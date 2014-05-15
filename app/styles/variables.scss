@@ -1,0 +1,168 @@
+@import 'base/color';
+@import 'mixins';
+
+$nav-height: 4em;
+
+// z-indexes
+$z-modal: 100;
+$z-fullscreen: 50;
+$z-fullin: 40;
+
+
+// type
+$font-base: 0.8em;
+
+// type
+$fat: 'gotham_htfbold';
+$thin: 'gotham_htflight';
+$ser: 'gotham_htfbook';
+$med: 'gotham-htfmedium';
+
+
+// margs and pads
+.pvs { padding: 0.6em 0; }
+.pvm { padding: 1em 0; }
+.pvl { padding: 1.5em 0; }
+.pvxl { padding: 2em 0; }
+.phs { padding: 0 0.6em; }
+.phm { padding: 0 1em; }
+.phs { padding: 0 0.6em; }
+.pts { padding-top: 0.6em; }
+.pbm { padding-bottom: 1em; }
+
+.pam { padding: 0.8em; }
+.pas { padding: 0.6em; }
+
+// correct?? should be mhxs??
+.mvxs{ margin: 0 0.3em;}
+.mvxl{ margin: 2em 0em;}
+.mvm { margin: 0.8em 0; }
+.mvl { margin: 1.2em 0; }
+.mtm { margin-top: 0.8em; }
+.mvxl { margin: 2em 0; }
+.mll {margin-left: 1.2em; }
+.mam { margin: 0.8em; }
+.mal { margin: 1.2em; }
+.mtl { margin-top: 1.2em; }
+.maxl{ margin: 2em; }
+.mhm { margin: 0.8em 0;}
+.mhl { margin: 0 1.2em;}
+
+// positioning
+.right { float: right; }
+.left { float: left; }
+.txt-center { text-align: center; }
+.txt-right { text-align: right; }
+
+// colors;
+.white { color: $white-light; }
+.green { color: $green; }
+.faded { background-color: $grey-trans; }
+.red { color: $red; }
+.black { color: $black; }
+.error { color: $red; }
+.red-grad {
+    @include border-radius(4px);
+	// background-image: -o-linear-gradient(bottom, #C97C65 0%, #C43741 50%, #C97C65 100%);
+	// background-image: -moz-linear-gradient(bottom, #C97C65 0%, #C43741 50%, #C97C65 100%);
+	// background-image: -webkit-linear-gradient(bottom, #C97C65 0%, #C43741 50%, #C97C65 100%);
+	// background-image: -ms-linear-gradient(bottom, #C97C65 0%, #C43741 50%, #C97C65 100%);
+	// background-image: linear-gradient(to bottom, #C97C65 0%, #C43741 50%, #C97C65 100%);
+}
+
+.brown-box {
+    background-color:$brown-light;
+    padding:20px;
+    &.box-small {
+        width:70%;
+    }
+}
+
+.point {cursor: pointer;}
+.rel { position:relative;}
+
+.vote {
+    width:200px;
+    padding:1px;
+    background-color: $red;
+    margin:auto;
+    display:block;
+    @include border-radius(15px);
+    @include box-shadow (0 0 5px rgba(229, 107, 107, 0.21));
+}
+
+// .round {
+//     @include border-radius(6px);
+// }
+
+// TODO: super hack. fix this
+.vote-left {
+    position: relative;
+    left: -74px;
+}
+.vote-right {
+    position:relative;
+    right: -74px;
+}
+
+@mixin brd-dark {
+    border: 1px solid $white-on-brown-brdr;
+}
+
+.brd-dark {
+    @include brd-dark;
+}
+
+.box {
+    @include brd-dark;
+    background: $brown-light;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.38);
+    border-radius: 2px;
+}
+
+/* things over image, or other thing */
+.le-wrap {
+    position:relative;
+
+    .le-in {
+        position:absolute;
+        &.center {
+            width: 100%;
+            text-align: center;
+        }
+        &.large-in {
+            bottom:9%;
+            font-size: 6em;
+        }
+        &.full-in {
+            top:0;
+            width: 100%;
+            background-color:inherit;
+            cursor: pointer;
+            height: 98%;
+            z-index: $z-fullin;
+            @include transition(background 0.5s ease);
+            &:hover {
+                background: #000;
+                background: -webkit-gradient(radial,50% 25%,0,50% 25%,400,from(rgba(255,255,255,.01)),to(rgba(255,255,255,.3))) transparent;
+                background: -moz-radial-gradient(center 45deg,circle cover,rgba(255,255,255,.01) 0%,rgba(255,255,255,.3)  100%) transparent;
+            }
+        }
+    }
+}
+
+.green-hov {
+    @include transition(color .3s ease);
+    &:hover {
+        color: $green;
+    }
+
+    &.active {
+        color:$green;
+    }
+}
+
+.scale {
+    display:inline-block;
+    &:hover { @include scale(1.2, 1.2); }
+}

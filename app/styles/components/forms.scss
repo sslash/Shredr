@@ -1,0 +1,80 @@
+@import 'mixins';
+@import 'base/color';
+@import 'variables';
+
+form { margin: 1em 0;}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    display: inline-block;
+    font-size: $font-base;
+    padding: 8px;
+    width:100%;
+    color: $grey;
+    @include border-radius(4px);
+    vertical-align: middle;
+    border:none;
+    margin-bottom:0.5em;
+    background-color:$brown-light;
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+    @include transition(border linear .2s, box-shadow linear .2s);
+}
+
+textarea {resize:none;}
+
+.form-light {
+    textarea,
+    input[type="text"],
+    input[type="password"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="month"],
+    input[type="time"],
+    input[type="week"],
+    input[type="number"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="color"]{
+        border: 1px solid $grey-border;
+    }
+}
+
+input[type="file"] {
+    width:60px;
+}
+.upload-box {
+    width: 200px;
+    margin: auto;
+    border: 2px dotted;
+    border-radius: 13px;
+    background: rgba(51, 51, 51, 0.43);
+    margin-top: 225px;
+    background-color:$brown;
+
+    h5 {
+        padding: 38px 0;
+        margin: 0;
+    }
+    .highlight {
+        border-radius: 13px;
+        background: $brown-light;
+    }
+}

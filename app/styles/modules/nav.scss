@@ -1,0 +1,50 @@
+@import '../base/color';
+@import 'variables';
+
+.nav {
+    background-color:$brown;
+    height: $nav-height;
+    padding:0.3em;
+    > ul {
+        height:100%;
+        > li {
+            padding-right: 3em;
+            height: 100%;
+            overflow:auto;
+            vertical-align: middle;
+            display: table-cell;
+        }
+    }
+
+    .active {
+        background-color:$green;
+        font-weight: 900;
+        padding-top: 0.6em;
+        color: $white-light;
+    }
+}
+
+.kicker {
+    background-color: $brown-light;
+}
+
+.nav-center {
+    position:absolute;
+    left:0;
+    right:0;
+    top:2.2em;
+    text-align:center;
+    a {
+        padding: 0.47em 2.4em;
+        background-color:$brown-light;
+        font-family:$thin;
+    }
+}
+
+.nav-right {
+    float: right;
+}
+
+.nav-left {
+    float: left;
+}

@@ -1,0 +1,43 @@
+@import 'color';
+@import 'variables';
+
+li {
+    list-style: none;
+}
+
+body {
+    background-color: $brown;
+    font-family: 'gotham-htfmedium';
+    color: $white;
+}
+
+h3, h2, h1 {
+    color: $white-light;
+    font-family: $thin;
+}
+
+h4, h5, h6 {
+    color: $white-light;
+    font-family: $med;
+}
+
+a {
+    color:$white-on-brown;
+    text-decoration:none;
+}
+
+.lead {
+    font-family: $thin;
+}
+.fat {
+    font-family: $fat;
+}
+.xsmall { font-size: 0.6em;}
+small {
+    font-size:0.7em;
+    color: $grey;
+}
+
+.icon-2x {
+    font-size: 2em;
+}

@@ -1,0 +1,48 @@
+<div class="pam txt-center" data-reg="content">
+
+    <p class="lead pam">{{battler.username}} has challenged you to a battle!</p>
+
+    {{#if_eq mode "Advanced"}}
+    <div>
+        <video style="max-width: 350px;">
+            <source src="video/br/{{advVidFile}}"
+            type='video/webm;codecs="vp8, vorbis"'/>
+            <source src="video/br/{{advVidFile}}"
+            type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'/>
+        </video>
+    </div>
+
+    <audio data-model="audio">
+        <p>Your browser does not support this feauture :(</p>
+        {{#if this.jamtrack}}
+        <source src="audio/{{this.jamtrack.fileId}}"type="audio/mpeg">
+            {{else}}
+            <source src="audio/br/{{this.fileId}}"type="audio/mpeg">
+                {{/if}}
+            </audio>
+
+            {{else}}
+            <video controls style="max-width: 350px;">
+                <source src="video/br/{{fileId}}"
+                type='video/webm;codecs="vp8, vorbis"'/>
+                <source src="video/br/{{fileId}}"
+                type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'/>
+            </video>
+            {{/if_eq}}
+            <div>
+                <span class="pointer" data-event="play">
+                    <i class="fa fa-play"></i>
+                </span>
+                <span class="pointer" data-event="stop">
+                    <i class="fa fa-stop"></i>
+                </span>
+            </div>
+
+            <p class="mvm">{{statement}}</p>
+
+            <div>
+                <button class="btn btn-niz" data-event="accept">Accept</button>
+                <button class="btn" data-event="decline">Decline</button>
+
+            </div>
+        </div>

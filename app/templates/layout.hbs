@@ -1,0 +1,52 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml"> <![endif]-->
+
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" xmlns="http://www.w2.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml"> <!--<![endif]-->
+
+  <head>
+  <meta charset="utf-8">
+
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Shredr</title>
+  <meta name="description" content="">
+
+  <!-- Mobile viewport optimized: h5bp.com/viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="/favicon.png" rel="shortcut icon">
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+  <nav id="navigation"></nav>
+  <section id="flash"></section>
+  <section id="kicker"></section>
+  <main id="main">{{{body}}}</main>
+  <section id="modal"></section>
+</body>
+
+<script>
+  window.app_options = {
+      "user" : {{{userBS}}},
+      "collection" : {{{collBS}}},
+      "model" : {{{modelBS}}},
+      "type" : "{{{type}}}"
+  };
+</script>
+
+
+<!-- build:js scripts/main.js -->
+<script data-main="/scripts/init" src="/bower_components/requirejs/require.js"></script>
+<!-- endbuild -->
+
+<script>document.write('<script src="http://'
+    + (location.host || 'localhost').split(':')[0]
+    + ':35729/livereload.js?snipver=1"><\/script>');
+</script>
+</html>

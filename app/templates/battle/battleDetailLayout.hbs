@@ -1,0 +1,103 @@
+<div class="container" data-region="landing">
+    <div class="row clearfix le-wrap">
+        {{#each round.turns}}
+        <div class="column half">
+            <video class="battle-vid">
+                <source src="/video/{{videoFileId}}" type='video/webm;codecs="vp8, vorbis"'/>
+                <source src="/video/{{videoFileId}}" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'/>
+            </video>
+        </div>
+        {{/each}}
+        <div class="le-in center large-in"><h1><i class="ion-play battle-play"></i></h1></div>
+        <div class="le-in full-in"></div>
+    </div>
+
+    <div class="row clearfix mvl le-wrap">
+        <div class="column half">
+            <h3><img src="/images/{{m.battler.profileImgFile}}" class="thumb-round img-small"><span class="thumb-txt">{{m.battler.username}}</span></h3>
+            <i class="ion-location fa-2x phs"></i><small>{{m.battler.location}}</small>
+
+            <button class="btn btn-niz mhl btn-logo">Vote</button>
+        </div>
+        <div class="column half txt-right">
+            <h3><span class="thumb-txt">{{m.battlee.username}}</span><img src="/images/{{m.battlee.username}}" class="thumb-round img-small"></h3>
+            <button class="btn btn-niz btn-logo mhl">Vote</button>
+            <i class="ion-location fa-2x phs"></i><small>{{m.battlee.location}}</small>
+        </div>
+
+        <div class="le-in center">
+            <p><small class="vote-left white">12 votes</small></p>
+            <i class="vote"></i>
+            <p><small class="vote-right white">15 votes</small></p>
+
+            <div class="green social mvm">
+                <i class="icon ion-social-facebook phs"></i>
+                <i class="icon ion-social-twitter phs"></i>
+                <i class="icon ion-social-googleplus phs"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row clearfix pvxl">
+        <div class="column two-thirds">
+            <h4>Comments</h4>
+            <form>
+                <input type="text" placeholder="Write a comment">
+            </form>
+
+            <section class="mvl">
+                <div class="row clearfix mvl">
+                    <div class="column ten">
+                        <img src="/images/shredder.jpg" class="thumb-round img-small">
+                    </div>
+                    <div class="column nine-ten">
+                        <p><small>Frolo Swaggins</small></p>
+                        <small class="white">yolo swagtown cray sup it is the crack yolo</small>
+                    </div>
+                </div>
+
+                <div class="row clearfix mvl">
+                    <div class="column ten">
+                        <img src="/images/shredder.jpg" class="thumb-round img-small">
+                    </div>
+                    <div class="column nine-ten">
+                        <p><small>Frolo Swaggins</small></p>
+                        <small class="white">yolo swagtown cray sup it is the crack yolo</small>
+                    </div>
+                </div>
+
+                <div class="row clearfix mvl">
+                    <div class="column ten">
+                        <img src="/images/shredder.jpg" class="thumb-round img-small">
+                    </div>
+                    <div class="column nine-ten">
+                        <p><small>Frolo Swaggins</small></p>
+                        <small class="white">yolo swagtown cray sup it is the crack yolo</small>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="column third">
+            <div class="mvl brown-box box-small right clearfix">
+                <h4>Related Battles</h4>
+
+                {{#each things}}
+                    <div class="brd-dark shred-thumb-wrap le-wrap mvm clearfix" data-mod="{{_id}}" data-evt="rel-bat">
+                        <div class="crop">
+                            <img src="http://img.youtube.com/vi/GcGl_UGEarc/0.jpg" class="shred-thumb">
+                        </div>
+                        <div class="crop">
+                            <img src="/images/shredder.jpg" class="shred-thumb">
+                        </div>
+                        <div class="le-in battle-in txt-center">
+                            <p>Ken vs</p>
+                            <p>Tim</p>
+                        </div>
+                        <div class="le-in full-in"></div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

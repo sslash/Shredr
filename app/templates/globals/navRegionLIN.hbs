@@ -1,0 +1,36 @@
+<ul class="nav-left">
+    <li><img class="logo-md" src="/images/logos/logo_sml_white.png"></img></li>
+    <li class="rel">
+        <i class="ion-ios7-bell"></i>
+        <small data-evt="nots" class="label{{#if_eq notifications 0}} non{{/if_eq}}">{{notifications}}</small>
+        <ul class="dropdown dd-left" style="display:none">
+            {{#each user.notifications}}
+            <li class="row txt-left xsmall mam clearfix">
+                <div class="column third"><i class="icon ion-game-controller-a icon-2x white"></i></div>
+                <div class="column two-thirds">
+                    <a href="#" data-evt="bodyClk" data-index="{{@index}}">{{this.body}}</a>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </li>
+</ul>
+
+<div class="nav-center">
+    <a href="#" data-mod="shreds">Shreds</a>
+    <a href="/#battle/0" data-mod="battles">Battles</a>
+    <a href="#">Profiles</a>
+</div>
+
+<ul class="nav-right">
+    <li><img src="/images/shredder.jpg" class="thumb-round img-small"></li>
+    <li>
+        <section data-event="menu" class="rel">
+            <i class="icon ion-ios7-gear"></i>
+            <ul class="dropdown" style="display:none">
+                <li><a href="#">Edit Profile</a></li>
+                <li><a href="#" data-evt="logout">Logout</a></li>
+            </ul>
+        </section>
+    </li>
+</ul

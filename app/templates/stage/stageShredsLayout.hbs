@@ -1,0 +1,56 @@
+<div class="container" data-region="landing">
+    <div class="row clearfix">
+        <div class="column half">
+            <div data-reg="feed" class="column full"></div>
+            {{#each leftShreds}}
+            <div class="column half">
+
+                {{#if this.youtubeId}}
+                <div class="brd-dark shred-thumb-wrap le-wrap">
+                    <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
+                    <div class="le-in">
+                        <p>{{this.type}}</p>
+                        <small class="lead">{{title}}</small>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+            {{/each}}
+        </div>
+        <div class="column half">
+            {{#each rightShredsTop}}
+            <div class="column half">
+                {{#if this.youtubeId}}
+                <div class="brd-dark shred-thumb-wrap le-wrap">
+                    <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
+                    <div class="le-in">
+                        <p>{{this.type}}</p>
+                        <small class="lead">{{title}}</small>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+            {{/each}}
+            <div data-reg="thmb" class="column full">
+                <section class="box pas shred-thumb-wrap">
+                    <h1>Stuff</h1>
+                    <p class="lead">Things,
+                        <br>can be here.</p>
+                    </section>
+                </div>
+                {{#each rightShredsBottom}}
+                <div class="column half">
+                    {{#if this.youtubeId}}
+                    <div class="brd-dark shred-thumb-wrap le-wrap">
+                        <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
+                        <div class="le-in">
+                            <p>{{this.type}}</p>
+                            <small class="lead">{{title}}</small>
+                        </div>
+                    </div>
+                    {{/if}}
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>

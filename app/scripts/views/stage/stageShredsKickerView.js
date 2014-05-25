@@ -1,23 +1,18 @@
 /* global define */
 define([
     'backbone',
-    'views/globals/kickerRegionView',
     'hbs!tmpl/stage/stageShredsKickerView'
 ],
 function (
     Backbone,
-    KickerRegionView,
     Tpl
 ){
 'use strict';
-var StageShredsKickerView = KickerRegionView.extend({
+var StageShredsKickerView = Backbone.Marionette.ItemView.extend({
+    template : Tpl,
 
     events : {
         'click [data-mod="filters"] span' : '__filterClicked'
-    },
-
-    onRender : function () {
-        this.ui.kicker.append(Tpl());
     },
 
     __filterClicked : function (e) {

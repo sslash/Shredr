@@ -7,8 +7,9 @@ li {
 
 body {
     background-color: $brown;
-    font-family: 'gotham-htfmedium';
+    font-family: $ser;
     color: $white;
+    font-size:$font-base;
 }
 
 h3, h2, h1 {
@@ -26,15 +27,24 @@ a {
     text-decoration:none;
 }
 
+strong {
+    font-family: $med;
+}
+.head {
+    font-size: $font-xl;
+}
 .lead {
     font-family: $thin;
+    font-weight: normal;
 }
 .fat {
     font-family: $fat;
 }
-.xsmall { font-size: 0.6em;}
+.xsmall {
+    font-size: 0.5em;
+}
 small {
-    font-size:0.7em;
+    font-size:0.6em;
     color: $grey;
 }
 

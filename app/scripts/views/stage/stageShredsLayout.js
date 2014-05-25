@@ -13,7 +13,9 @@ function (
 var StageShredsLayout = Backbone.Marionette.Layout.extend({
     template : Tpl,
 
-    events : {},
+    events : {
+        'click [data-evt="play"]' : '__playClicked'
+    },
 
     regions : {
         feed : '[data-reg="feed"]'
@@ -38,6 +40,11 @@ var StageShredsLayout = Backbone.Marionette.Layout.extend({
         // need to reset the region because we F*=)#/´d the DOM
         this.feed.reset();
         this.renderFeedRegion();
+    },
+
+    __playClicked : function (e) {
+        var id = $(e.currentTarget).attr('data-model');
+        Shredr.navigate('/#shred/' + id, {trigger : true});
     },
 
     renderFeedRegion : function () {

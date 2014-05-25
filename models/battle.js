@@ -25,26 +25,48 @@ var BattleSchema = new Schema({
     // In case for mode2, and the user has chosen an existing jamtrack
     jamtrackId : {type : Schema.ObjectId, ref : 'Jamtrack'},
 
+    votes : {
+
+        // battlers votes (id's to users)
+        battlers : [String],
+
+        // battlees votes (id's to users)
+        battlees : [String]
+    },
+
+    comments: [{
+        body: { type : String, default : '' },
+        user: { type : Schema.ObjectId, ref : 'User' },
+        createdAt: { type : Date, default : Date.now }
+    }],
+
     // Advanced mode things
-    rounds : [
-        {
-            // // size : 2
-            // turns : [{
+    rounds : [Schema.Types.Mixed]
+    // rounds : [
+         // [
+         //     {    // round 1
             //     videoFileId : String,
             //     createdAt : {type : Date},
+            //     startSec : Number,
+            //     startFrame : Number,
             //     rating : {
             //         raters : {type : Number, default : 0},
             //         currentValue : {type : Number, default : 0}
             //     },
-            //     // comments: [{
-            //     //     body: { type : String, default : '' },
-            //     //     user: { type : Schema.ObjectId, ref : 'User' },
-            //     //     createdAt: { type : Date, default : Date.now }
-            //     // }]
-            // }]
-        }
-    ]
+            //     comments: [{
+            //         body: { type : String, default : '' },
+            //         user: { type : Schema.ObjectId, ref : 'User' },
+            //         createdAt: { type : Date, default : Date.now }
+            //     }]
+            // },
+            // {
+            //    // round 2
+            //    things..
+            //}
+            //]
+    // ]
 });
+
 
 BattleSchema.path('battler').validate(function (user) {
     return typeof user !== "undefined" && user !== null ;
@@ -57,6 +79,25 @@ BattleSchema.path('battlee').validate(function (user) {
 BattleSchema.methods = {
     create: function (cb) {
         this.save(cb);
+    }
+};
+
+BattleSchema.methods = {
+    saveOrUpdate : function (populate, next) {
+        var deferred = Q.defer();
+        this.save(function(err, battle) {
+            if (err) { deferred.reject(err); }
+            else {
+                if ( populate ) {
+                    Battle.populate(battle, {path : 'comments.user', model : 'User'}, function (err, result) {
+                        deferred.resolve(result);
+                    });
+                } else {
+                    deferred.resolve(battle);
+                }
+            }
+        });
+        return deferred.promise;
     }
 };
 
@@ -90,12 +131,23 @@ BattleSchema.statics = {
         return deferred.promise;
     },
 
+    findSimple : function(id, cb) {
+        var deferred = Q.defer();
+        this.findOne({ _id : id })
+        .exec(function(err,res) {
+            if (err) { deferred.reject(err); }
+            else { deferred.resolve(res); }
+        });
+        return deferred.promise;
+    },
+
     findById: function (id, cb) {
         var deferred = Q.defer();
         this.findOne({ _id : id })
         .populate('battler')
         .populate('battlee')
         .populate('jamtrackId')
+        .populate('comments.user')
         .exec(function(err,res) {
             if (err) { deferred.reject(err); }
             else { deferred.resolve(res); }

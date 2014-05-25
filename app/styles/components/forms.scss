@@ -25,7 +25,7 @@ input[type="color"],
     font-size: $font-base;
     padding: 8px;
     width:100%;
-    color: $grey;
+    color: $white;
     @include border-radius(4px);
     vertical-align: middle;
     border:none;
@@ -35,7 +35,10 @@ input[type="color"],
     @include transition(border linear .2s, box-shadow linear .2s);
 }
 
-textarea {resize:none;}
+textarea {
+    height: 3em;
+    resize:none;
+}
 
 .form-light {
     textarea,

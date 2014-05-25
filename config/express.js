@@ -19,14 +19,19 @@ module.exports = function (app, config, passport) {
     app.use(express.logger('dev'));
 
     // express-winston logger makes sense BEFORE the router.
-    app.use(expressWinston.logger({
-        transports: [
-        new winston.transports.Console({
-            json: true,
-            colorize: true
-        })
-        ]
-    }));
+    // app.use(expressWinston.logger({
+    //     transports: [
+    //     new winston.transports.Console({
+    //         json: true,
+    //         colorize: true
+    //     })
+    //     ]
+    // }));
+    // simple logger
+    app.use(function(req, res, next){
+        console.log('%s %s', req.method, req.url);
+        next();
+    });
 
     // views config
     app.engine('hbs', hbs.express3({
@@ -58,14 +63,14 @@ module.exports = function (app, config, passport) {
         app.use(app.router);
 
         // express-winston errorLogger makes sense AFTER the router.
-        app.use(expressWinston.errorLogger({
-            transports: [
-            new winston.transports.Console({
-                json: true,
-                colorize: true
-            })
-            ]
-        }));
+        // app.use(expressWinston.errorLogger({
+        //     transports: [
+        //     new winston.transports.Console({
+        //         json: true,
+        //         colorize: true
+        //     })
+        //     ]
+        // }));
 
         app.use(function (req, res, next) {
             res.status(404).render('404', { url: req.originalUrl });

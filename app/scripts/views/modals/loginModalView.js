@@ -34,8 +34,8 @@ var LoginModalView = BaseModalLayout.extend({
 
     events : _.extend({}, BaseModalLayout.prototype.events, {
         'click .tab-btn'               : '__tabBtnClicked',
-        'submit form#register-form'        : '__registerSubmitted',
-        'submit form#login-form'           : '__loginFormSubmitted',
+        'submit form#register-form'    : '__registerSubmitted',
+        'submit form#login-form'       : '__loginFormSubmitted',
         'click [data-event="no-link"]' : '__closeClicked'
     }),
 

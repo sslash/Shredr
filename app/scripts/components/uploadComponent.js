@@ -32,9 +32,9 @@ define([
                             $container.children().remove();
                             $container.removeClass('upload-box');
 
-                            var vidHtml = '<video controls class="video-thumb"> data-model="upload-vid"' +
-                            '<source src="' + e.target.result + '"</source></video>';
-                            $container.append(vidHtml);
+                            // var vidHtml = '<video class="video-thumb" data-model="upload-vid">' +
+                            // '<source src="' + e.target.result + '"</source></video>';
+                            // $container.append(vidHtml);
                             that.trigger('file:changed:thumb:created', e.target.result);
 
                         } else if (file.type.match('audio.*') ) {}
@@ -55,11 +55,7 @@ define([
 
             initialize: function(options){
                 options = options || {};
-                if ( !options.region ) {
-                    throw new Error('A Marionette region must be included');
-                }
-
-                this.region = options.region;
+                Component.prototype.initialize.call(this, options);
                 this.view = new View();
                 this.listenTo(this.view, 'file:changed', this.__fileUploadBtnClicked);
                 this.listenTo(this.region, 'show', this.initDropListeners);
@@ -128,6 +124,7 @@ define([
             },
 
             upload : function (url) {
+                console.log('uploading');
 
                 var formData = new FormData();
                 formData.append('file', this.file );

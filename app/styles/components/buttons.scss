@@ -34,6 +34,11 @@
     &:hover { background-color: $green-light; }
 }
 
+.btn-def {
+    background-color: $brown-light;
+    &:hover { background-color: $brown-light-light; }
+}
+
 .btn-ser{
     background-color:$red;
     &:hover { background-color: $red-light; }

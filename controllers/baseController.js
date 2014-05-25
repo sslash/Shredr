@@ -22,11 +22,11 @@ module.exports = {
 
             // backbone objects
             fullBootstrap.userBS = JSON.stringify(user);
-            fullBootstrap.collBS = !!opts.collBS ? JSON.stringify(opts.collBS) : '';
-            fullBootstrap.modelBS = !!opts.modelBS ? JSON.stringify(opts.modelBS) : '';
+            fullBootstrap.collBS = !!opts.collBS ? JSON.stringify(opts.collBS) : '{}';
+            fullBootstrap.modelBS = !!opts.modelBS ? JSON.stringify(opts.modelBS) : '{}';
             fullBootstrap.layout = '../layout';
 
-            res.render(path.join( __dirname, '../app/templates/battle/battleDetailLayout' ), fullBootstrap);
+            res.render(path.join( __dirname, '../app/templates/' + opts.tpl ), fullBootstrap);
         });
     }
 };

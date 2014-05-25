@@ -42,6 +42,8 @@ var path = require('path');
 
     // battles
     app.get('/battle/:id', battleController.get);
+    app.get('/battle', battleController.list);
+
 
     // ****************** API ************************ //
 
@@ -84,6 +86,15 @@ var path = require('path');
     app.get('/api/battleRequest/:id', auth.requiresLogin, battleRequestController.getBattleRequest);
     app.post('/api/battleRequest', auth.requiresLogin, battleRequestController.createBattleRequest);
     app.put('/api/battleRequest/:id', auth.requiresLogin, battleRequestController.updateBattleRequest);
+
+
+    // battles
+    app.post('/api/battle/:id/postBattleRound/video', auth.requiresLogin, battleController.postBattleRoundVideo);
+    app.post('/api/battle/:id/postBattleRound', auth.requiresLogin, battleController.postBattleRound);
+    app.post('/api/battle/:id/vote/:battlerOrBattlee', auth.requiresLogin, battleController.postVote);
+    app.post('/api/battle/:id/comment', auth.requiresLogin, battleController.postComment);
+    app.get('/api/battle/:id', battleController.getJSON);
+
 
 	app.post('/users/session',
 		passport.authenticate('local', {

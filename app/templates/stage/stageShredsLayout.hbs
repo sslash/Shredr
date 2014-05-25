@@ -6,33 +6,38 @@
             <div class="column half">
 
                 {{#if this.youtubeId}}
-                <div class="brd-dark shred-thumb-wrap le-wrap">
+                <div class="brd-dark box-wrap le-wrap stage-thumb-wrap" data-evt="play" data-model="{{_id}}">
                     <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
-                    <div class="le-in">
-                        <p>{{this.type}}</p>
-                        <small class="lead">{{title}}</small>
+                    <div class="le-in thmb pas white">
+                        <p>{{this.user.username}}</p>
+                        <small class="lead white">{{title}}</small>
                     </div>
+                    <div class="le-in full-in"></div>
                 </div>
                 {{/if}}
+
             </div>
             {{/each}}
         </div>
         <div class="column half">
             {{#each rightShredsTop}}
             <div class="column half">
+
                 {{#if this.youtubeId}}
-                <div class="brd-dark shred-thumb-wrap le-wrap">
+                <div class="brd-dark box-wrap le-wrap stage-thumb-wrap" data-evt="play" data-model="{{_id}}">
                     <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
-                    <div class="le-in">
-                        <p>{{this.type}}</p>
-                        <small class="lead">{{title}}</small>
+                    <div class="le-in thmb pas white">
+                        <p>{{this.user.username}}</p>
+                        <small class="lead white">{{title}}</small>
                     </div>
+                    <div class="le-in full-in"></div>
                 </div>
                 {{/if}}
+
             </div>
             {{/each}}
             <div data-reg="thmb" class="column full">
-                <section class="box pas shred-thumb-wrap">
+                <section class="box pas box-wrap">
                     <h1>Stuff</h1>
                     <p class="lead">Things,
                         <br>can be here.</p>
@@ -40,15 +45,18 @@
                 </div>
                 {{#each rightShredsBottom}}
                 <div class="column half">
+
                     {{#if this.youtubeId}}
-                    <div class="brd-dark shred-thumb-wrap le-wrap">
+                    <div class="brd-dark box-wrap le-wrap stage-thumb-wrap" data-evt="play" data-model="{{_id}}">
                         <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
-                        <div class="le-in">
-                            <p>{{this.type}}</p>
-                            <small class="lead">{{title}}</small>
+                        <div class="le-in thmb pas white">
+                            <p>{{this.user.username}}</p>
+                            <small class="lead white">{{title}}</small>
                         </div>
+                        <div class="le-in full-in"></div>
                     </div>
                     {{/if}}
+
                 </div>
                 {{/each}}
             </div>

@@ -3,6 +3,7 @@ define([
     'backbone',
     'views/globals/navRegionView',
     'views/globals/navRegionLINView',
+    'views/globals/kickerRegionView',
     'views/modals/loginModalView',
     'views/globals/flashRegionView'
 ],
@@ -10,6 +11,7 @@ function (
     Backbone,
     NavRegionView,
     NavRegionLINView,
+    KickerRegionView,
     LoginModalView,
     FlashRegionView
 ){
@@ -29,6 +31,10 @@ var BaseController = Backbone.Marionette.Controller.extend({
                     Shredr.vent.trigger(options.event + ':success', modelOrColl,
                     response, opts);
                 }
+
+                if ( options.success ) {
+                    options.success.call(null, modelOrColl, response, opts);
+                }
             },
             error : function (modelOrColl, response, opts) {
 
@@ -45,9 +51,17 @@ var BaseController = Backbone.Marionette.Controller.extend({
         if ( action === 'save' ) {
             modelOrCollection[action](options.attrs, config);
         } else if (action === 'delete' ) {
-            //modelOrCollection.sync 'delete', modelOrCollection, conf
+            modelOrCollection.sync ('delete', modelOrCollection, conf);
         } else {
-            modelOrCollection[action](config);
+            // only fetch if not client render (changed in renderMainRegion)
+            if (Shredr.cliRender) {
+                modelOrCollection[action](config);
+
+            // Models lives on the Shredr object
+            } else {
+                // need to test this...
+                config.success(Shredr.model);  //|| Shredr.collection);
+            }
         }
     },
 
@@ -68,6 +82,7 @@ var BaseController = Backbone.Marionette.Controller.extend({
         }
 
         Shredr.navRegion.show(this.navRegionView);
+        Shredr.kickerRegion.show(new KickerRegionView());
     },
 
     renderMainRegion : function (View, opts, category) {
@@ -77,11 +92,12 @@ var BaseController = Backbone.Marionette.Controller.extend({
         } else {
             console.log('server render');
             Shredr.mainRegion.attachView(new View(
-                _.extend({}, opts, {el : $('[data-region="landing"]')})
+                _.extend({}, opts, {el : $('[data-region="landing"]'), serverRender : true})
             ));
+            Shredr.clientRender = true;
         }
 
-        Shredr.vent.trigger('stage:preRender', category);
+        Shredr.vent.trigger('mainRegion:preRender', category);
     },
 
     showLoginModal : function () {

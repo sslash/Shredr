@@ -6,12 +6,12 @@
 
     <section class="faded pam mvxl">
         {{#each rounds}}
-            {{#each turns}}
-                <video style="width:50px;" data-model="battle-vid">
-                    <source src="/video/s.mp4" type='video/webm;codecs="vp8, vorbis"'/>
-                    <source src="/video/s.mp4" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'/>
-                </video>
-            {{/each}}
+            {{#each this}}
+            <video id="video_{{@index}}" class="video-js vjs-default-skin"
+                data-setup='{"example_option":true}' style="width:50px;" data-model="battle-vid">
+                <source src="/video/battle/{{videoFileId}}" type='video/mp4' />
+            </video>
+        {{/each}}
         {{/each}}
         <div data-reg="video-drag" style="height: 156px">
             <span data-reg="arrow" class="arrow left" style="display:none">
@@ -50,7 +50,7 @@
                     </p>
                 </div>
                 <div class="column third">
-                    <p><button class="btn btn-niz">Upload</button></p>
+                    <p><button class="btn btn-niz" data-evt="submit">Done!</button></p>
                 </div>
             </div>
         </div>

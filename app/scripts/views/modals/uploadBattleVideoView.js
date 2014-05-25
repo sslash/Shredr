@@ -1,4 +1,6 @@
-/* global require */
+
+//TODO: FINISH SAVE
+/* global define */
 define([
 'backbone',
 'views/modals/baseModalLayout',
@@ -12,47 +14,51 @@ function (
     BaseModalLayout,
     UploadComponent,
     VPComponent,
-    Tpl
+    tpl
 ){
     'use strict';
     var UploadBattleVideoView = BaseModalLayout.extend({
 
         initialize : function (opts) {
             BaseModalLayout.prototype.initialize.apply(this, arguments);
+            this.listenTo(this.model, 'battle:save:success', this.modelSaveSuccess);
         },
 
         events : _.extend({}, BaseModalLayout.prototype.events, {
-            'click [data-evt="play"]' :    '__playClicked',
-            'click [data-evt="stop"]' :    '__stopClicked'
+            'click [data-evt="play"]'   : '__playClicked',
+            'click [data-evt="stop"]'   : '__stopClicked',
+            'click [data-evt="submit"]' : '__submitClicked'
         }),
 
         onShow : function () {
             // render this view's template
             BaseModalLayout.prototype.onShow.apply(this, arguments);
-            this.ui.body.html(Tpl(this.serializeData()));
 
-            // set ui now that DOM has new stuff
+            // Render the body template
+            this.ui.body.html(tpl(this.serializeData()));
+
+            // set UI now that DOM has new stuff
             this.ui.duration = this.$('[data-model="dur"]');
 
             this.renderAsyncs();
         },
 
-        serializeData : function () {
-            return this.model.toJSON();
-        },
-
+        // These things need the DOM to be ready in order to render
         renderAsyncs : function () {
 
-            // These things need the DOM to be ready in order to render
             setTimeout( function () {
                 try {
                     this.renderUpload();
                     this.renderCanvas();
                 } catch(e) {
-                    console.log('sap error: ' + e)
+                    console.log('sap error: ' + e);
                     this.renderAsyncs.call(this);
                 }
-            }.bind(this), 50);
+            }.bind(this), 20);
+        },
+
+        serializeData : function () {
+            return this.model.toJSON();
         },
 
         renderUpload : function () {
@@ -81,7 +87,7 @@ function (
             // add the uploaded video to that region
             this.$dragRegion.append([
                 '<video class="vid-drag" data-model="drag">',
-                '<source src="' + src + '"</source></video>',
+                '<source src="' + src + '"></source></video>',
             ].join(''));
 
             // save a reference to the video
@@ -93,6 +99,7 @@ function (
         },
 
         // set number of seconds until video must start
+        // (vidStartFramesOffset + vidStartSec)
         dragStop : function (e) {
             // get percentage of pixels from left
             var left = $(e.target)[0].getBoundingClientRect().left;
@@ -114,7 +121,7 @@ function (
 
         setVidStartSec : function (vidStartPercent) {
             var audioLength = this.$audio[0].duration;
-            var vidStartSec = (audioLength / 100) * vidStartPercent
+            var vidStartSec = (audioLength / 100) * vidStartPercent;
             this.vidStartFramesOffset = 0;
 
             // set offset in frames
@@ -143,12 +150,13 @@ function (
                     setTimeout(tryRender.bind(this), 40);
                 } else {
 
-                    // assume last vid has vidstartsec = 13 + frames = 40
-                    // first, get fract (x,fract)
-                    var fract = (40/60);
+                    // this doesnt always work due to equal video files
+                    var startTime = this.getStartTimeForLastVideo();
+                    var secStart = startTime.sec;
+                    var fract = (startTime.frames/60);
 
                     // then calculate offset percentage (13,frames secs into audio.duration)
-                    var percent = (100 / this.$audio[0].duration) * 13 + fract;
+                    var percent = (100 / this.$audio[0].duration) * (secStart + fract);
                     var pixelsLeft = (rect.width / 100)*percent;
 
                     // Draw the canvas pixelsLeft to the left on the audio buffer thing
@@ -163,70 +171,92 @@ function (
                     // render the offset label
                     this.$offsetLabel = this.$('[data-model="offsetLast"]');
                     this.$offsetLabel.animate({'left' : pixelsLeft + 'px'});
-                    this.$offsetLabel.text('13:40f');
+                    this.$offsetLabel.text(startTime.sec + ':' + startTime.frames);
                 }
-            }
+            };
 
             tryRender.call(this);
         },
 
-        renderPlayer : function () {
+        getStartTimeForLastVideo : function () {
+            var domVids = this.getDOMVideos();
+            var lastVideo = this.model.getLastVideo();
+            return {
+                sec : lastVideo.startSec + (domVids[domVids.length-1].duration || 0),
+                frames : lastVideo.startFrame
+            };
+        },
+
+        // gets all DOM videos (except the one the user adds)
+        getDOMVideos : function () {
+            return this.$('[data-model="battle-vid"]').get();
+        },
+
+        // Play clicked! must set up the videoplayer component and start playing..
+        startPlayer : function () {
             var audio = this.$audio[0];
-            var DOMvideos = this.$('[data-model="battle-vid"]').get();
 
-            function tryRender () {
+            var DOMvideos = this.getDOMVideos();
+            // craete a playable list of all previous battle videos
+            var rounds = this.model.get('rounds');
+            var vpVideos = _.map(DOMvideos, function(v, i) {
+                var roundi  = Math.floor(i/2);
+                var turni = i % 2;
+                return {
+                    sel : v,
+                    // get vid start sec and offset
+                    vidStartSec : parseInt(rounds[roundi][turni].startSec, 10), //+ 2,
+                    vidStartFramesOffset: parseInt(rounds[roundi][turni].startFrame, 10)
+                };
+            });
 
-                // if some videos aren't ready, or audio isn't ready, loop.
-              if ( _.some(DOMvideos, function(v) {  v.readyState < 3 }) || audio.readyState < 3) {
-                      setTimeout(tryRender.bind(this), 40);
-              } else {
-                  // craete a playable list of all previous battle videos
-                  var rounds = this.model.get('rounds');
-                  var vpVideos = _.map(DOMvideos, function(v, i) {
-                      return {
-                          sel : v,
+            // add the current vid to this list.
+            // if it has been added yet.
+            var newVid = this.$('[data-model="drag"]');
+            if ( newVid ) {
+                vpVideos.push({
+                    sel:newVid[0],
+                    vidStartSec : this.vidStartSec,
+                    vidStartFramesOffset : this.vidStartFramesOffset
+                });
+            }
 
-                          // get vid start sec and offset
-                          vidStartSec : 6 + i*10,
-                          vidStartFramesOffset: 13 + i*10 // this is just to fake TODO FIX ME
-                      };
-                  });
-
-                    // add the current vid to this list.
-                    // if it has been added yet.
-                  var newVid = this.$('[data-model="drag"]');
-                  if ( newVid ) {
-                      vpVideos.push({
-                          sel:newVid[0],
-                          vidStartSec : this.vidStartSec,
-                          vidStartFramesOffset : this.vidStartFramesOffset
-                      })
-                  }
-
-                 // create a new videoplayercomnponent.
-                  this.vpComponent = new VPComponent({
-                      videos : vpVideos,
-                      audio : audio
-                  });
-                  this.listenTo(this.vpComponent, 'player:seconds', this.renderPlaySeconds);
-              }
-          }
-          tryRender.call(this);
+            // create a new videoplayercomnponent.
+            this.vpComponent = new VPComponent({
+                videos : vpVideos,
+                audio : audio
+            });
+            this.listenTo(this.vpComponent, 'player:seconds', this.renderPlaySeconds);
+            this.vpComponent.play();
       },
 
+      // Triggered every second
       renderPlaySeconds : function (seconds) {
           var mins = Math.floor(seconds / 60);
           var secs = seconds % 60;
           this.ui.duration.text(mins + ':' + secs);
       },
 
+      modelSaveSuccess : function () {
+          this.__closeClicked();
+      },
+
        __playClicked : function () {
-           this.renderPlayer();
-          this.vpComponent.trigger('player:play');
+          this.startPlayer();
       },
 
       __stopClicked : function () {
           this.vpComponent.trigger('player:stop');
+      },
+
+      // upload file, then post battleround
+      __submitClicked : function () {
+          console.log('submitting')
+          this.model.postBattleRound({
+              uploadComponent : this.uploadComponent,
+              startSec : this.vidStartSec,
+              startFrame : this.vidStartFramesOffset
+          })
       }
 
     });

@@ -14,7 +14,8 @@ define([
         routes : {
             'stage/shreds' : 'listShreds',
             'battle/:id'   : 'showBattle',
-            '*all' : 'listShreds'
+            'shred/:id'    : 'showShred',
+            '*all'         : 'listShreds'
         },
 
         listShreds : function () {
@@ -22,7 +23,11 @@ define([
         },
 
         showBattle : function (id) {
-            this.battlesController.showBattleDetail();
+            this.battlesController.showBattleDetail(id);
+        },
+
+        showShred : function (id) {
+            this.shredsController.showShred(id);
         }
 
     });

@@ -15,7 +15,7 @@ var NavRegionView = Backbone.Marionette.Layout.extend({
     className : 'nav',
 
     initialize : function () {
-        this.listenTo(Shredr.vent, 'stage:preRender', this.setActiveClass);
+        this.listenTo(Shredr.vent, 'mainRegion:preRender', this.setActiveClass);
     },
 
     setActiveClass : function (category) {

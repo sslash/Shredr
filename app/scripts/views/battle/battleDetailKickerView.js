@@ -9,7 +9,7 @@ function (
     Backbone,
     KickerRegionView,
     UploadBattleVideoView,
-    Tpl
+    tpl
 ){
 'use strict';
 var BattleDetailKickerView = KickerRegionView.extend({
@@ -19,17 +19,21 @@ var BattleDetailKickerView = KickerRegionView.extend({
     },
 
     onRender : function () {
-        this.ui.kicker.append(Tpl(this.serializeData()));
-        this.ui.mid.html('<button class="btn btn-ser btn-small">Your turn!</button>');
+        this.ui.kicker.append(tpl(this.serializeData()));
         this.ui.right.html('<small class="white">Battle - ' + this.model.get('mode') + '</small>');
+
+        //if ( this.model.isUsersTurn() ) {
+            this.ui.mid.html('<button class="btn btn-ser btn-small">Your turn!</button>');
+        //}
     },
 
     serializeData : function () {
         var model = this.model.toJSON();
+
         return {
             m : model,
-            roundNo : model.roundNo
-        }
+            roundNo : model.rounds.length
+        };
     },
 
     __yourTurnClicked : function () {

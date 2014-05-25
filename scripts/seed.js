@@ -11,6 +11,8 @@ var locations = ['Oslo, Norway', 'Stockholm, Sweden', 'New York, USA', 'San Fran
 var types = ['Lick', 'Tutorial', 'Jamtrack', 'Cover', 'Other'];
 var playedsince = ['1965', '1945', '1999', '1993', '1988', '1990', '1989'];
 
+
+
 var tlenh = tags.length/2;
 var tlen = tags.length;
 
@@ -75,6 +77,40 @@ for (var i = 0; i < 100; i++) {
 		description : "This Shred is neat. cewl. sweet. ty. gangsta #" + i,
 		title : titles[ti]
 	});
+}
+
+
+// battles
+db.battles.remove({});
+var users = db.users.find();
+var count = db.users.count();
+var jamtrack = db.jamtracks.find();
+
+var battleTypes = ['simple', 'advanced'];
+var battleTypesLen = battleTypes.length;
+
+for (var i = 0; i < 100; i++) {
+	var typei = Math.floor((Math.random()*battleTypesLen)),
+		user1 = Math.floor((Math.random()*count)),
+		user2 = Math.floor((Math.random()*count)),
+		rCount = Math.floor((Math.random()*5));
+
+		db.battles.save({
+			battler: users[user1]._id,
+			battlee: users[user2]._id,
+			numRounds : rCount,
+			mode : battleTypes[typei],
+			jamtrackId : jamtrack[0]._id,
+			rounds : [
+				[
+					{
+						videoFileId : 'sap1.mp4',
+						startSec : 0,
+						startFrame : 0,
+					}
+				]
+			]
+		});
 }
 
 // tagslist

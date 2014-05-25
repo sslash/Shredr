@@ -2,11 +2,13 @@ define([
 	'backbone.marionette',
 	'router',
 	'models/user',
+	'models/shred',
+	'models/battle',
 	'controllers/baseController',
 	'controllers/authController',
 	'collections/shredsCollection',
 	'collections/battlesCollection'
-], function(Marionette, Router, User, BaseController, AuthController,
+], function(Marionette, Router, User, Shred, Battle, BaseController, AuthController,
 			ShredsCollection, BattlesCollection) {
     'use strict';
 
@@ -23,6 +25,10 @@ define([
         window.setTimeout(callback, 1000 / 60);
     };
 	window.CRAF = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+
+	window.printz = function(str, obj) {
+		console.log(str+ ' ' + JSON.stringify(obj, null, '\t'));
+	}
 
 	Backbone.Model.prototype.setDateString = function (date) {
 		if ( !(date instanceof Date) ) { date = new Date(date); }
@@ -55,13 +61,11 @@ define([
 		if ( options.collection ) {
 			if ( options.type === 'shreds' ) {
 				this.collection = new ShredsCollection(options.collection);
+				this.model = options.model ? new Shred(options.model) : null;
 			} else if ( options.type === 'battles' ) {
 				this.collection = new BattlesCollection(options.collection);
+				this.model = options.model ? new Battle(options.model) : null;
 			}
-		}
-
-		if ( options.model ) {
-			this.model = options.model;
 		}
 
 		this.router = new Router();

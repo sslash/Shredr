@@ -11,6 +11,7 @@ $z-fullin: 40;
 
 // type
 $font-base: 0.8em;
+$font-xl: 2.5em;
 
 // type
 $fat: 'gotham_htfbold';
@@ -29,6 +30,7 @@ $med: 'gotham-htfmedium';
 .phs { padding: 0 0.6em; }
 .pts { padding-top: 0.6em; }
 .pbm { padding-bottom: 1em; }
+.prl { padding-right:1.5em; }
 
 .pam { padding: 0.8em; }
 .pas { padding: 0.6em; }
@@ -39,6 +41,7 @@ $med: 'gotham-htfmedium';
 .mvm { margin: 0.8em 0; }
 .mvl { margin: 1.2em 0; }
 .mtm { margin-top: 0.8em; }
+.mbm { margin-bottom: 0.8em; }
 .mvxl { margin: 2em 0; }
 .mll {margin-left: 1.2em; }
 .mam { margin: 0.8em; }
@@ -55,7 +58,8 @@ $med: 'gotham-htfmedium';
 .txt-right { text-align: right; }
 
 // colors;
-.white { color: $white-light; }
+.white { color: $white-light !important; }
+.grey-faded { color: $brown-light-light; }
 .green { color: $green; }
 .faded { background-color: $grey-trans; }
 .red { color: $red; }
@@ -81,15 +85,26 @@ $med: 'gotham-htfmedium';
 .point {cursor: pointer;}
 .rel { position:relative;}
 
-.vote {
-    width:200px;
-    padding:1px;
-    background-color: $red;
+.vote-bar {
     margin:auto;
-    display:block;
-    @include border-radius(15px);
-    @include box-shadow (0 0 5px rgba(229, 107, 107, 0.21));
 }
+.vote-bar-in {
+    @include box-shadow (0 0 5px rgba(229, 107, 107, 0.21));
+    @include border-radius(15px);
+    display:inline-block;
+    height:4px;
+    padding:0px;
+}
+.battler-vote {
+    margin-right: -7px;
+    background-color: $red;
+    width : 100px;
+}
+.battlees-vote {
+    background-color: $blue;
+    width : 100px;
+}
+
 
 // .round {
 //     @include border-radius(6px);

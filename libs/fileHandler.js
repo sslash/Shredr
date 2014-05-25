@@ -69,7 +69,7 @@ module.exports.storeVideoFile = function (req, opts, next) {
     var size = file.size;
     size /= (1000*1000);
     // max size = 10Mb
-    if ( size > 10) {
+    if ( size > 100) {
         // next({err: 'File too large'});
         deferred.reject({err :'File too large'});
     } else if ( !((/^video/).test(file.type)) ) {

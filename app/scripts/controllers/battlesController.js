@@ -16,20 +16,27 @@ function (
 'use strict';
 var BattlesController = Backbone.Marionette.Controller.extend({
 
-    showBattleDetail : function () {
-        var model = new Battle(Shredr.model);
+    showBattleDetail : function (id) {
+        Shredr.baseController.exec( new Battle({id : id}), 'fetch',
+        {
+            event : 'battle:fetch',
+            success : function (battle, response, options) {
 
-        var kickerView = new BattleDetailKickerView({model : model});
-        Shredr.kickerRegion.show(kickerView);
+                Shredr.baseController.renderMainRegion(BattleDetailsLayout, {
+                        model : battle, collection : Shredr.collection });
 
-        // var stageLayout = new BattleDetailsLayout();
+                // TODO! Change this. the main kicker view should listen to Shredr.event and render instead
+                var kickerView = new BattleDetailKickerView({model : battle});
+                Shredr.kickerRegion.show(kickerView);
 
-        Shredr.baseController.renderMainRegion(BattleDetailsLayout,{
-            model : model,
-            collection : Shredr.collection
-        }, 'battles');
+                // show animation
+                this.showPreBattleAnimation(battle);
+                Shredr.model = battle;
+            }.bind(this)
+        });
+    },
 
-        // show animation
+    showPreBattleAnimation : function (model) {
         var preBattleView = new PreBattleAnimationView({model : model});
         this.listenToOnce(preBattleView, 'preBattleAnimation:done',
              Shredr.baseController.closeModal.bind(Shredr.baseController, 'hi-opac' ));

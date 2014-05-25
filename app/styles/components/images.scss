@@ -1,5 +1,6 @@
 // https://kuler.adobe.com/Clean-and-simple-color-theme-3719589/
 @import '../base/color';
+@import '../mixins';
 
 .logo-xs { width: 1.2em;}
 .logo-md {
@@ -46,24 +47,24 @@
     width:100%;
 }
 
-.shred-thumb-wrap {
+.stage-thumb-wrap {
+    cursor: pointer;
+}
+.box-wrap {
     margin:1px;
 
-    .le-in {
-        bottom: 1em;
+    .le-in.thmb {
+        bottom: 0em;
         width: 100%;
-        background: rgba(52, 155, 137, 0.45);
-        color: $white-light;
-        small {
-            color:$grey;
-        }
+        //background: rgba(52, 155, 137, 0.45);
+        background: rgba(48, 124, 168, 0.86);
         &.battle-in {
             bottom: 30%;
         }
     }
 }
 
-.crop{
+.crop {
 	float:left;
 	overflow:hidden; /* this is important */
 	position:relative; /* this is important too */

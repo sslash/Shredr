@@ -2,7 +2,16 @@
 @import '../base/color';
 @import '../mixins';
 
+.shred-vid {
+    width: 100.1%;
+    padding: 1px;
+    border: 1px solid #000;
+    background-color: rgba(255, 255, 255, 0.30);
+    &.half { max-height: 321px; }
+}
+
 .logo-xs { width: 1.2em;}
+.logo-sm { width: 1.6em;}
 .logo-md {
     width:3em;
 }
@@ -45,11 +54,17 @@
 /* Thumbs- Stage ++ */
 .shred-thumb {
     width:100%;
+    max-height:100%;
 }
 
 .stage-thumb-wrap {
     cursor: pointer;
+
+    &.small {
+        height:159px;
+    }
 }
+
 .box-wrap {
     margin:1px;
 

@@ -10,7 +10,7 @@
     &:hover { color: $green-light; }
 
     &.active {
-        border-bottom: 9px solid $green;
+        border-width: 9px;
     }
 }
 
@@ -23,6 +23,10 @@
     cursor:pointer;
     color: $white-light;
     @include transition (background-color 0.3s ease-in-out);
+}
+
+.active {
+    border-bottom: 2px solid $green;
 }
 
 .btn-logo {

@@ -94,7 +94,7 @@ var BaseController = Backbone.Marionette.Controller.extend({
             Shredr.mainRegion.attachView(new View(
                 _.extend({}, opts, {el : $('[data-region="landing"]'), serverRender : true})
             ));
-            Shredr.clientRender = true;
+            Shredr.cliRender = true;
         }
 
         Shredr.vent.trigger('mainRegion:preRender', category);

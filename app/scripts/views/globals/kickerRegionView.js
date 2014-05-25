@@ -3,12 +3,14 @@ define([
     'backbone',
     'views/shred/shredDetailKickerView',
     'views/stage/stageShredsKickerView',
+    'views/battle/battleDetailKickerView',
     'hbs!tmpl/globals/kickerRegion'
 ],
 function (
     Backbone,
     ShredDetailKickerView,
     StageShredsKickerView,
+    BattleDetailKickerView,
     Tpl
 ){
 'use strict';
@@ -39,12 +41,11 @@ var KickerRegionView = Backbone.Marionette.Layout.extend({
 
     showShredKicker : function (model) {
         this.wrap.show(new ShredDetailKickerView({model : model}));
-        console.log('will render Shred kicker ' + model.get('user').username);
-
     },
 
-    showBattleKicker : function () {
-        // TODO!!!!! do the same as with showShredKicker
+    showBattleKicked : function (battle) {
+        this.battleKickerView = new BattleDetailKickerView({model : battle});
+        this.wrap.show(this.battleKickerView);
     }
 });
 

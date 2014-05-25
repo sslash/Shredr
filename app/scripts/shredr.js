@@ -50,7 +50,7 @@ define([
 	Shredr.navigate = function (route, opts) {
 
 		// flag saying we are rendering on the client from now on
-		this.cliRender = true;
+		Shredr.cliRender = true;
 		Backbone.history.navigate(route, opts);
 	};
 

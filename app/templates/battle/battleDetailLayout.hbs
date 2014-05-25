@@ -2,7 +2,7 @@
     <div class="row clearfix le-wrap">
         <div class="column half">
             {{#each m.rounds}}
-                <video id="video_0_{{@index}}" style="display:none" data-model="battlerVid" class="battle-vid">
+                <video id="video_0_{{@index}}" style="display:none" data-model="battlerVid" class="shred-vid half">
                     <source src="/video/battle/{{this.0.videoFileId}}" type='video/mp4' />
                 </video>
             {{/each}}
@@ -10,14 +10,14 @@
         <div class="column half">
             {{#each m.rounds}}
                 {{#if this.1.videoFileId}}
-                <video class="battle-vid" style="display:none" id="video_1_{{@index}}" data-model="battleeVid" >
+                <video class="shred-vid half" style="display:none" id="video_1_{{@index}}" data-model="battleeVid" >
                     <source src="/video/battle/{{this.1.videoFileId}}" type='video/mp4' />
                 </video>
                 {{/if}}
             {{/each}}
 
             {{#if onlyOneVid}}
-                <img src="/img/profiles/{{m.battlee.profileImgFile}}" class="battle-vid">
+                <img src="/img/profiles/{{m.battlee.profileImgFile}}" class="battle-vid half">
             {{/if}}
         </div>
 

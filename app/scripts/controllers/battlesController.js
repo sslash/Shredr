@@ -2,14 +2,12 @@
 define([
     'backbone',
     'models/battle',
-    'views/battle/battleDetailKickerView',
     'views/battle/battleDetailLayout',
     'views/battle/preBattleAnimation'
 ],
 function (
     Backbone,
     Battle,
-    BattleDetailKickerView,
     BattleDetailsLayout,
     PreBattleAnimationView
 ){
@@ -25,10 +23,6 @@ var BattlesController = Backbone.Marionette.Controller.extend({
                 Shredr.baseController.renderMainRegion(BattleDetailsLayout, {
                         model : battle, collection : Shredr.collection });
 
-                // TODO! Change this. the main kicker view should listen to Shredr.event and render instead
-                var kickerView = new BattleDetailKickerView({model : battle});
-                Shredr.kickerRegion.show(kickerView);
-
                 // show animation
                 this.showPreBattleAnimation(battle);
                 Shredr.model = battle;
@@ -37,6 +31,7 @@ var BattlesController = Backbone.Marionette.Controller.extend({
     },
 
     showPreBattleAnimation : function (model) {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
         var preBattleView = new PreBattleAnimationView({model : model});
         this.listenToOnce(preBattleView, 'preBattleAnimation:done',
              Shredr.baseController.closeModal.bind(Shredr.baseController, 'hi-opac' ));

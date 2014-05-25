@@ -1,30 +1,30 @@
 /* global define */
 define([
     'backbone',
-    'views/globals/kickerRegionView',
     'views/modals/uploadBattleVideoView',
     'hbs!tmpl/battle/battleDetailKickerView'
 ],
 function (
     Backbone,
-    KickerRegionView,
     UploadBattleVideoView,
     tpl
 ){
 'use strict';
-var BattleDetailKickerView = KickerRegionView.extend({
+var BattleDetailKickerView = Backbone.Marionette.ItemView.extend({
+    template : tpl,
 
     events : {
         'click button' : '__yourTurnClicked'
     },
 
-    onRender : function () {
-        this.ui.kicker.append(tpl(this.serializeData()));
-        this.ui.right.html('<small class="white">Battle - ' + this.model.get('mode') + '</small>');
+    ui : {
+        mid : '[data-mod="mid"]'
+    },
 
-        //if ( this.model.isUsersTurn() ) {
+    onRender : function () {
+    //    if ( this.model.isUsersTurn() ) {
             this.ui.mid.html('<button class="btn btn-ser btn-small">Your turn!</button>');
-        //}
+    //    }
     },
 
     serializeData : function () {
@@ -32,6 +32,7 @@ var BattleDetailKickerView = KickerRegionView.extend({
 
         return {
             m : model,
+            isUsersTurn : true, //this.model.isUsersTurn(),
             roundNo : model.rounds.length
         };
     },

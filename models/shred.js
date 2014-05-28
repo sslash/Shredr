@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
-config = require('../config/config'),
-Schema = mongoose.Schema;
+	Q        = require('q'),
+	config   = require('../config/config'),
+	Schema   = mongoose.Schema;
 
 
 /**
@@ -131,11 +132,16 @@ ShredSchema.statics = {
 	* @param {Function} cb
 	* @api private
 	*/
-	findById: function (id, cb) {
+	findById: function (id) {
+		var deferred = Q.defer();
 		this.findOne({ _id : id })
 		.populate('user')
 		.populate('comments.user')
-		.exec(cb);
+		.exec(function (err, res) {
+			if (err) { deferred.reject(err); }
+			else { deferred.resolve(res); }
+		});
+		return deferred.promise;
 	},
 
 	/**
@@ -145,11 +151,10 @@ ShredSchema.statics = {
 	* @param {Function} cb
 	* @api private
 	*/
-
 	list: function (options, cb) {
+		var deferred = Q.defer();
 		var criteria = options.criteria || {};
 		var populate = options.populate || '';
-		console.log('list: ' + JSON.stringify(options));
 
 		this.find(criteria)
 		.populate(populate)
@@ -157,8 +162,14 @@ ShredSchema.statics = {
 		.limit(options.perPage)
 		.skip(options.perPage * options.page)
 		.exec(function(err, res) {
-			cb(err,res);
+			if ( cb ) { cb(err,res); }
+			else {
+				if ( err ) { deferred.reject(err); }
+				else { deferred.resolve(res); }
+			}
 		});
+
+		return deferred.promise;		
 	},
 
 	getShredsByUserId : function (userId, cb) {

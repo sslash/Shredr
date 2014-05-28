@@ -41,8 +41,11 @@ var path = require('path');
 	app.get('/logout', userController.logout);
 
     // battles
-    app.get('/battle/:id', battleController.get);
+    app.get('/battle/:id', battleController.show);
     app.get('/battle', battleController.list);
+
+    // shreds
+    app.get('/shred/:id', shredsController.show);
 
 
     // ****************** API ************************ //

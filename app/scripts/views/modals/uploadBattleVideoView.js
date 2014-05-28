@@ -5,7 +5,7 @@ define([
 'backbone',
 'views/modals/baseModalLayout',
 'components/uploadComponent',
-'components/videoPlayerComponent',
+'components/battlePlayerComponent',
 'hbs!tmpl/modals/uploadBattleVideoView',
 'autocomplete'
 ],

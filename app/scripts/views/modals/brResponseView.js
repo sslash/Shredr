@@ -3,7 +3,7 @@ define([
 'backbone',
 'views/modals/baseModalLayout',
 'models/battle',
-'components/videoPlayerComponent',
+'components/battlePlayerComponent',
 'hbs!tmpl/modals/brResponseView'
 ],
 function (

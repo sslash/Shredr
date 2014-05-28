@@ -5,7 +5,7 @@ var _              = require('underscore'),
 
 module.exports = BaseController.extend({
 
-    get : function(req, res) {
+    show : function(req, res) {
         battleService.getById(req.params.id)
         .then(battleService.getManyRelated)
         .then(function(result) {

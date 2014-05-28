@@ -8,6 +8,10 @@ define([
                 if ( opts.region ) {
                     this.region = opts.region;
                 }
+
+                if ( opts.model ) {
+                    this.model = opts.model;
+                }
             },
 
             show : function () {

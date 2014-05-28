@@ -57,6 +57,10 @@ $med: 'gotham-htfmedium';
 .txt-center { text-align: center; }
 .txt-right { text-align: right; }
 
+.blue-box {
+    background-color: $brown-light;
+}
+
 // colors;
 .white { color: $white-light !important; }
 .grey-faded { color: $brown-light-light; }

@@ -28,7 +28,7 @@ function (
                 {
                     event : 'shred:fetch',
                     success : function (shred, response, options) {
-                        Shredr.baseController.renderMainRegion(ShredLayout, {model : shred});
+                        Shredr.baseController.renderMainRegion(ShredLayout, {model : shred}, 'shreds');
                         Shredr.model = shred;
                     }
                 }

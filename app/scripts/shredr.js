@@ -56,6 +56,13 @@ define([
 
 	Shredr.addInitializer (function(options) {
 
+		// create youtubeplayer tag
+		var tag = document.createElement('script');
+
+		tag.src = "https://www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 		// Collection is just raw json data until the initial
 		// responsible controller parses it
 		if ( options.collection ) {

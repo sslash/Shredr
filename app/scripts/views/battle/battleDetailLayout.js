@@ -11,7 +11,7 @@
 /* global define */
 define([
     'backbone',
-    'components/videoPlayerComponent',
+    'components/battlePlayerComponent',
     'components/commentComponent',
     'collections/commentsCollection',
     'hbs!tmpl/battle/battleDetailLayout'

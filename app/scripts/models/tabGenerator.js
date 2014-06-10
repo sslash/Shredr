@@ -12,16 +12,17 @@
 
 		this.init = function() {
             this.cursorIdSel = '#tabs-cursor';
+            this.disabled = options.disabled;
             this.tabInput = options.input || this.find(this.cursorIdSel);
 
             if (!this.tabInput){
-                throw "Could not find tab input";
+                throw new Error ('Could not find tab input');
             }
             this.currentRow = 1;
             this.appendRowFn = options.appendRowFn || function () {};
             this.paintedRows = options.paintedRows || 1;
             this.rowGap = options.drawMultiRow || false;
-            this.notes = that.options.notes || $('.notes');
+            this.notes = $('[data-model="note"]');
             this.bendBtn = that.options.bendBtn || $('#bendBtn');
             this.tabs = that.options.tabs || [];
             this.tabsIndex = 0;			/* current Y */
@@ -39,7 +40,7 @@
             this.bendBtn.on('click', $.proxy(that.__bendBtnClicked, that));
             this.on('click', this.__tabsAreaClicked.bind(this));
 
-            if ( !!this.tabs.length ) {
+            if ( this.tabs.length ) {
                 this.waitAndRenderExistingTabs();
             }
 		};
@@ -133,8 +134,8 @@
 
 		this.moveBarDownOrUpwards = function(dir) {
 
-            /* Height between strings. - 2: duno why */
-			var height = Math.floor(this.height() / 6) - 2;
+            /* Height between strings. - 3.9: duno why */
+			var height = this.height() / 6 - 3.9;
 
             if (dir === 'up'){
                 // dont move on edge cases
@@ -288,46 +289,50 @@
   // TODO: change intervall numbers to equal noteLength, and remove noteLength!
 		this.__noteChangeClicked = function(e) {
 			var divId = e.currentTarget.id;
-			switch (true) {
-				case /^semibreve$/.test(divId):
-					this.intervall = 1;
-          this.noteLength = 4;
-					this.note_color = "red";
-					break;
-				case /^minim$/.test(divId):
-					this.intervall = 2;
-          this.noteLength = 2;
-					this.note_color = "blue";
-					break;
-				case /^crotchet$/.test(divId):
-					this.intervall = 4;
-          this.noteLength = 1;
-					this.note_color = "white";
-					break;
-				case /^quaver$/.test(divId):
-					this.intervall = 8;
-          this.noteLength = 0.5;
-					this.note_color = "yellow";
-					break;
-				case /^semiquaver$/.test(divId):
-					this.intervall = 16;
-          this.noteLength = 0.25;
-					this.note_color = "purple";
-					break;
-				case /^demisemiquaver$/.test(divId):
-					this.intervall = 32;
-          this.noteLength = 0.125;
-					this.note_color = "green";
-					break;
-				case /^hemidemisemiquaver$/.test(divId):
-					this.intervall = 64;
-          this.noteLength = 0.0625;
-					this.note_color = "brown";
-					break;
-			}
-			$(this.noteDiv).removeClass("selected");
-			this.noteDiv = "#" + divId;
-			$(this.noteDiv).addClass("selected");
+            $curr = $(e.currentTarget);
+
+            // Set current note icon to selected
+            $curr.parents('ul').find('li.selected').removeClass('selected');
+            $curr.parent().addClass('selected');
+
+            switch (true) {
+            case /^semibreve$/.test(divId):
+                this.intervall = 1;
+                this.noteLength = 4;
+                this.note_color = "red";
+                break;
+            case /^minim$/.test(divId):
+                this.intervall = 2;
+                this.noteLength = 2;
+                this.note_color = "blue";
+                break;
+            case /^crotchet$/.test(divId):
+                this.intervall = 4;
+                this.noteLength = 1;
+                this.note_color = "white";
+                break;
+            case /^quaver$/.test(divId):
+                this.intervall = 8;
+                this.noteLength = 0.5;
+                this.note_color = "yellow";
+                break;
+            case /^semiquaver$/.test(divId):
+                this.intervall = 16;
+                this.noteLength = 0.25;
+                this.note_color = "purple";
+                break;
+            case /^demisemiquaver$/.test(divId):
+                this.intervall = 32;
+                this.noteLength = 0.125;
+                this.note_color = "green";
+                break;
+            case /^hemidemisemiquaver$/.test(divId):
+                this.intervall = 64;
+                this.noteLength = 0.0625;
+                this.note_color = "brown";
+                break;
+            }
+
             this.tabInput.focus();
 		};
 

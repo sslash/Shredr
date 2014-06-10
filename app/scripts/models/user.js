@@ -4,7 +4,7 @@ define([
 ],function ( Backbone){
     'use strict';
     var User = Backbone.Model.extend({
-        urlRoot : 'api/user/',
+        urlRoot : '/api/user/',
 
         create : function (attrs) {
             if ( attrs.password !== attrs.password2 ) {

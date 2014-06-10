@@ -1,14 +1,12 @@
 /* global define */
 define([
 'backbone',
-'views/stage/stageShredsKickerView',
 'views/stage/stageShredsLayout',
 'views/shred/shredLayout',
 'models/shred'
 ],
 function (
     Backbone,
-    StageShredsKickerView,
     StageShredsLayout,
     ShredLayout,
     Shred
@@ -29,11 +27,11 @@ function (
                     event : 'shred:fetch',
                     success : function (shred, response, options) {
                         Shredr.baseController.renderMainRegion(ShredLayout, {model : shred}, 'shreds');
-                        Shredr.model = shred;
-                    }
+                        Shredr.setModel(shred);
+                    },
+                    type : 'model'
                 }
             );
-
         }
     });
 

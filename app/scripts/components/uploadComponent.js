@@ -32,9 +32,9 @@ define([
                             $container.children().remove();
                             $container.removeClass('upload-box');
 
-                            // var vidHtml = '<video class="video-thumb" data-model="upload-vid">' +
-                            // '<source src="' + e.target.result + '"</source></video>';
-                            // $container.append(vidHtml);
+                            var vidHtml = '<video class="video-thumb" data-model="upload-vid" controls>' +
+                            '<source src="' + e.target.result + '"</source></video>';
+                            $container.append(vidHtml);
                             that.trigger('file:changed:thumb:created', e.target.result);
 
                         } else if (file.type.match('audio.*') ) {}
@@ -124,8 +124,6 @@ define([
             },
 
             upload : function (url) {
-                console.log('uploading');
-
                 var formData = new FormData();
                 formData.append('file', this.file );
                 var that = this;

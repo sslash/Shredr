@@ -53,14 +53,19 @@ var BaseController = Backbone.Marionette.Controller.extend({
         } else if (action === 'delete' ) {
             modelOrCollection.sync ('delete', modelOrCollection, conf);
         } else {
-            // only fetch if not client render (changed in renderMainRegion)
+            // only fetch if client render (changed in renderMainRegion)
             if (Shredr.cliRender) {
                 modelOrCollection[action](config);
 
-            // Models lives on the Shredr object
+            // Models lives on the Shredr object, no need to fetch..
             } else {
                 // need to test this...
-                config.success(Shredr.model);  //|| Shredr.collection);
+                if ( options.type === 'model') {
+                    config.success(Shredr.model, {fake : true});
+                }
+                else {
+                    config.success(Shredr.collection, {fake : true})
+                }
             }
         }
     },
@@ -91,9 +96,14 @@ var BaseController = Backbone.Marionette.Controller.extend({
             Shredr.mainRegion.show(new View(opts));
         } else {
             console.log('server render');
-            Shredr.mainRegion.attachView(new View(
+
+            // TODO: need serverRender:ture??
+            var view = new View(
                 _.extend({}, opts, {el : $('[data-region="landing"]'), serverRender : true})
-            ));
+            );
+            Shredr.mainRegion.attachView(view);
+            view.onRender();
+
             Shredr.cliRender = true;
         }
 

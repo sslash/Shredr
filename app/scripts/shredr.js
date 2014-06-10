@@ -7,9 +7,10 @@ define([
 	'controllers/baseController',
 	'controllers/authController',
 	'collections/shredsCollection',
+	'collections/usersCollection',
 	'collections/battlesCollection'
 ], function(Marionette, Router, User, Shred, Battle, BaseController, AuthController,
-			ShredsCollection, BattlesCollection) {
+			ShredsCollection, UsersCollection, BattlesCollection) {
     'use strict';
 
 	var Shredr = new Marionette.Application();
@@ -54,6 +55,27 @@ define([
 		Backbone.history.navigate(route, opts);
 	};
 
+	Shredr.setCollection = function (coll) {
+		Shredr.collection = coll;
+
+		// Change to exec?
+		if ( Shredr.collection.models.length === 0 ) {
+			Shredr.collection.fetch({reset : true});
+		}
+	};
+
+	Shredr.setModel = function (model) {
+		Shredr.model = model;
+	};
+
+	function setModelAndCol(options, Model, Coll) {
+		var model = (options.model && options.model._id) ?
+			new Model(options.model, {parse:true}) : null;
+		this.setModel(model);
+
+		this.setCollection(new Coll(options.collection));
+	};
+
 	Shredr.addInitializer (function(options) {
 
 		// create youtubeplayer tag
@@ -66,12 +88,15 @@ define([
 		// Collection is just raw json data until the initial
 		// responsible controller parses it
 		if ( options.collection ) {
+
 			if ( options.type === 'shreds' ) {
-				this.collection = new ShredsCollection(options.collection);
-				this.model = options.model ? new Shred(options.model) : null;
+				setModelAndCol.call(this, options, Shred, ShredsCollection);
+
 			} else if ( options.type === 'battles' ) {
-				this.collection = new BattlesCollection(options.collection);
-				this.model = options.model ? new Battle(options.model) : null;
+				setModelAndCol.call(this, options, Battle, BattlesCollection);
+
+			} else if (options.type === 'users' ) {
+				setModelAndCol.call(this, options, User, UsersCollection);
 			}
 		}
 
@@ -87,15 +112,6 @@ define([
 		this.baseController = new BaseController();
 		Backbone.history.start({pushState:true});
 	});
-
-	Shredr.setCollection = function (coll) {
-		this.collection = coll;
-
-		// Change to exec?
-		if ( this.collection.models.length === 0 ) {
-			this.collection.fetch({reset : true});
-		}
-	};
 
 	Shredr.start(Shredr.options);
 	return Shredr;

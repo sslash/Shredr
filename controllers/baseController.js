@@ -15,8 +15,9 @@ module.exports = {
             user = user || {notLoggedIn : true};
             var fullBootstrap = {};
             _.extend(fullBootstrap, opts);
+
             // handlebars objects
-            fullBootstrap.things = opts.collBS || [];
+            fullBootstrap.things = opts.things || opts.collBS || [];
             fullBootstrap.m = opts.modelBS || {};
             fullBootstrap.type = opts.type || '';
 

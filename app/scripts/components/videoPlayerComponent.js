@@ -14,6 +14,7 @@ define([
             template : Tpl,
 
             onShow : function () {
+                console.log('hei')
                 this.$('#play-wrap').html(normalTpl(this.model.toJSON()))
             },
 
@@ -22,7 +23,6 @@ define([
             },
 
             __playClicked : function () {
-
             }
 
         });
@@ -37,21 +37,21 @@ define([
             initPlayer : function () {
                 this.player = new YoutubePlayer('player', this.model);
                 this.listenTo(this.player, 'player:ready', this.playerReady);
+                this.listenTo(this.player, 'player:playing', this.playerPlaying);
+                this.player.onYouTubeIframeAPIReady();
+            },
+
+            playerPlaying : function () {
+                this.trigger('player:playing');
             },
 
             playerReady : function () {
-                this.playerIsReady = true;
+                this.trigger('player:ready')
             },
 
             getDuration : function () {
     			return this.playerIsReady ? this.player.getDuration() : null;
     		},
-
-            __playClicked : function () {
-                this.$('img').hide();
-                this.player.onYouTubeIframeAPIReady();
-                this.listenToOnce(this.player, 'player:ready', this.play);
-            },
 
             play : function () {
                 this.player.play();
@@ -69,6 +69,12 @@ define([
                 } else {
                     this.view = new NormalView({model : this.model});
                 }
+
+                this.listenTo(this.view, 'player:playing', this.playerStartedPlaying);
+            },
+
+            playerStartedPlaying : function () {
+                this.model.tryIncreaseView();
             }
         });
     });

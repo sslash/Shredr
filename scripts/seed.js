@@ -39,16 +39,22 @@ for ( var i = 0; i < 100; i++ ) {
 	db.users.save({
 		provider : 'local',
 		username : names[namei],
+		fans : [],
+		fanees : [],
 		startedPlaying : playedsince[startedP],
 		email : namei + '@sapmail.com',
 		profileImgFile : profileimgs[imgi],
 		location : locations[loci],
 		birth : new Date(),
+		battles : [],
+		shreds : [],
 		guitars : tagsarr,
-		description : 'Mandalore skywalker greedo cade grievous jade. Luuke greedo cade moff alderaan darth wicket yavin mace. Gonk yoda darth amidala maul. Jade skywalker c-3po ewok moff. Hutt kit mustafar gamorrean palpatine jango hutt yoda mara. Mace yavin utapau antilles kenobi lobot hutt calrissian padmé'
+		bio : 'Mandalore skywalker greedo cade grievous jade. Luuke greedo cade moff alderaan darth wicket yavin mace. Gonk yoda darth amidala maul. Jade skywalker c-3po ewok moff. Hutt kit mustafar gamorrean palpatine jango hutt yoda mara. Mace yavin utapau antilles kenobi lobot hutt calrissian padmé'
 	});
 }
 
+
+// create shreds
 db.shreds.remove({});
 var users = db.users.find();
 var count = db.users.count();
@@ -72,7 +78,8 @@ for (var i = 0; i < 100; i++) {
 		tags : tagsarr,
 		type : types[typei],
 		comments : [],
-		youtubeUrl : 'http://youtu.be/' + youtubeurls[youtubei],
+		views : {},
+		thumb : 'http://img.youtube.com/vi/' + youtubeurls[youtubei] + '/0.jpg',
 		youtubeId : youtubeurls[youtubei],
 		description : "This Shred is neat. cewl. sweet. ty. gangsta #" + i,
 		title : titles[ti]
@@ -113,9 +120,53 @@ for (var i = 0; i < 100; i++) {
 		});
 }
 
+// update battles
+var battles = db.battles.find();
+var blen = battles.count();
+
+for (var i = 0; i < blen; i++) {
+	var battle = battles[i];
+	db.users.update( {_id : battle.battler}, { $addToSet: { battles: battle._id } } );
+	db.users.update( {_id : battle.battlee}, { $addToSet: { battles: battle._id } } );
+}
+
+// update shreds
+var shreds = db.shreds.find();
+var slen = shreds.count();
+
+for (var i = 0; i < slen; i++) {
+	var shred = shreds[i];
+	db.users.update( {_id : shred.user}, { $addToSet: { shreds: shred._id } } );
+}
+
+// update all users
+var users = db.users.find();
+var ulen = users.count();
+
+for (var i = 0; i < ulen; i++) {
+	var user = users[i];
+	db.users.update( {_id : user._id}, { $set: { fans: [] } } );
+	db.users.update( {_id : user._id}, { $set: { fanees: [] } } );
+}
+
 // tagslist
 db.tagslists.remove({});
 db.tagslists.save({
 	shredTags : ['17 equal temperament', 'Acoustic scale', 'Aeolian mode', 'Algerian scale', 'Altered scale', 'Augmented scale', 'Bebop dominant scale', 'Beta scale', 'Blues scale', 'Bohlen–Pierce scale', 'Chromatic scale', 'Delta scale', 'Dorian mode', 'Double harmonic scale', 'Enigmatic scale', 'Euler–Fokker genus', 'Flamenco mode', 'Gamma scale','"Gypsy" scale', 'Half diminished scale', 'Harmonic major scale', 'Harmonic minor scale','Harmonic Scale', 'Hexany' ],
 	gearTags : ['Gibson Les Pau', 'Fender Stratocaster', 'Fender Telecaster', 'Marshal JCM-2000', 'Mesa Boogie Mark v']
 });
+
+// scales
+var users = db.users.find();
+var count = db.users.count();
+for (var i = 0; i < 1000; i++) {
+	var useri = Math.floor((Math.random()*count));
+
+	db.scales.save({
+		title : 'Aeolian loltrain swag scale ' + '#' + i,
+		description : 'Bacon ipsum dolor sit amet pork chop sirloin tongue shank short loin. Landjaeger biltong frankfurter turkey doner beef tri-tip brisket prosciutto. Tri-tip filet mignon shank, drumstick jerky turducken leberkas chuck meatball ham jowl. Bacon salami kielbasa porchetta',
+		tabs : {},
+		tabsKey : 'C',
+		user : users[useri]._id,
+	});
+}

@@ -6,153 +6,144 @@ define([
 
 	/* Return a model class definition */
 	return Backbone.Model.extend({
-		urlRoot : 'api/shreds/',
+		urlRoot : '/api/shreds/',
 
 		defaults: {
+			title : 'Untitled Shredr Video',
 			"tabs" : {
 				"tempo" : "125",
 				"tabs" : [
-				{
-					// this is the correct data structure
-					"rest" : 4,
-					"stringz" : {
-						"0" : 12,
-						"1" : 14,
-						"2" : 14,
-						"3" : 12,
-						"4" : 14,
-						"5" : 14,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"0" : 12,
-						"1" : 14,
-						"2" : 14
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"0" : 15,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"2" : 11
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"5" : 1,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"4" : 10,
-					}
-				},
-				{
-					// this is the correct data structure
-					"rest" : 4,
-					"stringz" : {
-						"0" : 12,
-						"1" : 14,
-						"2" : 14,
-						"3" : 12,
-						"4" : 14,
-						"5" : 14,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"0" : 12,
-						"1" : 14,
-						"2" : 14
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"0" : 15,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"2" : 11
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"5" : 1,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"4" : 10,
-					}
-				},
-				{
-					// this is the correct data structure
-					"rest" : 4,
-					"stringz" : {
-						"0" : 12,
-						"1" : 14,
-						"2" : 14,
-						"3" : 12,
-						"4" : 14,
-						"5" : 14,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"0" : 12,
-						"1" : 14,
-						"2" : 14
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"0" : 15,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"2" : 11
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"5" : 1,
-					}
-				},
-				{
-					"rest" : 4,
-					"stringz" : {
-						"4" : 10,
-					}
-				}
-
-				// this is not
+				// {
+				// 	// this is the correct data structure
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"0" : 9,
+				// 		"1" : 14,
+				// 		"2" : 14,
+				// 		"3" : 12,
+				// 		"4" : 14,
+				// 		"5" : 14,
+				// 	}
+				// },
 				// {
 				// 	"rest" : 4,
-				// 	"stringz" : [
-				// 		{
-				// 			"2" : 2
-				// 		}
-				// 	]
+				// 	"stringz" : {
+				// 		"0" : 12,
+				// 		"1" : 14,
+				// 		"2" : 14
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"0" : 15,
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"2" : 11
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"5" : 1,
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"4" : 10,
+				// 	}
+				// },
+				// {
+				// 	// this is the correct data structure
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"0" : 12,
+				// 		"1" : 14,
+				// 		"2" : 14,
+				// 		"3" : 12,
+				// 		"4" : 14,
+				// 		"5" : 14,
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"0" : 12,
+				// 		"1" : 14,
+				// 		"2" : 14
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"0" : 15,
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"2" : 11
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"5" : 1,
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"4" : 10,
+				// 	}
+				// },
+				// {
+				// 	// this is the correct data structure
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"0" : 12,
+				// 		"1" : 14,
+				// 		"2" : 14,
+				// 		"3" : 12,
+				// 		"4" : 14,
+				// 		"5" : 14,
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"0" : 12,
+				// 		"1" : 14,
+				// 		"2" : 14
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"0" : 15,
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"2" : 11
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"5" : 1,
+				// 	}
+				// },
+				// {
+				// 	"rest" : 4,
+				// 	"stringz" : {
+				// 		"4" : 10,
+				// 	}
 				// }
 				],
 			},
@@ -166,10 +157,12 @@ define([
 		parse : function(response, options) {
 
 			// This only works in EcmaScript 5 ++
-			if ( Object.keys(response.rating).length === 0) {
-				response.rateValue = 0;
-			} else {
-				response.rateValue = this.setRateValue(response.rating);
+			if ( response.rating ) {
+				if ( Object.keys(response.rating).length === 0) {
+					response.rateValue = 0;
+				} else {
+					response.rateValue = this.setRateValue(response.rating);
+				}
 			}
 
 			//
@@ -197,6 +190,11 @@ define([
 			return rateVal;
 		},
 
+		getNumberOfViewers : function (views) {
+			views = views || this.get('views') || {};
+			return Object.keys(views).length;
+		},
+
 		validate : function (attrs) {
 			if ( !attrs.title || attrs.title.length === 0 ){
 				return 'Title must be included';
@@ -206,8 +204,16 @@ define([
 			}
 		},
 
+		getUserId : function () {
+			return this.get('user')._id || this.get('user').id;
+		},
+
+
+		/** API FUNCTIONS **/
+
+
 		rate : function(rateVal) {
-			var url = this.url() + '/rate?rating=' + rateVal;
+			var url = '/' + this.url() + '/rate?rating=' + rateVal;
 			var that = this;
 			$.post(url)
 			.done(function(res) {
@@ -216,6 +222,15 @@ define([
 				that.set({rating : res.rating});
 			})
 			.fail(function(err) {console.log('fail');});
+		},
+
+		tryIncreaseView : function () {
+			var url = '/' + this.url() + '/hej_jeg_kigger';
+			var that = this;
+			$.post(url)
+			.done(function(res) {
+				that.set({views : res.views})
+			});
 		},
 
 		addComment : function(comment) {
@@ -234,8 +249,10 @@ define([
 			}
 		},
 
-		getUserId : function () {
-			return this.get('user')._id || this.get('user').id;
+		getRating : function () {
+			var rating = this.get('rating');
+			var raters = rating.raters || {}
+			return (rating.rating / Object.keys(raters).length) || 0;
 		}
 	});
 });

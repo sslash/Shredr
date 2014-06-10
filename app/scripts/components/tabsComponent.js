@@ -10,6 +10,11 @@ function( Backbone, Component, Tmpl ) {
     var TabsView = Backbone.Marionette.Layout.extend({
         className : 'sr-region-inner',
 
+		initialize : function (opts) {
+			this.rows = opts.rows;
+			this.disabled = opts.disabled;
+		},
+
         template: Tmpl,
 
         events : {
@@ -24,9 +29,13 @@ function( Backbone, Component, Tmpl ) {
                 notes : this.$('[data-model="note"]'),
                 input : this.$('#tabs-cursor'),
                 drawMultiRow : 20, // 25 px margin
-                paintedRows : 4,
+                paintedRows : this.rows,
                 appendRowFn : this.appendRowFn.bind(this)
             });
+
+			if (this.disabled) {
+				this.$('#tabs-cursor').hide();
+			}
         },
 
         appendRowFn : function () {
@@ -56,8 +65,15 @@ function( Backbone, Component, Tmpl ) {
 	return Component.extend({
         initialize : function (opts) {
             Component.prototype.initialize.call(this, opts);
-            this.view = new TabsView({ model : this.model });
-        }
+            this.view = new TabsView({
+				model : this.model,
+				rows : opts.rows || 4,
+				disabled : opts.disabled
+			});
+        },
+
+		playTabs : function () { this.view.playTabs(); },
+		getTabs : function () { this.view.getTabs(); }
 	});
 
 });

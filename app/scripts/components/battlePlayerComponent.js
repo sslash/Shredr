@@ -1,3 +1,41 @@
+// http://flippinawesome.org/2014/05/20/frame-by-frame-animation-with-html-and-javascript/?utm_source=html5weekly&utm_medium=email
+// TODO: use the timing algorithm described above ^^ -->
+/*
+var redbox = document.getElementById("redbox-06");
+var startBtn = document.getElementById("redbox-btn-06");
+var input = document.getElementById("redbox-input-02");
+
+var startTime, duration;
+var rect = redbox.getBoundingClientRect();
+var startX = 0, endX = 520 - rect.width * 2;
+
+var setX = function(element, x) {
+    var t = "translateX(" + x + "px)";
+    var s = element.style;
+    s["transform"] = t;
+    s["webkitTransform"] = t;
+    s["mozTransform"] = t;
+    s["msTransform"] = t;
+}
+
+var run = function() {
+    var time = (new Date().getTime() - startTime) / duration;
+    if(time < 1) {
+        requestAnimationFrame(run);
+        setX(redbox, startX + (endX - startX) * time);
+    } else {
+        setX(redbox, endX);
+    }
+}
+
+var start = function() {
+    duration = input.value;
+    startTime = new Date().getTime();
+    run();
+}
+*/
+
+
 // takes a list of videofile objects and an audio file
 // listens to play and stop events
 // on play, it will play the audio file, and the video files

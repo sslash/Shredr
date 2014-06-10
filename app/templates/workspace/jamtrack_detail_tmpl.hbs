@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-sm-6">
+        <section data-event="play" style="background-image:url(img/banners/jamtrack_play.jpg); background-size:cover; height:350px;">
+            <div class="center-pos pointer banner">
+                <span class="banner-txt vert-align-top">
+                <i class="fa fa-play-circle-o fa-3x"></i>
+                </span>
+            </div>
+        </section>
+    </div>
+    <div class="col-sm-6">
+        <header class="border-btm"><h2>{{jamtrack.title}}</h2></header>
+        <div class="xsmall-gap"></div>
+        <div class="style-tags space">
+            {{#each jamtrack.tags}}
+                <span class="font-xsmall tags">{{this}}</span>
+            {{/each}}
+        </div>
+
+        <div class="small-gap"></div>
+
+        <p>{{jamtrack.description}}</p>
+
+        <div class="xsmall-gap"></div>
+        <audio controls style="display:none; width:100%; border-radius: 12px;
+background: rgba(255, 255, 255, 0.64);">
+            Your browser does not support the <code>audio</code> element. You should download a newer browser in order to use Shredr.
+            <source src="{{jamtrack.fullFilePath}}" type="audio/wav">
+        </audio>
+
+        <div class="xsmall-gap"></div>
+
+        <h5>Shreds using this track</h5>
+        {{#each jamtrack.relatedShreds}}
+        <ul class="thmb-list">
+            <li><video class="video-thmb-small" src="video/{{this.fileId}}"></video></li>
+        </ul>
+        {{/each}}
+
+        <div class="row">
+            <div class="col-sm-4">
+                <img class="profile-icon" src="{{jamtrack.user.profileImgFile}}">
+            </div>
+            <div class="col-sm-8">
+                <small>By: <h5>{{jamtrack.user.username}}</h5></small>
+            </div>
+        </div>
+    </div>
+</div>

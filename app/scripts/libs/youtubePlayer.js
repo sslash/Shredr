@@ -38,8 +38,7 @@ define([
                     'onStateChange': this.onPlayerStateChange.bind(this)
                 }
             });
-        }catch(e) {
-            console.log('error ' + e);
+        } catch(e) {
             if ( ++trycount < 20 ) {
                 setTimeout(this.onYouTubeIframeAPIReady.bind(this), 100);
             }
@@ -61,7 +60,8 @@ define([
     Player.prototype.onPlayerStateChange = function(event) {
         var that = this;
         if (event.data == YT.PlayerState.PLAYING && !this.done) {
-            that.done = true;
+            this.trigger('player:playing');
+            this.done = true;
         }
     };
 

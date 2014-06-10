@@ -1,0 +1,198 @@
+<!-- <section>
+<p>
+<select id="waveType" style="color:black;">
+    <option>sine</option>
+    <option>square</option>
+    <option>sawtooth</option>
+    <option>triangle</option>
+</select>
+Note: <input type="text" id="note" size="3" style="color:black; display:inline-block; width:50px;">
+Length:
+<select id="noteLength" style="color:black;">
+    <option value="4">whole</option>
+    <option value="2">half</option>
+    <option value="1">quarter</option>
+    <option value="0.5">eighth</option>
+    <option value="0.25">sixteenth</option>
+</select>
+BPM: <input type="text" id="bpm" size="3" value="120" style="color:black; display:inline-block; width:50px;">
+<button id="playAll">Play All</button>
+</p>
+<table border="1" id="tblNotes" style="color:#fff;">
+    <thead>
+        <tr>
+            <td>Note</td>
+            <td>Length</td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+</section>
+-->
+
+
+<!-- <div class="arrow_box bottom-side"></div> -->
+<section class="keyboard">
+    <svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="450px" height="50px" viewBox="-16 0 1240 120" style="display:block;">
+
+  <defs>
+    <rect id="key-white" x="0" y="0" width="20" height="120" rx="3" ry="3" stroke="black" />
+    <rect id="key-black" x="0" y="0" width="14" height="80" rx="3" ry="3" stroke="black" />
+  </defs>
+
+  <g id="keyboard"s>
+    <g id="ivory" fill="white">
+      <use id="C0" xlink:href="#key-white" x="0" />
+      <use id="D0" xlink:href="#key-white" x="20"/>
+      <use id="E0" xlink:href="#key-white" x="40"/>
+      <use id="F0" xlink:href="#key-white" x="60"/>
+      <use id="G0" xlink:href="#key-white" x="80"/>
+      <use id="A0" xlink:href="#key-white" x="100"/>
+      <use id="B0" xlink:href="#key-white" x="120"/>
+
+      <use id="C1" xlink:href="#key-white" x="140" />
+      <use id="D1" xlink:href="#key-white" x="160"/>
+      <use id="E1" xlink:href="#key-white" x="180"/>
+      <use id="F1" xlink:href="#key-white" x="200"/>
+      <use id="G1" xlink:href="#key-white" x="220"/>
+      <use id="A1" xlink:href="#key-white" x="240"/>
+      <use id="B1" xlink:href="#key-white" x="260"/>
+
+      <use id="C2" xlink:href="#key-white" x="280" />
+      <use id="D2" xlink:href="#key-white" x="300"/>
+      <use id="E2" xlink:href="#key-white" x="320"/>
+      <use id="F2" xlink:href="#key-white" x="340"/>
+      <use id="G2" xlink:href="#key-white" x="360"/>
+      <use id="A2" xlink:href="#key-white" x="380"/>
+      <use id="B2" xlink:href="#key-white" x="400"/>
+
+      <use id="C3" xlink:href="#key-white" x="420" />
+      <use id="D3" xlink:href="#key-white" x="440"/>
+      <use id="E3" xlink:href="#key-white" x="460"/>
+      <use id="F3" xlink:href="#key-white" x="480"/>
+      <use id="G3" xlink:href="#key-white" x="500"/>
+      <use id="A3" xlink:href="#key-white" x="520"/>
+      <use id="B3" xlink:href="#key-white" x="540"/>
+
+      <use id="C4" xlink:href="#key-white" x="560" />
+      <use id="D4" xlink:href="#key-white" x="580"/>
+      <use id="E4" xlink:href="#key-white" x="600"/>
+      <use id="F4" xlink:href="#key-white" x="620"/>
+      <use id="G4" xlink:href="#key-white" x="640"/>
+      <use id="A4" xlink:href="#key-white" x="660"/>
+      <use id="B4" xlink:href="#key-white" x="680"/>
+
+      <use id="C5" xlink:href="#key-white" x="700" />
+      <use id="D5" xlink:href="#key-white" x="720"/>
+      <use id="E5" xlink:href="#key-white" x="740"/>
+      <use id="F5" xlink:href="#key-white" x="760"/>
+      <use id="G5" xlink:href="#key-white" x="780"/>
+      <use id="A5" xlink:href="#key-white" x="800"/>
+      <use id="B5" xlink:href="#key-white" x="820"/>
+
+      <use id="C6" xlink:href="#key-white" x="840" />
+      <use id="D6" xlink:href="#key-white" x="860"/>
+      <use id="E6" xlink:href="#key-white" x="880"/>
+      <use id="F6" xlink:href="#key-white" x="900"/>
+      <use id="G6" xlink:href="#key-white" x="920"/>
+      <use id="A6" xlink:href="#key-white" x="940"/>
+      <use id="B6" xlink:href="#key-white" x="960"/>
+
+      <use id="C7" xlink:href="#key-white" x="980" />
+      <use id="D7" xlink:href="#key-white" x="1000"/>
+      <use id="E7" xlink:href="#key-white" x="1020"/>
+      <use id="F7" xlink:href="#key-white" x="1040"/>
+      <use id="G7" xlink:href="#key-white" x="1060"/>
+      <use id="A7" xlink:href="#key-white" x="1080"/>
+      <use id="B7" xlink:href="#key-white" x="1100"/>
+    </g>
+
+    <g id="ebony" fill="black">
+      <use id="Db0" xlink:href="#key-black" x="13"/>
+      <use id="Eb0" xlink:href="#key-black" x="33"/>
+      <use id="Gb0" xlink:href="#key-black" x="73"/>
+      <use id="Ab0" xlink:href="#key-black" x="93"/>
+      <use id="Bb0" xlink:href="#key-black" x="113"/>
+
+      <use id="Db1" xlink:href="#key-black" x="153"/>
+      <use id="Eb1" xlink:href="#key-black" x="173"/>
+      <use id="Gb1" xlink:href="#key-black" x="213"/>
+      <use id="Ab1" xlink:href="#key-black" x="233"/>
+      <use id="Bb1" xlink:href="#key-black" x="253"/>
+
+      <use id="Db2" xlink:href="#key-black" x="293"/>
+      <use id="Eb2" xlink:href="#key-black" x="313"/>
+      <use id="Gb2" xlink:href="#key-black" x="353"/>
+      <use id="Ab2" xlink:href="#key-black" x="373"/>
+      <use id="Bb2" xlink:href="#key-black" x="393"/>
+
+      <use id="Db3" xlink:href="#key-black" x="433"/>
+      <use id="Eb3" xlink:href="#key-black" x="453"/>
+      <use id="Gb3" xlink:href="#key-black" x="493"/>
+      <use id="Ab3" xlink:href="#key-black" x="513"/>
+      <use id="Bb3" xlink:href="#key-black" x="533"/>
+
+      <use id="Db4" xlink:href="#key-black" x="573"/>
+      <use id="Eb4" xlink:href="#key-black" x="593"/>
+      <use id="Gb4" xlink:href="#key-black" x="633"/>
+      <use id="Ab4" xlink:href="#key-black" x="653"/>
+      <use id="Bb4" xlink:href="#key-black" x="673"/>
+
+      <use id="Db5" xlink:href="#key-black" x="713"/>
+      <use id="Eb5" xlink:href="#key-black" x="733"/>
+      <use id="Gb5" xlink:href="#key-black" x="773"/>
+      <use id="Ab5" xlink:href="#key-black" x="793"/>
+      <use id="Bb5" xlink:href="#key-black" x="813"/>
+
+      <use id="Db6" xlink:href="#key-black" x="853"/>
+      <use id="Eb6" xlink:href="#key-black" x="873"/>
+      <use id="Gb6" xlink:href="#key-black" x="913"/>
+      <use id="Ab6" xlink:href="#key-black" x="933"/>
+      <use id="Bb6" xlink:href="#key-black" x="953"/>
+
+      <use id="Db7" xlink:href="#key-black" x="993"/>
+      <use id="Eb7" xlink:href="#key-black" x="1013"/>
+      <use id="Gb7" xlink:href="#key-black" x="1053"/>
+      <use id="Ab7" xlink:href="#key-black" x="1073"/>
+      <use id="Bb7" xlink:href="#key-black" x="1093"/>
+    </g>
+  </g>
+</svg></section>
+<section class="left-side-nav">
+    <ul class="nav">
+
+
+        <li><button class="nav-btn" data-event="keyboard-clicked">Keyboard</button></li>
+        <li class="note"><p data-model="note" id="semibreve">o</p></li>
+        <li class="note"><p data-model="note" id="minim">d</p></li>
+        <li class="note"><p data-model="note" class="selected" id="crotchet">&#9833;</p></li>
+        <li class="note"><p data-model="note" id="quaver">&#9834;</p></li>
+        <li class="note"><p data-model="note" id="semiquaver">&#9836;</p></li>
+        <li class="note"><p data-model="note" id="demisemiquaver">&#9836;&#9836;</p></li>
+        <li class="note"><p data-model="note" id="hemidemisemiquaver">&#9836;&#9836;&#9836;</p></li>
+    </ul>
+</section>
+
+
+<div class="content-wrap bottom-side">
+    <section class="tabsArea">
+        <div class="rows">
+            <div class="tabs-row">
+                <img src="img/tabs.png" class="tabs-img" style="width:100%;">
+            </div>
+            <div class="tabs-row">
+                <img src="img/tabs.png" class="tabs-img" style="width:100%;">
+            </div>
+            <div class="tabs-row">
+                <img src="img/tabs.png" class="tabs-img" style="width:100%;">
+            </div>
+            <div class="tabs-row">
+                <img src="img/tabs.png" class="tabs-img" style="width:100%;">
+            </div>
+        </div>
+        
+        <input type="text" id="tabs-cursor" class="tabs-cursor" maxlength="2" autocomplete="off"></input>
+    </section>
+</div>

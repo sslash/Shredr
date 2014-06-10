@@ -1,0 +1,25 @@
+<div class="sr-box clear-marg">
+	<div class="row clear-marg">
+		<div class="col-sm-6">
+			<div class="pull-right"><button class="btn" data-event="add">Add Jamtrack</button></div>
+			<ul class="nice-rows">
+				{{#each collection}}
+				<li class="row pointer" data-event="row-sel" data-index="{{@index}}">
+					<div class="right">
+						<img class="profile-icon" src="{{this.user.profileImgFile}}">
+					</div>
+					<h5 class="lead clear-marg">{{title}}</h5>
+					<p class="font-xsmall">{{#each tags}}<span class="tags">{{this}}</span>{{/each}} <span class="small-things">Created at: {{dateString}}</span></p>
+				</li>
+				{{/each}}
+			</ul>
+		</div>
+		<div class="col-sm-6 up-video right-nice-table">
+		<section data-region="editable"></section>
+		</div>
+	</div>
+</div>
+
+
+
+http://dribbble.com/shots/1246772-Learning-flow?list=show&tag=list

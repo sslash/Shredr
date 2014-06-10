@@ -18,16 +18,16 @@ var userPlugin  = require('mongoose-user');
      email: { type: String, default: '' },
      username: { type: String, default: '' },
      location: { type: String, default: '' },
-     birthdate: {type : Date},
+     birth: {type : Date},
      guitars : {type: []},
      startedPlaying : {type: String, default: ''},
      musicDna : {type: []},
      fanees: [{
-         user: { type : Schema.ObjectId, ref : 'User' },
+         user: { type : Schema.Types.ObjectId, ref : 'User' },
          createdAt: { type : Date, default : Date.now }
      }],
      fans: [{
-         user: { type : Schema.ObjectId, ref : 'User' },
+         user: { type : Schema.Types.ObjectId, ref : 'User' },
          createdAt: { type : Date, default : Date.now }
      }],
 
@@ -37,7 +37,10 @@ var userPlugin  = require('mongoose-user');
      provider: { type: String, default: '' },
      hashed_password: { type: String, default: '' },
      salt: { type: String, default: '' },
-     shreds: {type: []},
+
+     shreds: [{ type: Schema.Types.ObjectId, ref : 'Shred' }],
+     battles: [{ type: Schema.Types.ObjectId, ref : 'Battle' }],
+
      authToken: { type: String, default: '' }
  });
 
@@ -222,15 +225,35 @@ updatePass: function (cb) {
 
 
 UserSchema.statics = {
-  load : function (id, cb) {
-    this.findOne({ _id : id })
-      .exec(function(err,res) {
-        Shred.getShredsByUserId (id, function(err, shreds) {
-          res.shreds = shreds;
-          cb(err, res);
+
+    /**
+    * TODO: load should be a function to get a
+    * populated model, like list
+    */
+    load : function (id) {
+        var def = Q.defer();
+
+        this.findOne({ _id : id })
+        .populate('fanees.user')
+        .populate('fans.user')
+        .populate('battles')
+        .populate('shreds')
+        .exec(function(err,res) {
+            if (err ) { def.reject(err); }
+            else { def.resolve(res); }
         });
-      })
-  },
+
+        return def.promise;
+    },
+  // load : function (id, cb) {
+  //   this.findOne({ _id : id })
+  //     .exec(function(err,res) {
+  //       Shred.getShredsByUserId (id, function(err, shreds) {
+  //         res.shreds = shreds;
+  //         cb(err, res);
+  //       });
+  //     })
+  // },
 
   loadSimple : function(id) {
     var deferred = Q.defer();

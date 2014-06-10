@@ -1,0 +1,40 @@
+<form class="form-flat">
+    <header><h5>Upload a new jamtrack</h5></header>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <input type="text" placeholder="Title" id="title">
+        </div>
+        <div class="col-sm-4">
+            <label for="title" class="font-small"><em>The title for this Jamtrack</em></label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <textarea placeholder="Description" class="short" id="description"></textarea>
+        </div>
+        <div class="col-sm-4">
+            <label for="description" class="font-small"><em>Add a short text describing the jamtrack</em></label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="tags-area col-sm-8">
+            <div class="style-tags space" data-region="tags"></div>
+            <input type="text" placeholder="Tags" data-event="tags-input" id="tags">
+        </div>
+        <div class="col-sm-4">
+            <label class="font-small"><em>Add tags for that describes the jamtrack. For example Indie-rock, C-dominant, A-minor</em></label>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <section data-region="upload"></section>
+    </div>
+    <div class="right">
+        <button data-event="done-btn" class="btn">Done</button>
+        <a href="#" data-event="cancel-btn">Cancel</a>
+    </div>
+</form>

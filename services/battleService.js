@@ -119,6 +119,10 @@ module.exports = {
         return deferred.promise;
     },
 
+    getBattlesByUser : function (user) {
+        return Battle.findMany(user.battles);
+    },
+
     postVote : function (userId, battleId, battlerOrBattlee) {
         var deferred = Q.defer();
 

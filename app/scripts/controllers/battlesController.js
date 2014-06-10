@@ -25,7 +25,7 @@ var BattlesController = Backbone.Marionette.Controller.extend({
 
                 // show animation
                 this.showPreBattleAnimation(battle);
-                Shredr.model = battle;
+                Shredr.setModel(battle);
             }.bind(this)
         });
     },

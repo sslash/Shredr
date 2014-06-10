@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <header class="txt-center mvxl">
+            <div class="row clearfix">
+                <div class="column nine-ten">
+                    <h2 class="white" contenteditable="true">{{m.title}}</h2>
+                    <p class="lead white">By: {{user.username}}</p>
+                </div>
+                <div class="column ten">
+                    <button class="btn btn-niz" data-event="save-tabs-btn">Save</button>
+                </div>
+            </header>
+
+            <div class="row clearfix">
+                <div class="column ten">
+                    <section class="left side-nav">
+                        <ul class="no-style">
+                            <!-- <li><button class="nav-btn" data-event="keyboard-clicked">Keyboard</button></li> -->
+                            <li><p class="white" data-model="note" id="semibreve">o</p></li>
+                            <li><p class="white" data-model="note" id="minim">d</p></li>
+                            <li class="selected"><p class="white" data-model="note" id="crotchet">&#9833;</p></li>
+                            <li><p class="white" data-model="note" id="quaver">&#9834;</p></li>
+                            <li><p class="white" data-model="note" id="semiquaver">&#9836;</p></li>
+                            <li><p class="white" data-model="note" id="demisemiquaver">&#9836;&#9836;</p></li>
+                            <li><p class="white" data-model="note" id="hemidemisemiquaver">&#9836;&#9836;&#9836;</p></li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="column nine-ten">
+                    <section data-reg="tabs" class="row"></section>
+                </div>
+            </div>
+        </div>
+        <section class="row mtl">
+            <button class="btn btn-small" data-evt="play">Play <i class="ion-ios7-play"></i></button>
+        </section>
+    </div>
+</div>

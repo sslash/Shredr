@@ -1,10 +1,14 @@
+// TODO: avoid doing render on basecontroller.exec.success
+
 /* global define */
 define([
     'backbone',
     'components/videoPlayerComponent',
     'components/commentComponent',
     'components/tabsComponent',
+    'components/rateComponent',
     'collections/commentsCollection',
+    'collections/shredsCollection',
     'hbs!tmpl/shred/shredLayout'
 ],
 function (
@@ -12,7 +16,9 @@ function (
     PlayerComponent,
     CommentComponent,
     TabsComponent,
+    RateComponent,
     CommentCollection,
+    ShredsCollection,
     Tpl
 ){
 'use strict';
@@ -20,17 +26,38 @@ var ShredLayout = Backbone.Marionette.Layout.extend({
     template : Tpl,
 
     initialize : function () {
-        this.onRender();
+
+        Shredr.baseController.exec( new ShredsCollection(), 'fetch',
+            {
+                event : 'shreds:fetch',
+                success : function (shreds, response, options) {
+                    Shredr.setCollection(shreds);
+                    this.collection = shreds;
+
+                    if ( !response.fake ) { this.render(); }
+                }.bind(this),
+                type : 'collection'
+            }
+        );
+    },
+
+    events : {
+        'click [data-evt="thmb-click"]' : '__playClicked'
     },
 
     onRender : function () {
         this.renderComments();
         this.renderTabs();
         this.renderPlayer();
+        this.renderRating();
     },
 
     serializeData : function () {
-        return { m : this.model.toJSON() }
+        var data = {m : this.model.toJSON()};
+        if ( this.collection ) {
+            data.things = _.first(this.collection.toJSON(), 3)
+        }
+        return data;
     },
 
     renderPlayer : function () {
@@ -47,20 +74,32 @@ var ShredLayout = Backbone.Marionette.Layout.extend({
             region : new Backbone.Marionette.Region({
                 el : this.$('[data-reg="comments"]'),
             }),
-            type : 'shred',
+            type : 'shreds',
             _id : this.model.get('_id'),
             collection : new CommentCollection(this.model.get('comments'))
         }).show();
     },
 
+    renderRating : function () {
+        this.rateComponent = new RateComponent({
+            region : new Backbone.Marionette.Region({
+                el : this.$('[data-reg="rate"]'),
+            }),
+            model : this.model
+        }).show();
+    },
+
     renderTabs : function () {
-        // data-reg="tabs"
         this.tabsComponent = new TabsComponent({
             model : this.model,
             region : new Backbone.Marionette.Region({el : this.$('[data-reg="tabs"]')})
         }).show();
-        //this.renderKeyboard();
-    }
+    },
+
+    __playClicked : function (e) {
+        var id = $(e.currentTarget).attr('data-model');
+        Shredr.navigate('/#shred/' + id, {trigger : true});
+    },
 
 });
 
@@ -70,8 +109,8 @@ return ShredLayout;
 
 define([
     'backbone',
-    'hbs!tmpl/shredroom/tabs_tmpl',
-    'views/shredroom/tabs'
+    'hbs!tmpl/workspace/tabs_tmpl',
+    'views/workspace/tabs'
     ],
     function( Backbone, TabsTmpl, TabsEditor ) {
         'use strict';

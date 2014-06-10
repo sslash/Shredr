@@ -3,11 +3,10 @@
 */
 var mongoose   = require('mongoose'),
 Shred          = mongoose.model('Shred'),
-userService    = require('../services/userService'),
 shredService   = require('../services/shredService'),
-TagsList       = mongoose.model('TagsList'),
 Jamtrack       = mongoose.model('Jamtrack'),
 _              = require('underscore'),
+utils          = require('../libs/utils'),
 client         = require('../libs/responseClient'),
 fileHandler    = require('../libs/fileHandler'),
 path           = require('path'),
@@ -40,20 +39,22 @@ module.exports = BaseController.extend({
     //     });
     // };
 
+    /** RENDERS **/
+
     show : function (req, res) {
         shredService.getById(req.params.id)
         .then(shredService.getManyRelated)
         .then(function(result) {
             module.exports.render(req, res, _.extend(result, {
                 type : 'shreds',
+                things : _.first(result.collBS, 3),
                 tpl : 'shred/shredLayout'
             }));
+        })
+        .fail(function(err) {
+            console.log('failed: '  +err);
+            return null;
         });
-    },
-
-    get : function(req, res) {
-        shredService.getById(req.params.id)
-        .then(client.send.bind(null, res, null));
     },
 
     showStageView : function (req, res) {
@@ -71,6 +72,39 @@ module.exports = BaseController.extend({
         .fail(function(err) {
             console.log('err: ' + err);
         })
+    },
+
+
+    /** API ENDPOINTS **/
+
+    get : function(req, res) {
+        shredService.getById(req.params.id)
+        .then(client.send.bind(null, res, null));
+    },
+
+
+    rate : function(req, res) {
+        var userId = utils.getUserId(req),
+        rate = req.query.rating, shredId = req.params.id;
+
+        if ( !rate ) { return client.error(res, {'error' : 'Rating not included'}); }
+
+        shredService.rate(userId, shredId, rate)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res));
+    },
+
+    tryIncreaseView : function (req, res) {
+        var userId = utils.getUserOrIp(req),
+            shredId = req.params.id;
+        shredService.tryIncreaseView(userId, shredId)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res));
+    },
+
+    comment : function(req, res) {
+        var comment = req.body.body;
+        if (!comment) {return client.error(res, {'error' : 'Comment text not included' })}
+        shredService.comment(req.user, req.params.id, comment)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res));
     },
 
     /**
@@ -103,51 +137,18 @@ module.exports = BaseController.extend({
     * Create a Shred
     */
     create : function (req, res) {
-        var shred = new Shred(req.body);
-        shred.user = req.user;
-
-        // try and add new tags
-        TagsList.appendTags({
-            shredTags : req.body.shredTags,
-            gearTags : req.body.gearTags
-        });
-
-        shred.create(function (err, doc) {
-            if (err) { client.error(res, err, 400); }
-            else {
-
-                // if jamtrack reference, save reference to this in the jamtrack too
-                if ( req.body.jamtrackTag && req.body.jamtrackTag.length > 0 ) {
-
-                    Jamtrack.findByTitle(req.body.jamtrackTag, function (err, jamtrack) {
-                        if (err) { client.error(res, 'Jamtrack was not found', 400); }
-                        else {
-                            jamtrack.relatedShreds.push(doc);
-
-                            // care if this fails.
-                            jamtrack.save();
-                        }
-                    });
-                }
-
-                client.send(res, null, doc);
-            }
+        shredService.create(req.body, req.user)
+        .then(client.send.bind(null, res, null))
+        .fail(function(err) {
+            console.log('error! ' + err);
         });
     },
 
     upload : function (req, res ) {
-        fileHandler.storeVideoFile(req)
-        .then(function(result) {
-            Shred.findById(req.params.id, function (err, shred) {
-                if (err) { client.error(res, 'Shred not found', 400); }
-                else {
-                    shred.fileId = result.file.name;
-                    shred.save(client.send.bind(null, res));
-                }
-            });
-        })
-        .fail(function(err){
-            client.error(res, err);
+        shredService.upload(req)
+        .then(client.send.bind(null, res, null))
+        .fail(function(err) {
+            console.log('error! ' + err);
         });
     },
 
@@ -198,39 +199,5 @@ module.exports = BaseController.extend({
         if ( q.page ) { opts.page = q.query.page };
         if ( q.type ) { opts.criteria.type = q.type };
         return query.query(Shred, opts, res);
-    },
-
-    rate : function(req, res) {
-        var rate = req.query.rating;
-        if (!rate) {return res.json ({'error' : 'Rating not included'}, 500);}
-        rate = parseInt(rate, 10);
-
-        var user = req.user;
-        if (!user) {return res.json ({'error' : 'User no logged in'}, 500);}
-
-        var shredid = req.params.id;
-
-        Shred.findById(shredid, function(err, shred) {
-            if ( err ) {return res.json({}, 500);}
-            if (!shred) { return res.json({error : 'shred with id ' + shredid + ' not found'}, 500); }
-            shred.rate(user, rate, function(err, shred) {
-                return res.json(shred);
-            });
-        });
-    },
-
-    comment : function(req, res) {
-        var comment = req.body.comment;
-        if (!comment) {return res.json ({'error' : 'Comment not included'}, 500);}
-        var user = req.user;
-        var shredid = req.params.id;
-
-        Shred.findById(shredid, function(err, shred) {
-            if ( err ) {return res.json({}, 500);}
-            if (!shred) { return res.json({error : 'shred with id ' + shredid + ' not found'}, 500); }
-            shred.addComment(user, comment, function(err, shred) {
-                return res.json(shred);
-            });
-        });
     }
 });

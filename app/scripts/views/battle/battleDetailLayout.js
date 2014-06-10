@@ -35,9 +35,6 @@ var BattleDetailLayout = Backbone.Marionette.Layout.extend({
     },
 
     initialize : function (opts) {
-        if ( opts.serverRender ) {
-            this.onRender();
-        }
         this.listenTo(this.model, 'change:votes', this.renderVotes);
         this.listenTo(this.model, 'change:rounds', this.render);
     },

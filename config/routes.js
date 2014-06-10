@@ -13,7 +13,8 @@ var path = require('path');
 	 conversationController = require('../controllers/conversationController');
      tagsController         = require('../controllers/tagsController'),
      battleController       = require('../controllers/battleController'),
-     battleRequestController= require('../controllers/battleRequestController');
+     battleRequestController= require('../controllers/battleRequestController'),
+     workspaceController    = require('../controllers/workspaceController');
 
 
  module.exports = function(app, passport){
@@ -47,6 +48,13 @@ var path = require('path');
     // shreds
     app.get('/shred/:id', shredsController.show);
 
+    // users
+    app.get('/stage/users', userController.showStageView);
+    app.get('/users/:id', userController.show);
+
+    // workspace
+    app.get('/workspace', workspaceController.show);
+
 
     // ****************** API ************************ //
 
@@ -54,9 +62,10 @@ var path = require('path');
 	app.post('/api/shreds/', auth.requiresLogin, shredsController.create);
 	app.get('/api/shreds/query', shredsController.query);
 	app.get('/api/shreds/:id', shredsController.get);
-	app.post('/api/shreds/:id/rate', auth.requiresLogin, shredsController.rate);
+	app.post('/api/shreds/:id/rate', auth.requiresLogin, auth.requiresLogin, shredsController.rate);
 	app.post('/api/shreds/:id/comment', auth.requiresLogin, shredsController.comment);
     app.post('/api/shreds/:id/upload', auth.requiresLogin, shredsController.upload);
+    app.post('/api/shreds/:id/hej_jeg_kigger', shredsController.tryIncreaseView);
 
 	// Users
 	app.get('/api/user/query', userController.query);
@@ -74,7 +83,7 @@ var path = require('path');
     // Scales
     app.post('/api/scales', auth.requiresLogin, scalesController.create);
     app.get('/api/scales/:id', scalesController.get);
-    app.get('/api/scales', scalesController.query);
+    app.get('/api/scales', scalesController.list);
 
     // Jamtracks
     app.get('/api/jamtracks', jamtracksController.query);
@@ -89,7 +98,6 @@ var path = require('path');
     app.get('/api/battleRequest/:id', auth.requiresLogin, battleRequestController.getBattleRequest);
     app.post('/api/battleRequest', auth.requiresLogin, battleRequestController.createBattleRequest);
     app.put('/api/battleRequest/:id', auth.requiresLogin, battleRequestController.updateBattleRequest);
-
 
     // battles
     app.post('/api/battle/:id/postBattleRound/video', auth.requiresLogin, battleController.postBattleRoundVideo);
@@ -163,7 +171,5 @@ var path = require('path');
 	// });
 
 
-
-	app.get('/users/:userId', userController.show);
 	app.param('userId', userController.user);
 };

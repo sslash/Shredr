@@ -76,7 +76,6 @@ ScaleSchema.statics = {
    * @param {Function} cb
    * @api private
    */
-
   list: function (options, cb) {
     var criteria = options.criteria || {};
     var populate = options.populate || '';

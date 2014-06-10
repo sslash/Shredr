@@ -154,6 +154,17 @@ BattleSchema.statics = {
         });
         return deferred.promise;
     },
+
+    findMany : function (ids) {
+
+        var deferred = Q.defer();
+        this.find({ '_id': { $in: ids } }, function(err, res) {
+            if (err) { deferred.reject(err); }
+            else { deferred.resolve(res); }
+        });
+
+        return deferred.promise;
+    }
 };
 
 mongoose.model('Battle', BattleSchema);

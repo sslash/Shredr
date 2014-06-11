@@ -16,6 +16,7 @@ function( Backbone ) {
         defaults: {
             title : '',
             description : '',
+            /*
             "tabs" : {
                 "tempo" : "125",
                 "tabs" : [
@@ -152,6 +153,11 @@ function( Backbone ) {
                 	}
                 }
                 ],
+            },
+            */
+            tabs : {
+                tabs : [],
+                tempo : 125
             },
             tabsKey : 'C'
         }

@@ -9,11 +9,10 @@ BaseController = require("./baseController");
 module.exports = BaseController.extend({
 
     create : function (req, res) {
-        var scale = new Scale(req.body);
-        scale.user = req.user;
-
-        scale.create(function (err, doc) {
-            return client.send(res, err, doc);
+        scaleService.create(req.body, req.user)
+        .then(client.send.bind(null,res,null))
+        .fail(function(err) {
+            console.log('error! ' + err);
         });
     },
 

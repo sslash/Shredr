@@ -19,6 +19,11 @@ function(
         initialize : function () {
             this.model = new Scale();
         },
+
+        events : {
+            'click [data-evt="save"]' : '__saveClicked'
+        },
+
         onRender : function () {
             this.renderTabs();
         },
@@ -30,6 +35,27 @@ function(
                 model : this.model,
                 region : new Backbone.Marionette.Region({el : this.$('[data-reg="tabs"]')})
             }).show();
+        },
+
+        __saveClicked : function () {
+            this.model.set({
+                title : this.$('#scale-title').val(),
+                description : this.$('#scale-desc').val(),
+                tabs : this.tabsComponent.getTabs(),
+                tabsKey : this.$('#tabs-key').val()
+            });
+
+            Shredr.baseController.exec(this.model, 'save',
+                {success : this.onScaleCreated.bind(this)});
+        },
+
+        onScaleCreated : function (scaleModel) {
+
+            // Set the user model here since its not been
+            // populated on the server when saved. A bit lol,
+            // but still a fair solution. 
+            scaleModel.set('user', Shredr.user.toJSON());
+            this.trigger('scale:created', scaleModel);
         }
     });
 });

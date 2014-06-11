@@ -126,7 +126,7 @@ module.exports = BaseController.extend({
             if ( err ) { next({}, err); }
 
             Shred.count().exec(function (err, count) {
-                if (err) { next({}, err) }
+                if (err) { next({}, err); }
                 next(shreds);
             });
         });

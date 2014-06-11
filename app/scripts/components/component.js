@@ -17,6 +17,10 @@ define([
             show : function () {
                 this.region.show(this.view);
                 return this;
+            },
+
+            close : function () {
+                this.region.close();
             }
         })
         return Component;

@@ -1,20 +1,16 @@
-var async = require('async');
-var auth = require('./middlewares/authorization');
-var http = require('https');
-var path = require('path');
-
-/**
- * Route middlewares
- */
- var userController	     = require('../controllers/userController'),
-	 shredsController	   = require('../controllers/shredsController'),
-     scalesController	   = require('../controllers/scalesController'),
-     jamtracksController    = require('../controllers/jamtracksController'),
-	 conversationController = require('../controllers/conversationController');
-     tagsController         = require('../controllers/tagsController'),
-     battleController       = require('../controllers/battleController'),
-     battleRequestController= require('../controllers/battleRequestController'),
-     workspaceController    = require('../controllers/workspaceController');
+var async = require('async'),
+    auth = require('./middlewares/authorization'),
+    http = require('https'),
+    path = require('path'),
+    userController     = require('../controllers/userController'),
+    shredsController   = require('../controllers/shredsController'),
+    scalesController   = require('../controllers/scalesController'),
+    jamtracksController    = require('../controllers/jamtracksController'),
+    conversationController = require('../controllers/conversationController'),
+    tagsController         = require('../controllers/tagsController'),
+    battleController       = require('../controllers/battleController'),
+    battleRequestController= require('../controllers/battleRequestController'),
+    workspaceController    = require('../controllers/workspaceController');
 
 
  module.exports = function(app, passport){

@@ -5,7 +5,8 @@ define([
 'components/tabsComponent',
 'views/workspace/resourcesScalesListView',
 'views/workspace/resourcesScalesCreateView',
-'hbs!tmpl/workspace/resourcesScalesLayout'
+'hbs!tmpl/workspace/resourcesScalesLayout',
+'hbs!tmpl/workspace/resourcesScalesPreview'
 ],
 function(
     Backbone,
@@ -13,45 +14,75 @@ function(
     TabsComponent,
     ResourcesScalesListView,
     ResourcesScalesCreateView,
-    Tpl
+    tpl,
+    prevTpl
 ) {
     'use strict';
 
     /* Return a Layout class definition */
     return Backbone.Marionette.Layout.extend({
-        template : Tpl,
+        template : tpl,
         regions : {list : '[data-reg="list"]'},
         ui : {
             create : '[data-reg="create"]',
-            preview : '[data-reg="preview"]'
+            preview : '[data-reg="preview"]',
+            tabs : '[data-reg="tabs"]'
         },
 
         onRender : function () {
             this.model = this.collection.at(0);
             var view = new ResourcesScalesListView({collection : this.collection});
             this.list.show(view);
-            this.renderTabs();
-
+            this.showPreview();
             this.listenTo(Shredr.vent, 'resources:addBtn:clicked', this.createClicked);
             this.listenTo(view, 'item:clicked', this.itemClicked);
         },
 
+        showPreview : function () {
+            this.renderPreview();
+            this.renderTabs();
+        },
+
+        hidePreview : function () {
+            this.ui.preview.fadeOut('fast');
+            this.ui.tabs.hide();
+            this.tabsComponent.close();
+        },
+
+        renderPreview : function () {
+            this.ui.preview.html(prevTpl(this.model.toJSON()));
+            this.ui.preview.fadeIn();
+        },
+
+        // Called everytime a new scale is chosen.
+        // Might be wise to check if there are any memory leaks with
+        // setting the this.tabsComponent pointer over again
         renderTabs : function () {
+            this.ui.create.hide();
             this.tabsComponent = new TabsComponent({
                 model : this.model,
                 disabled : true,
                 region : new Backbone.Marionette.Region({el : this.$('[data-reg="tabs"]')})
             }).show();
+            this.ui.tabs.show();
         },
 
         createClicked : function () {
-            this.ui.preview.fadeOut('fast');
+            this.hidePreview();
             var view = new ResourcesScalesCreateView();
             this.ui.create.html(view.render().el).fadeIn();
+            this.listenTo(view, 'scale:created', this.scaleCreateSuccess);
+        },
 
+        scaleCreateSuccess : function (scaleModel) {
+            this.model = scaleModel;
+            this.collection.add(scaleModel);
+            this.showPreview();
         },
 
         itemClicked : function (scaleModel) {
+            this.model = scaleModel;
+            this.showPreview();
         }
     });
 });

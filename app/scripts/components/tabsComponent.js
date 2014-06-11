@@ -73,7 +73,7 @@ function( Backbone, Component, Tmpl ) {
         },
 
 		playTabs : function () { this.view.playTabs(); },
-		getTabs : function () { this.view.getTabs(); }
+		getTabs : function () { return this.view.getTabs(); }
 	});
 
 });

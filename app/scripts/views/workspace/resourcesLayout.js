@@ -24,12 +24,11 @@ function( Backbone, ScalesCollection, ResourcesScalesLayout,/* ComingSoonView, B
 			this.listenTo(Shredr.vent, 'resources:scales:clicked', this.scalesClicked);
 		},
 
-		events : { },
 		ui : {
 			catContent  : '[data-reg="catContent"]',
 			homeContent : '[data-reg="homeContent"]',
-			content 	: '[data-reg="content"]',
-			search	  : '[data-reg="search"]'
+			content	: '[data-reg="content"]',
+			search	: '[data-reg="search"]'
 		},
 
 		regions : { },

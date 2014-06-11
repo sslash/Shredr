@@ -21,8 +21,8 @@ function( Backbone, Tpl ) {
             this.listenTo(this, 'itemview:clicked', this.itemClicked);
         },
 
-        itemClicked : function (scaleModel) {
-            this.trigger('item:clicked', scaleModel);
+        itemClicked : function (itemView) {
+            this.trigger('item:clicked', itemView.model);
         }
     });
 });

@@ -18,7 +18,6 @@ TagsListSchema.statics = {
         .exec(function(err,res) {
             if (err) { next(); }
             else {
-
                 if ( tagsObject.shredTags ) {
                     res.shredTags = _.union(res.shredTags, tagsObject.shredTags);
                 }

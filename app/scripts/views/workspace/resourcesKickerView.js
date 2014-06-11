@@ -20,10 +20,13 @@ var ResourcesKickerView = Backbone.Marionette.ItemView.extend({
         button : '[data-mod="add-btn"]'
     },
 
+    // Add a Jamtrack, scale, theory or chord item
+    // depending on where ur at yo
     __addClicked : function () {
         Shredr.vent.trigger('resources:addBtn:clicked');
     },
 
+    // Navigating to scales section
     __scalesClicked : function () {
         Shredr.vent.trigger('resources:scales:clicked');
         this.ui.button.text('Add Scale');

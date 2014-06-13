@@ -30,17 +30,20 @@ function(
         },
 
         onRender : function () {
-            this.model = this.collection.at(0);
+            this.listenTo(this.collection, 'reset', this.showPreview);
+            if ( this.collection.models.length > 0 ) { this.showPreview(); }
             var view = new ResourcesScalesListView({collection : this.collection});
             this.list.show(view);
-            this.showPreview();
             this.listenTo(Shredr.vent, 'resources:addBtn:clicked', this.createClicked);
             this.listenTo(view, 'item:clicked', this.itemClicked);
         },
 
-        showPreview : function () {
+        showPreview : function () {console.log('sapda')
+            this.model = this.collection.at(0);
             this.renderPreview();
-            this.renderTabs();
+            if ( this.model ) {
+                this.renderTabs();
+            }
         },
 
         hidePreview : function () {
@@ -50,8 +53,10 @@ function(
         },
 
         renderPreview : function () {
-            this.ui.preview.html(prevTpl(this.model.toJSON()));
-            this.ui.preview.fadeIn();
+            if ( this.model ) {
+                this.ui.preview.html(prevTpl(this.model.toJSON()));
+                this.ui.preview.fadeIn();
+            }
         },
 
         // Called everytime a new scale is chosen.

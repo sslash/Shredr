@@ -26,6 +26,7 @@ var BaseController = Backbone.Marionette.Controller.extend({
         }
 
         var config = {
+            reset : options.reset,
             success : function (modelOrColl, response, opts) {
                 if ( options.event ) {
                     Shredr.vent.trigger(options.event + ':success', modelOrColl,

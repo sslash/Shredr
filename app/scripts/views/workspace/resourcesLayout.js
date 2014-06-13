@@ -8,11 +8,12 @@ define([
 	'backbone',
 	'collections/scalesCollection',
 	'views/workspace/resourcesScalesLayout',
+	'views/workspace/resourcesTheoryLayout',
 	// 'views/workspace/comingSoon',
 	// 'views/workspace/jamtrack',
 	'hbs!tmpl/workspace/resourcesLayout'
 ],
-function( Backbone, ScalesCollection, ResourcesScalesLayout,/* ComingSoonView, BacktrackView, */Tpl ) {
+function( Backbone, ScalesCollection, ResourcesScalesLayout, ResourcesTheoryLayout,/* ComingSoonView, BacktrackView, */Tpl ) {
     'use strict';
 
 	return Backbone.Marionette.Layout.extend({
@@ -22,6 +23,9 @@ function( Backbone, ScalesCollection, ResourcesScalesLayout,/* ComingSoonView, B
 		initialize : function () {
 			Shredr.vent.trigger('workspace:resources:render');
 			this.listenTo(Shredr.vent, 'resources:scales:clicked', this.scalesClicked);
+			this.listenTo(Shredr.vent, 'resources:chords:clicked', this.chordsClicked);
+			this.listenTo(Shredr.vent, 'resources:theory:clicked', this.chordsClicked);
+			this.listenTo(Shredr.vent, 'resources:back:clicked', this.backClicked);
 		},
 
 		ui : {
@@ -31,16 +35,27 @@ function( Backbone, ScalesCollection, ResourcesScalesLayout,/* ComingSoonView, B
 			search	: '[data-reg="search"]'
 		},
 
-		regions : { },
-
 		scalesClicked : function () {
 			var coll = new ScalesCollection();
-			Shredr.baseController.exec(coll, 'fetch');
+			Shredr.baseController.exec(coll, 'fetch', {reset : true});
 			var view = new ResourcesScalesLayout({collection : coll});
 			this.renderCatView(view);
 		},
 
+		backClicked : function () {
+			this.render();
+		},
+
+		chordsClicked : function () {
+			var coll = new Backbone.Collection();
+			var view = new ResourcesTheoryLayout({collection : coll});
+			this.renderCatView(view);
+
+		},
+
 		renderCatView : function (view) {
+			if ( this.catView ) { this.catView.close(); }
+			this.catView = view;
 			this.ui.homeContent.fadeOut('fast', function () {
 				this.ui.catContent.html(view.render().el);
 				this.ui.catContent.fadeIn('fast', function () {

@@ -12,7 +12,7 @@ var ResourcesKickerView = Backbone.Marionette.ItemView.extend({
     template : Tpl,
 
     events : {
-        'click [data-evt="scales"]' : '__scalesClicked',
+        'click [data-evt="category"]' : '__categoryClicked',
         'click [data-mod="add-btn"]': '__addClicked'
     },
 
@@ -27,9 +27,18 @@ var ResourcesKickerView = Backbone.Marionette.ItemView.extend({
     },
 
     // Navigating to scales section
-    __scalesClicked : function () {
-        Shredr.vent.trigger('resources:scales:clicked');
-        this.ui.button.text('Add Scale');
+    __categoryClicked : function (e) {
+        var category = $(e.currentTarget).attr('data-mod');
+        Shredr.vent.trigger('resources:' + category + ':clicked');
+
+        this.setButtonText(category);
+    },
+
+    setButtonText : function (category) {
+        switch(category) {
+            case 'scales' : this.ui.button.text('Add Scale'); break;
+            default : this.ui.button.text('Add Jamtrack');
+        }
     }
 });
 

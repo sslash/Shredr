@@ -1,0 +1,18 @@
+<header><h4>Jamtracks</h4></header>
+<form class="inline-form">
+    <div class="search-wrap mvl">
+        <input type="search">
+        <span class="search-icon ion-ios7-search"></span>
+    </div>
+</div>
+</form>
+<div class="mam txt-left">
+    {{#each things}}
+    <div class="mvm pas white-hov point" data-evt="play" data-mod="{{_id}}">
+        <div class="brd-bottom clearfix">
+            <p class="lead small white left">{{title}}</p>
+            <span class="right ion-ios7-play-outline"></span>
+        </div>
+    </div>
+{{/each}}
+</div>

@@ -10,10 +10,17 @@ define([
 	'views/workspace/resourcesScalesLayout',
 	'views/workspace/resourcesTheoryLayout',
 	// 'views/workspace/comingSoon',
-	// 'views/workspace/jamtrack',
+	'views/workspace/resourcesJamtrackView',
 	'hbs!tmpl/workspace/resourcesLayout'
 ],
-function( Backbone, ScalesCollection, ResourcesScalesLayout, ResourcesTheoryLayout,/* ComingSoonView, BacktrackView, */Tpl ) {
+function(
+	Backbone,
+	ScalesCollection,
+	ResourcesScalesLayout,
+	ResourcesTheoryLayout,
+	ResourcesJamtrackView,
+	Tpl
+) {
     'use strict';
 
 	return Backbone.Marionette.Layout.extend({
@@ -33,6 +40,12 @@ function( Backbone, ScalesCollection, ResourcesScalesLayout, ResourcesTheoryLayo
 			homeContent : '[data-reg="homeContent"]',
 			content	: '[data-reg="content"]',
 			search	: '[data-reg="search"]'
+		},
+
+		regions : { jamtrack : '[data-reg="jamtrack"]' },
+
+		onRender : function () {
+			this.jamtrack.show(new ResourcesJamtrackView());
 		},
 
 		scalesClicked : function () {

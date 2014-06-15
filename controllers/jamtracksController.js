@@ -1,41 +1,29 @@
-/**
-* Module dependencies.
-*/
 var mongoose   = require('mongoose'),
     client = require('../libs/responseClient'),
-    query = require('../libs/query.js'),
     fileHandler = require('../libs/fileHandler'),
+    jamtrackService   = require('../services/jamtrackService'),
     Jamtrack      = mongoose.model('Jamtrack');
 
-exports.create = function (req, res) {
-    var jamtrack = new Jamtrack(req.body);
-    jamtrack.user = req.user;
+BaseController = require("./baseController");
 
-    jamtrack.create(function (err, doc) {
-        return client.send(res, err, doc);
-    });
-};
 
-exports.upload = function(req, res) {
-    fileHandler.storeAudioFile(req)
-    .then(function(result) {
-        Jamtrack.findById(req.params.id, function(err, doc) {
-            // set unique name of file as a string on the jamtrack object
-            doc.fileId = result.file.name;
-            doc.save(client.send.bind(null, res));
-        });
-    })
-    .fail(function(err) {
-        client.error(res, err);
-    });
-}
+module.exports = BaseController.extend({
+    create : function (req, res) {
+        jamtrackService.create(req.body, req.user)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res));
+    },
 
-exports.get = function (req, res) {
-      Jamtrack.findById(req.params.id, client.send.bind(null, res));
-};
+    upload : function(req, res) {
+        jamtrackService.upload(req)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res));
+    },
 
-exports.query = function (req, res) {
-    var opts = req.query || {};
-    opts.populate = 'user';
-    return query.query(Jamtrack, opts, res);
-};
+    get : function (req, res) {
+          Jamtrack.findById(req.params.id, client.send.bind(null, res));
+    },
+
+    list : function (req, res) {
+        jamtrackService.list(req.query)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res));
+    }
+});

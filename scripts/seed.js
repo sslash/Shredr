@@ -3,7 +3,6 @@ var profileimgs = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jp
 var youtubeurls = [
 'LOx_uxq7i3g','y9Yf-r-VG7E','dm3QTgIdT8o','c1AP6NRe7xc','ZUM93WEzMHs','l-0F0A6Du-k', '03-lt7NSItg', '9A6iTzO8aU4', 'GcGl_UGEarc', 'WiGKMpKOBh0','R0fExdKtKsg', 'vHh-6f59hxQ','d2RZXeQc5HU','X1ZRBPA8SK0','B8nEQDaYzrY','DSDpeu0V1Ng','rXq5WcasEdc','VkdrXa_C5nM','naIqbXEGOOA'
 ];
-
 var names = ['Mikey Megakill', 'Jessica SapDer', 'Derp Derper', 'Jason Bourne', 'King Katwoman', 'The batmobile', 'Slash', 'Slash Shredtown', 'Sick Catmouse', 'Cat n dog', 'Steve Lukestar'];
 var tags = ['Gibson GA-20', 'Gibson EB Bass','The Suhr Classic', 'The Gibson Flying V', 'The Rickenbacker 381 V69', 'Gibson','Stratocaster', 'Marshall', 'Jmx' ];
 var titles = ['Air Marshal', 'Alone on a Wide, Wide Sea', 'Arms and the Man', 'The Cricket on the Hearth', 'For a Breath I Tarry'];
@@ -167,6 +166,31 @@ for (var i = 0; i < 1000; i++) {
 		description : 'Bacon ipsum dolor sit amet pork chop sirloin tongue shank short loin. Landjaeger biltong frankfurter turkey doner beef tri-tip brisket prosciutto. Tri-tip filet mignon shank, drumstick jerky turducken leberkas chuck meatball ham jowl. Bacon salami kielbasa porchetta',
 		tabs : {},
 		tabsKey : 'C',
+		user : users[useri]._id,
+	});
+}
+
+
+// Jamtracks
+var users = db.users.find();
+var count = db.users.count();
+var jamtracks = ["Sweet JT in d-minor", "Bluesy thing with twis", "Rock in d-minor", "Ballad in a-minor", "Slash-inspired rock in G", "Super sweet JT", "JT for the big D", "Aw yeah, this one's the bomb", "D-minor. Thats it", "Its all I've got", "Srsly, this rox", "Yeah boi. Thats wazup"];
+var jtlen = jamtracks.length;
+
+db.jamtracks.remove();
+for (var i = 0; i < 30; i++) {
+	var useri = Math.floor((Math.random()*count));
+	var jt = Math.floor((Math.random()*jtlen));
+
+	db.jamtracks.save({
+		createdAt : new Date(),
+		description : "Sweet jamtracks, bluesy with a twist of rock.",
+		fileId : "scrb1_claptonsmoky_jt.mp3",
+		relatedShreds : [ ],
+		tags : [
+			"blues", "d-minor"
+		],
+		title : jamtracks[jt],
 		user : users[useri]._id,
 	});
 }

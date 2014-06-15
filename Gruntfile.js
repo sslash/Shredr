@@ -31,7 +31,7 @@ module.exports = function (grunt) {
 
             compass: {
             files: ['<%= yeoman.app %>/styles/source/css/{,**/}*.{scss,sass}'],
-                tasks: ['compass']
+                tasks: ['compass'] // sass app/styles/source/css/style.scss:app/styles/source/css/style.css
             },
 
             livereload: {

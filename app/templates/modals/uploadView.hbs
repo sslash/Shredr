@@ -1,0 +1,60 @@
+<div class="row clearfix" style="height:100%;">
+    <div data-reg="tabs" style="height:100%; display:none;"></div>
+    <div data-reg="main" style="height:100%;">
+        <div class="column half">
+            <div class="container">
+                <div class="col-sm-6 txt-left" data-reg="left-content">
+                    <header class="bordered-header mvxl" data-evt="type" data-reg="head"></header>
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds">
+                            <input type="text" placeholder="Title" id="shred-title">
+                        </div>
+                        <div class="column third">
+                            <label for="shred-title" class="small"><em>{{title}}</em></label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds">
+                            <textarea placeholder="Description" id="shred-description" class="large"></textarea>
+                        </div>
+                        <div class="column third">
+                            <label for="shred-description" class="small"><em>{{desc}}</em></label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds">
+                            <div class="clearfix" data-region="shred-tags"></div>
+                            <input type="text" placeholder="Tags" class="deep" data-event="shred-tags-input">
+                        </div>
+                        <div class="column third">
+                            <label class="small"><em>{{tags}}</em></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="column half dark-wrapper">
+            <div class="container pvxxl">
+                <button class="btn btn-buf" data-evt="youtube">{{upload}} <span class="ion-social-youtube-outline"></span></button>
+            </div>
+            <div data-reg="youtube"></div>
+            <div data-reg="orLocal">
+                <h3 class="head txt-center mvm">Or</h3>
+
+                <div class="row">
+                    <div data-reg="upload"></div>
+                </div>
+            </div>
+
+            <div class="footer mal">
+                <button data-evt="save" class="btn btn-niz">Save</button>
+            </div>
+        </div>
+    </div>
+
+</div>

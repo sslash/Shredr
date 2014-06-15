@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+    Q        = require('q'),
     Schema = mongoose.Schema;
 /**
  * Scale Schema
@@ -38,15 +39,13 @@ JamtrackSchema.pre('remove', function (next) {
  */
 JamtrackSchema.methods = {
 
-  /**
-   * Save the Jamtrack
-   *
-   * @param {data} Scale data
-   * @param {Function} cb
-   * @api private
-   */
-  create: function (cb) {
-   this.save(cb);
+  create: function () {
+      var def = Q.defer();
+      this.save(function (err,res) {
+          if ( err ) { def.reject(err); }
+          else { def.resolve(res); }
+      });
+      return def.promise;
   }
 };
 

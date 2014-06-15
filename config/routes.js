@@ -82,7 +82,7 @@ var async = require('async'),
     app.get('/api/scales', scalesController.list);
 
     // Jamtracks
-    app.get('/api/jamtracks', jamtracksController.query);
+    app.get('/api/jamtracks', jamtracksController.list);
     app.get('/api/jamtracks/:id', jamtracksController.get);
     app.post('/api/jamtracks', auth.requiresLogin, jamtracksController.create);
     app.post('/api/jamtracks/:id/upload', auth.requiresLogin, jamtracksController.upload);

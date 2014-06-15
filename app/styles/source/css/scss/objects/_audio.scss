@@ -1,0 +1,19 @@
+.jamtrack-player {
+    position:fixed;
+    right: 0;
+    top: 20%;
+
+    &.pull-right {
+        @include transition(all 0.5s);
+        @include translate(100%, 0, 0)
+    }
+
+    &.pull-right-after {
+        @include translate(5%, 0, 0);
+    }
+    .jt-content {
+        padding: 14px 35px;
+        background-color: $valid;
+        color: $white;
+    }
+}

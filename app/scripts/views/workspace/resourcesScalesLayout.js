@@ -1,7 +1,7 @@
 /* globals $ */
 define([
 'backbone',
-'models/Scale',
+'models/scale',
 'components/tabsComponent',
 'views/workspace/resourcesScalesListView',
 'views/workspace/resourcesScalesCreateView',

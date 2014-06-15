@@ -1,7 +1,7 @@
 /* globals $ */
 define([
 'backbone',
-'models/Scale',
+'models/scale',
 'components/tabsComponent',
 'hbs!tmpl/workspace/resourcesScalesCreateView'
 ],
@@ -53,7 +53,7 @@ function(
 
             // Set the user model here since its not been
             // populated on the server when saved. A bit lol,
-            // but still a fair solution. 
+            // but still a fair solution.
             scaleModel.set('user', Shredr.user.toJSON());
             this.trigger('scale:created', scaleModel);
         }

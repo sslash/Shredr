@@ -2,7 +2,7 @@
 define([
 'backbone',
 
-'models/Scale',
+'models/scale',
 'collections/ScalesCollection',
 
 'views/workspace/tabs',

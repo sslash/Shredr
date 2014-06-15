@@ -20,5 +20,10 @@ module.exports = {
         .then(deferred.resolve)
         .fail(deferred.reject);
         return deferred.promise;
+    },
+
+    create : function (body) {
+        var user = new User(body);
+        return user.create();
     }
 };

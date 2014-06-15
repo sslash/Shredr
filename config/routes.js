@@ -68,7 +68,7 @@ var async = require('async'),
 	app.put('/api/user/:id', auth.requiresLogin, userController.update);
 	app.get('/api/user/:id', userController.getById);
 	app.get('/api/user', userController.list);
-    app.post('/api/user', userController.register);
+    app.post('/api/user', userController.create);
 	app.post('/api/user/:id/addFan/:faneeId', auth.requiresLogin, userController.addFan);
 	app.post('/api/user/:id/deleteNotification/:nid', auth.requiresLogin, userController.deleteNotification);
 
@@ -113,6 +113,20 @@ var async = require('async'),
 	app.get('/api/conversation/:id', auth.requiresLogin, conversationController.get);
 	app.post('/api/conversation/:id/sendMessage', auth.requiresLogin, conversationController.sendMessage);
 
+
+
+
+
+    // social logins
+    app.get('/auth/facebook', passport.authenticate('facebook', {
+        scope: [ 'email', 'user_about_me'],
+        failureRedirect: '/login'
+    }), userController.signin);
+
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            failureRedirect: '/login'
+    }), userController.authCallback);
 
 	// TODO: This is code for authenticating with youtube
 	// It doesnt work..

@@ -7,7 +7,7 @@ var Schema      = mongoose.Schema;
 var Crypto	   = require('crypto');
 var Shred       = mongoose.model('Shred');
 var _           = require('underscore');
-var authTypes   = [];
+var oAuthTypes  = ['facebook'];
 var Q           = require('q');
 var userPlugin  = require('mongoose-user');
 
@@ -34,14 +34,16 @@ var userPlugin  = require('mongoose-user');
      notifications : {type:[]},
      bio : {type: String, default: ''},
      profileImgFile: { type: String, default: 'shredder.jpg' },
-     provider: { type: String, default: '' },
+     profileImgUrl: {type : String},
+     provider: { type: String, default: 'local' },
      hashed_password: { type: String, default: '' },
      salt: { type: String, default: '' },
 
      shreds: [{ type: Schema.Types.ObjectId, ref : 'Shred' }],
      battles: [{ type: Schema.Types.ObjectId, ref : 'Battle' }],
 
-     authToken: { type: String, default: '' }
+     authToken: { type: String, default: '' },
+     facebook: {}
  });
 
 /**
@@ -70,7 +72,7 @@ var validatePresenceOf = function (value) {
 
 UserSchema.path('username').validate(function (username) {
   // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true
+  if (oAuthTypes.indexOf(this.provider) !== -1) return true
   	return username.length;
 }, 'Username cannot be blank');
 
@@ -80,7 +82,7 @@ UserSchema.path('username').validate(function (username) {
 
 UserSchema.path('email').validate(function (email) {
   // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true
+  if (oAuthTypes.indexOf(this.provider) !== -1) return true
   	return email.length;
 }, 'Email cannot be blank')
 
@@ -88,7 +90,7 @@ UserSchema.path('email').validate(function (email, fn) {
 	var User = mongoose.model('User');
 
   // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) fn(true);
+  if (oAuthTypes.indexOf(this.provider) !== -1) fn(true);
 
   // Check only when it is a new user or when email field is modified
 if (this.isNew || this.isModified('email')) {
@@ -100,36 +102,44 @@ if (this.isNew || this.isModified('email')) {
 
 UserSchema.path('username').validate(function (username) {
   // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true
+  if (oAuthTypes.indexOf(this.provider) !== -1) return true
   	return username.length;
 }, 'Username cannot be blank')
 
+
 UserSchema.path('hashed_password').validate(function (hashed_password) {
-  // if you are authenticating by any of the oauth strategies, don't validate
-  if (authTypes.indexOf(this.provider) !== -1) return true
-  	return hashed_password.length;
+  if (this.doesNotRequireValidation()) return true
+  return hashed_password.length
 }, 'Password cannot be blank')
 
 
 /**
  * Pre-save hook
  */
+UserSchema.pre('save', function(next) {
+  if (!this.isNew) return next()
 
- UserSchema.pre('save', function(next) {
- 	if (!this.isNew) return next();
-
- 		if (!validatePresenceOf(this.password)
- 			&& authTypes.indexOf(this.provider) === -1)
- 			next(new Error('Invalid password'));
- 		else
- 			next();
- 	})
+  if (!validatePresenceOf(this.password)
+    && !this.doesNotRequireValidation())
+    next(new Error('Invalid password'))
+  else
+    next();
+})
 
 /**
  * Methods
  */
 
  UserSchema.methods = {
+
+     create: function () {
+         var def = Q.defer();
+         this.save(function (err,res) {
+             if ( err ) { def.reject(err); }
+             else { def.resolve(res); }
+         });
+         return def.promise;
+     },
 
 addNotification : function (opts) {
   var deferred = Q.defer();
@@ -220,6 +230,13 @@ updatePass: function (cb) {
    	} catch (err) {
    		return ''
    	}
+   },
+
+   /**
+    * Validation is not required if using OAuth
+    */
+   doesNotRequireValidation: function() {
+     return ~oAuthTypes.indexOf(this.provider);
    }
 }
 
@@ -284,7 +301,7 @@ UserSchema.statics = {
       .exec(function(err, res) {
         cb(err,res);
       });
-  },
+  }
 }
 
 // Helpers

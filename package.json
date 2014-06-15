@@ -1,7 +1,6 @@
 {
   "name": "shredr",
   "version": "0.0.1",
-
   "dependencies": {
     "express": "~3.3.4",
     "mongoose": "latest",
@@ -14,9 +13,9 @@
     "express-hbs": "~0.2.0",
     "winston": "0.6.x",
     "express-winston": "~0.2.4",
-    "q": "~1.0.0"
+    "q": "~1.0.0",
+    "passport-facebook": "~1.0.3"
   },
-
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.0",

@@ -112,7 +112,7 @@ var BaseController = Backbone.Marionette.Controller.extend({
     },
 
     showLoginModal : function () {
-        var opts = {classes : 'modal-short'};
+        var opts = {classes : 'modal-short form-dark'};
         this.showModal(new LoginModalView(opts));
     },
 

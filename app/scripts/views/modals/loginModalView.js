@@ -36,7 +36,9 @@ var LoginModalView = BaseModalLayout.extend({
         'click .tab-btn'               : '__tabBtnClicked',
         'submit form#register-form'    : '__registerSubmitted',
         'submit form#login-form'       : '__loginFormSubmitted',
-        'click [data-event="no-link"]' : '__closeClicked'
+        'click [data-event="no-link"]' : '__closeClicked',
+        'click [data-event="ok-btn"]'  : '__editProfileClicked',
+        'click [data-evt="face"]'      : '__faceClicked'
     }),
 
     onRender : function () {
@@ -59,7 +61,7 @@ var LoginModalView = BaseModalLayout.extend({
 
     modelSavedSuccess : function () {
         Shredr.authController.loginUser(this.model);
-        utils.execFadeOutIn(this.$('form'), regSuccessTpl);
+        utils.execFadeOutIn(this.$('form'), regSuccessTpl(this.model.toJSON()));
     },
 
     modelLoginSuccess : function () {
@@ -95,6 +97,15 @@ var LoginModalView = BaseModalLayout.extend({
         this.renderForm($ct.attr('data-model'));
         this.$('.active').removeClass('active');
         $ct.addClass('active');
+    },
+
+    __editProfileClicked : function (e) {
+        e.preventDefault();
+        this.__closeClicked();
+    },
+
+    __faceClicked : function () {
+        window.location = '/auth/facebook';
     }
 });
 

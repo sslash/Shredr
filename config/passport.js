@@ -1,6 +1,7 @@
-var mongoose = require('mongoose')
-  , LocalStrategy = require('passport-local').Strategy
-  , User = mongoose.model('User');
+var mongoose = require('mongoose'),
+    LocalStrategy = require('passport-local').Strategy,
+    FacebookStrategy = require('passport-facebook').Strategy,
+    User = mongoose.model('User');
 
 
 module.exports = function (passport, config) {
@@ -35,4 +36,37 @@ module.exports = function (passport, config) {
       })
     }
   ));
+
+
+  // use facebook strategy
+  passport.use(new FacebookStrategy({
+      clientID: config.facebook.clientID,
+      clientSecret: config.facebook.clientSecret,
+      callbackURL: config.facebook.callbackURL
+    },
+    function(accessToken, refreshToken, profile, done) {
+      User.findOne({ 'facebook.id': profile.id }, function (err, user) {
+        if (err) { return done(err) }
+        if (!user) {
+          user = new User({
+            username: profile.displayName,
+            email: profile.emails[0].value,
+            gender : profile.gender,
+            location : (!!profile._json.hometown) ? profile._json.hometown.name : '',
+            provider: 'facebook',
+            profileImgUrl : 'http://graph.facebook.com/' + profile.id + '/picture?type=square',
+            facebook: profile._json
+          })
+          user.save(function (err) {
+            if (err) console.log(err)
+            return done(err, user)
+          })
+        }
+        else {
+          return done(err, user)
+        }
+      })
+    }
+));
+
 }

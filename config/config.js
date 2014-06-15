@@ -9,6 +9,11 @@ var config = {
     app: {
       name: 'shredr'
     },
+    facebook: {
+      clientID: "322423007904195",
+      clientSecret: "d7fd67f5fbda8a09badbce0f0d2ea102",
+      callbackURL: "http://localhost:9000/auth/facebook/callback"
+    },
     port: 9000
   },
 
@@ -22,7 +27,12 @@ var config = {
 
   production : {
     root: rootPath,
-    port: process.env.PORT || 5000
+    port: process.env.PORT || 5000,
+    facebook: {
+      clientID: "322423007904195",
+      clientSecret: "d7fd67f5fbda8a09badbce0f0d2ea102",
+      callbackURL: "http://localhost:5000/auth/facebook/callback"
+    },
   }
 };
 

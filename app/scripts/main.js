@@ -1,5 +1,6 @@
 // requires dependencies that automatically starts the app
 require([
 	'backbone.marionette',
-	'shredr'
+	'shredr',
+	'libs/facebookLogin'
 ],function ( Marionette, Shredr ) {});

@@ -1,20 +1,28 @@
-<form class="form-light" id="register-form">
-    <p class="lead pam">Register here, and join<br> the Shredr community!</p>
+<!-- <img class="logo-lg maxl" src="/images/logos/logo_sml_white.png"></img> -->
+<p class="lead pam white">Register here, and join<br> the Shredr community!</p>
+
+<div class="txt-center mvl">
+    <button data-evt="face" class="btn btn-buf face">Login with Facebook</button>
+    <div id="status"></div>
+    <p class="lead mvm white">Or</p>
+</div>
+
+<form id="register-form">
     <small class="error" data-model="error-msg" style="display:none"></small>
-    <div class="row">
+    <div class="row mvs">
         <input type="text" name="username-input" id="username" required autocomplete="off" placeholder="Pick a username">
     </div>
-    <div class="row">
+    <div class="row mvs">
         <input type="email" id="email"  required autocomplete="off" placeholder="Enter email">
     </div>
-    <div class="row">
+    <div class="row mvs">
         <input type="password" id="pw1" required autocomplete="off" placeholder="Password">
     </div>
-    <div class="row">
+    <div class="row mvs">
         <input type="password" id="pw2" required autocomplete="off" placeholder="Repeat password">
     </div>
 
-    <div class="row txt-center">
+    <div class="row txt-center mvs">
         <button type="submit" class="btn btn-niz">Register</button>
     </div>
 </form>

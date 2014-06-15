@@ -19,8 +19,7 @@ label {
 
 button, input, select, textarea {
     font-family: inherit;
-    font-size: 100%;
-    margin: 0 1px 0;
+    font-size: 0.8em;
 }
 
 textarea { resize : none; }
@@ -30,6 +29,10 @@ input, textarea {
 	box-sizing: border-box;
 	border:none;
 	padding: $pad-half 0.65rem;
+}
+
+input:-webkit-autofill {
+    background-color: $white !important;
 }
 
 input[type=text], input[type=search], input[type=url], input[type=number], textarea {
@@ -84,7 +87,8 @@ input[type="search"]::-webkit-search-decoration {
 .form-dark {
     background-color: $brown-light !important;
     input, textarea { background-color: $brown; }
-    h2, label, input, textarea { color: $white !important; }
+    h2, h4, label, input, textarea { color: $white !important; }
+	a {color: $valid !important;}
     .deep {
         background-color: rgba(31, 30, 30, 0.81);
         height: 3em;
@@ -93,25 +97,25 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 
-.form-light {
-    textarea,
-    input[type="text"],
-    input[type="password"],
-    input[type="datetime"],
-    input[type="datetime-local"],
-    input[type="date"],
-    input[type="month"],
-    input[type="time"],
-    input[type="week"],
-    input[type="number"],
-    input[type="email"],
-    input[type="url"],
-    input[type="search"],
-    input[type="tel"],
-    input[type="color"]{
-        border: 1px solid $grey-border;
-    }
-}
+// .form-light {
+//     textarea,
+//     input[type="text"],
+//     input[type="password"],
+//     input[type="datetime"],
+//     input[type="datetime-local"],
+//     input[type="date"],
+//     input[type="month"],
+//     input[type="time"],
+//     input[type="week"],
+//     input[type="number"],
+//     input[type="email"],
+//     input[type="url"],
+//     input[type="search"],
+//     input[type="tel"],
+//     input[type="color"]{
+//         border: 1px solid $grey-border;
+//     }
+// }
 
 input[type="file"] {
     width: 75px;

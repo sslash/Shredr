@@ -106,21 +106,16 @@ module.exports = BaseController.extend({
 		}
 	},
 
-	register : function(req, res){
-		var user = new User(req.body)
-		user.provider = 'local'
-		user.save(function (err) {
-			if (err) {
-				return res.send(err.errors);
-			} else {
-				// manually login the user once successfully signed up
-				// logIn is a passport function (passport.request.js)
-				req.logIn(user, function(err) {
-				if (err) return next(err)
-				return res.send(user);
-				});
-			}
-		});
+	create : function(req, res) {
+		userService.create(req.body)
+		.then(function (user) {
+			// manually login the user once successfully signed up
+			// logIn is a passport function (passport.request.js)
+			req.logIn(user, function () {
+				client.send(res, null, user);
+			});
+		})
+		.fail(client.error.bind(null,res));
 	},
 
 	deleteNotification : function(req, res) {
@@ -190,12 +185,10 @@ module.exports = BaseController.extend({
 		login(req, res);
 	},
 
-	signin : function(req,res){
-
-	},
+	signin : function(req,res) {},
 
 	authCallback : function(req,res){
-
+		res.redirect('/');
 	},
 
 	user : function(req,res){

@@ -32,6 +32,9 @@
 
 .btn-info {
 	background-color:$valid;
+	&:hover {
+		background-color: $valid-hov;
+	}
 }
 
 .btn-buf {

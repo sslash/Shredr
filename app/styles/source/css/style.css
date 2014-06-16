@@ -1612,7 +1612,7 @@ input[type="file"] {
   margin: 2em 0;
   width: 80%; }
 .input-row label {
-  margin-top: 2.4em; }
+  margin-top: 1em; }
 
 /* Search Form */
 .search-field {
@@ -2063,6 +2063,8 @@ td {
 
 .btn-info {
   background-color: #307ca8; }
+  .btn-info:hover {
+    background-color: #4b8cb3; }
 
 .btn-buf {
   background-color: #2b2828;
@@ -2549,8 +2551,8 @@ td {
   .modal .modal-body {
     height: 100%; }
   .modal.pull-down-after {
-    -webkit-transform: translate3d(0, 160px, 0);
-    transform: translate3d(0, 160px, 0); }
+    -webkit-transform: translate3d(0, 130px, 0);
+    transform: translate3d(0, 130px, 0); }
   .modal.modal-tall {
     height: 540px; }
     .modal.modal-tall .dark-wrapper {

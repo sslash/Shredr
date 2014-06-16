@@ -18,6 +18,7 @@ var ShredSchema = new Schema({
 		raters : {}
 	},
 	tabs: {},
+	thumb : {type : String},
 	youtubeUrl : {type : String, default : '', trim : true},
 	youtubeId : {type : String, default : '', trim : true},
 	user: {type : Schema.ObjectId, ref : 'User'},

@@ -14,7 +14,8 @@
     "winston": "0.6.x",
     "express-winston": "~0.2.4",
     "q": "~1.0.0",
-    "passport-facebook": "~1.0.3"
+    "passport-facebook": "~1.0.3",
+    "fluent-ffmpeg": "~1.7.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

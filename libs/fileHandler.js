@@ -1,6 +1,8 @@
 var fs    = require('fs'),
     path  = require('path'),
-    Q     = require('q');
+    Q     = require('q'),
+    FFmpeg = require('fluent-ffmpeg'),
+    vidDir = './public/video/';
 
 
 module.exports.storeFile = function (args, next) {
@@ -58,7 +60,7 @@ module.exports.storeAudioFile = function (req, next) {
 };
 
 module.exports.storeVideoFile = function (req, opts, next) {
-    var deferred = Q.defer();
+    var def = Q.defer();
     opts = opts || {};
     var file = req.files.file;
     var args = {
@@ -68,18 +70,49 @@ module.exports.storeVideoFile = function (req, opts, next) {
     };
     var size = file.size;
     size /= (1000*1000);
-    // max size = 10Mb
+
+    // Do some error handling
     if ( size > 100) {
-        // next({err: 'File too large'});
-        deferred.reject({err :'File too large'});
+        // max size = 10Mb
+        def.reject({err :'File too large'});
+
     } else if ( !((/^video/).test(file.type)) ) {
-        //next({err: 'File is not a video'});
-        deferred.reject({err :'File is not a video'});
+        // must be video file
+        def.reject({err :'File is not a video'});
+
     } else {
+
+        // Store the file to harddrive
         this.storeFile(args, function(err,res) {
-            if (err) { deferred.reject(err); }
-            else { deferred.resolve(res); }
+            if (err) { def.reject(err); }
+            else {
+
+                // Create a thumbnail for the video
+                if ( opts.thumb) {
+                    createThumbnail(res)
+                    .then(def.resolve, def.reject)
+                    .done();
+                }
+            }
         });
     }
-    return deferred.promise;
+    return def.promise;
 };
+
+function createThumbnail(res) {
+    var deferred = Q.defer();
+    var filepath = vidDir + res.file.name;
+    new FFmpeg({ source: filepath })
+    .withSize('320x240')
+    .on('error', function (err) {
+        console.log('fail: ' + err.message);
+        deferred.reject(err.message);
+    })
+    .on('end', function(filenames) {
+        console.log('Successfully generated ' + filenames.join(', '));
+        res.thumb = filenames.length ? filenames[0] : null;
+        deferred.resolve(res);
+    })
+    .takeScreenshots(1, './public/video/thumbs');
+    return deferred.promise;
+}

@@ -109,11 +109,12 @@ module.exports = {
     upload : function (req) {
         var def = Q.defer();
 
-        fileHandler.storeVideoFile(req)
+        fileHandler.storeVideoFile(req, {thumb : true})
         .then(function(result) {
             Shred.findById(req.params.id)
             .then(function (shred) {
                 shred.fileId = result.file.name;
+                shred.thumb = result.thumb;
                 shred.save(function(err, res){
                     if (err) { def.reject(err); }
                     else { def.resolve(shred); }

@@ -40,7 +40,7 @@ var BaseController = Backbone.Marionette.Controller.extend({
             error : function (modelOrColl, response, opts) {
 
                 // parse the error message
-                var errors = JSON.parse(response.responseText).error.errors;
+                var errors = JSON.parse(response.responseText);
                 var msgs = Object.keys(errors).map(function(key) {
                     return errors[key].message;
                 });

@@ -23,12 +23,16 @@
 		background: $gray-light-2;
 		color: $gray;
 	}
+	&.wide { min-width: 140px; }
 }
 
 .btn-small {
 	padding: $pad-half;
 }
 
+.btn-info {
+	background-color:$valid;
+}
 
 .btn-buf {
     background-color: $brown;

@@ -986,6 +986,9 @@ table {
 .mam {
   margin: 0.8em; }
 
+.mas {
+  margin: 0.6em; }
+
 .mal {
   margin: 1.2em; }
 
@@ -1252,11 +1255,6 @@ html {
 .no-top-marg {
   margin-top: -2.7em; }
 
-.workspace-btn {
-  position: absolute;
-  right: 0;
-  top: 14px; }
-
 /* Links */
 a {
   color: #333333;
@@ -1433,8 +1431,8 @@ figcaption {
 
 /* Thumbs- Stage ++ */
 .profile-img-thumb {
-  right: 2px;
-  top: 2px; }
+  right: 4px;
+  top: 8px; }
 
 .shred-thumb {
   width: 100%;
@@ -1801,8 +1799,6 @@ td {
 
 .kicker {
   background-color: #313338; }
-  .kicker > .container, .kicker > .header {
-    padding: 0.8em 0 1em 0; }
 
 .kicker-btns {
   text-align: center; }
@@ -2059,9 +2055,14 @@ td {
   .btn.disabled {
     background: #eeeeee;
     color: #777777; }
+  .btn.wide {
+    min-width: 140px; }
 
 .btn-small {
   padding: 0.8em; }
+
+.btn-info {
+  background-color: #307ca8; }
 
 .btn-buf {
   background-color: #2b2828;

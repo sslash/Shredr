@@ -11,10 +11,23 @@ define([
 
         var NormalView = Backbone.Marionette.ItemView.extend({
             template : tpl,
+            initialize : function () {
+                this.listenTo(this, 'player:playing', this.fadeOutMeta);
+                this.listenTo(this, 'player:stopped', this.fadeInMeta);
+            },
+
+            fadeInMeta : function () {
+                // this.$('#meta').fadeIn();
+            },
+            fadeOutMeta : function () {
+                // this.$('#meta').fadeOut();
+            },
 
             events : {
                 'click [data-evt="play"]' : '__playClicked',
-                'click [data-evt="stop"]' : '__stopClicked'
+                'click [data-evt="stop"]' : '__stopClicked',
+                // 'mouseover #meta' : 'fadeInMeta',
+                // 'mouseout #meta' : 'fadeOutMeta'
             },
 
             getVideo : function () {
@@ -32,6 +45,7 @@ define([
                 this.getVideo();
                 this.video[0].pause();
                 this.video[0].currentTime = 0;
+                this.trigger('player:stopped');
             }
 
         });
@@ -50,17 +64,26 @@ define([
                 this.player.onYouTubeIframeAPIReady();
             },
 
+            __playClicked : function () {
+                this.play();
+            },
+
+            __stopClicked : function () {
+                this.player.stopVideo();
+                this.trigger('player:stopped');
+            },
+
             playerPlaying : function () {
                 this.trigger('player:playing');
             },
 
             playerReady : function () {
-                this.trigger('player:ready')
+                this.trigger('player:ready');
             },
 
             getDuration : function () {
-    			return this.playerIsReady ? this.player.getDuration() : null;
-    		},
+                return this.playerIsReady ? this.player.getDuration() : null;
+            },
 
             play : function () {
                 this.player.play();

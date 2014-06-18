@@ -22,13 +22,16 @@ figcaption {
 	font-style: italic;
 }
 
+.shred-vid-wrap {
+	height: $thumb-list-height;
+}
 
 .shred-vid {
 	width: 100.1%;
 	padding: 1px;
 	border: 1px solid #000;
 	&.half { max-height: 321px; }
-	max-height: $thumb-list-height;
+	max-height: 100%;
 	background: $brown-light;
 }
 
@@ -140,12 +143,13 @@ figcaption {
 /* video */
 .video-meta {
 	background: rgba(0, 0, 0, 0.45);
-	margin-top: -52px;
 	padding: 14px;
-	margin-left: 1px;
-	margin-right: 1px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin-right: 9px;
 	z-index: $z-vid;
-	position: relative;
+	position: absolute;
 	color: $white;
 }
 

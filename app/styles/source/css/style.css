@@ -1291,11 +1291,14 @@ figure {
 figcaption {
   font-style: italic; }
 
+.shred-vid-wrap {
+  height: 359px; }
+
 .shred-vid {
   width: 100.1%;
   padding: 1px;
   border: 1px solid #000;
-  max-height: 359px;
+  max-height: 100%;
   background: #313338; }
   .shred-vid.half {
     max-height: 321px; }
@@ -1394,12 +1397,13 @@ figcaption {
 /* video */
 .video-meta {
   background: rgba(0, 0, 0, 0.45);
-  margin-top: -52px;
   padding: 14px;
-  margin-left: 1px;
-  margin-right: 1px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-right: 9px;
   z-index: 10;
-  position: relative;
+  position: absolute;
   color: #f2f2ef; }
 
 .banner {

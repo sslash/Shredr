@@ -1,5 +1,4 @@
 ##TODOS:
-* Finish styling on shredr videos
 * Send a message
 * Become fan
 * Challenge to battle
@@ -9,3 +8,4 @@
 * Searching
 * Social functions
 * Landing page
+* hide playback buttons

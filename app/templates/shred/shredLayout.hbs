@@ -1,19 +1,22 @@
 <div class="container" data-region="landing">
     <div class="row clearfix">
 
-        <div class="column three-fourth" data-reg="player"></div>
+        <div class="column three-fourth prs" data-reg="player"></div>
 
-        <div class="column fourth">
+        <div class="column fourth blue-box pas small vid-thmb-list">
 
             {{#each things}}
 
-            <div class="brd-dark box-wrap le-wrap stage-thumb-wrap small" data-evt="thmb-click" data-model="{{_id}}">
-                <img src="/video/thumbs/{{thumb}}" class="shred-thumb">
-                <div class="le-in thmb pas white">
-                    <p>{{user.username}}</p>
-                    <small class="lead white">{{title}}</small>
+            <!-- brd-dark -->
+            <div class="box-wrap row clearfix point" data-evt="thmb-click" data-model="{{_id}}">
+                <div class="column third">
+                    <img src="{{thumb}}" class="shred-thumb">
                 </div>
-                <div class="le-in full-in"></div>
+
+                <div class="column two-thirds pam">
+                    <p class="white">{{title}}</p>
+                    <p><small>By {{user.username}}</small></p>
+                </div>
             </div>
 
             {{/each}}
@@ -28,21 +31,24 @@
         <div class="column two-thirds">
             <div class="row mvl clearfix">
                 <h5 class="column three-fourth">{{m.type}} <small>Added {{m.createdAt}}</small></h5>
+                <div class="column fourth green txt-right phl">
+                    <i class="icon ion-social-facebook mvxs"></i>
+                    <i class="icon ion-social-twitter mvxs"></i>
+                    <i class="icon ion-social-googleplus mvxs"></i>
+                </div>
             </div>
 
             <div class="row mvl clearfix">
                 <h1 class="column three-fourth lead">{{m.title}}</h1>
+                <div class="column fourth phl">
+                    <button class="btn btn-ser">Challenge {{m.user.username}}</button>
+                </div>
             </div>
 
             <div class="row mvl clearfix">
 
-                <div class="column third">
-                    <h3><img src="/img/profiles/16.jpg" class="thumb-round img-xs"><span class="thumb-txt"><a href="/users/{{m.user._id}}">{{m.user.username}}</a></span></h3>
-                    <i class="ion-location fa-2x phs"></i><small>{{m.user.location}}</small>
-                </div>
-
                 <!-- TODO: verify this is correct -->
-                <section class="column two-thirds mtm green-swabs">
+                <section class="mtm green-swabs">
                     <p><a class="white active">About</a>
                     <a>Promote</a>
                     <a>Hide</a></p>
@@ -52,8 +58,8 @@
                 </section>
             </div>
 
-            <div class="row clearfix pal">
-                <h4>Shredr Tabs</h4>
+            <div class="row clearfix">
+                <h3 class="mvs">Shredr Tabs</h3>
                 <div data-reg="tabs" class="prl"></div>
             </div>
         </div>
@@ -61,7 +67,7 @@
         <div class="column third">
             <div data-reg="rate"></div>
 
-            <div class="row pvl">
+            <div class="row mvl pam blue-box">
                 <div data-reg="comments"></div>
             </div>
         </div>

@@ -12,6 +12,11 @@ function( Backbone, Shred ) {
 
         queryParams : {},
 
+		initialize : function(opts) {
+			opts = opts || {};
+			if ( opts.query ) { this.setQuery(opts.query); }
+		},
+
         // TODO: this part can be reused
         url : function () {
             var url =  this.model.prototype.urlRoot + 'query', qs = '';

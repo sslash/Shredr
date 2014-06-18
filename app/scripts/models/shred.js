@@ -213,7 +213,7 @@ define([
 
 
 		rate : function(rateVal) {
-			var url = '/' + this.url() + '/rate?rating=' + rateVal;
+			var url = this.url() + '/rate?rating=' + rateVal;
 			var that = this;
 			$.post(url)
 			.done(function(res) {
@@ -225,7 +225,7 @@ define([
 		},
 
 		tryIncreaseView : function () {
-			var url = '/' + this.url() + '/hej_jeg_kigger';
+			var url = this.url() + '/hej_jeg_kigger';
 			var that = this;
 			$.post(url)
 			.done(function(res) {

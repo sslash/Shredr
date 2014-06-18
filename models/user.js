@@ -49,7 +49,6 @@ var userPlugin  = require('mongoose-user');
 /**
  * Virtuals
  */
-
  UserSchema
  .virtual('password')
  .set(function(password) {
@@ -256,7 +255,7 @@ UserSchema.statics = {
         .populate('battles')
         .populate('shreds')
         .exec(function(err,res) {
-            if (err ) { def.reject(err); }
+            if (err) { def.reject(err); }
             else { def.resolve(res); }
         });
 

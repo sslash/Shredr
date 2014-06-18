@@ -21,7 +21,7 @@ $valid-hov: #4B8CB3;
 $warning : #fff664; // duno
 $information : #349B89; // green
 $brown: #2b2828;
-$brown-light: #313338;
+$brown-light: #313338; // actually dark blue.
 // variations
 $green-light: #40BDA7;
 $green-trans: rgba(52, 155, 137, 0.45);
@@ -35,8 +35,8 @@ $white-on-brown: rgba(255, 255, 255, 0.67);
 $white-on-brown-brdr: rgba(255, 255, 255, 0.3);
 $black-trans: rgba(0, 0, 0, 0.75);
 
-$nav-height: 4em;
-$top-height: 112px;
+$nav-height: 3.9em;
+$top-height: 108px;
 
 // z-indexes
 $z-modal: 100;
@@ -137,6 +137,8 @@ $bp-xl : 73em;
 $bp-xxl : 89em;
 $bp-xxxl : 93em;
 
+$thumb-list-height: 359px;
+
 //
 @mixin brd-dark {
     border: 1px solid $white-on-brown-brdr;
@@ -144,43 +146,6 @@ $bp-xxxl : 93em;
 
 
 // margs and pads
-.pvs { padding: 0.6em 0; }
-.pvm { padding: 1em 0; }
-.pvl { padding: 1.5em 0; }
-.pvxxl{ padding: 3em 0; }
-.pvxl { padding: 2em 0; }
-.pvhuge { padding:7em 0;}
-.phs { padding: 0 0.6em; }
-.phm { padding: 0 1em; }
-.phs { padding: 0 0.6em; }
-.pts { padding-top: 0.6em; }
-.ptm { padding-top: 1em; }
-.ptl { padding-top: 1.5em; }
-.pbm { padding-bottom: 1em; }
-.prl { padding-right:1.5em; }
-
-.pam { padding: 0.8em; }
-.pal { padding: 1.5em; }
-.paxl { padding: 2.5em; }
-.pas { padding: 0.6em; }
-
-// correct?? should be mhxs??
-.mvxs{ margin: 0 0.3em;}
-.mvm { margin: 0.8em 0; }
-.mvl { margin: 1.2em 0; }
-.mvxl { margin: 2em 0; }
-.mtm { margin-top: 0.8em; }
-.mtl { margin-top: 1.2em; }
-.mbm { margin-bottom: 0.8em; }
-.mbs { margin-bottom: 0.6em; }
-.mll {margin-left: 1.2em; }
-.mam { margin: 0.8em; }
-.mal { margin: 1.2em; }
-.maxl{ margin: 2em; }
-.mhm { margin: 0.8em 0;}
-.mhs { margin: 0 0.6em;}
-.mhl { margin: 0 1.2em;}
-
 .in { display: inline-block; }
 
 // positioning

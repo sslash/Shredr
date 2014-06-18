@@ -47,7 +47,7 @@ module.exports = BaseController.extend({
         .then(function(result) {
             module.exports.render(req, res, _.extend(result, {
                 type : 'shreds',
-                things : _.first(result.collBS, 3),
+                things : _.first(result.collBS, 10),
                 tpl : 'shred/shredLayout'
             }));
         })
@@ -60,6 +60,7 @@ module.exports = BaseController.extend({
     showStageView : function (req, res) {
         shredService.list()
         .then(function (shreds) {
+            debugger
             module.exports.render(req, res, {
                 collBS : shreds,
                 leftShreds : shreds.slice(0,14),
@@ -79,7 +80,8 @@ module.exports = BaseController.extend({
 
     get : function(req, res) {
         shredService.getById(req.params.id)
-        .then(client.send.bind(null, res, null));
+        .then(client.send.bind(null, res, null))
+        .done();
     },
 
 
@@ -90,14 +92,14 @@ module.exports = BaseController.extend({
         if ( !rate ) { return client.error(res, {'error' : 'Rating not included'}); }
 
         shredService.rate(userId, shredId, rate)
-        .then(client.send.bind(null, res, null), client.error.bind(null, res));
+        .then(client.send.bind(null, res, null), client.error.bind(null, res))
+        .done();
     },
 
     tryIncreaseView : function (req, res) {
-        var userId = utils.getUserOrIp(req),
-            shredId = req.params.id;
-        shredService.tryIncreaseView(userId, shredId)
-        .then(client.send.bind(null, res, null), client.error.bind(null, res));
+        shredService.tryIncreaseView(req, req.params.id)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res))
+        .done();
     },
 
     comment : function(req, res) {
@@ -194,10 +196,8 @@ module.exports = BaseController.extend({
     },
 
     query : function (req, res) {
-        var opts = {criteria : {}}, q = req.query;
-        if ( q.perPage ) { opts.perPage = q.perPage; }
-        if ( q.page ) { opts.page = q.query.page };
-        if ( q.type ) { opts.criteria.type = q.type };
-        return query.query(Shred, opts, res);
+        shredService.query(req.query)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res))
+        .done();
     }
 });

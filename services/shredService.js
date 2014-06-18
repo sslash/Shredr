@@ -1,6 +1,7 @@
 var mongoose       = require('mongoose'),
 _              = require('underscore'),
 Shred         = mongoose.model('Shred'),
+utils          = require('../libs/utils'),
 TagsList       = mongoose.model('TagsList'),
 query          = require('../libs/query.js'),
 Q              = require('q'),
@@ -16,13 +17,7 @@ module.exports = {
 
     list : function () {
         // TODO: return a more approriate fetch
-        var deferred = Q.defer();
-
-        query.query(Shred, {populate : 'user'})
-        .then(deferred.resolve)
-        .fail(deferred.reject);
-
-        return deferred.promise;
+        return query.query(Shred, {populate : 'user'})
     },
 
     getManyRelated : function (shred) {
@@ -72,13 +67,27 @@ module.exports = {
         return def.promise;
     },
 
-    tryIncreaseView : function (userOrIp, shredId) {
+    tryIncreaseView : function (req, shredId) {
         var def = Q.defer();
 
+        // id is IP or userId
+        var userId = utils.getUserOrIp(req);
         Shred.findSimple(shredId)
         .then(function(shred) {
-            shred.tryIncreaseview(userOrIp).then(def.resolve);
-        });
+            if (!shred.views) { shred.views = {}; }
+
+            // if user hasnt seen this, increase view
+            if ( !shred.views[userId] ) {
+                shred.views[userId] = true;
+                shred.markModified('views');
+                shred.save(function(err, res) {
+                    if ( err ) { def.reject(err); }
+                    else { def.resolve(res); }
+                });
+
+            // or just return normally
+            } else { def.resolve(shred);}
+        }).done();
 
         return def.promise;
     },
@@ -114,7 +123,7 @@ module.exports = {
             Shred.findById(req.params.id)
             .then(function (shred) {
                 shred.fileId = result.file.name;
-                shred.thumb = result.thumb;
+                shred.thumb = './public/video/thumbs/' + result.thumb;
                 shred.save(function(err, res){
                     if (err) { def.reject(err); }
                     else { def.resolve(shred); }
@@ -123,5 +132,14 @@ module.exports = {
         })
         .fail(def.reject);
         return def.promise;
+    },
+
+    query : function (q) {
+        var opts = {criteria : {}};
+        opts.populate = 'user';
+        if ( q.perPage ) { opts.perPage = q.perPage; }
+        if ( q.page ) { opts.page = q.query.page };
+        if ( q.type ) { opts.criteria.type = q.type };
+        return query.query(Shred, opts);
     }
 };

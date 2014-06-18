@@ -5,22 +5,20 @@
             {{#each leftShreds}}
             <div class="column half">
 
-                {{#if this.youtubeId}}
                 <div class="brd-dark box-wrap le-wrap stage-thumb-wrap" data-evt="play" data-model="{{_id}}">
-                    <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
+                    <img src="{{thumb}}" class="shred-thumb">
                     <div class="le-in thmb pas white">
                         <p>{{this.user.username}}</p>
                         <small class="lead white">{{title}}</small>
 
                         <div class="le-in profile-img-thumb">
-                            <img src="/img/profiles/{{user.profileImgFile}}" class="thumb-round img-xs">
+                            <img src="{{user.profileImgFile}}" class="thumb-round img-xs">
                         </div>
 
                     </div>
 
                     <div class="le-in full-in"></div>
                 </div>
-                {{/if}}
 
             </div>
             {{/each}}
@@ -29,19 +27,17 @@
             {{#each rightShredsTop}}
             <div class="column half">
 
-                {{#if this.youtubeId}}
                 <div class="brd-dark box-wrap le-wrap stage-thumb-wrap" data-evt="play" data-model="{{_id}}">
-                    <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
+                    <img src="{{thumb}}" class="shred-thumb">
                     <div class="le-in thmb pas white">
                         <p>{{this.user.username}}</p>
                         <small class="lead white">{{title}}</small>
                         <div class="le-in profile-img-thumb">
-                            <img src="/img/profiles/{{user.profileImgFile}}" class="thumb-round img-xs">
+                            <img src="{{user.profileImgFile}}" class="thumb-round img-xs">
                         </div>
                     </div>
                     <div class="le-in full-in"></div>
                 </div>
-                {{/if}}
 
             </div>
             {{/each}}
@@ -55,19 +51,17 @@
                 {{#each rightShredsBottom}}
                 <div class="column half">
 
-                    {{#if this.youtubeId}}
                     <div class="brd-dark box-wrap le-wrap stage-thumb-wrap" data-evt="play" data-model="{{_id}}">
-                        <img src="http://img.youtube.com/vi/{{this.youtubeId}}/0.jpg" class="shred-thumb">
+                        <img src="{{thumb}}" class="shred-thumb">
                         <div class="le-in thmb pas white">
                             <p>{{this.user.username}}</p>
                             <small class="lead white">{{title}}</small>
                             <div class="le-in profile-img-thumb">
-                                <img src="/img/profiles/{{user.profileImgFile}}" class="thumb-round img-xs">
+                                <img src="{{user.profileImgFile}}" class="thumb-round img-xs">
                             </div>
                         </div>
                         <div class="le-in full-in"></div>
                     </div>
-                    {{/if}}
 
                 </div>
                 {{/each}}

@@ -71,3 +71,9 @@ html {
 .no-top-marg {
 	margin-top: -2.7em; //this probably breaks something
 }
+
+// right-side list of vids in shredLayout
+.vid-thmb-list {
+	max-height: $thumb-list-height;
+	overflow-y:scroll;
+}

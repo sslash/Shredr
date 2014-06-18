@@ -33,6 +33,7 @@ var KickerRegionView = Backbone.Marionette.Layout.extend({
     },
 
     initialize : function () {
+        console.log('sap2')
         this.listenTo(Shredr.vent, 'shred:stage:render', this.showShredStageKicker);
         this.listenTo(Shredr.vent, 'users:stage:render', this.showUsersStageKicker);
         this.listenTo(Shredr.vent, 'users:layout:render', this.showUserKicker);
@@ -63,7 +64,13 @@ var KickerRegionView = Backbone.Marionette.Layout.extend({
     },
 
     showShredKicker : function (model) {
+        // TODO: clean this shit up.
         this.wrap.show(new ShredDetailKickerView({model : model}));
+        // if ( typeof this.wrap.el === 'string') {
+        //     $(this.wrap.el).html(new ShredDetailKickerView({model : model}).render().el);
+        // } else {
+        //     this.wrap.show(new ShredDetailKickerView({model : model}));
+        // }
     },
 
     showBattleKicker : function (battle) {

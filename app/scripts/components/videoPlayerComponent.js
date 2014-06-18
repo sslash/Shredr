@@ -3,26 +3,35 @@ define([
     'components/component',
     'libs/youtubePlayer',
     'hbs!tmpl/components/videoPlayerView',
-    'hbs!tmpl/components/videoPlayerView',
     'hbs!tmpl/components/youtubePlayerView',
 
     ],
-    function( Backbone, Component, YoutubePlayer, Tpl, normalTpl, youtubeTpl ) {
+    function( Backbone, Component, YoutubePlayer, tpl, youtubeTpl ) {
         'use strict';
 
         var NormalView = Backbone.Marionette.ItemView.extend({
-            template : Tpl,
-
-            onShow : function () {
-                console.log('hei')
-                this.$('#play-wrap').html(normalTpl(this.model.toJSON()))
-            },
+            template : tpl,
 
             events : {
-                'click [data-evt="play"]' : '__playClicked'
+                'click [data-evt="play"]' : '__playClicked',
+                'click [data-evt="stop"]' : '__stopClicked'
+            },
+
+            getVideo : function () {
+                this.video = this.video || this.$('video');
+                return this.video;
             },
 
             __playClicked : function () {
+                this.getVideo();
+                this.video[0].play();
+                this.trigger('player:playing');
+            },
+
+            __stopClicked : function () {
+                this.getVideo();
+                this.video[0].pause();
+                this.video[0].currentTime = 0;
             }
 
         });

@@ -28,8 +28,6 @@ var ShredSchema = new Schema({
 		createdAt: { type : Date, default : Date.now }
 	}],
 
-	// thumbnail image of shred
-	thumb : String,
 	shredTags: {type: []},
 	gearTags: {type: []},
 	jamtrackTag : {type : String},
@@ -120,23 +118,23 @@ ShredSchema.methods = {
 
 		return def.promise;
 	},
-
-	tryIncreaseview : function(userOrIp) {
-		var def = Q.defer();
-
-		if ( !this.views[userOrIp] ) {
-			this.views[userOrIp] = true;
-			this.markModified('views');
-			this.save(function(err, res) {
-				if ( err ) { def.reject(err); }
-				else { def.resolve(res); }
-			});
-		} else {
-			def.resolve(this);
-		}
-
-		return def.promise;
-	},
+	// 
+	// tryIncreaseview : function(userOrIp) {
+	// 	var def = Q.defer();
+	//
+	// 	if ( !this.views[userOrIp] ) {
+	// 		this.views[userOrIp] = true;
+	// 		this.markModified('views');
+	// 		this.save(function(err, res) {
+	// 			if ( err ) { def.reject(err); }
+	// 			else { def.resolve(res); }
+	// 		});
+	// 	} else {
+	// 		def.resolve(this);
+	// 	}
+	//
+	// 	return def.promise;
+	// },
 
 	getNumberOfViews : function () {
 		return Object.keys(this.views).length;

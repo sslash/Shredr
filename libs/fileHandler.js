@@ -2,14 +2,19 @@ var fs    = require('fs'),
     path  = require('path'),
     Q     = require('q'),
     FFmpeg = require('fluent-ffmpeg'),
-    vidDir = './public/video/';
+    vidDir = './public/video/',
+
+    // stored in mongo
+    thumbDir = '/video/thumbs/';
+
+    // Stored on hdd
+var thumbDirStore =  './public' + thumbDir;
 
 
 module.exports.storeFile = function (args, next) {
 
     // get the temporary location of the file
     var tmp_path = "./" + args.file.path;
-    console.log("Tmp path is: " + tmp_path);
 
     // set where the file should actually exists - in this case it is in the "images" directory
     var target_path = args.path + args.filename;
@@ -24,8 +29,10 @@ module.exports.storeFile = function (args, next) {
         fs.unlink(tmp_path, function() {
             if (err) {
                 //throw err;
+                console.log('error saving file! ' + err);
                 next.call(null, {err : err}, {});
             } else {
+                console.log('File Saved.');
                 //res.send('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes');
                 next.call(null, null, {file : args.file});
             }
@@ -66,7 +73,7 @@ module.exports.storeVideoFile = function (req, opts, next) {
     var args = {
         file : file,
         filename : file.name,
-        path : opts.path || './public/video/'
+        path : opts.path || vidDir
     };
     var size = file.size;
     size /= (1000*1000);
@@ -110,9 +117,10 @@ function createThumbnail(res) {
     })
     .on('end', function(filenames) {
         console.log('Successfully generated ' + filenames.join(', '));
-        res.thumb = filenames.length ? filenames[0] : null;
+        res.thumb = filenames.length ? thumbDir + filenames[0] : null;
         deferred.resolve(res);
     })
-    .takeScreenshots(1, './public/video/thumbs');
+    .takeScreenshots(1, thumbDirStore);
+
     return deferred.promise;
 }

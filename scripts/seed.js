@@ -42,7 +42,7 @@ for ( var i = 0; i < 100; i++ ) {
 		fanees : [],
 		startedPlaying : playedsince[startedP],
 		email : namei + '@sapmail.com',
-		profileImgFile : profileimgs[imgi],
+		profileImgFile : '/img/profiles/' + profileimgs[imgi],
 		location : locations[loci],
 		birth : new Date(),
 		battles : [],

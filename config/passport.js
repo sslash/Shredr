@@ -54,7 +54,7 @@ module.exports = function (passport, config) {
             gender : profile.gender,
             location : (!!profile._json.hometown) ? profile._json.hometown.name : '',
             provider: 'facebook',
-            profileImgUrl : 'http://graph.facebook.com/' + profile.id + '/picture?type=square',
+            profileImgFile : 'http://graph.facebook.com/' + profile.id + '/picture?type=square',
             facebook: profile._json
           })
           user.save(function (err) {

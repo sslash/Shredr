@@ -27,7 +27,7 @@ var ShredLayout = Backbone.Marionette.Layout.extend({
 
     initialize : function () {
 
-        Shredr.baseController.exec( new ShredsCollection(), 'fetch',
+        Shredr.baseController.exec( new ShredsCollection({populate : 'user'}), 'fetch',
             {
                 event : 'shreds:fetch',
                 success : function (shreds, response, options) {
@@ -55,7 +55,7 @@ var ShredLayout = Backbone.Marionette.Layout.extend({
     serializeData : function () {
         var data = {m : this.model.toJSON()};
         if ( this.collection ) {
-            data.things = _.first(this.collection.toJSON(), 3)
+            data.things = this.collection.toJSON()
         }
         return data;
     },
@@ -92,6 +92,7 @@ var ShredLayout = Backbone.Marionette.Layout.extend({
     renderTabs : function () {
         this.tabsComponent = new TabsComponent({
             model : this.model,
+            disabled : true,
             region : new Backbone.Marionette.Region({el : this.$('[data-reg="tabs"]')})
         }).show();
     },

@@ -20,8 +20,6 @@ function (
         },
 
         showShred : function (id) {
-            // create a shredlayout
-            // fetch the shred with exec
             Shredr.baseController.exec( new Shred({id : id}), 'fetch',
                 {
                     event : 'shred:fetch',

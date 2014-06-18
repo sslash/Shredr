@@ -103,105 +103,6 @@ So feel free to use any of these approaches. Or don't. It's totally up to you.
   font-weight: normal;
   font-style: normal; }
 
-.pvs {
-  padding: 0.6em 0; }
-
-.pvm {
-  padding: 1em 0; }
-
-.pvl {
-  padding: 1.5em 0; }
-
-.pvxxl {
-  padding: 3em 0; }
-
-.pvxl {
-  padding: 2em 0; }
-
-.pvhuge {
-  padding: 7em 0; }
-
-.phs {
-  padding: 0 0.6em; }
-
-.phm {
-  padding: 0 1em; }
-
-.phs {
-  padding: 0 0.6em; }
-
-.pts {
-  padding-top: 0.6em; }
-
-.ptm {
-  padding-top: 1em; }
-
-.ptl {
-  padding-top: 1.5em; }
-
-.pbm {
-  padding-bottom: 1em; }
-
-.prl {
-  padding-right: 1.5em; }
-
-.pam {
-  padding: 0.8em; }
-
-.pal {
-  padding: 1.5em; }
-
-.paxl {
-  padding: 2.5em; }
-
-.pas {
-  padding: 0.6em; }
-
-.mvxs {
-  margin: 0 0.3em; }
-
-.mvm {
-  margin: 0.8em 0; }
-
-.mvl {
-  margin: 1.2em 0; }
-
-.mvxl {
-  margin: 2em 0; }
-
-.mtm {
-  margin-top: 0.8em; }
-
-.mtl {
-  margin-top: 1.2em; }
-
-.mbm {
-  margin-bottom: 0.8em; }
-
-.mbs {
-  margin-bottom: 0.6em; }
-
-.mll {
-  margin-left: 1.2em; }
-
-.mam {
-  margin: 0.8em; }
-
-.mal {
-  margin: 1.2em; }
-
-.maxl {
-  margin: 2em; }
-
-.mhm {
-  margin: 0.8em 0; }
-
-.mhs {
-  margin: 0 0.6em; }
-
-.mhl {
-  margin: 0 1.2em; }
-
 .in {
   display: inline-block; }
 
@@ -941,6 +842,12 @@ table {
 .prl {
   padding-right: 1.5em; }
 
+.prs {
+  padding-right: 0.6em; }
+
+.pls {
+  padding-left: 0.6em; }
+
 .pam {
   padding: 0.8em; }
 
@@ -980,6 +887,9 @@ table {
 .mbs {
   margin-bottom: 0.6em; }
 
+.mls {
+  margin-left: 0.6em; }
+
 .mll {
   margin-left: 1.2em; }
 
@@ -997,6 +907,9 @@ table {
 
 .mhm {
   margin: 0 0.8em; }
+
+.mhxl {
+  margin: 0 2em; }
 
 .mhs {
   margin: 0 0.6em; }
@@ -1255,6 +1168,10 @@ html {
 .no-top-marg {
   margin-top: -2.7em; }
 
+.vid-thmb-list {
+  max-height: 359px;
+  overflow-y: scroll; }
+
 /* Links */
 a {
   color: #333333;
@@ -1378,7 +1295,8 @@ figcaption {
   width: 100.1%;
   padding: 1px;
   border: 1px solid #000;
-  background-color: rgba(255, 255, 255, 0.3); }
+  max-height: 359px;
+  background: #313338; }
   .shred-vid.half {
     max-height: 321px; }
 
@@ -1436,7 +1354,10 @@ figcaption {
 
 .shred-thumb {
   width: 100%;
-  max-height: 100%; }
+  max-height: 100%;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
 
 .stage-thumb-wrap {
   cursor: pointer; }
@@ -1472,9 +1393,9 @@ figcaption {
 
 /* video */
 .video-meta {
-  background: rgba(52, 155, 137, 0.45);
-  margin-top: -35px;
-  padding: 5px;
+  background: rgba(0, 0, 0, 0.45);
+  margin-top: -52px;
+  padding: 14px;
   margin-left: 1px;
   margin-right: 1px;
   z-index: 10;
@@ -1495,7 +1416,7 @@ figcaption {
 
 .fullscreenimg {
   position: fixed;
-  top: 112px;
+  top: 108px;
   left: -50%;
   width: 200%;
   height: 200%;
@@ -1536,11 +1457,6 @@ input:-webkit-autofill {
 
 input[type=text], input[type=search], input[type=url], input[type=number], textarea {
   -webkit-appearance: none; }
-
-button, input[type="submit"] {
-  padding: 0.8em;
-  background: #333333;
-  cursor: pointer; }
 
 input[type="checkbox"],
 input[type="radio"] {
@@ -1781,7 +1697,7 @@ td {
 \*------------------------------------*/
 .nav {
   background-color: #2b2828;
-  height: 4em;
+  height: 3.9em;
   padding: 0.3em; }
   .nav > ul {
     height: 100%; }
@@ -2593,11 +2509,11 @@ td {
   -moz-box-shadow: -4px -2px 11px 0px rgba(51, 51, 51, 0.52);
   box-shadow: -4px -2px 11px 0px rgba(51, 51, 51, 0.52);
   right: 0;
-  top: 112px;
+  top: 108px;
   width: 50%; }
 .profile .full-left {
   position: fixed;
-  top: 112px;
+  top: 108px;
   width: 50%;
   bottom: 0;
   left: 0; }

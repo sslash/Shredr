@@ -1,7 +1,26 @@
-<div class="column half pvs" data-mod="kicker"></div>
+<div class="column half" data-mod="kicker">
+    <div class="in">
+        <img src="{{user.profileImgFile}}" class="thumb-round img-xs">
+    </div>
+
+    <div class="in">
+        <span class="thumb-txt">
+            <a class="white" href="/users/{{user._id}}">{{user.username}}</a>
+            <i class="ion-location fa-2x phs"></i><small>{{user.location}}</small>
+        </span>
+    </div>
+</div>
 <div class="column fourth mtl" data-mod="mid">
     <i class="icon ion-ios7-arrow-down icon-2x"></i>
 </div>
-<div class="column fourth mtl txt-right" data-mod="right">
-    <span class="right"><i class="icon ion-ios7-search icon-2x"></i></span>
+
+<div class="column fourth txt-right" data-mod="right">
+    <div class="row clearfix">
+        <div class="column third" style="margin-top: 9px;">
+            <i class="icon ion-ios7-search icon-2x"></i>
+        </div>
+        <div class="column two-thirds" style="margin-top: 4px;">
+            <a href="/workspace" data-reg="workspace" class="btn btn-info wide">Workspace <span class="ion-mic-a"></span></a>
+        </div>
+    </div>
 </div>

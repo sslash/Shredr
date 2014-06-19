@@ -1449,6 +1449,8 @@ button, input, select, textarea {
 
 textarea {
   resize: none; }
+  textarea.tall {
+    height: 8em; }
 
 input, textarea {
   width: 100%;
@@ -1970,8 +1972,7 @@ td {
   -o-transition: background 0.3s ease-in-out;
   transition: background 0.3s ease-in-out; }
   .btn:hover, .btn:focus {
-    background: #777777;
-    color: #f2f2ef; }
+    background: #61b1a3; }
   .btn.disabled {
     background: #eeeeee;
     color: #777777; }
@@ -1983,7 +1984,7 @@ td {
 
 .btn-info {
   background-color: #307ca8; }
-  .btn-info:hover {
+  .btn-info:hover, .btn-info:focus, .btn-info:active {
     background-color: #4b8cb3; }
 
 .btn-buf {

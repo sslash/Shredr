@@ -152,21 +152,9 @@ module.exports = BaseController.extend({
 	},
 
 	addFan : function (req, res) {
-		var faneeId = req.params.faneeId;
-
-		req.user.addFanee(faneeId)
-		.then(function() {
-			return User.loadSimple(faneeId)
-		})
-		.then( function(user) {
-			return user.addFan(req.user);
-		})
-		.then ( function (user) {
-			return client.send(res, null, user);
-		})
-		.fail ( function(err) {
-			return client.error(res, err);
-		})
+		userService.addFan(req.params.faneeId, req.user)
+		.then(client.send.bind(null, res, null), client.error.bind(null, res))
+		.done();
 	},
 
 	logout : function(req,res){

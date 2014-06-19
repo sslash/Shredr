@@ -25,5 +25,22 @@ module.exports = {
     create : function (body) {
         var user = new User(body);
         return user.create();
+    },
+
+    addFan : function (faneeId, user) {
+        var def = Q.defer();
+        user.addFanee(faneeId)
+        .then(function() {
+            return User.loadSimple(faneeId)
+        })
+        .then( function(userRes) {
+            return userRes.addFan(user);
+        })
+        .then ( function (res) {
+            def.resolve(user);
+        })
+        .fail (def.reject).done();
+
+        return def.promise;
     }
 };

@@ -33,7 +33,6 @@ var KickerRegionView = Backbone.Marionette.Layout.extend({
     },
 
     initialize : function () {
-        console.log('sap2')
         this.listenTo(Shredr.vent, 'shred:stage:render', this.showShredStageKicker);
         this.listenTo(Shredr.vent, 'users:stage:render', this.showUsersStageKicker);
         this.listenTo(Shredr.vent, 'users:layout:render', this.showUserKicker);

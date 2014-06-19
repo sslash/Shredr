@@ -22,7 +22,10 @@ button, input, select, textarea {
     font-size: 0.8em;
 }
 
-textarea { resize : none; }
+textarea {
+	resize : none;
+	&.tall { height:8em;}
+}
 
 input, textarea {
 	width: 100%;

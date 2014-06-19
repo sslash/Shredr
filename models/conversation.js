@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
 	config = require('../config/config'),
-  Q       = require('q'),
+	Q       = require('q'),
 	Schema = mongoose.Schema;
 
 /**

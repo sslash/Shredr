@@ -64,6 +64,8 @@ define([
 		}
 	};
 
+	Shredr.updateUser = function (newUser) { this.user = new User(newUser);}
+
 	Shredr.setModel = function (model) {
 		Shredr.model = model;
 	};
@@ -106,7 +108,7 @@ define([
 		if (!options.user.notLoggedIn) {
 			this.authController.silentLogin(new User(options.user));
 		} else {
-			Shredr.user = new User(options.user);
+			Shredr.updateUser(options.user);
 		}
 
 		this.baseController = new BaseController();

@@ -1,6 +1,5 @@
 ##TODOS:
-* Send a message
-* Become fan
+* Become fan -> feedback system
 * Challenge to battle
 * Respond to battle request
 * Finish a battle
@@ -9,3 +8,6 @@
 * Social functions
 * Landing page
 * hide playback buttons
+
+// non importants
+* restrict fans added multiple times

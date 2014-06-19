@@ -4,7 +4,8 @@
  var mongoose   = require('mongoose'),
     Conversation = mongoose.model('Conversation'),
     _          = require('underscore'),
-    Client = require('../libs/responseClient'),
+    client = require('../libs/responseClient'),
+    conversationService = require('../services/conversationService'),
     User = mongoose.model('User');
 
  /**
@@ -12,38 +13,23 @@
  */
  exports.create = function (req, res) {
   var conv = req.body;
-  if ( !conv.recipient || !conv.originator ) {
-    Client.error(res, {'Error' : 'Did not receive a receipent or originator'});
+  if ( !conv.recipient ) {
+    client.error(res, {'Error' : 'Did not receive a receipent'});
   }
 
-  var conversation = new Conversation(conv);
-  conversation.create()
-  .then( function(doc) {
-      return User.loadSimple(conv.recipient);
-  })
-  .then( function(doc) {
-    return doc.addNotification({
-      type : 1,
-      body : 'New message received from ' + req.user.username,
-      referenceId : conversation._id.toString()
-    });
-  })
-  .then( function(doc) {
-    return Client.send(res, null, conversation);
-  })
-  .fail( function (err) {
-    return Client.error(res, err);
-  });
+  conversationService.create(conv, req.user)
+  .then(client.send.bind(null, res, null), client.error.bind(null, res))
+  .done();
 };
 
 exports.get = function (req, res) {
   var id = req.params.id;
   Conversation.load(id)
   .then( function(doc) {
-    return Client.send(res, null, doc);
+    return client.send(res, null, doc);
   })
   .fail( function (err) {
-    return Client.error(res, err);
+    return client.error(res, err);
   });
 };
 
@@ -51,12 +37,12 @@ exports.sendMessage = function (req, res) {
   var id = req.params.id;
   var message = req.body.message;
   if (!message || !message.from || !message.body || message.body.lenght === 0) {
-    return Client.error(res, {'Error' : 'Did not reveice a recipient or message body'});
+    return client.error(res, {'Error' : 'Did not reveice a recipient or message body'});
   }
   message.timestamp = new Date();
   var conversation = {};
 
-  Conversation.loadSimple(id) 
+  Conversation.loadSimple(id)
   // Send the message
   .then( function(conv){
     conversation = conv;
@@ -78,19 +64,19 @@ exports.sendMessage = function (req, res) {
     });
   })
 
-  // return 
+  // return
   .then( function() {
-    return Client.send(res, null, conversation);
+    return client.send(res, null, conversation);
   })
   .fail( function(err) {
-    return Client.error(res, err);
+    return client.error(res, err);
   });
 };
 
-// if (err) { Client.error(res, err); }
+// if (err) { client.error(res, err); }
 //     else {
 //       User.loadSimple(conv.recipient, function (err, res) {
-//         if ( err ) { Client.error(res,err); }
+//         if ( err ) { client.error(res,err); }
 //         else {
 //         }
 //       });

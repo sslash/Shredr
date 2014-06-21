@@ -1,6 +1,7 @@
 ##TODOS:
-* Challenge to battle
+* Notifications
 * Respond to battle request
+* Send and receive messages
 * Finish a battle
 * Promotions
 * Searching
@@ -10,3 +11,6 @@
 
 // non importants
 * restrict fans added multiple times
+
+// bugs
+* cant stop battlerequest playback in advanced mode.

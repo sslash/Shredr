@@ -1,47 +1,23 @@
 //TODO: FINISH SAVE
 /* global define */
 define([
-'backbone',
-'views/modals/baseModalLayout',
-'components/uploadComponent',
+'views/modals/uploadBattleSmplVideoView',
 'components/battlePlayerComponent',
 'hbs!tmpl/modals/uploadBattleAdvVideoView',
 'autocomplete'
 ],
 function (
-    Backbone,
-    BaseModalLayout,
-    UploadComponent,
+    UploadBattleSmplVideoView,
     VPComponent,
     tpl
 ){
     'use strict';
-    var UploadBattleVideoView = BaseModalLayout.extend({
-
-        initialize : function (opts) {
-            opts.classes += ' form-dark';
-            BaseModalLayout.prototype.initialize.apply(this, arguments);
-            this.listenTo(this.model, 'battle:save:success', this.modelSaveSuccess);
-            this.heading = opts.heading || 'Your turn to play. Upload the next battle video!';
-        },
-
-        events : _.extend({}, BaseModalLayout.prototype.events, {
-            'click [data-evt="play"]'   : '__playClicked',
-            'click [data-evt="stop"]'   : '__stopClicked',
-            'click [data-evt="submit"]' : '__submitClicked'
-        }),
+    var UploadBattleVideoView = UploadBattleSmplVideoView.extend({
 
         onShow : function () {
-            // render this view's template
-            BaseModalLayout.prototype.onShow.apply(this, arguments);
-
-            // Render the body template
-            this.ui.body.html(tpl(this.serializeData()));
-
+          UploadBattleSmplVideoView.prototype.onShow.call(this, tpl);
             // set UI now that DOM has new stuff
             this.ui.duration = this.$('[data-model="dur"]');
-
-            this.renderAsyncs();
         },
 
         // These things need the DOM to be ready in order to render
@@ -50,29 +26,15 @@ function (
             setTimeout( function () {
                 try {
                     this.renderUpload();
-                    this.renderCanvas();
+                    this.renderOtherThings();
                 } catch(e) {
                     this.renderAsyncs.call(this);
                 }
             }.bind(this), 20);
         },
 
-        serializeData : function () {
-            return {
-              heading : this.heading,
-              m : this.model.toJSON(),
-              roundNo : this.model.getCurrentRound()
-            };
-        },
-
-        renderUpload : function () {
-            this.uploadComponent = new UploadComponent({
-                fileUpload : true,
-                classes : 'upl-small',
-                fileDrop : true,
-                region : new Backbone.Marionette.Region({ el : this.$('[data-reg="upload"]')})
-            }).show();
-            this.listenTo(this.uploadComponent, 'file:changed:thumb:created', this.videoUploaded);
+        renderOtherThings : function () {
+          this.renderCanvas();
         },
 
         // removes the upload compoment. Renders a draggable video frame
@@ -97,17 +59,6 @@ function (
                 containment: 'parent',
                 stop: this.dragStop.bind(this)
             });
-        },
-
-        showSelectedVideo : function (src) {
-          this.$('[data-reg="upload"]').remove();
-
-          // show the video-draggable region
-          this.$dragRegion = this.$('[data-reg="video-drag"]');
-          this.$dragRegion.append([
-              '<video class="vid-drag" data-model="drag">',
-              '<source src="' + src + '"></source></video>',
-          ].join(''));
         },
 
         // set number of seconds until video must start
@@ -251,14 +202,6 @@ function (
           var mins = Math.floor(seconds / 60);
           var secs = seconds % 60;
           this.ui.duration.text(mins + ':' + secs);
-      },
-
-      modelSaveSuccess : function () {
-          this.__closeClicked();
-      },
-
-       __playClicked : function () {
-          this.startPlayer();
       },
 
       __stopClicked : function () {

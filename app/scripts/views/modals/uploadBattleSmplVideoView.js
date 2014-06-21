@@ -4,8 +4,7 @@ define([
 'backbone',
 'views/modals/baseModalLayout',
 'components/uploadComponent',
-'hbs!tmpl/modals/uploadBattleSmplVideoView',
-'autocomplete'
+'hbs!tmpl/modals/uploadBattleSmplVideoView'
 ],
 function (
     Backbone,
@@ -29,12 +28,16 @@ function (
             'click [data-evt="submit"]' : '__submitClicked'
         }),
 
-        onShow : function () {
+        /**
+        * @otherTpl might be subclass's template
+        */
+        onShow : function (otherTpl) {
             // render this view's template
             BaseModalLayout.prototype.onShow.apply(this, arguments);
 
             // Render the body template
-            this.ui.body.html(tpl(this.serializeData()));
+            otherTpl = otherTpl || tpl;
+            this.ui.body.html(otherTpl(this.serializeData()));
             this.renderAsyncs();
         },
 
@@ -44,11 +47,14 @@ function (
             setTimeout( function () {
                 try {
                     this.renderUpload();
+                    this.renderOtherThings();
                 } catch(e) {
                     this.renderAsyncs.call(this);
                 }
             }.bind(this), 20);
         },
+
+        renderOtherThings : function () {},
 
         serializeData : function () {
             return {
@@ -87,12 +93,17 @@ function (
           this.__closeClicked();
       },
 
+      startPlayer : function () {
+        this.$('video')[0].play();
+      },
+
        __playClicked : function () {
           this.startPlayer();
       },
 
       __stopClicked : function () {
-          this.vpComponent.trigger('player:stop');
+        this.$('video')[0].pause();
+        this.$('video')[0].duration = 0;  
       },
 
       // upload file, then post battleround

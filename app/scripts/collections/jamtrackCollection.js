@@ -7,7 +7,7 @@ function( Backbone, Jamtrack ) {
 
     /* Return a collection class definition */
     return Backbone.Collection.extend({
-        url : 'api/jamtracks',
+        url : '/api/jamtracks',
         model: Jamtrack,
 
         toJSON : function () {

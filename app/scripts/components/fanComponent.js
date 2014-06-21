@@ -24,7 +24,7 @@ define([
                 this.render();
             },
 
-            setFaneeRelationship : function () {                
+            setFaneeRelationship : function () {
                 this.isFan = Shredr.user.isFanOf(this.model.get('_id'));
                 if ( this.isFan ) {
                     var $btn = this.$('[data-evt="fan"]');
@@ -35,7 +35,6 @@ define([
             },
 
             onRender : function () {
-                console.log('rendering!');
                 this.setFaneeRelationship();
             }
 
@@ -43,7 +42,6 @@ define([
 
 
         return Component.extend({
-
             initialize: function(options) {
                 Component.prototype.initialize.call(this, options);
                 this.view = new View({model : this.model});

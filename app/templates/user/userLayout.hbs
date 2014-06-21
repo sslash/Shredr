@@ -23,13 +23,15 @@
                 </small>
 
                 <div class="ptm txt-right">
-                    <section data-reg="fan" class="in"></section> 
+                    <section data-reg="fan" class="in"></section>
                     <button class="btn btn-small" data-evt="pm">Send message <span class="ion-email"></span></button>
                 </div>
             </div>
 
-            <div class="blue-box mal pal txt-center">
-                <button class="btn btn-ser">Challenge To Battle!</button>
+            <div class="mal txt-center">
+                <div class="battle-ch-banner pal">
+                    <button class="btn btn-ser brd" data-evt="br">Challenge To Battle!</button>
+                </div>
             </div>
 
             <div class="blue-box mal pal txt-center">
@@ -41,9 +43,8 @@
         <div class="column half">
             <div class="right scrollable">
                 {{#each m.shreds}}
-
                 <div class="blue-box mal pal txt-center">
-                    <a href="/shred/{{id}}"><img src="{{thumb}}" class="shred-thumb brd-dark"></a>
+                    <a href="/shred/{{_id}}"><img src="{{thumb}}" class="shred-thumb brd-dark"></a>
                     <div class="footer txt-center">
                         <h4 class="lead mam"><a href="/shred/{{id}}">{{title}}</a></h4>
                         <p><small>{{description}}</small></p>

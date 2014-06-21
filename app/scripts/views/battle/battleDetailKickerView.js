@@ -1,7 +1,7 @@
 /* global define */
 define([
     'backbone',
-    'views/modals/uploadBattleVideoView',
+    'views/modals/uploadBattleAdvVideoView',
     'hbs!tmpl/battle/battleDetailKickerView'
 ],
 function (

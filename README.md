@@ -1,5 +1,4 @@
 ##TODOS:
-* Become fan -> feedback system
 * Challenge to battle
 * Respond to battle request
 * Finish a battle

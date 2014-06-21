@@ -1,6 +1,7 @@
 /* global require */
 define([
     'backbone',
+    'libs/utils',
     'views/globals/navRegionView',
     'views/globals/navRegionLINView',
     'views/globals/kickerRegionView',
@@ -9,6 +10,7 @@ define([
 ],
 function (
     Backbone,
+    utils,
     NavRegionView,
     NavRegionLINView,
     KickerRegionView,
@@ -80,6 +82,7 @@ var BaseController = Backbone.Marionette.Controller.extend({
         this.listenTo(Shredr.vent, 'modal:close', this.closeModal);
     },
 
+    // used to render after login modal
     renderGlobalViews : function () {
         if ( Shredr.authController.isLoggedIn() ) {
             this.navRegionView = new NavRegionLINView();
@@ -119,6 +122,17 @@ var BaseController = Backbone.Marionette.Controller.extend({
     showModal : function (view, opts) {
         this.flashRegionView.toggleOverlay(opts);
         Shredr.modalRegion.show(view);
+    },
+
+    hideShowNewModal : function (view) {
+      var el = Shredr.modalRegion.currentView.$el;
+      utils.execTransition(el[0], function () {
+        el.addClass('pull-down-left-after');
+      },function () {
+        view.extraClasses += ' pull-down-left-before';
+        Shredr.modalRegion.show(view)
+      })
+
     },
 
     closeModal : function (opts) {

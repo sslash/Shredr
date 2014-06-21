@@ -11,11 +11,21 @@ var NavRegionView = Backbone.Marionette.ItemView.extend({
     template : tpl,
     className : 'jamtrack-player pull-right',
 
+    events : {
+        'click [data-evt="stop"]' : '__stopClicked'
+    },
+
+    __stopClicked : function () {
+        this.$audio[0].pause();
+        this.$audio[0].currentTime = 0;
+        this.$el.removeClass('pull-right-after');
+    },
+
     playJamtrack : function (jamtrack) {
-        var $audio = this.$('audio');
-        $audio.attr('src', '/audio/' + jamtrack.get('fileId'));
+        this.$audio = this.$('audio');
+        this.$audio.attr('src', '/audio/' + jamtrack.get('fileId'));
         this.showAnimation(jamtrack.get('title'));
-        $audio[0].play();
+        this.$audio[0].play();
     },
 
     showAnimation : function (title) {

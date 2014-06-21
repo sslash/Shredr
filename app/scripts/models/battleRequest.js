@@ -2,11 +2,13 @@ define([
     'backbone',
     'models/user',
     'models/jamtrack',
+    'models/baseBattle'
 ],
-function( Backbone, User, Jamtrack ) {
+function( Backbone, User, Jamtrack, baseBattle ) {
     'use strict';
-    return Backbone.Model.extend({
-        urlRoot : '/api/battleRequest',
+
+    var BattleRequest = Backbone.Model.extend({
+        urlRoot : '/api/battleRequest/',
 
         defaults: {
             battler : {},
@@ -52,10 +54,17 @@ function( Backbone, User, Jamtrack ) {
 
         getUploadUrl : function () {
             if ( !this.id ) {
-                throw Error('Battle Request object does not have an ID');
+                throw new Error('Battle Request object does not have an ID');
             }
 
             return this.url() + '/' + this.get('mode') + '/uploadFile';
+        },
+
+        getLastVideo : function () {
+          return {
+            startSec : 0,
+            startFrame : 0
+          };
         },
 
         getUploadAdvancedFinishedUrl : function () {
@@ -70,4 +79,7 @@ function( Backbone, User, Jamtrack ) {
             });
         }
     });
+
+    _.extend(BattleRequest.prototype, baseBattle);
+    return BattleRequest;
 });

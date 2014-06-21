@@ -1,45 +1,45 @@
 define([
 	'backbone',
-	'models/user'
+	'models/user',
+	'models/baseBattle'
 ],
-function( Backbone, User ) {
+function( Backbone, User, baseBattle ) {
     'use strict';
 
-	/* Return a model class definition */
-	return Backbone.Model.extend({
+	var Battle =  Backbone.Model.extend({
 
 		urlRoot : '/api/battle/',
 
-		/**
-		* Send a battle round instance
-		* First upload battle-video
-		* Then, if ok, upload meta data
-		*/
-		postBattleRound : function (opts) {
-			var url = '/api/battle/' + this.get('_id') + '/postBattleRound/video';
-			opts.uploadComponent.upload(url);
-			this.listenTo(opts.uploadComponent, 'file:upload:success',
-
-				// video sent. now send meta
-				this.postBattleRoundMeta.bind(this, opts));
-		},
-
-		/**
-		* Called when video has been uploaded for a new round
-		* sends a post to the server
-		*/
-		postBattleRoundMeta : function (meta) {
-			var url = '/api/battle/' + this.get('_id') + '/postBattleRound';
-			var dat = this;
-			$.post(url, {
-				startFrame : meta.startFrame,
-				startSec : meta.startSec
-			})
-			.done(function(res) {
-				dat.set({'rounds' : res.rounds});
-				dat.trigger('battle:save:success', dat);
-			})
-		},
+		// /**
+		// * Send a battle round instance
+		// * First upload battle-video
+		// * Then, if ok, upload meta data
+		// */
+		// postBattleRound : function (opts) {
+		// 	var url = this + this.get('_id') + '/postBattleRound/video';
+		// 	opts.uploadComponent.upload(url);
+		// 	this.listenTo(opts.uploadComponent, 'file:upload:success',
+		//
+		// 	// video sent. now send meta
+		// 	this.postBattleRoundMeta.bind(this, opts));
+		// },
+		//
+		// /**
+		// * Called when video has been uploaded for a new round
+		// * sends a post to the server
+		// */
+		// postBattleRoundMeta : function (meta) {
+		// 	var url = '/api/battle/' + this.get('_id') + '/postBattleRound';
+		// 	var dat = this;
+		// 	$.post(url, {
+		// 		startFrame : meta.startFrame,
+		// 		startSec : meta.startSec
+		// 	})
+		// 	.done(function(res) {
+		// 		dat.set({'rounds' : res.rounds});
+		// 		dat.trigger('battle:save:success', dat);
+		// 	})
+		// },
 
 		getRounds : function () {
 			return this.get('rounds');
@@ -116,4 +116,7 @@ function( Backbone, User ) {
 			return votes;
 		}
 	});
+
+	_.extend(Battle.prototype, baseBattle);
+	return Battle;
 });

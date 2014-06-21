@@ -93,27 +93,6 @@ input[type="search"]::-webkit-search-decoration {
     }
 }
 
-
-// .form-light {
-//     textarea,
-//     input[type="text"],
-//     input[type="password"],
-//     input[type="datetime"],
-//     input[type="datetime-local"],
-//     input[type="date"],
-//     input[type="month"],
-//     input[type="time"],
-//     input[type="week"],
-//     input[type="number"],
-//     input[type="email"],
-//     input[type="url"],
-//     input[type="search"],
-//     input[type="tel"],
-//     input[type="color"]{
-//         border: 1px solid $grey-border;
-//     }
-// }
-
 input[type="file"] {
     width: 75px;
 	background-color: transparent !important;
@@ -121,6 +100,7 @@ input[type="file"] {
         margin-top: 15px;
     }
 }
+
 .upload-box {
     width: 48%;
     margin: auto;
@@ -130,6 +110,13 @@ input[type="file"] {
     margin-top: 225px;
     margin-bottom:16px;
     background-color:$brown;
+
+		&.upl-small {
+			width: 25%;
+			h5 {
+				padding:30px;
+			}
+		}
 
     h5 {
         padding: 80px;
@@ -146,7 +133,7 @@ input[type="file"] {
         margin: 2em 0;
         width: 80%;
     }
-    label { margin-top: 1em; }
+    label { margin-top: 2em; }
 }
 
 /* Search Form */

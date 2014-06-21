@@ -9,7 +9,8 @@ define([
         var View = Backbone.Marionette.ItemView.extend({
             template : tmpl,
 
-            initialize : function (options) {
+            initialize : function (opts) {
+                this.extraClasses = opts.classes;
                 this.listenTo(this, 'file:changed:success', this.createThumb);
             },
 
@@ -46,6 +47,10 @@ define([
                 reader.readAsDataURL(file);
             },
 
+            onRender : function () {
+              this.$('[data-reg="droppable"]').addClass(this.extraClasses);
+            },
+
             __fileChanged : function (e) {
                 this.trigger('file:changed', e);
             }
@@ -53,10 +58,10 @@ define([
 
         return Component.extend({
 
-            initialize: function(options){
-                options = options || {};
-                Component.prototype.initialize.call(this, options);
-                this.view = new View();
+            initialize: function(opts) {
+                opts = opts || {};
+                Component.prototype.initialize.call(this, opts);
+                this.view = new View({classes : opts.classes});
                 this.listenTo(this.view, 'file:changed', this.__fileUploadBtnClicked);
                 this.listenTo(this.region, 'show', this.initDropListeners);
                 this.listenTo(this, 'file:upload', this.upload);

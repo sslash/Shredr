@@ -6,7 +6,11 @@ define([
         var Component = Backbone.Marionette.Controller.extend({
             initialize : function (opts) {
                 if ( opts.region ) {
-                    this.region = opts.region;
+                    if ( typeof opts.region === 'string' ) {
+                        this.region = new Backbone.Marionette.Region({el : $(opts.region)})
+                    } else {
+                        this.region = opts.region;
+                    }
                 }
 
                 if ( opts.model ) {

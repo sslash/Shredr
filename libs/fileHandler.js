@@ -1,4 +1,4 @@
-var fs    = require('fs'),
+  var fs    = require('fs'),
     path  = require('path'),
     Q     = require('q'),
     FFmpeg = require('fluent-ffmpeg'),
@@ -46,7 +46,7 @@ module.exports.storeAudioFile = function (req, next) {
         var args = {
             file : file,
             filename : file.name,
-            path : './public/audio/'
+            path : req.filePath || './public/audio/'
         };
 
         // max size = 10Mb
@@ -99,6 +99,8 @@ module.exports.storeVideoFile = function (req, opts, next) {
                     createThumbnail(res)
                     .then(def.resolve, def.reject)
                     .done();
+                }else {
+                  def.resolve(res);
                 }
             }
         });

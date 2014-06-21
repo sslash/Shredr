@@ -1,4 +1,4 @@
-
+$pull-down: 20px; //130px;
 .modal {
     position:fixed;
     left:50%;
@@ -21,7 +21,7 @@
     }
 
     &.pull-down-after {
-        @include translate(0, 130px, 0);
+        @include translate(0, $pull-down, 0);
     }
 
     &.modal-tall {
@@ -29,6 +29,14 @@
         .dark-wrapper {
             height: 100%;
         }
+    }
+
+    &.pull-down-left-before {
+      @include translate(200%, $pull-down, 0);
+    }
+
+    &.pull-down-left-after {
+      @include translate(-200%, $pull-down, 0);
     }
 
     &.modal-huge {

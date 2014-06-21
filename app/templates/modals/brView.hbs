@@ -1,0 +1,74 @@
+<div class="row clearfix" style="height:100%;">
+    <div data-reg="main" style="height:100%;">
+        <div class="column half">
+            <div class="container">
+                <header class="mvxl"><h3>Challenge {{username}} to Battle!</h3></header>
+
+                <div class="col-sm-6 txt-center mtxl">
+                    <img src="{{battler.profileImgFile}}" class="thumb-round img-xs">
+                    <h6 class="fat pal vert-up in">VS</h6>
+                    <img src="{{battlee.profileImgFile}}" class="thumb-round img-xs">
+                </div>
+
+                <div class="mvl">
+                    <p class="lead small white"><strong>Battles</strong> is a competition between two players.
+                        Each player takes turn in uploading a video. Others <strong>vote</strong>.
+                        Battles can also have a <strong>backingtrack</strong></p>
+                </div>
+
+                <div class="col-sm-6 txt-left mtxl">
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds">
+                            <textarea type="text" placeholder="Battle Statement" id="br-statement" class="large"></textarea>
+                        </div>
+                        <div class="column third">
+                            <label for="br-statement" class="small"><em>Create a killer battle challenge message</em></label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds point">
+                            <input type="range" placeholder="Number of Rounds" id="br-rounds" min="1" max="5" value="3">
+                        </div>
+                        <div class="column third">
+                            <label for="shred-description" class="small"><em>Number of rounds the battle will last</em></label>
+                        </div>
+                    </div>
+
+                    <div class="row txt-center mvxl">
+                        <h3 class="lead">Rounds: <span data-mod="rounds">3</span></h3>
+                    </div>
+
+                    <footer class="pam">
+                        <button data-evt="save" class="btn btn-ser brd">Send Battle Challenge</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="column half dark-wrapper">
+            <header class="mvl"><h5 data-mod="mode-head">Select Battle Mode</h5></header>
+
+            <div class="row">
+                <section data-reg="mode">
+                    <img src="/img/banners/battle1.jpg" class="video-thumb point opac" data-evt="smpl">
+                    <div class="row mvm">
+                        <button class="btn btn-small btn-buf" data-evt="smpl">Simple</button>
+                    </div>
+                </section>
+            </div>
+
+            <div class="row">
+                <section data-reg="mode">
+                    <img src="/img/banners/battle2.jpg" class="video-thumb point opac" data-evt="adv">
+                    <div class="row mvm">
+                        <button class="btn btn-small btn-buf" data-evt="adv">Advanced</button>
+                    </div>
+                </section>
+                <section data-reg="upl"></section>
+            </div>
+        </div>
+    </div>
+
+</div>

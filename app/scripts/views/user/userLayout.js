@@ -2,12 +2,14 @@
 define([
     'backbone',
     'views/modals/pmModal',
+    'views/modals/brView',
     'components/fanComponent',
     'hbs!tmpl/user/userLayout'
 ],
 function (
     Backbone,
     PmModal,
+    BrView,
     FanComponent,
     tpl
 ){
@@ -16,7 +18,8 @@ var UserLayout = Backbone.Marionette.Layout.extend({
     template : tpl,
 
     events : {
-        'click [data-evt="pm"]' : '__pmClicked'
+        'click [data-evt="pm"]' : '__pmClicked',
+        'click [data-evt="br"]' : '__brClicked'
     },
 
     onRender : function () {
@@ -30,8 +33,11 @@ var UserLayout = Backbone.Marionette.Layout.extend({
         }).show();
     },
 
-    __fanClicked : function (e) {
-
+    __brClicked : function (e) {
+        Shredr.baseController.showModal(new BrView({
+            model : this.model,
+            classes : 'modal-huge modal-tall form-dark'
+        }));
     },
 
     __pmClicked : function () {

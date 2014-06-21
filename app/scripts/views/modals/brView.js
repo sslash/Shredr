@@ -1,0 +1,184 @@
+/* global require */
+define([
+  'backbone',
+  'models/battleRequest',
+  'collections/jamtrackCollection',
+  'components/uploadComponent',
+  'views/modals/baseModalLayout',
+  'views/globals/playAudioView',
+  'views/modals/uploadBattleAdvVideoView',
+  'views/modals/uploadBattleSmplVideoView',
+  'hbs!tmpl/modals/brView',
+  'hbs!tmpl/battle/jamtrackForm'
+  ],
+  function (
+    Backbone,
+    BattleRequest,
+    JamtrackCollection,
+    UploadComponent,
+    BaseModalLayout,
+    PlayAudioView,
+    UploadBattleAdvVideoView,
+    UploadBattleSmplVideoView,
+    tpl,
+    jamtrackTpl
+  ){
+    'use strict';
+    var BattleRequestView = BaseModalLayout.extend({
+
+      initialize : function (opts) {
+        BaseModalLayout.prototype.initialize.apply(this, arguments);
+        this.brModel = new BattleRequest({
+          battlee : this.model.get('_id'),
+          mode : 'simple'
+        });
+      },
+
+      events : _.extend({}, BaseModalLayout.prototype.events, {
+        'change #br-rounds'             : '__roundsChanged',
+        'click [data-evt="smpl"]'       : '__simpleClicked',
+        'click [data-evt="save"]'       : '__saveClicked',
+        'click [data-evt="adv"]'        : '__advClicked',
+        'click [data-evt="play"]'       : '__playJamtrackClicked',
+        'change [data-mod="jamtracks"]' : '__jamtrackSelected'
+      }),
+
+      ui : _.extend({}, BaseModalLayout.prototype.ui, {
+        rounds : '[data-mod="rounds"]'
+      }),
+
+      onRender : function () {
+        BaseModalLayout.prototype.onRender.apply(this, arguments);
+        this.ui.body.html(tpl({
+          battler : Shredr.user.toJSON(),
+          battlee : this.model.toJSON()
+        }));
+
+        this.bindUIElements();
+      },
+
+      __roundsChanged : function(e) {
+        this.ui.rounds.text(this.$(e.currentTarget).val());
+      },
+
+      __jamtrackSelected : function (e) {
+        this.selectedJamtrack = this.jamtrackColl.get(e.currentTarget.value);
+        this.brModel.set('jamtrackId', this.selectedJamtrack.get('_id'));
+      },
+
+      __simpleClicked : function (e) {
+        this.$('[data-evt="smpl"]').removeClass('opac');
+        this.brModel.set('mode', 'simple');
+      },
+
+      __advClicked : function () {
+        this.$('[data-evt="adv"]').removeClass('opac');
+        this.brModel.set('mode', 'advanced');
+        this.renderJamtrackForm();
+      },
+
+      __playJamtrackClicked : function (e) {
+        this.playAudioView.playJamtrack(this.selectedJamtrack);
+      },
+
+      renderJamtrackForm : function () {
+        // hide mode select images and buttons
+        this.$('[data-mod="mode-head"]').text('Advanced Mode Selected');
+        this.$('[data-reg="mode"]').fadeOut('fast');
+        this.$('[data-reg="upl"]').html(jamtrackTpl);
+
+        this.renderJamtracksColl();
+        this.renderJamtrackPlayback();
+        this.renderUploadComponent();
+      },
+
+      renderJamtracksColl : function () {
+        this.jamtrackColl = new JamtrackCollection();
+        this.listenTo(this.jamtrackColl, 'reset', this.renderJamtracks);
+        this.jamtrackColl.fetch({reset:true});
+      },
+
+      renderJamtrackPlayback : function () {
+        this.playAudioView = new PlayAudioView();
+        this.$el.append(this.playAudioView.render().el);
+      },
+
+      renderUploadComponent : function () {
+        this.uploadComponent = new UploadComponent({
+          fileUpload : true,
+          fileDrop : true,
+          region : new Backbone.Marionette.Region({el : this.$('[data-reg="upload"]')})
+        }).show();
+      },
+
+      renderJamtracks : function () {
+        var $el = this.$('[data-mod="jamtracks"]');
+        this.jamtrackColl.forEach(function(jt) {
+          var html = '<option value="' + jt.get('_id') + '">' + jt.get('title') + '</option>';
+          $el.append(html);
+        });
+      },
+
+      doSave : {
+        simple : function () {
+          this.saveModel();
+        },
+        advanced : function () {
+          // if user has selected a jamtrack from the list.
+          // no need to upload anything
+          if ( this.brModel.get('jamtrackId') ) {
+            this.saveModel();
+            // Or, user should have uploaded either a jamtrack (mode 1), or video
+          } else {
+            if ( !this.uploadComponent.fileAdded() ) { return alert('You must upload a jamtrack, or select an existing');}
+              this.saveModel(this.uploadJamtrack.bind(this));
+            }
+          }
+      },
+
+      uploadJamtrack : function () {
+        this.listenTo(this.uploadComponent, 'file:upload:success', this.onSaveSuccess.bind(this));
+        this.uploadComponent.upload(this.brModel.getUploadUrl());
+      },
+
+      __saveClicked : function () {
+        this.doSave[this.brModel.get('mode')].apply(this);
+      },
+
+      /**
+      * Preconditions:
+      * Mode1: will simply save br
+      * Mode2: jamtrack has been uploaded, or jamtrackid is selected
+      */
+      saveModel : function (next) {
+        // return this.onSaveSuccess(); //TODO just rm this
+        Shredr.baseController.exec(this.brModel, 'save', {
+          attrs : {
+              rounds : this.$('#br-rounds').val(),
+              statement : this.$('#br-statement').val()
+          },
+          success : function (res) {
+            if (next) { next(); }
+            else { this.onSaveSuccess(res); }
+          }.bind(this)
+        });
+      },
+
+      onSaveSuccess : function (res) {
+        if (res) { this.brModel.set(res); }
+
+        var opts = {
+            model : this.brModel,
+            classes : 'modal-wide ',
+            heading : 'Upload your initial battle video!'
+        };
+        var view = this.brModel.get('mode') === 'advanced' ?
+          new UploadBattleAdvVideoView(opts) :
+          new UploadBattleSmplVideoView(opts);
+
+        Shredr.baseController.hideShowNewModal(view);
+      }
+    });
+
+    return BattleRequestView;
+  });

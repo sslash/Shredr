@@ -25,6 +25,10 @@ var BaseModal = Backbone.Marionette.Layout.extend({
 
     onShow : function () {
         setTimeout(function() {
+            // used sometimes for left-transitions
+            this.$el.removeClass('pull-down-left-before');
+
+            // pulls the modal down
             this.$el.addClass('pull-down-after');
         }.bind(this));
     },

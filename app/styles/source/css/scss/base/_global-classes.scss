@@ -8,6 +8,8 @@
     visibility: hidden !important;
 }
 
+.opac { opacity: 0.5; }
+
 /* Completely remove from the flow but leave available to screen readers. */
 .is-vishidden {
     position: absolute !important;
@@ -88,6 +90,7 @@
 .pts { padding-top: 0.6em; }
 .ptm { padding-top: 1em; }
 .ptl { padding-top: 1.5em; }
+.ptxl { padding-top: 2em; }
 .pbm { padding-bottom: 1em; }
 .prl { padding-right:1.5em; }
 .prs { padding-right:0.6em; }
@@ -106,6 +109,7 @@
 .mvxl { margin: 2em 0; }
 .mtm { margin-top: 0.8em; }
 .mtl { margin-top: 1.2em; }
+.mtxl { margin-top: 2em; }
 .mbm { margin-bottom: 0.8em; }
 .mbs { margin-bottom: 0.6em; }
 .mls { margin-left: 0.6em; }
@@ -165,6 +169,10 @@
 
 .point {cursor: pointer;}
 .rel { position:relative;}
+.vert-up {
+    position: relative;
+    bottom: 2em;
+}
 
 .vote-bar { margin:auto; }
 
@@ -209,6 +217,8 @@
 .brd-dark {
     @include brd-dark;
 }
+
+.brd { border: 1px solid !important;}
 
 .brd-light {
     border: 1px solid $gray-light-3;

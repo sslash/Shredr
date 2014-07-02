@@ -25,7 +25,8 @@ function() {
         var dat = this;
         $.post(url, {
           startFrame : meta.startFrame,
-          startSec : meta.startSec
+          startSec : meta.startSec,
+          duration : meta.duration
         })
         .done(function(res) {
           dat.set({'rounds' : res.rounds});

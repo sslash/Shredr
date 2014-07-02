@@ -96,6 +96,7 @@ exports.uploadJamtrack = function (brId, req) {
       battleRequest = br;
       br.startFrame = body.startFrame;
       br.startSec = body.startSec;
+      br.duration = body.duration;
       br.save();
     })
     // send notification to battlee
@@ -137,13 +138,13 @@ exports.uploadJamtrack = function (brId, req) {
 
           // set video files
           battle.rounds = [];
-          battle.rounds[0] = {
-              turns : [{
+          battle.rounds[0] = [
+              {
                   videoFileId : br.advVidFile,
                   createdAt : new Date(),
                   rating : { raters : 0, currentValue : 0 }
-              }]
-          };
+              }
+          ];
 
           // need to save in order to send notification
           battler = br.battler;

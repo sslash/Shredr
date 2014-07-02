@@ -3,7 +3,6 @@
   z-index: $z-dropdown;
   left:0;
   min-width:300px;
-  max-height: 400px;
   top: 37px;
   @include border-radius(4px);
   @include box-shadow(0 3px 7px rgba(0, 0, 0,0.3));
@@ -16,6 +15,10 @@
     background-color:$valid;
     padding: 5px 10px;
     line-height:2em;
+  }
+  > div {
+    max-height: 400px;
+    overflow-y:scroll;
   }
 }
 

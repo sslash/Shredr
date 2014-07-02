@@ -1353,6 +1353,8 @@ figcaption {
   border: 1px solid rgba(255, 255, 255, 0.4); }
 
 .thumb-txt {
+  max-width: 70%;
+  display: inline-block;
   position: relative;
   bottom: 12px;
   margin: 0 12px; }
@@ -2066,7 +2068,9 @@ td {
   .label:hover {
     background-color: #e56b6b; }
   .label.non {
-    background-color: #313338; }
+    background-color: transparent; }
+    .label.non:hover {
+      background-color: rgba(255, 255, 255, 0.1); }
 
 .tags {
   margin: 1px;
@@ -2594,7 +2598,6 @@ td {
   z-index: 200;
   left: 0;
   min-width: 300px;
-  max-height: 400px;
   top: 37px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -2609,6 +2612,9 @@ td {
     background-color: #307ca8;
     padding: 5px 10px;
     line-height: 2em; }
+  .dropdown > div {
+    max-height: 400px;
+    overflow-y: scroll; }
 
 .arrow-up {
   background: #f2f2ef;

@@ -99,7 +99,6 @@ function( Component, tmpl ) {
                 }
                 if ( (this.secs === this.curr.vidStartSec) &&
                     (this.frames === this.curr.vidStartFramesOffset) ) {
-                        console.log('yeah..')
                         this.stopVideo(this.prev.sel, this.peekTwoVids());
                         this.curr.sel.play();
 
@@ -142,20 +141,18 @@ function( Component, tmpl ) {
         return Component.extend({
 
             initialize: function(options) {
-                options = options || {};
+                options || (options = {});
                 this.videos = options.videos;
+                this.mode = options.mode;
                 if ( this.videos[0].vidStartSec === 0 ) { this.videos[0].vidStartSec = 2; }
                 this.audio = options.audio;
                 this.listenTo(this, 'player:stop', this.stop);
-                console.log('sapsdap')
             },
 
-            startPlayer : function (playFn) {
+            startPlayer : function (waitCondition, playFn) {
 
                 function tryRender () {
-                    // if some videos aren't ready, or audio isn't ready, loop.
-                    if ( _.some(this.videos, function(v) {  v.readyState < 3 } )
-                    || this.audio.readyState < 3 ) {
+                    if (waitCondition) {
                         setTimeout(tryRender.bind(this), 40);
 
                     } else {
@@ -168,10 +165,23 @@ function( Component, tmpl ) {
 
 
             play : function () {
-                this.startPlayer(function() {
+                var startFn = function() {
                     this.playIterator = new PlayIterator(this.videos, this.audio, this);
                     this.playIterator.start();
-                });
+                },waitCondition;
+
+                if ( this.mode === 'simple' ) {
+
+                    // if at least one video isn't ready
+                    waitCondition = _.some(this.videos, function(v) {  v.readyState < 3 } );
+
+                    // if at least one video isn't ready, or audio isn't ready, loop.
+                } else {
+                    waitCondition = _.some(this.videos, function(v) {  v.readyState < 3 } )
+                        || this.audio.readyState < 3;
+                }
+
+                this.startPlayer(waitCondition, startFn);
             },
 
             stop : function () {

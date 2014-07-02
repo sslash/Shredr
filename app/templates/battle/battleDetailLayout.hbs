@@ -17,7 +17,7 @@
             {{/each}}
 
             {{#if onlyOneVid}}
-                <img src="/img/profiles/{{m.battlee.profileImgFile}}" class="battle-vid half">
+                <img src="{{m.battlee.profileImgFile}}" class="shred-vid half">
             {{/if}}
         </div>
 
@@ -38,7 +38,7 @@
 
     <div class="row clearfix mvl le-wrap">
         <div class="column third">
-            <h3><img src="/img/profiles/{{m.battler.profileImgFile}}" class="thumb-round img-xs"><span class="thumb-txt">{{m.battler.username}}</span></h3>
+            <h3><img src="{{m.battler.profileImgFile}}" class="thumb-round img-xs"><span class="thumb-txt">{{m.battler.username}}</span></h3>
             <i class="ion-location fa-2x phs"></i><small>{{m.battler.location}}</small>
             <button class="btn btn-niz mhl btn-logo" data-evt="vote" data-model="battler">Vote</button>
         </div>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="column third txt-right">
-            <h3><span class="thumb-txt">{{m.battlee.username}}</span><img src="/img/profiles/{{m.battlee.profileImgFile}}" class="thumb-round img-xs"></h3>
+            <h3><span class="thumb-txt">{{m.battlee.username}}</span><img src="{{m.battlee.profileImgFile}}" class="thumb-round img-xs"></h3>
             <button class="btn btn-niz btn-logo mhl" data-evt="vote" data-model="battlee">Vote</button>
             <i class="ion-location fa-2x phs"></i><small>{{m.battlee.location}}</small>
         </div>

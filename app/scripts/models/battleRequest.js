@@ -63,7 +63,8 @@ function( Backbone, User, Jamtrack, baseBattle ) {
         getLastVideo : function () {
           return {
             startSec : 0,
-            startFrame : 0
+            startFrame : 0,
+            duration : 0
           };
         },
 

@@ -60,7 +60,6 @@ module.exports = BaseController.extend({
     showStageView : function (req, res) {
         shredService.list()
         .then(function (shreds) {
-            debugger
             module.exports.render(req, res, {
                 collBS : shreds,
                 leftShreds : shreds.slice(0,14),

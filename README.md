@@ -1,5 +1,5 @@
 ##TODOS:
-* Finish a battle
+* Finish a battle (send battle request with duration. + finish more.)
 * Promotions
 * Searching
 * Social functions
@@ -12,3 +12,4 @@
 // bugs
 * cant stop battlerequest playback in advanced mode.
 * New fan notification, clicking leads to empty user..
+* Notifications number never changes

@@ -63,13 +63,7 @@ var KickerRegionView = Backbone.Marionette.Layout.extend({
     },
 
     showShredKicker : function (model) {
-        // TODO: clean this shit up.
         this.wrap.show(new ShredDetailKickerView({model : model}));
-        // if ( typeof this.wrap.el === 'string') {
-        //     $(this.wrap.el).html(new ShredDetailKickerView({model : model}).render().el);
-        // } else {
-        //     this.wrap.show(new ShredDetailKickerView({model : model}));
-        // }
     },
 
     showBattleKicker : function (battle) {

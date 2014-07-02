@@ -106,7 +106,10 @@
 		background-color:$red-light;
 	}
 	&.non {
-		background-color: $brown-light;
+		background-color: transparent;
+		&:hover {
+			background-color: rgba(255,255,255,0.1);
+		}
 	}
 
 }

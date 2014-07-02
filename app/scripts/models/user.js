@@ -5,6 +5,9 @@ define([
     'use strict';
     var User = Backbone.Model.extend({
         urlRoot : '/api/user/',
+        defaults : {
+            location : 'Planet Earth'
+        },
 
         create : function (attrs) {
             console.log('hello')

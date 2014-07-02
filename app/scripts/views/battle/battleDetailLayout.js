@@ -101,14 +101,14 @@ var BattleDetailLayout = Backbone.Marionette.Layout.extend({
        for (var i = 0, z = 0; i < rounds.length; i++) {
            battleVids[z++] = {
                sel : this.$battlerVids[i],
-               vidStartSec : parseInt(rounds[i][0].startSec, 10),
-               vidStartFramesOffset: parseInt(rounds[i][0].startFrame, 10)
+               vidStartSec : parseInt(rounds[i][0].startSec, 10) || 0,
+               vidStartFramesOffset: parseInt(rounds[i][0].startFrame, 10) || 0
            }
            if ( this.$battleeVids[i] ) {
                battleVids[z++] = {
                    sel : this.$battleeVids[i],
-                   vidStartSec : parseInt(rounds[i][1].startSec, 10),
-                   vidStartFramesOffset: parseInt(rounds[i][1].startFrame, 10)
+                   vidStartSec : parseInt(rounds[i][1].startSec, 10) || 0,
+                   vidStartFramesOffset: parseInt(rounds[i][1].startFrame, 10) || 0
                }
            }
        }
@@ -143,6 +143,7 @@ var BattleDetailLayout = Backbone.Marionette.Layout.extend({
    __playClicked : function () {
        this.vpComponent = new VPComponent({
            videos : this.getOrderedBattleVids(),
+           mode : this.model.get('mode'),
            audio : this.$('audio')[0]
        });
        this.listenTo(this.vpComponent, 'player:seconds', this.renderPlaySeconds);

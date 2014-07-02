@@ -49,19 +49,16 @@ var BattleSchema = new Schema({
             //     createdAt : {type : Date},
             //     startSec : Number,
             //     startFrame : Number,
+            //     duration : Number // only for simplemode.
+            //                       // Each simplemode video starts right after the prev finishes
             //     rating : {
             //         raters : {type : Number, default : 0},
             //         currentValue : {type : Number, default : 0}
             //     },
-            //     comments: [{
-            //         body: { type : String, default : '' },
-            //         user: { type : Schema.ObjectId, ref : 'User' },
-            //         createdAt: { type : Date, default : Date.now }
-            //     }]
             // },
             // {
             //    // round 2
-            //    things..
+            //    things.. same as above...
             //}
             //]
     // ]

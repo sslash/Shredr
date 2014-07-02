@@ -32,6 +32,13 @@ var PreBattleAnimation = Backbone.Marionette.ItemView.extend({
             );
         }.bind(this), 1600);
     },
+
+    // serializeData : function () {
+    //     var model = this.model.toJSON();
+    //     return {
+    //         battler : this.model.battler.to
+    //     }
+    // }
 });
 
 return PreBattleAnimation;

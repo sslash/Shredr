@@ -2,16 +2,22 @@
 define([
     'backbone',
     'views/modals/uploadBattleAdvVideoView',
+    'views/modals/uploadBattleSmplVideoView',
     'hbs!tmpl/battle/battleDetailKickerView'
 ],
 function (
     Backbone,
     UploadBattleVideoView,
+    UploadBattleSmplVideoView,
     tpl
 ){
 'use strict';
 var BattleDetailKickerView = Backbone.Marionette.ItemView.extend({
     template : tpl,
+
+    initialize : function () {
+        this.listenTo(this.model, 'change:rounds', this.render);
+    },
 
     events : {
         'click button' : '__yourTurnClicked'
@@ -22,9 +28,9 @@ var BattleDetailKickerView = Backbone.Marionette.ItemView.extend({
     },
 
     onRender : function () {
-    //    if ( this.model.isUsersTurn() ) {
+        if ( this.model.isUsersTurn() ) {
             this.ui.mid.html('<button class="btn btn-ser btn-small">Your turn!</button>');
-    //    }
+        }
     },
 
     serializeData : function () {
@@ -32,16 +38,21 @@ var BattleDetailKickerView = Backbone.Marionette.ItemView.extend({
 
         return {
             m : model,
-            isUsersTurn : true, //this.model.isUsersTurn(),
             roundNo : model.rounds.length
         };
     },
 
     __yourTurnClicked : function () {
-        var view = new UploadBattleVideoView({
+        var opts = {
             model : this.model,
-            classes : 'modal-wide'
-        });
+            classes : 'modal-wide ',
+            heading : 'Upload your next battle video!'
+        };
+
+        var view = this.model.get('mode') === 'advanced' ?
+            new UploadBattleVideoView(opts) :
+            new UploadBattleSmplVideoView(opts);
+
         Shredr.baseController.showModal(view);
     }
 });

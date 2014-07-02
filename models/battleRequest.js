@@ -29,6 +29,10 @@ var BattleRequestSchema = new Schema({
   startSec : Number,
   startFrame : Number,
 
+  // Simple mode. Each simplemode video starts
+  // right after the prev finishes
+  duration : Number,
+
 
   // In case for mode2, and the user has chosen an existing jamtrack
   jamtrackId : {type : Schema.ObjectId, ref : 'Jamtrack'}

@@ -6,40 +6,23 @@ define([
 function( Backbone, User, baseBattle ) {
     'use strict';
 
-	var Battle =  Backbone.Model.extend({
+	var Battle = Backbone.Model.extend({
 
 		urlRoot : '/api/battle/',
 
-		// /**
-		// * Send a battle round instance
-		// * First upload battle-video
-		// * Then, if ok, upload meta data
-		// */
-		// postBattleRound : function (opts) {
-		// 	var url = this + this.get('_id') + '/postBattleRound/video';
-		// 	opts.uploadComponent.upload(url);
-		// 	this.listenTo(opts.uploadComponent, 'file:upload:success',
-		//
-		// 	// video sent. now send meta
-		// 	this.postBattleRoundMeta.bind(this, opts));
-		// },
-		//
-		// /**
-		// * Called when video has been uploaded for a new round
-		// * sends a post to the server
-		// */
-		// postBattleRoundMeta : function (meta) {
-		// 	var url = '/api/battle/' + this.get('_id') + '/postBattleRound';
-		// 	var dat = this;
-		// 	$.post(url, {
-		// 		startFrame : meta.startFrame,
-		// 		startSec : meta.startSec
-		// 	})
-		// 	.done(function(res) {
-		// 		dat.set({'rounds' : res.rounds});
-		// 		dat.trigger('battle:save:success', dat);
-		// 	})
-		// },
+		parse : function (attrs) {
+			attrs.id = attrs._id;
+			attrs.battler = new User(attrs.battler);
+			attrs.battlee = new User(attrs.battlee);
+			return attrs;
+		},
+
+		toJSON : function () {
+			var model = Backbone.Model.prototype.toJSON.call(this);
+			model.battler = model.battler.toJSON ? model.battler.toJSON() : model.battler;
+			model.battlee = model.battlee.toJSON ? model.battlee.toJSON() : model.battlee;
+			return model;
+		},
 
 		getRounds : function () {
 			return this.get('rounds');
@@ -58,9 +41,9 @@ function( Backbone, User, baseBattle ) {
 		// User's participation in this battle
 		usersPart : function () {
 			var userId = Shredr.user.get('_id');
-			if ( this.get('battler')._id === userId ) {
+			if ( this.get('battler').get('_id') === userId ) {
 				return 'battler';
-			} else if ( this.get('battlee')._id === userId ) {
+			} else if ( this.get('battlee').get('_id') === userId ) {
 				return 'battlee';
 			} else {
 				return false;
@@ -70,7 +53,7 @@ function( Backbone, User, baseBattle ) {
 		isUsersTurn : function () {
 			var usersPart = this.usersPart();
 			if ( !usersPart ) { return false; }
-			var lastRound = getLastRound();
+			var lastRound = this.getLastRound();
 
 			// its the users turn if he is battler
 			// and the battle needs a new round

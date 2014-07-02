@@ -41,7 +41,6 @@ exports.create = function (req, res) {
     .done();
   };
 
-  // only advanced mode.
   // Used to store meta data about video
   exports.updateBattleRequest = function (req, res) {
     battleRequestService.updateBattleRequest(req.params.id, req.body)

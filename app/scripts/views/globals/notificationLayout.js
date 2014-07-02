@@ -32,7 +32,7 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
 
     serializeData : function () {
       return {
-        notifLen : this.model.get('notifications').length,
+        notLen : this.model.get('notifications').length,
         m : this.model.toJSON()
       };
     },
@@ -77,6 +77,13 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
 
     __dropdownClicked : function () {
       this.ui.body.toggle();
+      this.setSeenOnNotifications();
+    },
+
+    setSeenOnNotifications : function () {
+        var $btn = this.$('[data-mod="btn"]');
+        $btn.addClass('non');
+        $btn.text('0');
     },
 
     onRender : function () {

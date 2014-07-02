@@ -173,7 +173,7 @@ define([
             heading : 'Upload your initial battle video!'
         };
         var view = this.brModel.get('mode') === 'advanced' ?
-          new UploadBattleAdvVideoView(opts) :
+          new UploadBattleAdvVideoView(opts):
           new UploadBattleSmplVideoView(opts);
 
         Shredr.baseController.hideShowNewModal(view);

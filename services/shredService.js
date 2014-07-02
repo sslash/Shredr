@@ -53,8 +53,6 @@ module.exports = {
     comment : function (user, shredId, body) {
         var def = Q.defer();
 
-        debugger
-
         Shred.findSimple(shredId)
         .then(function(shred) {
             shred.comments.push({

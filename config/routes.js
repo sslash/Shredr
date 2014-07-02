@@ -127,8 +127,7 @@ module.exports = function(app, passport){
     failureRedirect: '/login'
   }), userController.signin);
 
-  app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/login'
   }), userController.authCallback);
 

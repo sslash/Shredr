@@ -103,13 +103,20 @@ function (
 
       __stopClicked : function () {
         this.$('video')[0].pause();
-        this.$('video')[0].duration = 0;  
+        this.$('video')[0].duration = 0;
       },
 
       // upload file, then post battleround
       __submitClicked : function () {
+          // some biz logic here. Should be moved to battle/br object...
+          var lastVideo = this.model.getLastVideo();
+          var startSec = lastVideo ? lastVideo.startSec + lastVideo.duration : 0;
+          debugger
           this.model.postBattleRound({
-              uploadComponent : this.uploadComponent
+              uploadComponent : this.uploadComponent,
+              startSec : startSec,
+              startFrame : 0,
+              duration : this.$('video')[0].duration
           });
       }
 

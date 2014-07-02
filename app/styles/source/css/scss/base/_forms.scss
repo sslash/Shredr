@@ -84,7 +84,7 @@ input[type="search"]::-webkit-search-decoration {
 .form-dark {
     background-color: $brown-light !important;
     input, textarea { background-color: $brown; }
-    h2, h4, label, input, textarea { color: $white !important; }
+    h2, h4, p, label, input, textarea { color: $white !important; }
 	a {color: $valid !important;}
     .deep {
         background-color: rgba(31, 30, 30, 0.81);

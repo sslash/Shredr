@@ -36,11 +36,18 @@ function( Backbone ) {
 			var url = this.url() + '/sendMessage';
 			$.post(url, {message : message})
 			.done(function(res) {
+                that.set('messages', res.messages);
 				that.trigger('message:sent:success', res);
 			})
 			.fail(function(jqXHR, textStatus, errorThrown) {
 				that.trigger('message:sent:fail', textStatus);
 			});
-		}
+		},
+
+        // get the user that Shredr.user will send the next message to
+        getSendTo : function () {
+            return this.get('recipient')._id === Shredr.user.get('_id') ?
+                this.get('originator') : this.get('recipient');
+        }
 	});
 });

@@ -967,7 +967,7 @@ table {
   color: #d74b4b; }
 
 .black {
-  color: #333333; }
+  color: #333333 !important; }
 
 .red-grad {
   -webkit-border-radius: 4px;
@@ -1332,7 +1332,7 @@ figcaption {
   width: 5em; }
 
 .img-sm {
-  width: 150px; }
+  width: 110px; }
 
 .img-md {
   width: 200px; }
@@ -1433,6 +1433,8 @@ figcaption {
     margin-left: 50px; }
   .banner .right {
     margin-right: 50px; }
+  .banner .le-in {
+    height: 150px; }
 
 .fullscreenimg {
   position: fixed;
@@ -1515,7 +1517,7 @@ input[type="search"]::-webkit-search-decoration {
   background-color: #313338 !important; }
   .form-dark input, .form-dark textarea {
     background-color: #2b2828; }
-  .form-dark h2, .form-dark h4, .form-dark label, .form-dark input, .form-dark textarea {
+  .form-dark h2, .form-dark h4, .form-dark p, .form-dark label, .form-dark input, .form-dark textarea {
     color: #f2f2ef !important; }
   .form-dark a {
     color: #307ca8 !important; }
@@ -1730,7 +1732,6 @@ td {
     .nav > ul > li {
       padding-right: 3em;
       height: 100%;
-      overflow: auto;
       vertical-align: middle;
       display: table-cell; }
   .nav .active {
@@ -2396,21 +2397,13 @@ td {
   border-color: #d74b4b;
   background: #ffbebe; }
 
-.dropdown {
-  position: fixed;
-  right: 1em;
-  padding: 1em;
-  background-color: #313338;
-  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
-  color: #f2f2ef;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  min-width: 350px; }
-  .dropdown.dd-left {
-    left: 1em;
-    top: 4em;
-    right: inherit; }
+.messages {
+  max-height: 268px;
+  overflow-y: scroll;
+  background: #2b2828;
+  margin: 12px;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.3); }
 
 .battle-play {
   padding: 40px 80px;
@@ -2496,18 +2489,18 @@ td {
   .modal .modal-body {
     height: 100%; }
   .modal.pull-down-after {
-    -webkit-transform: translate3d(0, 20px, 0);
-    transform: translate3d(0, 20px, 0); }
+    -webkit-transform: translate3d(0, 130px, 0);
+    transform: translate3d(0, 130px, 0); }
   .modal.modal-tall {
     height: 540px; }
     .modal.modal-tall .dark-wrapper {
       height: 100%; }
   .modal.pull-down-left-before {
-    -webkit-transform: translate3d(200%, 20px, 0);
-    transform: translate3d(200%, 20px, 0); }
+    -webkit-transform: translate3d(200%, 130px, 0);
+    transform: translate3d(200%, 130px, 0); }
   .modal.pull-down-left-after {
-    -webkit-transform: translate3d(-200%, 20px, 0);
-    transform: translate3d(-200%, 20px, 0); }
+    -webkit-transform: translate3d(-200%, 130px, 0);
+    transform: translate3d(-200%, 130px, 0); }
   .modal.modal-huge {
     margin-left: -40%;
     width: 80%; }
@@ -2522,6 +2515,9 @@ td {
   .modal.modal-short {
     width: 286px;
     margin-left: -143px; }
+  .modal.modal-med {
+    width: 400px;
+    margin-left: -200px; }
   .modal.modal-wide {
     width: 100%; }
     @media (min-width: 768px) {
@@ -2592,3 +2588,50 @@ td {
   margin-right: 10%; }
 .workspace .ws-banner-left {
   margin-left: 10%; }
+
+.dropdown {
+  position: absolute;
+  z-index: 200;
+  left: 0;
+  min-width: 300px;
+  max-height: 400px;
+  top: 37px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  background-color: #f2f2ef; }
+  .dropdown .row {
+    padding: 15px 10px; }
+  .dropdown .footer {
+    background-color: #307ca8;
+    padding: 5px 10px;
+    line-height: 2em; }
+
+.arrow-up {
+  background: #f2f2ef;
+  border: 2px solid #313338; }
+
+.arrow-up:after, .arrow-up:before {
+  bottom: 100%;
+  left: 8%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none; }
+
+.arrow-up:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #f2f2ef;
+  border-width: 10px;
+  margin-left: -10px; }
+
+.arrow-up:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-bottom-color: #313338;
+  border-width: 16px;
+  margin-left: -16px; }

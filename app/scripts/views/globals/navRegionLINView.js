@@ -6,6 +6,7 @@ define([
     'views/globals/navRegionView',
     'models/battleRequest',
     'views/modals/brResponseView',
+    'views/globals/notificationLayout',
     'hbs!tmpl/globals/navRegionLIN'
 ],
 function (
@@ -13,30 +14,31 @@ function (
     NavRegionView,
     BattleRequest,
     BrResponseView,
-    Tpl
+    NotificationLayout,
+    tpl
 ){
 'use strict';
 var NavRegionView = NavRegionView.extend({
-    template : Tpl,
+    template : tpl,
 
     events : {
         'click [data-event="menu"]'      : '__menuClicked',
         'click [data-evt="logout"]'      : '__logoutClicked',
-        'click [data-evt="nots"]'        : '__notificationsClicked',
         'click [data-evt="bodyClk"]'     : '__bodyClicked',
         'mouseleave [data-event="menu"]' : '__menuMouseLeave'
     },
 
     serializeData : function () {
         var user = Shredr.user.toJSON();
-        return {
-            user : user,
-            notifications : user.notifications.length
-        };
+        return { user : user };
     },
 
-    __notificationsClicked : function (e) {
-        $(e.currentTarget).parent().find('.dropdown').show();
+    regions : {
+      notifications : '[data-reg="notifications"]'
+    },
+
+    onRender : function () {
+      this.notifications.show(new NotificationLayout({model : Shredr.user}));
     },
 
     __menuClicked : function (e) {

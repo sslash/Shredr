@@ -33,7 +33,7 @@ var userPlugin  = require('mongoose-user');
 
      notifications : {type:[]},
      bio : {type: String, default: ''},
-     profileImgFile: { type: String, default: 'shredder.jpg' },
+     profileImgFile: { type: String, default: '/img/profiles/shredder.jpg' },
      profileImgUrl: {type : String},
      provider: { type: String, default: 'local' },
      hashed_password: { type: String, default: '' },
@@ -301,16 +301,22 @@ UserSchema.statics = {
         cb(err,res);
       });
   }
-}
+};
 
 // Helpers
 function getNotificationTypeById (id) {
-    if ( id === 1 ) {
-      return 'New Message';
-    } else if ( id === 2 ) {
-      return 'New Fan';
-  } else if (id === 3 ) {
-      return 'New Battle Request';
-  }
-};
-mongoose.model('User', UserSchema)
+    switch(id) {
+    case 1:
+        return 'New Message';
+    case 2:
+        return 'New Fan';
+    case 3:
+        return 'New Battle Request';
+    case 4:
+        return 'Battle Request Accept';
+    case 5:
+        return 'Battle Request Decline';
+    }
+}
+
+mongoose.model('User', UserSchema);

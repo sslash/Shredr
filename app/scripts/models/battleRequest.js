@@ -71,12 +71,20 @@ function( Backbone, User, Jamtrack, baseBattle ) {
             return this.url() + '/' + this.get('mode') + '/uploadVideoFile';
         },
 
-        acceptRequest : function () {
+        respondToBR : function (response) {
             var that = this;
-            $.post(this.url() + '/accept')
-            .done ( function (battle) {
-                that.trigger('battleRequest:accept:success', battle);
+            $.post(this.url() + '/' + response)
+            .done ( function (res) {
+                that.trigger('battleRequest:' + response + ':success', res);
             });
+        },
+
+        declineRequest : function () {
+            this.respondToBR('decline');
+        },
+
+        acceptRequest : function () {
+            this.respondToBR('accept');
         }
     });
 

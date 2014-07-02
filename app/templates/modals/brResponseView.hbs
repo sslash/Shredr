@@ -1,10 +1,10 @@
 <div class="pam txt-center" data-reg="content">
 
-    <p class="lead pam">{{battler.username}} has challenged you to a battle!</p>
+    <p class="lead pam"><a href="/users/{{battler._id}}">{{battler.username}}</a> has challenged you to a battle!</p>
 
     {{#if_eq mode "Advanced"}}
     <div>
-        <video style="max-width: 350px;">
+        <video>
             <source src="video/br/{{advVidFile}}"
             type='video/webm;codecs="vp8, vorbis"'/>
             <source src="video/br/{{advVidFile}}"
@@ -22,27 +22,27 @@
             </audio>
 
             {{else}}
-            <video controls style="max-width: 350px;">
-                <source src="video/br/{{fileId}}"
+            <video controls>
+                <source src="video/br/{{advVidFile}}"
                 type='video/webm;codecs="vp8, vorbis"'/>
-                <source src="video/br/{{fileId}}"
+                <source src="video/br/{{advVidFile}}"
                 type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'/>
             </video>
             {{/if_eq}}
             <div>
-                <span class="pointer" data-event="play">
+                <span class="pointer" data-evt="play">
                     <i class="fa fa-play"></i>
                 </span>
-                <span class="pointer" data-event="stop">
+                <span class="pointer" data-evt="stop">
                     <i class="fa fa-stop"></i>
                 </span>
             </div>
 
-            <p class="mvm">{{statement}}</p>
+            <p class="mvl"><img src="{{battler.profileImgFile}}" class="thumb-round img-xs"><span class="thumb-txt">{{statement}}</span></p>
 
             <div>
-                <button class="btn btn-niz" data-event="accept">Accept</button>
-                <button class="btn" data-event="decline">Decline</button>
+                <button class="btn btn-niz" data-evt="accept">Accept</button>
+                <button class="btn" data-evt="decline">Decline</button>
 
             </div>
         </div>

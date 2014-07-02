@@ -17,20 +17,11 @@
 	background: #ffbebe;
 }
 
-.dropdown {
-	position:fixed;
-	right:1em;
-	padding:1em;
-	background-color:$brown-light;
-	@include box-shadow(0 3px 7px rgba(0, 0, 0,0.3));
-	color: $white;
+.messages {
+	max-height: 268px;
+	overflow-y: scroll;
+	background: #2b2828;
+	margin: 12px;
+	text-align: left;
 	@include brd-dark;
-	min-width: 350px;
-
-	&.dd-left {
-		left:1em;
-		top:4em;
-		right:inherit;
-	}
-
 }

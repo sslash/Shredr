@@ -94,6 +94,7 @@ module.exports = function(app, passport){
   app.post('/api/battleRequest/:id/:mode/uploadFile', auth.requiresLogin, battleRequestController.uploadJamtrack);
   //app.post('/api/battleRequest/:id/Advanced/uploadVideoFile', auth.requiresLogin, battleRequestController.uploadInitialBrVideoAdvanced);
   app.post('/api/battleRequest/:id/accept', auth.requiresLogin, battleRequestController.acceptBattleRequest);
+  app.post('/api/battleRequest/:id/decline', auth.requiresLogin, battleRequestController.declineBattleRequest);
   app.get('/api/battleRequest/:id', auth.requiresLogin, battleRequestController.getBattleRequest);
   app.post('/api/battleRequest', auth.requiresLogin, battleRequestController.create);
   //app.put('/api/battleRequest/:id', auth.requiresLogin, battleRequestController.updateBattleRequest);

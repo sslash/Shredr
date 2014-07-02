@@ -51,6 +51,10 @@
 // 	}
 // }
 
+nav {
+	// position:relative;
+	// z-index: $z-nav;
+}
 .nav {
 	background-color:$brown;
 	height: $nav-height;
@@ -60,7 +64,7 @@
 		> li {
 			padding-right: 3em;
 			height: 100%;
-			overflow:auto;
+			// overflow:auto;
 			vertical-align: middle;
 			display: table-cell;
 		}

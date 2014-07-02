@@ -141,12 +141,13 @@ function( Component, tmpl ) {
 
         return Component.extend({
 
-            initialize: function(options){
+            initialize: function(options) {
                 options = options || {};
                 this.videos = options.videos;
                 if ( this.videos[0].vidStartSec === 0 ) { this.videos[0].vidStartSec = 2; }
                 this.audio = options.audio;
                 this.listenTo(this, 'player:stop', this.stop);
+                console.log('sapsdap')
             },
 
             startPlayer : function (playFn) {

@@ -1,0 +1,40 @@
+<!-- https://dribbble.com/shots/427354-SeenTh-at-Notifications-Flyout?list=searches&tag=notifications&offset=113 -->
+
+<i class="ion-ios7-bell"></i>
+<small data-evt="drop" class="label{{#if_eq notifications 0}} non{{/if_eq}}">{{notifLen}}</small>
+<div class="arrow-up dropdown" data-reg="body" style="display:none;">
+  <div class="pam">
+    {{#each m.notifications}}
+    <li class="row txt-left small clearfix black brd-light-bottom point" data-evt="not" data-mod="{{@index}}">
+        <div class="column six">
+          {{#if_eq type "New Fan"}}
+            <i class="icon ion-ios7-personadd icon-2x"></i>
+          {{/if_eq}}
+
+          {{#if_eq type "New Battle Request"}}
+              <i class="icon ion-game-controller-a icon-2x"></i>
+          {{/if_eq}}
+
+          {{#if_eq type "Battle Request Accept"}}
+              <i class="icon ion-game-controller-a icon-2x"></i>
+          {{/if_eq}}
+
+          {{#if_eq type "Battle Request Decline"}}
+              <i class="icon ion-ios7-close-empty icon-2x"></i>
+          {{/if_eq}}
+
+          {{#if_eq type "New Message"}}
+              <i class="icon ion-chatbubble-working icon-2x"></i>
+          {{/if_eq}}
+        </div>
+        <div class="column five-six">
+            <p class="black">{{this.body}}</p>
+        </div>
+    </li>
+    {{/each}}
+  </div>
+
+      <div class="footer row clearfix">
+            <p>Notifications <span class="icon ion-ios7-close-empty icon-2x point right" data-evt="drop"></span></p>
+    </div>
+</div>

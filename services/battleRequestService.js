@@ -103,3 +103,81 @@ exports.uploadJamtrack = function (brId, req) {
       return sendBrNotification(battleRequest);
     });
   };
+
+  var sendBrRespondNotification = function (type, response, battler, battlee, referenceId) {
+      return battler.addNotification({
+        type : type,
+        body : 'Battle request to ' + battlee.username + ' was ' + response,
+        id  : referenceId + new Date().getTime(),
+        referenceId : referenceId
+      });
+  };
+
+  exports.acceptBattleRequest = function (battleId) {
+      var def = Q.defer();
+      var battler = {}, battleRequest, battle, battlee;
+      BattleRequest.findById(battleId)
+      // copy things over from battle request object
+      .then(function(br) {
+          battleRequest = br;
+          battle = new Battle();
+          battle.battler = br.battler._id.toString();
+          battle.battlee = br.battlee._id.toString();
+          battle.numRounds = br.rounds;
+          battle.mode = br.mode;
+
+          if ( br.mode === 'Advanced') {
+              // set jamtrack
+              if ( br.jamtrackId ) {
+                  battle.jamtrackId = br.jamtrackId._id.toString();
+              } else {
+                  battle.jamtrackFileId = br.jamtrackFileId;
+              }
+          }
+
+          // set video files
+          battle.rounds = [];
+          battle.rounds[0] = {
+              turns : [{
+                  videoFileId : br.advVidFile,
+                  createdAt : new Date(),
+                  rating : { raters : 0, currentValue : 0 }
+              }]
+          };
+
+          // need to save in order to send notification
+          battler = br.battler;
+          battlee = br.battlee;
+          return battle.save();
+      })
+
+      // send notification and delete battlerequest object
+      .then(function() {
+          sendBrRespondNotification(4, 'accepted', battler, battlee,
+          battle._id.toString());
+
+          return battleRequest.remove();
+      })
+      .then(function () {
+          def.resolve(battle);
+      })
+      .fail(function(err) {
+          def.reject(err);
+      }).done();
+
+      return def.promise;
+};
+
+exports.declineBattleRequest = function (brId) {
+    return BattleRequest.findById(brId)
+    .then(function(br) {
+        sendBrRespondNotification(5, 'declined', br.battler, br.battlee,
+            br.battlee._id.toString());
+        return br.remove();
+    })
+    .fail(function(err) {
+        console.log('failed..'  + err);
+        throw err;
+    })
+
+};

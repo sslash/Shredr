@@ -1,7 +1,4 @@
 ##TODOS:
-* Notifications
-* Respond to battle request
-* Send and receive messages
 * Finish a battle
 * Promotions
 * Searching
@@ -14,3 +11,4 @@
 
 // bugs
 * cant stop battlerequest playback in advanced mode.
+* New fan notification, clicking leads to empty user..

@@ -9,6 +9,7 @@ var responseClient = {
 	},
 
 	error : function (res, errorMsg, errorCode) {
+		errorMsg || (errorMsg = errorMsg.toString());
 		errorCode = errorCode || 400;
 		res.send({error : errorMsg}, errorCode);
 	}

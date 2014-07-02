@@ -1,0 +1,19 @@
+<header>
+    <div class="tab-btn"><h2 class="bold"> <span class="white ion-chatbubble-working icon"></small> {{recipient.username}}</h2></div>
+</header>
+
+
+<section class="messages">
+    {{#each messages}}
+    <section class="pam row clearfix">
+        <div class="column fourth">
+            <img src="{{from.profileImgFile}}" class="thumb-round img-xs">
+        </div>
+        <div class="column three-fourth">
+            <p class="tall">{{body}}</p>
+        </div>
+    </section>
+    {{/each}}
+</section>
+
+<section data-reg="reply" class="mvl"></section>

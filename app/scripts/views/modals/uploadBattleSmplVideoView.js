@@ -109,9 +109,11 @@ function (
       // upload file, then post battleround
       __submitClicked : function () {
           // some biz logic here. Should be moved to battle/br object...
+
+          TODO: INTEGER PARSE NEEDED IN ORDER TO WORK
           var lastVideo = this.model.getLastVideo();
           var startSec = lastVideo ? lastVideo.startSec + lastVideo.duration : 0;
-          debugger
+
           this.model.postBattleRound({
               uploadComponent : this.uploadComponent,
               startSec : startSec,

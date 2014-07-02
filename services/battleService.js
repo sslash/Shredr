@@ -88,7 +88,8 @@ module.exports = {
 
             _.extend(battle.rounds[i][index], {
                 startFrame : body.startFrame,
-                startSec   : body.startSec
+                startSec   : body.startSec,
+                duration   : body.duration,
             });
             battle.markModified('rounds');
             battle.save(function(err) {

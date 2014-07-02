@@ -142,6 +142,9 @@ exports.uploadJamtrack = function (brId, req) {
               {
                   videoFileId : br.advVidFile,
                   createdAt : new Date(),
+                  startSec : 0,
+                  startFrame : 0,
+                  duration : br.duration,
                   rating : { raters : 0, currentValue : 0 }
               }
           ];

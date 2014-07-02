@@ -1,5 +1,10 @@
 ##TODOS:
-* Finish a battle (send battle request with duration. + finish more.)
+* Finish a battle
+    add battle durations and starttime for simple battles
+    play simple battle
+    see through that advanced battles work now
+    finish battles with winners.
+    
 * Promotions
 * Searching
 * Social functions

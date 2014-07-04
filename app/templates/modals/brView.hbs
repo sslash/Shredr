@@ -5,9 +5,9 @@
                 <header class="mvxl"><h3>Challenge {{username}} to Battle!</h3></header>
 
                 <div class="col-sm-6 txt-center mtxl">
-                    <img src="{{battler.profileImgFile}}" class="thumb-round img-xs">
+                    <img src="{{battler.profileImgFile}}" class="thumb-round img-sm">
                     <h6 class="fat pal vert-up in">VS</h6>
-                    <img src="{{battlee.profileImgFile}}" class="thumb-round img-xs">
+                    <img src="{{battlee.profileImgFile}}" class="thumb-round img-sm">
                 </div>
 
                 <div class="mvl">
@@ -28,18 +28,26 @@
 
                     <div class="row clearfix input-row">
                         <div class="column two-thirds point">
-                            <input type="range" placeholder="Number of Rounds" id="br-rounds" min="1" max="5" value="3">
+                            <label class="small">Player has maximum <span class="fat" data-mod="brDays">5</span> days to reply</label>
+                            <input type="range" class="clear-marg" placeholder="Day Limit" id="brDays" min="1" max="7" value="5">
                         </div>
                         <div class="column third">
-                            <label for="shred-description" class="small"><em>Number of rounds the battle will last</em></label>
+                            <label for="br-days" class="small"><em>For each turn, the player has x-amount of days to reply</em></label>
                         </div>
                     </div>
 
-                    <div class="row txt-center mvxl">
-                        <h3 class="lead">Rounds: <span data-mod="rounds">3</span></h3>
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds point">
+                            <label class="small">Battle lasts for <span class="fat" data-mod="brRounds">3</span> rounds</label>
+                            <input type="range" class="clear-marg" placeholder="Number of Rounds" id="brRounds" min="1" max="5" value="3">
+                        </div>
+                        <div class="column third">
+                            <label for="br-rounds" class="small"><em>A round consists of one video from each player.</em></label>
+                        </div>
                     </div>
 
-                    <footer class="pam">
+
+                    <footer class="row pvm">
                         <button data-evt="save" class="btn btn-ser brd">Send Battle Challenge</button>
                     </footer>
                 </div>

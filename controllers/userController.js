@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	shredsController = require('./shredsController'),
+	battleService = require('../services/battleService'),
 	client = require('../libs/responseClient'),
 	Query = require('../libs/query'),
 	BaseController = require("./baseController"),
@@ -19,8 +20,14 @@ var renderIndex = function(req, res, user, err) {
 	});
 };
 
+
+var onLogin = function (req) {
+	battleService.findAndClearBattles(req.user);
+};
+
 var login = function (req, res) {
-  res.send(req.user);
+	onLogin(req);
+	res.send(req.user);
 };
 
 module.exports = BaseController.extend({
@@ -112,7 +119,7 @@ module.exports = BaseController.extend({
 			// manually login the user once successfully signed up
 			// logIn is a passport function (passport.request.js)
 			req.logIn(user, function () {
-				client.send(res, null, user);
+				login();
 			});
 		})
 		.fail(client.error.bind(null,res));
@@ -151,6 +158,17 @@ module.exports = BaseController.extend({
 		});
 	},
 
+	clearNotifications : function (req, res) {
+		var userId = req.params.id;
+		if ( req.user._id.toString() !== userId ) {
+			return client.error(res, 'Not authorized', 401);
+		}
+
+		userService.clearNotifications(req.user)
+		.then(client.send.bind(null, res,null), client.error.bind(null, res) )
+		.done();
+	},
+
 	addFan : function (req, res) {
 		userService.addFan(req.params.faneeId, req.user)
 		.then(client.send.bind(null, res, null), client.error.bind(null, res))
@@ -175,7 +193,8 @@ module.exports = BaseController.extend({
 
 	signin : function(req,res) {},
 
-	authCallback : function(req,res){
+	authCallback : function(req,res) {
+		onLogin(req);
 		res.redirect('/');
 	},
 

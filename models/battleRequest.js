@@ -13,6 +13,7 @@ var BattleRequestSchema = new Schema({
   battlee: {type : Schema.ObjectId, ref : 'User'},
 
   rounds : {type : Number, default: 1},
+  dayLimit : {type : Number, default: 5},
   statement : String,
 
   // Simple or Advanced

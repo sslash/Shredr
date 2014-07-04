@@ -25,7 +25,8 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
 
     events : {
         'click [data-evt="not"]'  : '__notificationsClicked',
-        'click [data-evt="drop"]' : '__dropdownClicked'
+        'click [data-evt="drop"]' : '__dropdownClicked',
+        'click [data-evt="clear"]': '__clearClicked'
     },
 
     ui : { body : '[data-reg="body"]'},
@@ -35,6 +36,10 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
         notLen : this.model.get('notifications').length,
         m : this.model.toJSON()
       };
+    },
+
+    onRender : function () {
+        this.$el.addClass(this.extraClasses);
     },
 
     onShow : function () {},
@@ -83,11 +88,13 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
     setSeenOnNotifications : function () {
         var $btn = this.$('[data-mod="btn"]');
         $btn.addClass('non');
-        $btn.text('0');
+        //$btn.text('0');
     },
 
-    onRender : function () {
-        this.$el.addClass(this.extraClasses);
+    __clearClicked : function (e) {
+        e.preventDefault();
+        Shredr.user.clearNotifications();
+        this.listenTo(Shredr.vent, 'user:clearNotifications:success', this.render);
     }
 });
 

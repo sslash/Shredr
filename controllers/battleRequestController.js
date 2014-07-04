@@ -17,6 +17,7 @@ exports.create = function (req, res) {
     statement: req.body.statement,
     rounds : req.body.rounds,
     mode : req.body.mode,
+    dayLimit : req.body.dayLimit,
     jamtrackId : req.body.jamtrackId || null
 
   })

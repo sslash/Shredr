@@ -42,5 +42,25 @@ module.exports = {
         .fail (def.reject).done();
 
         return def.promise;
+    },
+
+    clearNotifications : function(user) {
+        var def = Q.defer();
+        user.notifications.length = 0;
+        user.notifications = [];
+        user.update({notifications : []}, function(err,res) {
+            if (err) { def.reject(err); }
+            def.resolve(res);
+        });
+        return def.promise;
+    },
+
+    /**
+    * Users have references to all the battles they
+    * are included in
+    */
+    addBattleReference : function(user, battleId) {
+        user.battles.push(battleId);
+        user.save();
     }
 };

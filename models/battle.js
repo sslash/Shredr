@@ -13,6 +13,8 @@ var BattleSchema = new Schema({
 
     numRounds : {type : Number, default: 1},
 
+    dayLimit : {type : Number, default: 5},
+
     // Simple or Advanced
     mode : String,
     createdAt  : {type : Date, default : Date.now},
@@ -95,6 +97,36 @@ BattleSchema.methods = {
             }
         });
         return deferred.promise;
+    },
+
+    getLastVideo : function () {
+        return 'lol';
+    },
+
+    // check it last video in battle is either:
+    // last round, or if not, check if the last video is later then
+    // dayLimit ago
+
+    // TODO: NOT TESTED AND NOT FINISHED AT ALL
+    checkIfFinished : function () {
+
+        // If alle rounds are done
+        if ( this.rounds.length === this.numRounds && this.getLastRound().length === 2 ) {
+            // Battle is finished. draw a winner!
+        }
+
+        // One battle might not have done his job...
+        else {
+            var dayLimit = this.dayLimit;
+            var today = new Date();
+
+            var lastVideoDate = this.getLastVideo().createdAt;
+            var deadlineDay = new Date().setDate(lastVideoDate.getDate() + dayLimit);
+
+            if ( deadlineDay < today ) {
+                // FINISHED! NEXT BATTLER IS A LOOSER
+            }
+        }
     }
 };
 

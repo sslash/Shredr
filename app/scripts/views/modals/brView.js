@@ -35,7 +35,7 @@ define([
       },
 
       events : _.extend({}, BaseModalLayout.prototype.events, {
-        'change #br-rounds'             : '__roundsChanged',
+        'change input[type="range"]'    : '__rangeChanged',
         'click [data-evt="smpl"]'       : '__simpleClicked',
         'click [data-evt="save"]'       : '__saveClicked',
         'click [data-evt="adv"]'        : '__advClicked',
@@ -44,7 +44,8 @@ define([
       }),
 
       ui : _.extend({}, BaseModalLayout.prototype.ui, {
-        rounds : '[data-mod="rounds"]'
+        brRounds : '[data-mod="brRounds"]',
+        brDays : '[data-mod="brDays"]'
       }),
 
       onRender : function () {
@@ -57,8 +58,9 @@ define([
         this.bindUIElements();
       },
 
-      __roundsChanged : function(e) {
-        this.ui.rounds.text(this.$(e.currentTarget).val());
+      __rangeChanged : function(e) {
+          var $ct = $(e.currentTarget);
+          this.ui[$ct.attr('id')].text($ct.val());
       },
 
       __jamtrackSelected : function (e) {
@@ -154,7 +156,8 @@ define([
         // return this.onSaveSuccess(); //TODO just rm this
         Shredr.baseController.exec(this.brModel, 'save', {
           attrs : {
-              rounds : this.$('#br-rounds').val(),
+              rounds : this.$('#brRounds').val(),
+              dayLimit : this.$('#brDays').val(),
               statement : this.$('#br-statement').val()
           },
           success : function (res) {

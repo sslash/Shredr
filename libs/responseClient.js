@@ -1,3 +1,11 @@
+/**
+* Status codes:
+* 401 - Unauthorized
+* 400 - Bad Request
+* 500 - Internal server error
+* 501 - Not implemented
+*/
+
 var responseClient = {
 	send : function(res, err, doc) {
 		console.log('err: ' + err  + ', doc: ' + doc);

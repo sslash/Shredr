@@ -1,7 +1,8 @@
 var mongoose      = require('mongoose'),
-Q             = require('q'),
-fileHandler   = require('../libs/fileHandler'),
-BattleRequest = mongoose.model('BattleRequest');
+    Q             = require('q'),
+    fileHandler   = require('../libs/fileHandler'),
+    userService    = require('./userService'),
+    BattleRequest = mongoose.model('BattleRequest');
 
 exports.create = function (opts) {
   var def = Q.defer();
@@ -125,6 +126,7 @@ exports.uploadJamtrack = function (brId, req) {
           battle.battler = br.battler._id.toString();
           battle.battlee = br.battlee._id.toString();
           battle.numRounds = br.rounds;
+          battle.dayLimit = br.dayLimit;
           battle.mode = br.mode;
 
           if ( br.mode === 'Advanced') {
@@ -157,8 +159,12 @@ exports.uploadJamtrack = function (brId, req) {
 
       // send notification and delete battlerequest object
       .then(function() {
-          sendBrRespondNotification(4, 'accepted', battler, battlee,
-          battle._id.toString());
+          var battleId = battle._id.toString();
+          sendBrRespondNotification(4, 'accepted', battler, battlee, battleId);
+
+          // save battle ids in user objs, dont care if it went well.. (TODO)
+          userService.addBattleReference(battler, battleId);
+          userService.addBattleReference(battlee, battleId);
 
           return battleRequest.remove();
       })

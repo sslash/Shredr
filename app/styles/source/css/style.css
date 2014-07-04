@@ -1332,10 +1332,11 @@ figcaption {
   width: 5em; }
 
 .img-sm {
-  width: 110px; }
+  width: 80px;
+  height: 80px; }
 
 .img-md {
-  width: 200px; }
+  width: 120px; }
 
 .video-thumb {
   width: 50%; }
@@ -1559,6 +1560,8 @@ input[type="file"] {
   width: 80%; }
 .input-row label {
   margin-top: 2em; }
+.input-row .clear-marg {
+  margin: 0; }
 
 /* Search Form */
 .search-field {

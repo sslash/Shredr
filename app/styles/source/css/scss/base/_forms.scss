@@ -134,7 +134,12 @@ input[type="file"] {
         width: 80%;
     }
     label { margin-top: 2em; }
+	.clear-marg {
+		margin:0;
+	}
 }
+
+
 
 /* Search Form */
 .search-field {

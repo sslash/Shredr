@@ -17,7 +17,7 @@ var userPlugin  = require('mongoose-user');
  var UserSchema = new Schema({
      email: { type: String, default: '' },
      username: { type: String, default: '' },
-     location: { type: String, default: '' },
+     location: { type: String, default: 'Planet Earth' },
      birth: {type : Date},
      guitars : {type: []},
      startedPlaying : {type: String, default: ''},

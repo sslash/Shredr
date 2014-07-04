@@ -167,5 +167,18 @@ module.exports = {
         .then(deferred.resolve.bind(null));
 
         return deferred.promise;
+    },
+
+    TODO: CONTINUE HERE. DO THIS FOR:
+    - WHEN LOGGING IN
+    - WHEN ACCESSING A BATTLE (NOT COLLECTION VIEW). HOWEVER THIS DOES NOT USE THIS PARTICUL FN, BUT SOHULD USE THE ONE IN BATTLE.jS
+    findAndClearBattles : function (user) {
+        module.exports.getBattlesByUser(user)
+        .then(function(battles) {
+
+            battles.forEach(function(battle){
+                battle.checkIfFinished();
+            })
+        });
     }
 };

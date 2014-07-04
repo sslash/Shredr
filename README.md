@@ -1,6 +1,6 @@
 ##TODOS:
 * Battles
-    - Finish a battle
+    - Finish a battle - TODO STUFF
     - See through that advanced battles work now
 
     finish battles with winners:

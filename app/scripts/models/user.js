@@ -9,6 +9,10 @@ define([
             location : 'Planet Earth'
         },
 
+        initialize : function () {
+            if ( this.get('_id') ) { this.id = this.get('_id'); }
+        },
+
         create : function (attrs) {
             console.log('hello')
             if ( attrs.password !== attrs.password2 ) {
@@ -39,6 +43,18 @@ define([
 
         isFanOf : function (otherUserId) {
             return _.any(this.get('fanees'), function(fanee) {  return fanee.user === otherUserId; });
+        },
+
+        clearNotifications : function () {
+            var dat = this;
+            $.post(this.url() + '/clearNotifications')
+            .done(function(res) {
+                dat.set('notifications', []);
+                Shredr.vent.trigger('user:clearNotifications:success', res);
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                Shredr.vent.trigger('user:clearNotifications:fail', textStatus);
+            });
         }
     });
 return User;

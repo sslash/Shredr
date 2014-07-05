@@ -11,7 +11,11 @@ var BattleSchema = new Schema({
     // receiver. Sort of
     battlee: {type : Schema.ObjectId, ref : 'User'},
 
-    numRounds : {type : Number, default: 1},
+    winner : {type : Schema.ObjectId, ref : 'User'},
+
+    completed : {type : Boolean, default : false},
+
+    numRounds : {type : Number, default: 2},
 
     dayLimit : {type : Number, default: 5},
 
@@ -99,20 +103,28 @@ BattleSchema.methods = {
         return deferred.promise;
     },
 
+
+    // copied from backbone battle.js. SHould find a way to share..
+    getLastRound : function () {
+        var rounds = this.rounds;
+        return rounds[rounds.length-1];
+    },
+
     getLastVideo : function () {
-        return 'lol';
+        var round = this.getLastRound();
+        return round.length === 2 ? round[1] : round[0];
     },
 
     // check it last video in battle is either:
     // last round, or if not, check if the last video is later then
     // dayLimit ago
-
-    // TODO: NOT TESTED AND NOT FINISHED AT ALL
     checkIfFinished : function () {
+        if ( this.completed === true ) {return true;}
 
         // If alle rounds are done
         if ( this.rounds.length === this.numRounds && this.getLastRound().length === 2 ) {
             // Battle is finished. draw a winner!
+            return this.setFinishedByVote();
         }
 
         // One battle might not have done his job...
@@ -120,13 +132,74 @@ BattleSchema.methods = {
             var dayLimit = this.dayLimit;
             var today = new Date();
 
+            // deadline day is #dayLimit days after lastVideoDate
             var lastVideoDate = this.getLastVideo().createdAt;
             var deadlineDay = new Date().setDate(lastVideoDate.getDate() + dayLimit);
 
             if ( deadlineDay < today ) {
                 // FINISHED! NEXT BATTLER IS A LOOSER
+                return this.setFinishedWithLastRound();
             }
         }
+    },
+
+    setFinishedByVote : function () {
+        var winner,
+            battlers = this.votes.battlers.length,
+            battlees = this.votes.battlees.length;
+
+        if (battlers > battlees) { winner = this.battler; }
+        else if (battlees > battlers) { winner = this.battlee; }
+        else { winner = null; } // tie
+
+        return this.finishBattle(winner);
+    },
+
+    setFinishedWithLastRound : function () {
+        this.completed = true;
+
+        // lastRound has 2 videos ?
+        var winner = this.getLastRound().length === 2 ?
+            // then battlee was the last. Or else battler was the last
+            this.battlee : this.battler;
+
+        return this.finishBattle(winner);
+    },
+
+    // returns a promise
+    finishBattle : function (winner) {
+        var def = Q.defer();
+        this.completed = true;
+        this.winner = winner;
+        var battle = this;
+        var looser = winner._id.toString() === this.battler._id.toString() ?
+            this.battlee : this.battler;
+
+        this.save(function(err, res) {
+
+            if (err) { throw err; }
+
+            // send message to users saying battle is finished.
+            // it would be nicer if user service could listen
+            // to some event and do the job itself, but whatevs.
+            Q.all([
+                winner.addNotification({
+                    type : 6,
+                    body : 'Battle Finished. You Won!',
+                    referenceId : battle._id.toString()
+                }),
+
+                // send looser notification
+
+                looser.addNotification({
+                    type : 6,
+                    body : 'Battle Finished. You Lost.',
+                    referenceId : battle._id.toString()
+                })
+            ]).then(def.resolve, def.reject).done();
+        });
+
+        return def.promise;
     }
 };
 
@@ -184,10 +257,15 @@ BattleSchema.statics = {
         return deferred.promise;
     },
 
-    findMany : function (ids) {
+    findMany : function (ids, opts) {
+        opts || (opts = {});
+        opts.populate = opts.populate || [];
 
         var deferred = Q.defer();
-        this.find({ '_id': { $in: ids } }, function(err, res) {
+        this.find({ '_id': { $in: ids } })
+        .populate(opts.populate)
+        .exec(function(err, res) {
+
             if (err) { deferred.reject(err); }
             else { deferred.resolve(res); }
         });

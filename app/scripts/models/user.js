@@ -14,7 +14,6 @@ define([
         },
 
         create : function (attrs) {
-            console.log('hello')
             if ( attrs.password !== attrs.password2 ) {
                 return this.trigger('invalid', this, 'Passwords are not equal');
             }
@@ -54,6 +53,18 @@ define([
             })
             .fail(function(jqXHR, textStatus, errorThrown) {
                 Shredr.vent.trigger('user:clearNotifications:fail', textStatus);
+            });
+        },
+
+        getUserStuff : function () {
+            var dat = this;
+            $.get(this.url() + '/getUserStuff')
+            .done(function(res) {
+                dat.set(res);
+                Shredr.vent.trigger('user:getUserStuff:success', res);
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                Shredr.vent.trigger('user:getUserStuff:fail', textStatus);
             });
         }
     });

@@ -26,6 +26,10 @@
           {{#if_eq type "New Message"}}
               <i class="icon ion-chatbubble-working icon-2x"></i>
           {{/if_eq}}
+          {{#if_eq type "Battle Finished"}}
+              <i class="icon ion-game-controller icon-2x"></i>
+          {{/if_eq}}
+
         </div>
         <div class="column five-six">
             <p class="black">{{this.body}}</p>

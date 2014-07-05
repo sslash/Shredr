@@ -14,6 +14,7 @@ function (
 var AuthController = Backbone.Marionette.Controller.extend({
     silentLogin : function (user) {
         Shredr.user = user;
+        Shredr.user.getUserStuff();
     },
 
     loginUser : function (user) {

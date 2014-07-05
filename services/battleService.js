@@ -90,6 +90,7 @@ module.exports = {
                 startFrame : body.startFrame,
                 startSec   : body.startSec,
                 duration   : body.duration,
+                createdAt  : new Date()
             });
             battle.markModified('rounds');
             battle.save(function(err) {
@@ -120,8 +121,8 @@ module.exports = {
         return deferred.promise;
     },
 
-    getBattlesByUser : function (user) {
-        return Battle.findMany(user.battles);
+    getBattlesByUser : function (user, opts) {
+        return Battle.findMany(user.battles, opts || {});
     },
 
     postVote : function (userId, battleId, battlerOrBattlee) {
@@ -169,16 +170,21 @@ module.exports = {
         return deferred.promise;
     },
 
-    TODO: CONTINUE HERE. DO THIS FOR:
-    - WHEN LOGGING IN
-    - WHEN ACCESSING A BATTLE (NOT COLLECTION VIEW). HOWEVER THIS DOES NOT USE THIS PARTICUL FN, BUT SOHULD USE THE ONE IN BATTLE.jS
+    // Do this type of thing when:
+    //
+    // When user requests it in /api/user/getUserInfo. happens when SPA loads
+    // When accessing a particular battle (not using the service function)
+    // When battling
     findAndClearBattles : function (user) {
-        module.exports.getBattlesByUser(user)
+        return module.exports.getBattlesByUser(user, {populate : ['battler', 'battlee']})
         .then(function(battles) {
 
-            battles.forEach(function(battle){
-                battle.checkIfFinished();
-            })
+            var promises = battles.map(function(battle) {
+                return battle.checkIfFinished();
+            });
+
+            // Wait until all promises are done, then resolve
+            return Q.all(promises);
         });
     }
 };

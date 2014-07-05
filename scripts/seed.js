@@ -194,3 +194,48 @@ for (var i = 0; i < 30; i++) {
 		user : users[useri]._id,
 	});
 }
+
+
+
+
+
+
+// CUSTOM STUFF
+
+// update array example
+db.users.update({"provider" : "facebook"}, {$set : {notifications : []}})
+
+var threeDaysAgo = new Date();
+threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+
+var battle = {
+	mode : "simple",
+	title : 'hey23',
+	battlee : ObjectId("53b4454a80cd367703ba5a3a"),
+	battler : ObjectId("53b4456480cd367703ba5a3b"),
+	rounds : [
+		[
+			{
+				"rating" : {
+					"currentValue" : 0,
+					"raters" : 0
+				},
+				"duration" : 1337,
+				"startFrame" : 0,
+				"startSec" : 0,
+				"createdAt" : threeDaysAgo,
+				"videoFileId" : "sap2.mp4"
+			}
+		]
+	],
+	comments : [],
+	votes : {
+		"battlees" : [],
+		"battlers" : []
+	},
+	createdAt : new Date(),
+	dayLimit : 2,
+	numRounds : 3
+};
+
+db.battles.save(battle);

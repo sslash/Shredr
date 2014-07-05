@@ -21,6 +21,7 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
 
     initialize : function (opts) {
         this.extraClasses = opts.classes || '';
+        this.listenTo(Shredr.vent, 'user:getUserStuff:success', this.render);
     },
 
     events : {
@@ -58,6 +59,10 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
         },
 
         'Battle Request Accept' : function(notification) {
+            Shredr.navigate('/battle/' + notification.referenceId, {trigger : true});
+        },
+
+        'Battle Finished' : function(notification) {
             Shredr.navigate('/battle/' + notification.referenceId, {trigger : true});
         },
 

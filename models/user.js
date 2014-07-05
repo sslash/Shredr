@@ -140,53 +140,55 @@ UserSchema.pre('save', function(next) {
          return def.promise;
      },
 
-addNotification : function (opts) {
-  var deferred = Q.defer();
-  this.notifications.push({
-    type : getNotificationTypeById(opts.type),
-    body : opts.body,
-    id  : new Date().getTime(),
-    referenceId : opts.referenceId
-  });
+    addNotification : function (opts) {
+      var deferred = Q.defer();
+      this.notifications.push({
+        type : getNotificationTypeById(opts.type),
+        body : opts.body,
+        id  : new Date().getTime(),
+        referenceId : opts.referenceId
+      });
 
-  this.update({notifications : this.notifications},function(err,res) {
-    if (err) { deferred.reject(err); }
-    else { deferred.resolve(res); }
-  });
-  return deferred.promise;
-},
+      this.update({notifications : this.notifications},function(err,res) {
+        if (err) { deferred.reject(err); }
+        else { deferred.resolve(res); }
+      });
+      return deferred.promise;
+    },
 
-addFanee : function (faneeId) {
- var deferred = Q.defer();
- var fanees = this.fanees;
- fanees.push({user : faneeId});
- this.update({fanees : fanees}, function(err,res){
-  if (err) { deferred.reject(err); }
-  else { deferred.resolve(res); }
-});
- return deferred.promise;
-},
+    addFanee : function (faneeId) {
+        var deferred = Q.defer();
+        var fanees = this.fanees;
+        fanees.push({user : faneeId});
 
-addFan : function (fan) {
-   var deferred = Q.defer();
-   var fans = this.fans;
-   var that = this;
-   fans.push({user : fan._id});
-   this.update({fans : fans}, function(err,res){
-    if (err) { deferred.reject(err); }
-    else {
-      return that.addNotification({
-        type : 2,
-        body : 'You got a new fan: ' + fan.username,
-        referenceId : fan._id.toString()
-      })
-      .then( function(res) { deferred.resolve(res); })
-      .fail( function(err) { deferred.reject(err); }
-      );
-    }
-  });
-   return deferred.promise;
-},
+        this.update({fanees : fanees}, function(err,res){
+            if (err) { deferred.reject(err); }
+            else { deferred.resolve(res); }
+        });
+
+        return deferred.promise;
+    },
+
+    addFan : function (fan) {
+        var deferred = Q.defer();
+        var fans = this.fans;
+        var that = this;
+        fans.push({user : fan._id});
+        this.update({fans : fans}, function(err,res){
+            if (err) { deferred.reject(err); }
+                else {
+                    return that.addNotification({
+                        type : 2,
+                        body : 'You got a new fan: ' + fan.username,
+                        referenceId : fan._id.toString()
+                    })
+                    .then( function(res) { deferred.resolve(res); })
+                    .fail( function(err) { deferred.reject(err); }
+                );
+            }
+        });
+        return deferred.promise;
+    },
 
 updatePass: function (cb) {
     return this.save(cb);
@@ -261,62 +263,55 @@ UserSchema.statics = {
 
         return def.promise;
     },
-  // load : function (id, cb) {
-  //   this.findOne({ _id : id })
-  //     .exec(function(err,res) {
-  //       Shred.getShredsByUserId (id, function(err, shreds) {
-  //         res.shreds = shreds;
-  //         cb(err, res);
-  //       });
-  //     })
-  // },
 
-  loadSimple : function(id) {
-    var deferred = Q.defer();
-    this.findOne({_id : id}).exec(function(err, res) {
-      if (err) { deferred.reject(err); }
-      else { deferred.resolve(res); }
-    });
+      loadSimple : function(id) {
+        var deferred = Q.defer();
+        this.findOne({_id : id}).exec(function(err, res) {
+          if (err) { deferred.reject(err); }
+          else { deferred.resolve(res); }
+        });
 
-    return deferred.promise;
-  },
+        return deferred.promise;
+      },
 
-  /**
-   * List shreds
-   *
-   * @param {Object} options
-   * @param {Function} cb
-   * @api private
-   */
-  list: function (options, cb) {
-    var criteria = options.criteria || {};
-    var populate = options.populate || '';
+      /**
+       * List shreds
+       *
+       * @param {Object} options
+       * @param {Function} cb
+       * @api private
+       */
+      list: function (options, cb) {
+        var criteria = options.criteria || {};
+        var populate = options.populate || '';
 
-    this.find(criteria)
-      .populate(populate)
-      .sort({'createdAt': -1}) // sort by date
-      .limit(options.perPage)
-      .skip(options.perPage * options.page)
-      .exec(function(err, res) {
-        cb(err,res);
-      });
-  }
-};
+        this.find(criteria)
+          .populate(populate)
+          .sort({'createdAt': -1}) // sort by date
+          .limit(options.perPage)
+          .skip(options.perPage * options.page)
+          .exec(function(err, res) {
+            cb(err,res);
+          });
+      }
+    };
 
-// Helpers
-function getNotificationTypeById (id) {
-    switch(id) {
-    case 1:
-        return 'New Message';
-    case 2:
-        return 'New Fan';
-    case 3:
-        return 'New Battle Request';
-    case 4:
-        return 'Battle Request Accept';
-    case 5:
-        return 'Battle Request Decline';
+    // Helpers
+    function getNotificationTypeById (id) {
+        switch(id) {
+        case 1:
+            return 'New Message';
+        case 2:
+            return 'New Fan';
+        case 3:
+            return 'New Battle Request';
+        case 4:
+            return 'Battle Request Accept';
+        case 5:
+            return 'Battle Request Decline';
+        case 6:
+            return 'Battle Finished';
+        }
     }
-}
 
-mongoose.model('User', UserSchema);
+    mongoose.model('User', UserSchema);

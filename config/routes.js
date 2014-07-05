@@ -65,6 +65,7 @@ module.exports = function(app, passport){
 
   // Users
   app.get('/api/user/query', userController.query);
+  app.get('/api/user/:id/getUserStuff', auth.requiresLogin, userController.getUserStuff);
   app.put('/api/user/:id', auth.requiresLogin, userController.update);
   app.get('/api/user/:id', userController.getById);
   app.get('/api/user', userController.list);

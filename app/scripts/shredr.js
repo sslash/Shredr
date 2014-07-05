@@ -64,7 +64,9 @@ define([
 		}
 	};
 
-	Shredr.updateUser = function (newUser) { this.user = new User(newUser);}
+	Shredr.updateUser = function (newUser) {
+		this.user = new User(newUser);
+	};
 
 	Shredr.setModel = function (model) {
 		Shredr.model = model;

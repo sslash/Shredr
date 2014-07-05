@@ -20,13 +20,7 @@ var renderIndex = function(req, res, user, err) {
 	});
 };
 
-
-var onLogin = function (req) {
-	battleService.findAndClearBattles(req.user);
-};
-
 var login = function (req, res) {
-	onLogin(req);
 	res.send(req.user);
 };
 
@@ -62,9 +56,9 @@ module.exports = BaseController.extend({
 	query : function (req, res) {
 		return Query.UsersQuery.query(req.query, function (err, result) {
 			if ( err ) {
-			res.send(err, 400);
+				res.send(err, 400);
 			} else {
-			res.send(result);
+				res.send(result);
 			}
 		});
 	},
@@ -104,11 +98,9 @@ module.exports = BaseController.extend({
 				if (err){
 					renderIndex(req, res, {}, err);
 				}
-				console.log('User is logged in: ' + doc);
 				renderIndex(req, res, doc);
 			});
 		} else {
-			console.log('User is not logged in');
 			renderIndex(req, res, {});
 		}
 	},
@@ -175,6 +167,24 @@ module.exports = BaseController.extend({
 		.done();
 	},
 
+
+	// This one:
+	// 	- clears finished battles for user
+	//  - Fetches the feed
+	//	- Should be socket IO thing
+	getUserStuff : function (req, res) {
+		battleService.findAndClearBattles(req.user)
+		.then(function(){
+			return userService.load(req.user._id);
+		})
+		.then(function(user) {
+			client.send(res, null, user);
+		})
+		.fail(function(err) {
+			client.error(res, err);
+		}).done();
+	},
+
 	logout : function(req,res){
 		req.logout();
 		res.redirect('/');
@@ -194,7 +204,6 @@ module.exports = BaseController.extend({
 	signin : function(req,res) {},
 
 	authCallback : function(req,res) {
-		onLogin(req);
 		res.redirect('/');
 	},
 

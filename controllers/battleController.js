@@ -14,6 +14,8 @@ module.exports = BaseController.extend({
             // render hbs
             module.exports.render(req, res, _.extend(result, {
                 type : 'battles',
+                modelBS : b,
+                collBS : result.collBS,
                 round : b.rounds[0],
                 onlyOneVid :  (b.rounds[0].length === 1),
                 tpl : 'battle/battleDetailLayout'
@@ -22,7 +24,7 @@ module.exports = BaseController.extend({
     },
 
     getJSON : function (req, res) {
-        battleService.getById (req.params.id)
+        battleService.getById(req.params.id)
         // get related ?
         .then(client.send.bind(null, res, null));
     },

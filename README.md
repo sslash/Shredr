@@ -1,10 +1,11 @@
 ##TODOS:
+
+* Edit profile (images at least) CONTINUE IN EDIT PROFILE VIEW IN NAV
+
 * Battles
-    - Battle finished view
     - See through that advanced battles work now
 
 * user things in navbar
-* Edit profile (images at least)
 * Promotions
 * Searching
 * Social functions

@@ -13,7 +13,7 @@ var mongoose       = require('mongoose'),
 module.exports = {
     getById : function(id) {
         // returns a promise
-        return Battle.findById(id);
+        return Battle.load(id);
     },
 
     getMany : function () {
@@ -106,7 +106,6 @@ module.exports = {
 
     getManyRelated : function (battle) {
         var deferred = Q.defer();
-
         query.query(Battle)
         .then( function(doc) {
             deferred.resolve({
@@ -163,7 +162,7 @@ module.exports = {
                 user : userId
             });
 
-            return battle.saveOrUpdate(true)
+            return battle.saveOrUpdate(true);
         })
         .then(deferred.resolve.bind(null));
 

@@ -28,6 +28,10 @@ var BattleDetailKickerView = Backbone.Marionette.ItemView.extend({
     },
 
     onRender : function () {
+        if ( this.model.get('completed') === true ) {
+            return this.ui.mid.html('<img src="/img/trophy.png" class="logo-sm left mhm">' +
+                '<figcaption class="fat error in">Battle is Finished</figcaption>');
+        }
         if ( this.model.isUsersTurn() ) {
             this.ui.mid.html('<button class="btn btn-ser btn-small">Your turn!</button>');
         }

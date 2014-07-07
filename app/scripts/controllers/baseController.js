@@ -56,9 +56,14 @@ var BaseController = Backbone.Marionette.Controller.extend({
         } else if (action === 'delete' ) {
             modelOrCollection.sync ('delete', modelOrCollection, conf);
         } else {
+
             // only fetch if client render (changed in renderMainRegion)
             if (Shredr.cliRender) {
                 modelOrCollection[action](config);
+
+                // Set the modelOrCollection object globally on the Shredr instance
+                var fn = 'set' + options.type.charAt(0).toUpperCase() + options.type.slice(1);
+                Shredr[fn](modelOrCollection);
 
             // Models lives on the Shredr object, no need to fetch..
             } else {
@@ -67,7 +72,7 @@ var BaseController = Backbone.Marionette.Controller.extend({
                     config.success(Shredr.model, {fake : true});
                 }
                 else {
-                    config.success(Shredr.collection, {fake : true})
+                    config.success(Shredr.collection, {fake : true});
                 }
             }
         }

@@ -22,10 +22,11 @@ var NavRegionView = NavRegionView.extend({
     template : tpl,
 
     events : {
-        'click [data-event="menu"]'      : '__menuClicked',
         'click [data-evt="logout"]'      : '__logoutClicked',
         'click [data-evt="bodyClk"]'     : '__bodyClicked',
-        'mouseleave [data-event="menu"]' : '__menuMouseLeave'
+        'click [data-evt="menu"]'        : '__menuClicked',
+        'mouseleave [data-reg="menu-body"]'   : '__menuMouseLeave',
+        'click [data-evt="clear"]'       : '__menuMouseLeave'
     },
 
     serializeData : function () {
@@ -37,12 +38,10 @@ var NavRegionView = NavRegionView.extend({
       notifications : '[data-reg="notifications"]'
     },
 
+    ui : { body : '[data-reg="menu-body"]'},
+
     onRender : function () {
       this.notifications.show(new NotificationLayout({model : Shredr.user}));
-    },
-
-    __menuClicked : function (e) {
-        $(e.currentTarget).find('.dropdown').show();
     },
 
     __bodyClicked : function (e) {
@@ -57,13 +56,18 @@ var NavRegionView = NavRegionView.extend({
     },
 
     __menuMouseLeave : function (e) {
-        $(e.currentTarget).find('.dropdown').hide();
+        this.ui.body.hide();
     },
 
     __logoutClicked : function (e) {
         e.preventDefault();
         Shredr.authController.logoutUser();
-    }
+    },
+
+    __menuClicked : function (e) {
+        e.preventDefault();
+        this.ui.body.toggle();
+    },
 });
 
 return NavRegionView;

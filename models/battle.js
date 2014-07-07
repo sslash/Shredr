@@ -243,11 +243,12 @@ BattleSchema.statics = {
         return deferred.promise;
     },
 
-    findById: function (id, cb) {
+    load: function (id, cb) {
         var deferred = Q.defer();
         this.findOne({ _id : id })
         .populate('battler')
         .populate('battlee')
+        .populate('winner')
         .populate('jamtrackId')
         .populate('comments.user')
         .exec(function(err,res) {

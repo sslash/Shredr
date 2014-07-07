@@ -2,17 +2,27 @@
 define([
     'backbone',
     'libs/utils',
-    'hbs!tmpl/battle/preBattleAnimation'
+    'hbs!tmpl/battle/preBattleAnimation',
+    'hbs!tmpl/battle/preCompletedBattleAnimation',
 ],
 function (
     Backbone,
     utils,
-    Tpl
+    tpl,
+    completeTpl
 ){
 'use strict';
 var PreBattleAnimation = Backbone.Marionette.ItemView.extend({
     className : 'battle-anim',
-    template : Tpl,
+    template : tpl,
+
+    getTemplate : function () {
+        if ( this.model.get('completed') === true ) {
+            return completeTpl;
+        } else {
+            return tpl;
+        }
+    },
 
     onShow : function () {
         // pull in

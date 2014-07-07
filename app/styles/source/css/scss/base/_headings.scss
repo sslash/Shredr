@@ -40,6 +40,15 @@ a {
 	text-decoration:none;
 }
 
+.glow {
+	text-shadow: 1px 1px 2px #EBF0B5;
+}
+
+.win {
+	text-decoration: underline;
+	font-style: italic;
+}
+
 strong {
 	font-family: $font-secondary;
 }

@@ -261,39 +261,6 @@ $thumb-list-height: 359px;
 }
 
 /* things over image, or other thing */
-.le-wrap {
-    position:relative;
-
-    .le-in {
-        position:absolute;
-        &.center {
-            width: 100%;
-            text-align: center;
-        }
-        &.faded {
-            background: rgba(0, 0, 0, 0.71);
-        }
-        &.large-in {
-            bottom:9%;
-            font-size: 6em;
-        }
-        &.full-in {
-            top:0;
-            width: 100%;
-            background-color:inherit;
-            cursor: pointer;
-            height: 98%;
-            z-index: $z-fullin;
-            @include transition(background 0.5s ease);
-            &:hover {
-                background: #000;
-                background: -webkit-gradient(radial,50% 25%,0,50% 25%,400,from(rgba(255,255,255,.01)),to(rgba(255,255,255,.3))) transparent;
-                background: -moz-radial-gradient(center 45deg,circle cover,rgba(255,255,255,.01) 0%,rgba(255,255,255,.3)  100%) transparent;
-            }
-        }
-    }
-}
-
 .green-hov {
     @include transition(color .3s ease);
     &:hover {

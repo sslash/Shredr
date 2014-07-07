@@ -3,7 +3,7 @@
   z-index: $z-dropdown;
   left:0;
   min-width:300px;
-  top: 37px;
+  top: 50px;
   @include border-radius(4px);
   @include box-shadow(0 3px 7px rgba(0, 0, 0,0.3));
   background-color: $white;
@@ -20,6 +20,15 @@
     max-height: 400px;
     overflow-y:scroll;
   }
+
+  &.right-menu {
+      left:inherit !important;
+      right:0;
+  }
+}
+
+.arrow-up-right:after, .arrow-up-right:before {
+    @include arrow_box_b_a(83% !important);
 }
 
 .arrow-up {

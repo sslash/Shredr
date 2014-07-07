@@ -17,6 +17,10 @@ function (
 var UserLayout = Backbone.Marionette.Layout.extend({
     template : tpl,
 
+    initialize : function () {
+        this.listenTo(Shredr.vent, 'users:layout:renderEdit', this.renderEdit);
+    },
+
     events : {
         'click [data-evt="pm"]' : '__pmClicked',
         'click [data-evt="br"]' : '__brClicked'
@@ -31,6 +35,10 @@ var UserLayout = Backbone.Marionette.Layout.extend({
             model : this.model,
             region : new Backbone.Marionette.Region({el : this.$('[data-reg="fan"]')})
         }).show();
+    },
+
+    renderEdit : function () {
+        alert('rendering edit')
     },
 
     __brClicked : function (e) {

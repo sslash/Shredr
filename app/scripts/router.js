@@ -27,6 +27,7 @@ define([
             'battle/:id'   : 'showBattle',
             'shred/:id'    : 'showShred',
             'users/:id'    : 'showUser',
+            'users/:id/edit' : 'editUser',
             'workspace'    : 'showWorkspace',
             '*all'         : 'listShreds'
         },
@@ -40,7 +41,11 @@ define([
         },
 
         showUser : function (id) {
-            this.usersController.showUser();
+            this.usersController.showUser(id);
+        },
+
+        editUser : function (id) {
+            this.usersController.showUser(id, true);
         },
 
         showBattle : function (id) {

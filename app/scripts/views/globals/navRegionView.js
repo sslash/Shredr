@@ -17,7 +17,7 @@ var NavRegionView = Backbone.Marionette.Layout.extend({
     initialize : function () {
         this.listenTo(Shredr.vent, 'mainRegion:preRender', this.setActiveClass);
     },
-
+    
     setActiveClass : function (category) {
         this.$('.active').removeClass('active');
         var sel = '[data-mod="' + category + '"]';

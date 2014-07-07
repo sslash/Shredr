@@ -19,7 +19,7 @@ function (
             Shredr.vent.trigger('users:stage:render', Shredr.collection);
         },
 
-        showUser : function (id) {
+        showUser : function (id, edit) {
 
             Shredr.baseController.exec( new User({id : id}), 'fetch',
                 {
@@ -29,6 +29,11 @@ function (
                         Shredr.baseController.renderMainRegion(UserLayout, {model : user}, 'users');
                         Shredr.setModel(user);
                         Shredr.vent.trigger('users:layout:render', Shredr.model);
+
+                        // render profile clicked
+                        if ( edit ) {
+                            Shredr.vent.trigger('users:layout:renderEdit');
+                        }
                     },
                     type : 'model'
                 }

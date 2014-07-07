@@ -10,14 +10,21 @@
 </div>
 
 <ul class="nav-right no-style">
-    <li><img src="{{user.profileImgFile}}" class="thumb-round img-xs"></li>
-    <li>
-        <section data-event="menu" class="rel">
-            <i class="icon ion-ios7-gear"></i>
-            <ul class="dropdown" style="display:none">
-                <li><a href="#">Edit Profile</a></li>
-                <li><a href="#" data-evt="logout">Logout</a></li>
-            </ul>
-        </section>
-    </li>
-</ul
+    <li><a href="/users/{{user._id}}"><img src="{{user.profileImgFile}}" class="thumb-round img-xs"></a></li>
+
+    <li><a href="#" class="icon ion-ios7-gear point" data-evt="menu"></a></li>
+        <div class="arrow-up arrow-up-right dropdown right-menu" data-reg="menu-body" style="display:none;">
+            <div class="pam">
+                <li class="row txt-left small clearfix black brd-light-bottom point">
+                    <a href="/#users/{{user._id}}/edit" class="black">Edit Profile</a>
+                </li>
+                <li class="row txt-left small clearfix black brd-light-bottom point">
+                    <a href="/logout" class="black">Logout</a>
+                </li>
+            </div>
+
+            <div class="footer row clearfix">
+                <p><span class="icon ion-ios7-close-empty icon-2x point right" data-evt="drop"></span></p>
+            </div>
+        </div>
+</ul>

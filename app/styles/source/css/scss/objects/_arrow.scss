@@ -3,9 +3,9 @@
 	background: $bck;
 	border: $size solid $brdr;
 }
-@mixin arrow_box_b_a () {
+@mixin arrow_box_b_a ($left:8%) {
 	bottom: 100%;
-	left: 8%;
+	left: $left;
 	border: solid transparent;
 	content: " ";
 	height: 0;

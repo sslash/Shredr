@@ -1,7 +1,5 @@
 ##TODOS:
 
-* Edit profile (images at least) CONTINUE IN EDIT PROFILE VIEW IN NAV
-
 * Battles
     - See through that advanced battles work now
 

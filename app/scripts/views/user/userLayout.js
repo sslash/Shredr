@@ -3,6 +3,7 @@ define([
     'backbone',
     'views/modals/pmModal',
     'views/modals/brView',
+    'views/user/editUserView',
     'components/fanComponent',
     'hbs!tmpl/user/userLayout'
 ],
@@ -10,6 +11,7 @@ function (
     Backbone,
     PmModal,
     BrView,
+    EditUserView,
     FanComponent,
     tpl
 ){
@@ -18,7 +20,7 @@ var UserLayout = Backbone.Marionette.Layout.extend({
     template : tpl,
 
     initialize : function () {
-        this.listenTo(Shredr.vent, 'users:layout:renderEdit', this.renderEdit);
+        this.listenTo(Shredr.vent, 'users:layout:renderEditView', this.renderEdit);
     },
 
     events : {
@@ -38,7 +40,11 @@ var UserLayout = Backbone.Marionette.Layout.extend({
     },
 
     renderEdit : function () {
-        alert('rendering edit')
+        console.log('yeah boi')
+        Shredr.baseController.showModal(new EditUserView({
+            model : this.model,
+            classes : 'modal-huge modal-tall form-dark'
+        }));
     },
 
     __brClicked : function (e) {

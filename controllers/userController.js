@@ -53,6 +53,14 @@ module.exports = BaseController.extend({
 		});
 	},
 
+	showEditUser : function(req, res) {
+		module.exports.render(req, res, {
+			modelBS : req.user,
+			type : 'users',
+			tpl : 'user/userLayout'
+		});
+	},
+
 	query : function (req, res) {
 		return Query.UsersQuery.query(req.query, function (err, result) {
 			if ( err ) {
@@ -78,16 +86,20 @@ module.exports = BaseController.extend({
 
 	update : function(req,res) {
 		var user = req.user;
-		user = extend(user, req.body);
+		userService.update(req.user, {
+			startedPlaying : req.body.startedPlaying,
+			location : req.body.location,
+			birth : req.body.birth,
+			bio : req.body.bio
+		})
+		.then(client.send.bind(null, res, null), client.error.bind(null, res) )
+		.done();
+	},
 
-		user.save(function(err) {
-			if (!err) {
-			return res.send(user);
-			} else {
-				console.log('error: ' + err);
-				return res.send({'Error' : 'Failed to save'}, 401);
-			}
-		});
+	uploadProfileImg : function (req, res) {
+		userService.uploadProfileImg(req.user, req)
+		.then(client.send.bind(null, res,null), client.error.bind(null, res) )
+		.done();
 	},
 
 	index : function(req,res) {

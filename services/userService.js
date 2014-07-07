@@ -4,7 +4,8 @@ var mongoose       = require('mongoose'),
     query          = require('../libs/query.js'),
     Q              = require('q'),
     shredService   = require('../services/shredService'),
-    battleService   = require('../services/battleService'),
+    battleService  = require('../services/battleService'),
+    extend         = require('util')._extend,
     fileHandler    = require('../libs/fileHandler');
 
 module.exports = {
@@ -52,6 +53,47 @@ module.exports = {
             if (err) { def.reject(err); }
             def.resolve(res);
         });
+        return def.promise;
+    },
+
+    update : function (user, body) {
+        // only support adding these fields
+        var def = Q.defer();
+        // dont save empty fields
+        for (key in body) {
+            if ( !body[key] ) {
+                delete body[key];
+            }
+        }
+
+        user = extend(user, body);
+
+        user.save(function(err) {
+            if (err) { def.reject(err); }
+            def.resolve(user);
+        });
+
+        return def.promise;
+    },
+
+    uploadProfileImg : function(user, req) {
+        var def = Q.defer();
+        var args = {};
+        args.filePath = './public/img/profiles/';
+        fileHandler.storeImageFile(req, args)
+
+        // Save the reference to the local file
+        .then(function(result) {
+          user.profileImgFile = '/img/profiles/' + result.file.name;
+          user.save(function(err,res) {
+            if ( err ) { return def.reject(err); }
+            def.resolve(user);
+          });
+        })
+        .fail(function(err) {
+          def.reject(err);
+        }).done();
+
         return def.promise;
     },
 

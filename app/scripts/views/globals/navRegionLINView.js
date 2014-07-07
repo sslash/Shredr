@@ -26,7 +26,8 @@ var NavRegionView = NavRegionView.extend({
         'click [data-evt="bodyClk"]'     : '__bodyClicked',
         'click [data-evt="menu"]'        : '__menuClicked',
         'mouseleave [data-reg="menu-body"]'   : '__menuMouseLeave',
-        'click [data-evt="clear"]'       : '__menuMouseLeave'
+        'click [data-evt="clear"]'       : '__menuMouseLeave',
+        'click [data-evt="editProfile"]' : '__editProfileClicked'
     },
 
     serializeData : function () {
@@ -68,6 +69,11 @@ var NavRegionView = NavRegionView.extend({
         e.preventDefault();
         this.ui.body.toggle();
     },
+
+    __editProfileClicked : function (e) {
+        e.preventDefault();
+        Shredr.navigate('/users/edit', {trigger : true});
+    }
 });
 
 return NavRegionView;

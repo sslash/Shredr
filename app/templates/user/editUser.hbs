@@ -1,0 +1,62 @@
+<div class="row clearfix" style="height:100%;">
+    <div data-reg="main" style="height:100%;">
+        <div class="column half">
+            <div class="container">
+                <header class="mvxl"><h3>{{m.username}}'s Shredr Profile</h3></header>
+
+                <div class="col-sm-6 txt-left mtxl">
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds">
+                            <textarea id="bio" class="large" placeholder="Write here.." type="text">{{m.bio}}</textarea>
+                        </div>
+                        <div class="column third">
+                            <label for="bio" class="small"><em>Write a short bio about yourself</em></label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds">
+                            <input type="text" id="guitar-start" type="text" placeholder="e.g 1996" value="{{m.startedPlaying}}">
+                        </div>
+                        <div class="column third">
+                            <label for="guitar-start"><em>When did you start playing guitar</em></label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds point">
+                            <input type="text" id="city" type="text" placeholder="e.g Oslo, Norway" value="{{m.location}}">
+                        </div>
+                        <div class="column third">
+                            <label for="city"><em>Where do you live</em></label>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix input-row">
+                        <div class="column two-thirds point">
+                            <input id="birth" type="date" value="{{m.birth}}">
+                        </div>
+                        <div class="column third">
+                            <label for="birth"><em>When where you born</em></label>
+                        </div>
+                    </div>
+
+                    <footer class="row pvm">
+                        <button data-evt="save" class="btn btn-ser brd">Save</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="column half dark-wrapper">
+            <header class="mvl"><h5 data-mod="mode-head">Select a profile picture</h5></header>
+            <div class="row mvxl"><img src="{{m.profileImgFile}}" class="img-sm thumb-round"></div>
+            <div class="row">
+                <div data-reg="upload"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -21,30 +21,40 @@ define([
             createThumb : function(file) {
                 var reader = new FileReader();
                 var that = this;
-                var $container = this.$('[data-reg="droppable"]');
 
                 // Closure to capture the file information.
                 // creates an html string containing the thumbnail view
                 // and appends it to the DOM instead of the droppable section
                 reader.onload = (function(theFile) {
                     return function(e) {
-
-                        if ( file.type.match('video.*') ){
-                            $container.children().remove();
-                            $container.removeClass('upload-box');
-
-                            var vidHtml = '<video class="video-thumb" data-model="upload-vid" controls>' +
+                        var thumbHtml;
+                        if ( file.type.match('video.*') ) {
+                            thumbHtml = '<video class="video-thumb" data-model="upload-vid" controls>' +
                             '<source src="' + e.target.result + '"</source></video>';
-                            $container.append(vidHtml);
-                            that.trigger('file:changed:thumb:created', e.target.result);
 
-                        } else if (file.type.match('audio.*') ) {}
+                        } else if (file.type.match('audio.*')) {
+                            return;
+
+                        } else if (file.type.match('image.*')) {
+                            thumbHtml = '<img class="img-md brd" data-model="upload-vid" src=' + e.target.result + '>';
+                        }
+
+                        that.renderThumb(thumbHtml, e);
                     };
 
                 })(file);
 
                 // Read in the file as a data URL.
                 reader.readAsDataURL(file);
+            },
+
+            renderThumb : function (thumbHtml, e) {
+                var $container = this.$('[data-reg="droppable"]');
+                $container.children().remove();
+                $container.removeClass('upload-box');
+
+                $container.append(thumbHtml);
+                this.trigger('file:changed:thumb:created', e.target.result);
             },
 
             onRender : function () {

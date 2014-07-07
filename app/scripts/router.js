@@ -26,8 +26,8 @@ define([
             'stage/users'  : 'listUsers',
             'battle/:id'   : 'showBattle',
             'shred/:id'    : 'showShred',
+            'users/edit'   : 'editUser',
             'users/:id'    : 'showUser',
-            'users/:id/edit' : 'editUser',
             'workspace'    : 'showWorkspace',
             '*all'         : 'listShreds'
         },
@@ -44,8 +44,8 @@ define([
             this.usersController.showUser(id);
         },
 
-        editUser : function (id) {
-            this.usersController.showUser(id, true);
+        editUser : function () {
+            this.usersController.showEditUser();
         },
 
         showBattle : function (id) {

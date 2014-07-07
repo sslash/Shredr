@@ -46,6 +46,7 @@ module.exports = function(app, passport){
 
   // users
   app.get('/stage/users', userController.showStageView);
+  app.get('/users/edit', userController.showEditUser);
   app.get('/users/:id', userController.show);
 
   // workspace
@@ -66,6 +67,7 @@ module.exports = function(app, passport){
   // Users
   app.get('/api/user/query', userController.query);
   app.get('/api/user/:id/getUserStuff', auth.requiresLogin, userController.getUserStuff);
+  app.post('/api/user/:id/upload', auth.requiresLogin, userController.uploadProfileImg);
   app.put('/api/user/:id', auth.requiresLogin, userController.update);
   app.get('/api/user/:id', userController.getById);
   app.get('/api/user', userController.list);

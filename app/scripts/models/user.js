@@ -66,6 +66,10 @@ define([
             .fail(function(jqXHR, textStatus, errorThrown) {
                 Shredr.vent.trigger('user:getUserStuff:fail', textStatus);
             });
+        },
+
+        getUploadUrl : function () {
+            return this.url() + '/upload';
         }
     });
 return User;

@@ -19,25 +19,28 @@ function (
             Shredr.vent.trigger('users:stage:render', Shredr.collection);
         },
 
+        showEditUser : function () {
+            this.renderUserLayout(Shredr.user);
+            Shredr.vent.trigger('users:layout:renderEditView');
+        },
+
         showUser : function (id, edit) {
 
             Shredr.baseController.exec( new User({id : id}), 'fetch',
                 {
                     event : 'user:fetch',
                     success : function (user, response, options) {
-
-                        Shredr.baseController.renderMainRegion(UserLayout, {model : user}, 'users');
-                        Shredr.setModel(user);
-                        Shredr.vent.trigger('users:layout:render', Shredr.model);
-
-                        // render profile clicked
-                        if ( edit ) {
-                            Shredr.vent.trigger('users:layout:renderEdit');
-                        }
+                        this.renderUserLayout(user);
                     },
                     type : 'model'
                 }
             );
+        },
+
+        renderUserLayout : function (user) {
+            Shredr.baseController.renderMainRegion(UserLayout, {model : user}, 'users');
+            Shredr.setModel(user);
+            Shredr.vent.trigger('users:layout:render', Shredr.model);
         }
     });
 

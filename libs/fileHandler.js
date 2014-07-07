@@ -40,30 +40,58 @@ module.exports.storeFile = function (args, next) {
     });
 };
 
+// TODO: SERIOUSE REFACTOR THIS
+module.exports.storeImageFile = function(req, args) {
+    var deferred = Q.defer();
+    var file = req.files.file;
+    var args = {
+        file : file,
+        filename : file.name,
+        path : args.filePath || './public/img/'
+    };
+
+    // get size in MB
+    var size = file.size;
+    size /= (1000*1000);
+
+    // max size = 4Mb
+    if ( size > 4 ) {
+        deferred.reject({err :'File too large'});
+    } else if ( !((/^image/).test(file.type)) ) {
+        deferred.reject({err :'File is not an image file'});
+    } else {
+        this.storeFile(args, function(err,res) {
+            if (err) { deferred.reject(err); }
+            else { deferred.resolve(res); }
+        });
+    }
+    return deferred.promise;
+},
+
 module.exports.storeAudioFile = function (req, next) {
     var deferred = Q.defer();
-        var file = req.files.file;
-        var args = {
-            file : file,
-            filename : file.name,
-            path : req.filePath || './public/audio/'
-        };
+    var file = req.files.file;
+    var args = {
+        file : file,
+        filename : file.name,
+        path : req.filePath || './public/audio/'
+    };
 
-        // max size = 10Mb
-        var size = file.size;
-        size /= (1000*1000);
+    // max size = 10Mb
+    var size = file.size;
+    size /= (1000*1000);
 
-        if ( size > 10 ) {
-            deferred.reject({err :'File too large'});
-        } else if ( !((/^audio/).test(file.type)) ) {
-            deferred.reject({err :'File is not an audio file'});
-        } else {
-            this.storeFile(args, function(err,res) {
-                if (err) { deferred.reject(err); }
-                else { deferred.resolve(res); }
-            });
-        }
-        return deferred.promise;
+    if ( size > 10 ) {
+        deferred.reject({err :'File too large'});
+    } else if ( !((/^audio/).test(file.type)) ) {
+        deferred.reject({err :'File is not an audio file'});
+    } else {
+        this.storeFile(args, function(err,res) {
+            if (err) { deferred.reject(err); }
+            else { deferred.resolve(res); }
+        });
+    }
+    return deferred.promise;
 };
 
 module.exports.storeVideoFile = function (req, opts, next) {

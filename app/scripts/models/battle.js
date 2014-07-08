@@ -69,6 +69,20 @@ function( Backbone, User, baseBattle ) {
 			}
 		},
 
+		getBattleStatus : function () {
+			// Check if finished
+			if ( this.get('completed') ) { return 'complete'; }
+
+			// if all rounds are completed
+			if (this.getRounds().length === this.get('numRounds') &&
+				this.getLastRound().length === 2 ) {
+				return 'finalRoundDone';
+			} else {
+				if ( this.isUsersTurn() ) { return 'usersTurn'; }
+				else { return ''; }
+			}
+		},
+
 		postVote : function (battlerOrBattlee) {
 			var url = '/api/battle/' + this.get('_id') + '/vote/' + battlerOrBattlee;
 			var dat = this;

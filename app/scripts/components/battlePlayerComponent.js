@@ -1,41 +1,3 @@
-// http://flippinawesome.org/2014/05/20/frame-by-frame-animation-with-html-and-javascript/?utm_source=html5weekly&utm_medium=email
-// TODO: use the timing algorithm described above ^^ -->
-/*
-var redbox = document.getElementById("redbox-06");
-var startBtn = document.getElementById("redbox-btn-06");
-var input = document.getElementById("redbox-input-02");
-
-var startTime, duration;
-var rect = redbox.getBoundingClientRect();
-var startX = 0, endX = 520 - rect.width * 2;
-
-var setX = function(element, x) {
-var t = "translateX(" + x + "px)";
-var s = element.style;
-s["transform"] = t;
-s["webkitTransform"] = t;
-s["mozTransform"] = t;
-s["msTransform"] = t;
-}
-
-var run = function() {
-var time = (new Date().getTime() - startTime) / duration;
-if(time < 1) {
-requestAnimationFrame(run);
-setX(redbox, startX + (endX - startX) * time);
-} else {
-setX(redbox, endX);
-}
-}
-
-var start = function() {
-duration = input.value;
-startTime = new Date().getTime();
-run();
-}
-*/
-
-
 // takes a list of videofile objects and an audio file
 // listens to play and stop events
 // on play, it will play the audio file, and the video files
@@ -48,8 +10,9 @@ define([
     function( Component, tmpl ) {
         'use strict';
 
-        var PlayIterator = function (videos, audio, component) {
+        var PlayIterator = function (videos, audio, uploadMode, component) {
             this.videos = videos;
+            this.uploadMode = uploadMode;
             this.audio = audio;
             this.component = component;
         };
@@ -60,8 +23,13 @@ define([
                 if ( !currVid.stub ) {
                     currVid.pause();
                     currVid.currentTime = 0;
-                    $(currVid).hide();
+
+                    // only hide video if not in upload mode
+                    if ( !this.uploadMode ) {
+                        $(currVid).hide();
+                    }
                 }
+
                 $(peekVid).show();
             },
 
@@ -88,11 +56,11 @@ define([
 
                 var startTime, duration, frames = 0;
                 this.playAudio();
+                startTime = new Date().getTime();
                 playNext();
 
                 function run () {
                     // set when next video starts
-                    startTime = new Date().getTime();
                     duration = getDurationForCurrentVideo();
                     loop();
                 }
@@ -132,11 +100,11 @@ define([
 
                 function getDurationForCurrentVideo () {
                     return dat.curr.vidStartSec ?
-                    // return length of next video
+                    // return length of next video, in MS
                     (dat.curr.vidStartSec + (dat.curr.vidStartFramesOffset/60)) * 1000
                     :
                     // or, if there is no next (i.e prev is the last video)
-                    dat.curr.sel.duration
+                    dat.prev.sel.duration
                 }
             },
 
@@ -157,9 +125,10 @@ define([
             },
 
             stop : function () {
-                this.stopVideo(this.prev);
                 this.audio.pause();
                 this.audio.currentTime = 0;
+                this.stopVideo(this.prev.sel);
+                this.stopVideo(this.curr.sel);
                 window.cancelAnimationFrame(this.animateId);
             }
         }
@@ -170,6 +139,7 @@ define([
                 options || (options = {});
                 this.videos = options.videos;
                 this.mode = options.mode;
+                this.uploadMode = options.uploadMode;
                 //if ( this.videos[0].vidStartSec === 0 ) { this.videos[0].vidStartSec = 2; }
                 this.audio = options.audio;
                 this.listenTo(this, 'player:stop', this.stop);
@@ -192,7 +162,7 @@ define([
 
             play : function () {
                 var startFn = function() {
-                    this.playIterator = new PlayIterator(this.videos, this.audio, this);
+                    this.playIterator = new PlayIterator(this.videos, this.audio, this.uploadMode, this);
                     this.playIterator.start();
                 }, waitCondition;
 

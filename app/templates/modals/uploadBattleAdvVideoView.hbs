@@ -5,19 +5,19 @@
   </header>
 
   <section class="faded pam mvxl">
-      <div class="row clearfix">
-          <div class="column half">
-          {{#each m.rounds}}
-              {{#each this}}
-                  <video id="video_{{@index}}" class="video-js vjs-default-skin left" data-setup='{"example_option":true}' data-model="battle-vid">
-                      <source src="/video/battle/{{videoFileId}}" type='video/mp4'>
-                  </video>
+      <div class="row clearfix rel" data-reg="video-drag">
+          <div data-reg="vids" class="left">
+              {{#each m.rounds}}
+                  {{#each this}}
+                      <video id="vid_{{startSec}}" class="video-js vjs-default-skin left"
+                       style="margin-right:1px;" data-setup='{"preload":"auto", "controls":"false"}' data-model="battle-vid" src="/video/battle/{{videoFileId}}">
+                          <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                      </video>
+                  {{/each}}
               {{/each}}
-          {{/each}}
-      </div>
+          </div>
 
-    <div class="column half">
-          <div data-reg="video-drag" class="in rel">
+        <div class="left mhl">
             <span data-reg="arrow" class="arrow left" style="display:none">
               <i class="icon ion-arrow-left-a"></i>
             </span>
@@ -25,12 +25,10 @@
             <span data-reg="arrow" class="arrow right" style="display:none">
               <i class="icon ion-arrow-right-a"></i>
             </span>
-          </div>
-      </div>
+        </div>
     </div>
 
     <div class="mtm audio-bfr red-grad" data-reg="audio">
-      <canvas id="myCanvas" style="position:absolute; left: 0; right:0; z-index:1"></canvas>
       <audio data-model="audio">
         <p>Your browser does not support this feauture :(</p>
         {{#if m.jamtrackId}}
@@ -39,8 +37,8 @@
             <source src="/audio/br/{{m.jamtrackFileId}}"type="audio/mpeg">
         {{/if}}
       </audio>
-      <label data-model="offset" style="position:absolute; top:-20px;"></label>
-      <label data-model="offsetLast" style="position:absolute;"></label>
+      <label data-model="offset" style="top:-20px;" class="battle-drag-label"></label>
+      <label data-model="offsetLast" class="battle-drag-label"></label>
       </div>
 
     </section>

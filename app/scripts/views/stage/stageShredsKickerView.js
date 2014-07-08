@@ -11,8 +11,13 @@ function (
 var StageShredsKickerView = Backbone.Marionette.ItemView.extend({
     template : Tpl,
 
+    ui : {
+        more : '[data-reg="more"]'
+    },
+
     events : {
-        'click [data-mod="filters"] span' : '__filterClicked'
+        'click [data-mod="filters"] span' : '__filterClicked',
+        'click [data-evt="more"]'         : '__moreClicked'
     },
 
     __filterClicked : function (e) {
@@ -23,6 +28,10 @@ var StageShredsKickerView = Backbone.Marionette.ItemView.extend({
 
         this.collection.setQuery({type : val});
         Shredr.baseController.exec(this.collection, 'fetch');
+    },
+
+    __moreClicked : function () {
+        this.$('[data-reg="more"]').slideDown();
     }
 });
 

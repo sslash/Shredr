@@ -28,13 +28,27 @@ var BattleDetailKickerView = Backbone.Marionette.ItemView.extend({
     },
 
     onRender : function () {
-        if ( this.model.get('completed') === true ) {
-            return this.ui.mid.html('<img src="/img/trophy.png" class="logo-sm left mhm">' +
-                '<figcaption class="fat error in">Battle is Finished</figcaption>');
+        this.setStatusMsg();
+    },
+
+    setStatusMsg : function () {
+        var status = this.model.getBattleStatus(), html;
+        switch(status) {
+            case 'complete':
+                html = '<figcaption class="fat error in">' +
+                    '<img src="/img/trophy.png" class="logo-sm left mhm">' +
+                    ' Battle is Finished</figcaption>';
+                break;
+            case 'finalRoundDone' :
+                html = '<figcaption class="fat error in">All rounds are done!</figcaption>' +
+                        '<p class="small">Battle completes when voting period is over.</p>';
+                break;
+            case 'usersTurn' :
+                html = '<button class="btn btn-ser btn-small">Your turn!</button>';
+                break;
+            default: break;
         }
-        if ( this.model.isUsersTurn() ) {
-            this.ui.mid.html('<button class="btn btn-ser btn-small">Your turn!</button>');
-        }
+        this.ui.mid.html(html);
     },
 
     serializeData : function () {

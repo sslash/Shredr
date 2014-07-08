@@ -44,7 +44,6 @@ function (
         },
 
         renderVideoPlayer : function () {
-
             var video = this.$('video')[0];
             var audio = this.$('audio')[0];
 
@@ -54,7 +53,8 @@ function (
                     vidStartSec: this.model.get('startSec'),
                     vidStartFramesOffset: this.model.get('startFrame')
                 }],
-                audio : audio
+                audio : audio,
+                uploadMode : true // dont hide video as u play
             });
         },
 
@@ -100,7 +100,7 @@ function (
         },
 
         __playClicked : function () {
-            this.vpComponent.trigger('player:play');
+            this.vpComponent.play();
         },
 
         __stopClicked : function () {

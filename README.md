@@ -1,12 +1,22 @@
 ##TODOS:
 
-* Battles
-    - See through that advanced battles work now:
-        - continue adding battle advanced vids (imporving its ui feats) and verify it works to play. Then create finishing the battle
+* Feed
+    - New Shreds from fanees
+    - New Battles with fanees
+    - New relevant users (location)
+    - New battles with fans
+    - New Followings with fanees
+    - Promotions
+        - By promoting a video, you show it on all your fanees' feed (like a retweet)
+        - Must look cool
+        - Promotions can have a text
 
-* user things in navbar
-* Promotions
-* Searching
+    * Later
+        - Leveling
+        - Scales
+        - Theory things
+
+* Searching and filtering
 * Social functions
 * Landing page
 * hide playback buttons
@@ -21,6 +31,8 @@
 * New fan notification, clicking leads to empty user..
 * Notifications number never changes
 * After register, if you want to edit profile, its a little buggy upon that save.
+* stopping battles and restarting isnt working
+* Video playback in general is not working across browsers
 
 
 

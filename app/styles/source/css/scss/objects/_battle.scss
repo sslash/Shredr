@@ -12,6 +12,13 @@
     right: 20%;
 }
 
+.battle-drag-label {
+    border-left: 3px solid #333;
+    line-height: 1.3em;
+    position: absolute;
+    padding:0;
+}
+
 .battle-anim {
     position:fixed;
     left:0;

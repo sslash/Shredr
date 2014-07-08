@@ -20,17 +20,7 @@ function (
             this.ui.duration = this.$('[data-model="dur"]');
 
             // save a reference to the video drag region's rect
-            this.videoDragRect = $.find('[data-reg="video-drag"]')[0].getBoundingClientRect();
-            this.setVideoWidths();
-        },
-
-        setVideoWidths : function () {
-            var $vids = this.$('[data-model="battle-vid"]');
-            var len = $vids.length;
-            $vids.each(function() {
-                var width = (1 / len) * 100 - 1;
-                $(this).css({width : width + '%'});
-            })
+            this.videoDragRect = this.$('[data-reg="video-drag"]')[0].getBoundingClientRect();
         },
 
         // These things need the DOM to be ready in order to render
@@ -40,6 +30,7 @@ function (
                 try {
                     this.renderUpload();
                     this.renderCanvas();
+                    this.setVideoWidths();
                 } catch(e) {
                     this.renderAsyncs.call(this);
                 }
@@ -54,7 +45,6 @@ function (
             // remove the upload region
             this.$('[data-model="instr"]').text('Drag the video on the timeline so it starts on the correct timeframe');
 
-            // this.$dragRegion.addClass('drag-vid-region');
             this.$('[data-reg="arrow"]').show();
 
             this.showSelectedVideo(src);
@@ -68,20 +58,12 @@ function (
         },
 
         // set number of seconds until video must start
-        // (vidStartFramesOffset + vidStartSec)
         dragStop : function (e) {
-            // var left = $ct[0].getBoundingClientRect().left;
-            // left = left - this.videoDragRect.left;
 
             // get percentage of pixels from left
             var $ct = $(e.target);
-            var parentRect = $ct.parent()[0].getBoundingClientRect();
             var pixelsLeft = $ct.position().left;
-            var parentWidth = parentRect.width - $ct[0].getBoundingClientRect().width;
-            var vidStartPercent = (pixelsLeft/parentWidth) * 100;
-
-            // // percent from left
-            // var vidStartPercent = (left/this.videoDragRect.width) * 100;
+            var vidStartPercent = (pixelsLeft/this.videoDragRect.width) * 100;
 
             // set this percent in seconds (i.e play-offset into audio)
             this.setVidStartSec(vidStartPercent);
@@ -91,8 +73,7 @@ function (
                 this.$offset = this.$('[data-model="offset"]');
             }
 
-            var offsetLeft = $ct.offset().left - $ct[0].getBoundingClientRect().width - 50; // -50 just works. havent bothered calculating here..
-            this.$offset.animate({'left' : offsetLeft + 'px'});
+            this.$offset.animate({'left' : pixelsLeft + 'px'});
             this.$offset.text(this.vidStartSec + ':' + this.vidStartFramesOffset + 'f');
         },
 
@@ -119,60 +100,58 @@ function (
         // video. Sets the this.$audio property
         renderCanvas : function () {
             this.$audio = document.querySelector('[data-model="audio"]');
-            var domVids = this.getDOMVideos();
-            var lastDomVid = domVids[domVids.length-1];
             var $audioRegion = this.$('[data-reg="audio"]');
 
             var tryRender = function () {
-                if ( this.$audio.readyState < 3 || lastDomVid.readyState < 3 ) {
+                if ( this.$audio.readyState < 3 ) {
                     setTimeout(tryRender.bind(this), 40);
                 } else {
 
-                    var rect = $audioRegion[0].getBoundingClientRect();
+                    var lastSec = this.getLastVideoSec();
+                    var audioSecs = this.$audio.duration;
 
-                    // this doesnt always work due to equal video files
-                    var startTime = this.getStartTimeForLastVideo(lastDomVid);
-                    var secStart = startTime.sec;
-                    var fract = (startTime.frames/60);
-
-                    // then calculate offset percentage (13,frames secs into audio.duration)
-                    var percent = (100 / this.$audio.duration) * (secStart + fract);
-                    var pixelsLeft = (rect.width / 100)*percent;
-
-                    // Draw the canvas pixelsLeft to the left on the audio buffer thing
-                    var c = document.getElementById("myCanvas");
-                    c.width = rect.width;
-                    var ctx = c.getContext("2d");
-                    ctx.beginPath();
-                    ctx.moveTo(pixelsLeft, 0);
-                    ctx.lineTo(pixelsLeft, rect.height-1);
-                    ctx.stroke();
+                    var lastVidEndPercent = (lastSec/audioSecs) * 100;
+                    var audioRegionWidth = $audioRegion.width();
+                    var lastVidLeftOffsetPx = (audioRegionWidth / 100) * lastVidEndPercent;
 
                     // render the offset label
                     this.$offsetLabel = this.$('[data-model="offsetLast"]');
-                    this.$offsetLabel.animate({'left' : pixelsLeft + 'px'});
-                    this.$offsetLabel.text(startTime.sec + ':' + startTime.frames);
+                    this.$offsetLabel.animate({'left' : lastVidLeftOffsetPx + 'px'});
+                    this.$offsetLabel.text(lastSec);
+
+
+                    // set video-region widths
+                    var $videos = this.$('[data-reg="vids"]');
+                    $videos.css({width : lastVidLeftOffsetPx + 'px'});
                 }
             };
 
             tryRender.call(this);
         },
 
-        getStartTimeForLastVideo : function (video) {
-            // find last brvideo
-            var lastDuration = video.duration || 0;
+        getLastVideoSec : function () {
+            var startTime = this.getStartTimeForLastVideo();
+            return startTime.sec + (startTime.frames/60);
+        },
 
+        setVideoWidths : function () {
+
+            var $vids = this.$('[data-model="battle-vid"]');
+            var len = $vids.length;
+            $vids.each(function() {
+                var width = (1 / len) * 100 - 1;
+                $(this).css({width : width + '%'});
+            });
+        },
+
+        getStartTimeForLastVideo : function () {
             var lastVideo = this.model.getLastVideo();
-            try {
-                var startSec = parseInt(lastVideo.startSec,10) + parseInt(lastDuration,10);
-                var startFrame = parseInt(lastVideo.startFrame, 10);
-                return {
-                    sec : startSec,
-                    frames : startFrame
-                };
-            } catch(e) {
-                return { sec : 0, frames : 0};
-            }
+            var startSec = parseFloat(lastVideo.startSec,10) + parseFloat(lastVideo.duration,10);
+            var startFrame = parseFloat(lastVideo.startFrame,10);
+            return {
+                sec : startSec,
+                frames : startFrame
+            };
         },
 
         // gets all DOM videos (except the one the user adds)
@@ -213,7 +192,8 @@ function (
             // create a new videoplayercomnponent.
             this.vpComponent = new VPComponent({
                 videos : vpVideos,
-                audio : audio
+                audio : audio,
+                uploadMode : true
             });
             this.listenTo(this.vpComponent, 'player:seconds', this.renderPlaySeconds);
             this.vpComponent.play();

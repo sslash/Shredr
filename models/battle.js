@@ -121,23 +121,26 @@ BattleSchema.methods = {
     checkIfFinished : function () {
         if ( this.completed === true ) {return true;}
 
-        // If alle rounds are done
-        if ( this.rounds.length === this.numRounds && this.getLastRound().length === 2 ) {
-            // Battle is finished. draw a winner!
-            return this.setFinishedByVote();
-        }
+        var dayLimit = this.dayLimit;
+        var today = new Date();
 
-        // One battle might not have done his job...
-        else {
-            var dayLimit = this.dayLimit;
-            var today = new Date();
+        // deadline day is #dayLimit days after lastVideoDate
+        var lastVideoDate = this.getLastVideo().createdAt;
+        var deadlineDay = new Date().setDate(lastVideoDate.getDate() + dayLimit);
 
-            // deadline day is #dayLimit days after lastVideoDate
-            var lastVideoDate = this.getLastVideo().createdAt;
-            var deadlineDay = new Date().setDate(lastVideoDate.getDate() + dayLimit);
+        // FINISHED!
+        if ( deadlineDay < today ) {
 
-            if ( deadlineDay < today ) {
-                // FINISHED! NEXT BATTLER IS A LOOSER
+            // Time has now run out! Ie battler or battlee hasn't responeded since
+            // last due day.
+
+            // If alle rounds are done, battle has completed normally.
+            // finish by vote
+            if ( this.rounds.length === this.numRounds && this.getLastRound().length === 2 ) {
+                return this.setFinishedByVote();
+
+            // else, one of them has simply not responded.. The other is then the winner!
+            } else {
                 return this.setFinishedWithLastRound();
             }
         }
@@ -166,14 +169,29 @@ BattleSchema.methods = {
         return this.finishBattle(winner);
     },
 
+    // set this.completed
+    // set the winner reference,
+    // and send messages to winner and looser
     // returns a promise
     finishBattle : function (winner) {
         var def = Q.defer();
         this.completed = true;
         this.winner = winner;
-        var battle = this;
-        var looser = winner._id.toString() === this.battler._id.toString() ?
-            this.battlee : this.battler;
+        var battle = this, finishMsg;
+        var winnerRec = winner, looserRec;
+
+        if (winner) {
+            var looserRec = winner._id.toString() === this.battler._id.toString() ?
+                this.battlee : this.battler;
+
+        // Tie..
+        } else {
+            finishMsg = 'Battle Finished. It was a tie!';
+
+            // not the actual winner/looser.
+            // Just correct references for notifications below
+            winnerRec = this.battler; looserRec = this.battlee;
+        }
 
         this.save(function(err, res) {
 
@@ -183,17 +201,17 @@ BattleSchema.methods = {
             // it would be nicer if user service could listen
             // to some event and do the job itself, but whatevs.
             Q.all([
-                winner.addNotification({
+                winnerRec.addNotification({
                     type : 6,
-                    body : 'Battle Finished. You Won!',
+                    body : finishMsg || 'Battle Finished. You Won!',
                     referenceId : battle._id.toString()
                 }),
 
                 // send looser notification
 
-                looser.addNotification({
+                looserRec.addNotification({
                     type : 6,
-                    body : 'Battle Finished. You Lost.',
+                    body : finishMsg || 'Battle Finished. You Lost.',
                     referenceId : battle._id.toString()
                 })
             ]).then(def.resolve, def.reject).done();

@@ -24,16 +24,9 @@ var app = express();
 
 require('../config/passport')(passport, config);
 
-var app = express();
-
+// Logging
 require('../config/express')(app, config, passport);
 require('../config/routes')(app, passport);
-
-// Logging
-app.use(function(req, res, next) {
-	console.log('%s %s', req.method, req.url);
-	next();
-});
 
 var port = process.env.PORT || 5000;
 

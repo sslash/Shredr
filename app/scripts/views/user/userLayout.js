@@ -32,6 +32,10 @@ var UserLayout = Backbone.Marionette.Layout.extend({
         this.renderFanButton();
     },
 
+    serializeData : function () {
+        return { m : JSON.stringify(this.model) };
+    },
+
     renderFanButton : function () {
         new FanComponent({
             model : this.model,
@@ -40,7 +44,6 @@ var UserLayout = Backbone.Marionette.Layout.extend({
     },
 
     renderEdit : function () {
-        console.log('yeah boi')
         Shredr.baseController.showModal(new EditUserView({
             model : this.model,
             classes : 'modal-huge modal-tall form-dark'

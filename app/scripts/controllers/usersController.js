@@ -25,12 +25,13 @@ function (
         },
 
         showUser : function (id, edit) {
+            var dat = this;
 
             Shredr.baseController.exec( new User({id : id}), 'fetch',
                 {
                     event : 'user:fetch',
                     success : function (user, response, options) {
-                        this.renderUserLayout(user);
+                        dat.renderUserLayout(user);
                     },
                     type : 'model'
                 }

@@ -1343,7 +1343,7 @@ figcaption {
   margin: 0 12px; }
 
 .vid-drag {
-  height: 100%;
+  width: 40%;
   border: 1px solid rgba(255, 255, 255, 0.25);
   cursor: move; }
 
@@ -1530,6 +1530,10 @@ input[type="file"] {
     width: 25%; }
     .upload-box.upl-small h5 {
       padding: 30px; }
+  .upload-box.upl-full {
+    width: 100%; }
+    .upload-box.upl-full h5 {
+      padding: 35px; }
   .upload-box h5 {
     padding: 80px;
     margin: 0; }
@@ -2451,7 +2455,7 @@ td {
   position: absolute;
   font-size: 4em;
   color: rgba(0, 0, 0, 0.24);
-  top: 160px; }
+  top: 15px; }
   .arrow.right {
     right: 15%; }
   .arrow.left {

@@ -118,6 +118,13 @@ input[type="file"] {
 			}
 		}
 
+		&.upl-full {
+			width: 100%;
+			h5 {
+				padding:35px;
+			}
+		}
+
     h5 {
         padding: 80px;
         margin: 0;

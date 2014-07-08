@@ -8,7 +8,6 @@
 
 var responseClient = {
 	send : function(res, err, doc) {
-		console.log('err: ' + err  + ', doc: ' + doc);
 		if ( err ) {
 			res.send(err, 500);
 		} else {
@@ -18,6 +17,7 @@ var responseClient = {
 
 	error : function (res, errorMsg, errorCode) {
 		errorMsg || (errorMsg = errorMsg.toString());
+		console.log('ERR: ' + errorMsg);
 		errorCode = errorCode || 400;
 		res.send({error : errorMsg}, errorCode);
 	}

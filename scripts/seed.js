@@ -92,7 +92,7 @@ var users = db.users.find();
 var count = db.users.count();
 var jamtrack = db.jamtracks.find();
 
-var battleTypes = ['simple', 'advanced'];
+var battleTypes = ['Simple', 'Advanced'];
 var battleTypesLen = battleTypes.length;
 
 for (var i = 0; i < 100; i++) {

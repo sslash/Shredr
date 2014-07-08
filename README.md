@@ -1,7 +1,8 @@
 ##TODOS:
 
 * Battles
-    - See through that advanced battles work now
+    - See through that advanced battles work now:
+        - continue adding battle advanced vids (imporving its ui feats) and verify it works to play. Then create finishing the battle
 
 * user things in navbar
 * Promotions
@@ -15,9 +16,11 @@
 * on lookup battle, do the same, but if battle is done, update should be sync and battle is returned updated.
 
 // bugs
+* edit profile only works from home page
 * cant stop battlerequest playback in advanced mode.
 * New fan notification, clicking leads to empty user..
 * Notifications number never changes
+* After register, if you want to edit profile, its a little buggy upon that save.
 
 
 

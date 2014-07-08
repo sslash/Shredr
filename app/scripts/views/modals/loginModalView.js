@@ -102,6 +102,9 @@ var LoginModalView = BaseModalLayout.extend({
     __editProfileClicked : function (e) {
         e.preventDefault();
         this.__closeClicked();
+        setTimeout(function() {
+            Shredr.navigate('/users/edit', {trigger : true});
+        }, 200);
     },
 
     __faceClicked : function () {

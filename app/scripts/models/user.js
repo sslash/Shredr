@@ -13,6 +13,11 @@ define([
             if ( this.get('_id') ) { this.id = this.get('_id'); }
         },
 
+        parse : function (attrs) {
+            this.id = attrs._id;
+            return attrs;
+        },
+
         create : function (attrs) {
             if ( attrs.password !== attrs.password2 ) {
                 return this.trigger('invalid', this, 'Passwords are not equal');

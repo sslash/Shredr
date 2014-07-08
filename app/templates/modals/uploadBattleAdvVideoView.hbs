@@ -5,35 +5,42 @@
   </header>
 
   <section class="faded pam mvxl">
-    {{#each m.rounds}}
-      {{#each this}}
-        <video id="video_{{@index}}" class="video-js vjs-default-skin" data-setup='{"example_option":true}' style="width:50px;" data-model="battle-vid">
-          <source src="/video/battle/{{videoFileId}}" type='video/mp4'>
-          </video>
-    {{/each}}
-    {{/each}}
-    <div data-reg="video-drag" style="height: 156px">
-      <span data-reg="arrow" class="arrow left" style="display:none">
-        <i class="icon ion-arrow-left-a"></i>
-      </span>
-      <div data-reg="upload"></div>
-      <span data-reg="arrow" class="arrow right" style="display:none">
-        <i class="icon ion-arrow-right-a"></i>
-      </span>
+      <div class="row clearfix">
+          <div class="column half">
+          {{#each m.rounds}}
+              {{#each this}}
+                  <video id="video_{{@index}}" class="video-js vjs-default-skin left" data-setup='{"example_option":true}' data-model="battle-vid">
+                      <source src="/video/battle/{{videoFileId}}" type='video/mp4'>
+                  </video>
+              {{/each}}
+          {{/each}}
+      </div>
+
+    <div class="column half">
+          <div data-reg="video-drag" class="in rel">
+            <span data-reg="arrow" class="arrow left" style="display:none">
+              <i class="icon ion-arrow-left-a"></i>
+            </span>
+            <div data-reg="upload" style="width:180px;"></div>
+            <span data-reg="arrow" class="arrow right" style="display:none">
+              <i class="icon ion-arrow-right-a"></i>
+            </span>
+          </div>
+      </div>
     </div>
 
-    <div class="mtm audio-bfr red-grad" data-reg="audio" style="display:none;">
+    <div class="mtm audio-bfr red-grad" data-reg="audio">
       <canvas id="myCanvas" style="position:absolute; left: 0; right:0; z-index:1"></canvas>
       <audio data-model="audio">
         <p>Your browser does not support this feauture :(</p>
         {{#if m.jamtrackId}}
-        <source src="/audio/{{m.jamtrackId.fileId}}"type="audio/mpeg">
-          {{else}}
-          <source src="/audio/br/{{m.jamtrackFileId}}"type="audio/mpeg">
-            {{/if}}
-          </audio>
-          <label data-model="offset" style="position:absolute; top:-20px;"></label>
-          <label data-model="offsetLast" style="position:absolute;"></label>
+            <source src="/audio/{{m.jamtrackId.fileId}}"type="audio/mpeg">
+        {{else}}
+            <source src="/audio/br/{{m.jamtrackFileId}}"type="audio/mpeg">
+        {{/if}}
+      </audio>
+      <label data-model="offset" style="position:absolute; top:-20px;"></label>
+      <label data-model="offsetLast" style="position:absolute;"></label>
       </div>
 
     </section>

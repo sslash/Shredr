@@ -10,28 +10,28 @@ var rect = redbox.getBoundingClientRect();
 var startX = 0, endX = 520 - rect.width * 2;
 
 var setX = function(element, x) {
-    var t = "translateX(" + x + "px)";
-    var s = element.style;
-    s["transform"] = t;
-    s["webkitTransform"] = t;
-    s["mozTransform"] = t;
-    s["msTransform"] = t;
+var t = "translateX(" + x + "px)";
+var s = element.style;
+s["transform"] = t;
+s["webkitTransform"] = t;
+s["mozTransform"] = t;
+s["msTransform"] = t;
 }
 
 var run = function() {
-    var time = (new Date().getTime() - startTime) / duration;
-    if(time < 1) {
-        requestAnimationFrame(run);
-        setX(redbox, startX + (endX - startX) * time);
-    } else {
-        setX(redbox, endX);
-    }
+var time = (new Date().getTime() - startTime) / duration;
+if(time < 1) {
+requestAnimationFrame(run);
+setX(redbox, startX + (endX - startX) * time);
+} else {
+setX(redbox, endX);
+}
 }
 
 var start = function() {
-    duration = input.value;
-    startTime = new Date().getTime();
-    run();
+duration = input.value;
+startTime = new Date().getTime();
+run();
 }
 */
 
@@ -43,75 +43,101 @@ var start = function() {
 
 // used by battleChallengeResponse.js
 define([
-'components/component'
-],
-function( Component, tmpl ) {
-    'use strict';
+    'components/component'
+    ],
+    function( Component, tmpl ) {
+        'use strict';
 
-    var PlayIterator = function (videos, audio, component) {
-        this.videos = videos;
-        this.audio = audio;
-        this.component = component;
-    };
+        var PlayIterator = function (videos, audio, component) {
+            this.videos = videos;
+            this.audio = audio;
+            this.component = component;
+        };
 
-    PlayIterator.prototype = {
+        PlayIterator.prototype = {
 
-        stopVideo : function (currVid, peekVid) {
-            if ( !currVid.stub ) {
-                currVid.pause();
-                currVid.currentTime = 0;
-                $(currVid).hide();
-            }
-            $(peekVid).show();
-        },
-
-        playAudio : function () {
-            window.RAF(function() {
-                this.audio.play();
-            }.bind(this));
-        },
-
-        doRAF : function (fn) {
-            var that = this;
-            function loop () {
-                fn();
-                that.animateId = window.RAF(loop);
-            }
-            loop();
-        },
-
-        start : function () {
-            this.next();
-            this.prev = { sel: {pause : function () {}, stub : true} }
-
-            this.secs = 0;
-            this.frames = 0;
-
-            this.playAudio();
-
-            this.doRAF(function() {
-
-                if ( (this.frames % 60) === 0 ) {
-                    this.secs ++;
-                    this.frames = 0;
-                    // update seconds in UI
-                    this.component.trigger('player:seconds', this.secs);
+            stopVideo : function (currVid, peekVid) {
+                if ( !currVid.stub ) {
+                    currVid.pause();
+                    currVid.currentTime = 0;
+                    $(currVid).hide();
                 }
-                if ( (this.secs === this.curr.vidStartSec) &&
-                    (this.frames === this.curr.vidStartFramesOffset) ) {
-                        this.stopVideo(this.prev.sel, this.peekTwoVids());
-                        this.curr.sel.play();
+                $(peekVid).show();
+            },
 
-                        if ( this.hasNext() ) {
-                            this.next();
-                        } else {
-                            console.log('no more vids..');
-                        }
-                    }
-
-                    this.frames ++;
-
+            playAudio : function () {
+                window.RAF(function() {
+                    this.audio.play();
                 }.bind(this));
+            },
+
+            doRAF : function (fn) {
+                var that = this;
+                function loop () {
+                    fn();
+                    that.animateId = window.RAF(loop);
+                }
+                loop();
+            },
+
+            start : function () {
+                var dat = this;
+                this.next();
+                this.prev = { sel: {pause : function () {}, stub : true} }
+                this.secs = 0;
+
+                var startTime, duration, frames = 0;
+                this.playAudio();
+                playNext();
+
+                function run () {
+                    // set when next video starts
+                    startTime = new Date().getTime();
+                    duration = getDurationForCurrentVideo();
+                    loop();
+                }
+
+                function loop () {
+                    var time = (new Date().getTime() - startTime) / duration;
+                    frames ++;
+
+                    // not done yet
+                    if ( time < 1 ) {
+                        requestAnimationFrame(loop);
+
+                        // update time
+                        if ( (frames % 60) === 0 ) {
+                            dat.secs++;
+                            frames = 0;
+                            // update seconds in UI
+                            dat.component.trigger('player:seconds', dat.secs);
+                        }
+
+
+                        // done with dat movie. try play next
+                    } else {
+                        playNext();
+                    }
+                }
+
+                function playNext () {
+                    dat.stopVideo(dat.prev.sel, dat.peekTwoVids());
+                    dat.curr.sel.play();
+
+                    if ( dat.hasNext() ) {
+                        dat.next();
+                        run();
+                    }
+                }
+
+                function getDurationForCurrentVideo () {
+                    return dat.curr.vidStartSec ?
+                    // return length of next video
+                    (dat.curr.vidStartSec + (dat.curr.vidStartFramesOffset/60)) * 1000
+                    :
+                    // or, if there is no next (i.e prev is the last video)
+                    dat.curr.sel.duration
+                }
             },
 
             peekTwoVids : function () {
@@ -144,7 +170,7 @@ function( Component, tmpl ) {
                 options || (options = {});
                 this.videos = options.videos;
                 this.mode = options.mode;
-                if ( this.videos[0].vidStartSec === 0 ) { this.videos[0].vidStartSec = 2; }
+                //if ( this.videos[0].vidStartSec === 0 ) { this.videos[0].vidStartSec = 2; }
                 this.audio = options.audio;
                 this.listenTo(this, 'player:stop', this.stop);
             },
@@ -168,9 +194,9 @@ function( Component, tmpl ) {
                 var startFn = function() {
                     this.playIterator = new PlayIterator(this.videos, this.audio, this);
                     this.playIterator.start();
-                },waitCondition;
+                }, waitCondition;
 
-                if ( this.mode === 'simple' ) {
+                if ( this.mode === 'Simple' ) {
 
                     // if at least one video isn't ready
                     waitCondition = _.some(this.videos, function(v) {  v.readyState < 3 } );
@@ -178,7 +204,7 @@ function( Component, tmpl ) {
                     // if at least one video isn't ready, or audio isn't ready, loop.
                 } else {
                     waitCondition = _.some(this.videos, function(v) {  v.readyState < 3 } )
-                        || this.audio.readyState < 3;
+                    || this.audio.readyState < 3;
                 }
 
                 this.startPlayer(waitCondition, startFn);

@@ -51,11 +51,14 @@ var BattleDetailKickerView = Backbone.Marionette.ItemView.extend({
             model : this.model,
             classes : 'modal-wide ',
             heading : 'Upload your next battle video!'
-        };
+        }, view;
 
-        var view = this.model.get('mode') === 'advanced' ?
-            new UploadBattleVideoView(opts) :
-            new UploadBattleSmplVideoView(opts);
+        if ( this.model.get('mode') === 'Advanced' ) {
+            opts.classes = 'modal-huge ';
+            view = new UploadBattleVideoView(opts);
+        } else {
+            view = new UploadBattleSmplVideoView(opts);
+        }
 
         Shredr.baseController.showModal(view);
     }

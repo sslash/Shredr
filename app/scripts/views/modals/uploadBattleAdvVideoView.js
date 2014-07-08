@@ -15,9 +15,22 @@ function (
     var UploadBattleVideoView = UploadBattleSmplVideoView.extend({
 
         onShow : function () {
-          UploadBattleSmplVideoView.prototype.onShow.call(this, tpl);
+            UploadBattleSmplVideoView.prototype.onShow.call(this, tpl);
             // set UI now that DOM has new stuff
             this.ui.duration = this.$('[data-model="dur"]');
+
+            // save a reference to the video drag region's rect
+            this.videoDragRect = $.find('[data-reg="video-drag"]')[0].getBoundingClientRect();
+            this.setVideoWidths();
+        },
+
+        setVideoWidths : function () {
+            var $vids = this.$('[data-model="battle-vid"]');
+            var len = $vids.length;
+            $vids.each(function() {
+                var width = (1 / len) * 100 - 1;
+                $(this).css({width : width + '%'});
+            })
         },
 
         // These things need the DOM to be ready in order to render
@@ -26,15 +39,11 @@ function (
             setTimeout( function () {
                 try {
                     this.renderUpload();
-                    this.renderOtherThings();
+                    this.renderCanvas();
                 } catch(e) {
                     this.renderAsyncs.call(this);
                 }
             }.bind(this), 20);
-        },
-
-        renderOtherThings : function () {
-          this.renderCanvas();
         },
 
         // removes the upload compoment. Renders a draggable video frame
@@ -47,9 +56,6 @@ function (
 
             // this.$dragRegion.addClass('drag-vid-region');
             this.$('[data-reg="arrow"]').show();
-
-            // save a reference to the region's rect
-            this.videoDragRect = $.find('[data-reg="video-drag"]')[0].getBoundingClientRect();
 
             this.showSelectedVideo(src);
 
@@ -64,12 +70,18 @@ function (
         // set number of seconds until video must start
         // (vidStartFramesOffset + vidStartSec)
         dragStop : function (e) {
-            // get percentage of pixels from left
-            var left = $(e.target)[0].getBoundingClientRect().left;
-            left = left - this.videoDragRect.left;
+            // var left = $ct[0].getBoundingClientRect().left;
+            // left = left - this.videoDragRect.left;
 
-            // percent from left
-            var vidStartPercent = (left/this.videoDragRect.width) * 100;
+            // get percentage of pixels from left
+            var $ct = $(e.target);
+            var parentRect = $ct.parent()[0].getBoundingClientRect();
+            var pixelsLeft = $ct.position().left;
+            var parentWidth = parentRect.width - $ct[0].getBoundingClientRect().width;
+            var vidStartPercent = (pixelsLeft/parentWidth) * 100;
+
+            // // percent from left
+            // var vidStartPercent = (left/this.videoDragRect.width) * 100;
 
             // set this percent in seconds (i.e play-offset into audio)
             this.setVidStartSec(vidStartPercent);
@@ -78,12 +90,14 @@ function (
             if ( !this.$offset) {
                 this.$offset = this.$('[data-model="offset"]');
             }
-            this.$offset.animate({'left' : left + 'px'});
+
+            var offsetLeft = $ct.offset().left - $ct[0].getBoundingClientRect().width - 50; // -50 just works. havent bothered calculating here..
+            this.$offset.animate({'left' : offsetLeft + 'px'});
             this.$offset.text(this.vidStartSec + ':' + this.vidStartFramesOffset + 'f');
         },
 
         setVidStartSec : function (vidStartPercent) {
-            var audioLength = this.$audio[0].duration;
+            var audioLength = this.$audio.duration;
             var vidStartSec = (audioLength / 100) * vidStartPercent;
             this.vidStartFramesOffset = 0;
 
@@ -104,22 +118,25 @@ function (
         // vertical canvas line that is represents the finish point of the last
         // video. Sets the this.$audio property
         renderCanvas : function () {
-            this.$audio = $('audio');
-            var $audioRegion = $.find('[data-reg="audio"]');
-            var rect = $audioRegion[0].getBoundingClientRect();
+            this.$audio = document.querySelector('[data-model="audio"]');
+            var domVids = this.getDOMVideos();
+            var lastDomVid = domVids[domVids.length-1];
+            var $audioRegion = this.$('[data-reg="audio"]');
 
             var tryRender = function () {
-                if ( this.$audio[0].readyState < 3 ) {
+                if ( this.$audio.readyState < 3 || lastDomVid.readyState < 3 ) {
                     setTimeout(tryRender.bind(this), 40);
                 } else {
 
+                    var rect = $audioRegion[0].getBoundingClientRect();
+
                     // this doesnt always work due to equal video files
-                    var startTime = this.getStartTimeForLastVideo();
+                    var startTime = this.getStartTimeForLastVideo(lastDomVid);
                     var secStart = startTime.sec;
                     var fract = (startTime.frames/60);
 
                     // then calculate offset percentage (13,frames secs into audio.duration)
-                    var percent = (100 / this.$audio[0].duration) * (secStart + fract);
+                    var percent = (100 / this.$audio.duration) * (secStart + fract);
                     var pixelsLeft = (rect.width / 100)*percent;
 
                     // Draw the canvas pixelsLeft to the left on the audio buffer thing
@@ -141,17 +158,21 @@ function (
             tryRender.call(this);
         },
 
-        getStartTimeForLastVideo : function () {
+        getStartTimeForLastVideo : function (video) {
             // find last brvideo
-            var domVids = this.getDOMVideos();
-            var lastDomVid = domVids[domVids.length-1];
-            var lastDuration = lastDomVid ? lastDomVid.duration : 0;
+            var lastDuration = video.duration || 0;
 
             var lastVideo = this.model.getLastVideo();
-            return {
-                sec : lastVideo.startSec + lastDuration,
-                frames : lastVideo.startFrame
-            };
+            try {
+                var startSec = parseInt(lastVideo.startSec,10) + parseInt(lastDuration,10);
+                var startFrame = parseInt(lastVideo.startFrame, 10);
+                return {
+                    sec : startSec,
+                    frames : startFrame
+                };
+            } catch(e) {
+                return { sec : 0, frames : 0};
+            }
         },
 
         // gets all DOM videos (except the one the user adds)
@@ -161,7 +182,7 @@ function (
 
         // Play clicked! must set up the videoplayer component and start playing..
         startPlayer : function () {
-            var audio = this.$audio[0];
+            var audio = this.$audio;
 
             var DOMvideos = this.getDOMVideos();
             // craete a playable list of all previous battle videos
@@ -180,9 +201,10 @@ function (
             // add the current vid to this list.
             // if it has been added yet.
             var newVid = this.$('[data-model="drag"]');
-            if ( newVid ) {
+            if ( newVid && newVid.length) {
                 vpVideos.push({
                     sel:newVid[0],
+                    duration : newVid[0].duration,
                     vidStartSec : this.vidStartSec,
                     vidStartFramesOffset : this.vidStartFramesOffset
                 });
@@ -210,11 +232,13 @@ function (
 
       // upload file, then post battleround
       __submitClicked : function () {
+
           this.model.postBattleRound({
               uploadComponent : this.uploadComponent,
               startSec : this.vidStartSec,
+              duration : this.$video[0].duration,
               startFrame : this.vidStartFramesOffset
-          })
+          });
       }
 
     });

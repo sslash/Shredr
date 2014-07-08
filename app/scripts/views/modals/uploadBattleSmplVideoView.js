@@ -67,7 +67,7 @@ function (
         renderUpload : function () {
             this.uploadComponent = new UploadComponent({
                 fileUpload : true,
-                classes : 'upl-small',
+                classes : 'upl-full',
                 fileDrop : true,
                 region : new Backbone.Marionette.Region({ el : this.$('[data-reg="upload"]')})
             }).show();

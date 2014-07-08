@@ -45,6 +45,9 @@ function (
 
         renderVideoPlayer : function () {
 
+            var video = this.$('video')[0];
+            var audio = this.$('audio')[0];
+
             this.vpComponent = new VPComponent({
                 videos : [{
                     sel : video,

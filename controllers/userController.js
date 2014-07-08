@@ -120,13 +120,14 @@ module.exports = BaseController.extend({
 	create : function(req, res) {
 		userService.create(req.body)
 		.then(function (user) {
+			console.log('Created user success!');
 			// manually login the user once successfully signed up
 			// logIn is a passport function (passport.request.js)
 			req.logIn(user, function () {
-				login();
+				login(req, res);
 			});
 		})
-		.fail(client.error.bind(null,res));
+		.fail(client.error.bind(null, res)).done();
 	},
 
 	deleteNotification : function(req, res) {

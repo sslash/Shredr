@@ -40,17 +40,6 @@ exports.uploadJamtrack = function (brId, req) {
     .fail(def.reject).done();
 
     return def.promise;
-    // // send notification to battlee, in case br is finished
-    // .then(function() {
-    //   if ( req.params.mode === 'Simple' ) {
-    //     return sendBrNotification(battleRequest, res);
-    //   } else {
-    //     return client.send(res, null, battleRequest);
-    //   }
-    // })
-    // .fail (function(err) {
-    //   client.error(res, err);
-    // });
   };
 
   exports.uploadInitialVideo = function (brId, req) {
@@ -186,8 +175,6 @@ exports.declineBattleRequest = function (brId) {
         return br.remove();
     })
     .fail(function(err) {
-        console.log('failed..'  + err);
         throw err;
-    })
-
+    });
 };

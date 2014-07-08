@@ -48,7 +48,7 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
     actions : {
 
         'New Fan' : function (notification) {
-            Shredr.navigate('/users/' + notification.referenceId, {trigger : true});
+            Shredr.navigate('/users/' + notification.referenceId, {trigger : true, replace : true});
         },
 
         'New Battle Request' : function(notification) {
@@ -79,6 +79,7 @@ var NotificationModal = Backbone.Marionette.Layout.extend({
     },
 
     __notificationsClicked : function (e) {
+        e.preventDefault();
         var index = parseInt($(e.currentTarget).attr('data-mod'),10);
         var notification = this.model.get('notifications')[index];
         this.actions[notification.type](notification);

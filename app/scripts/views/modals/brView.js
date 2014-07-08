@@ -70,12 +70,12 @@ define([
 
       __simpleClicked : function (e) {
         this.$('[data-evt="smpl"]').removeClass('opac');
-        this.brModel.set('mode', 'simple');
+        this.brModel.set('mode', 'Simple');
       },
 
       __advClicked : function () {
         this.$('[data-evt="adv"]').removeClass('opac');
-        this.brModel.set('mode', 'advanced');
+        this.brModel.set('mode', 'Advanced');
         this.renderJamtrackForm();
       },
 
@@ -122,19 +122,21 @@ define([
       },
 
       doSave : {
-        simple : function () {
-          this.saveModel();
-        },
-        advanced : function () {
-          // if user has selected a jamtrack from the list.
-          // no need to upload anything
-          if ( this.brModel.get('jamtrackId') ) {
-            this.saveModel();
-            // Or, user should have uploaded either a jamtrack (mode 1), or video
-          } else {
-            if ( !this.uploadComponent.fileAdded() ) { return alert('You must upload a jamtrack, or select an existing');}
-              this.saveModel(this.uploadJamtrack.bind(this));
-            }
+          Simple : function () {
+              this.saveModel();
+          },
+          Advanced : function () {
+              // if user has selected a jamtrack from the list.
+              // no need to upload anything
+              if ( this.brModel.get('jamtrackId') ) {
+                  this.saveModel();
+                  // Or, user should have uploaded either a jamtrack (mode 1), or video
+              } else {
+                  if ( !this.uploadComponent.fileAdded() ) {
+                      return alert('You must upload a jamtrack, or select an existing');
+                  }
+                  this.saveModel(this.uploadJamtrack.bind(this));
+              }
           }
       },
 
@@ -175,7 +177,7 @@ define([
             classes : 'modal-wide ',
             heading : 'Upload your initial battle video!'
         };
-        var view = this.brModel.get('mode') === 'advanced' ?
+        var view = this.brModel.get('mode') === 'Advanced' ?
           new UploadBattleAdvVideoView(opts):
           new UploadBattleSmplVideoView(opts);
 

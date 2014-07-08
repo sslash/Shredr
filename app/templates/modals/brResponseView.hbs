@@ -3,46 +3,52 @@
     <p class="lead pam"><a href="/users/{{battler._id}}">{{battler.username}}</a> has challenged you to a battle!</p>
 
     {{#if_eq mode "Advanced"}}
-    <div>
+    <div class="row">
         <video>
             <source src="video/br/{{advVidFile}}"
             type='video/webm;codecs="vp8, vorbis"'/>
             <source src="video/br/{{advVidFile}}"
             type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'/>
         </video>
+
+        <section class="row mvm">
+            <i class="ion-play mhs point" data-evt="play"></i>
+            <i class="ion-stop mhs point" data-evt="stop"></i>
+        </section>
+
     </div>
 
     <audio data-model="audio">
         <p>Your browser does not support this feauture :(</p>
         {{#if this.jamtrack}}
-        <source src="audio/{{this.jamtrack.fileId}}"type="audio/mpeg">
-            {{else}}
+            <source src="audio/{{this.jamtrack.fileId}}"type="audio/mpeg">
+        {{else}}
             <source src="audio/br/{{this.fileId}}"type="audio/mpeg">
-                {{/if}}
-            </audio>
+        {{/if}}
+    </audio>
 
-            {{else}}
-            <video controls>
-                <source src="video/br/{{advVidFile}}"
-                type='video/webm;codecs="vp8, vorbis"'/>
-                <source src="video/br/{{advVidFile}}"
-                type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'/>
-            </video>
-            {{/if_eq}}
-            <div>
-                <span class="pointer" data-evt="play">
-                    <i class="fa fa-play"></i>
-                </span>
-                <span class="pointer" data-evt="stop">
-                    <i class="fa fa-stop"></i>
-                </span>
-            </div>
+    {{else}}
+    <video controls>
+        <source src="video/br/{{advVidFile}}"
+        type='video/webm;codecs="vp8, vorbis"'/>
+        <source src="video/br/{{advVidFile}}"
+        type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"'/>
+    </video>
+    {{/if_eq}}
+    <div>
+        <span class="pointer" data-evt="play">
+            <i class="fa fa-play"></i>
+        </span>
+        <span class="pointer" data-evt="stop">
+            <i class="fa fa-stop"></i>
+        </span>
+    </div>
 
-            <p class="mvl"><img src="{{battler.profileImgFile}}" class="thumb-round img-xs"><span class="thumb-txt">{{statement}}</span></p>
+    <p class="mvl"><img src="{{battler.profileImgFile}}" class="thumb-round img-xs"><span class="thumb-txt">{{statement}}</span></p>
 
-            <div>
-                <button class="btn btn-niz" data-evt="accept">Accept</button>
-                <button class="btn" data-evt="decline">Decline</button>
+    <div>
+        <button class="btn btn-niz" data-evt="accept">Accept</button>
+        <button class="btn" data-evt="decline">Decline</button>
 
-            </div>
-        </div>
+    </div>
+</div>

@@ -22,6 +22,7 @@ var BaseController = Backbone.Marionette.Controller.extend({
 
     exec : function (modelOrCollection, action, options) {
         options = options || {};
+        options.type = options.type || 'model'; 
 
         if (options.event) {
             Shredr.vent.trigger(options.event, modelOrCollection);
@@ -44,7 +45,19 @@ var BaseController = Backbone.Marionette.Controller.extend({
                 // parse the error message
                 var errors = JSON.parse(response.responseText);
                 var msgs = Object.keys(errors).map(function(key) {
-                    return errors[key].message;
+
+                    // there might be an inner error map here..
+                    // in that case, just return the first one
+                    if ( errors[key].errors ) {
+                        var innerErrors = errors[key].errors;
+                        return Object.keys(innerErrors).map(function(k) {
+                            return innerErrors[k].message;
+                        })[0];
+
+                    // or its just a simple error message
+                    } else {
+                        return errors[key].message;
+                    }
                 });
 
                 modelOrColl.trigger(action + ':fail:post', modelOrColl, msgs);

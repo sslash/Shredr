@@ -85,6 +85,21 @@ UserSchema.path('email').validate(function (email) {
   	return email.length;
 }, 'Email cannot be blank')
 
+
+UserSchema.path('username').validate(function (username, fn) {
+    var User = mongoose.model('User');
+
+  // if you are authenticating by any of the oauth strategies, don't validate
+  if (oAuthTypes.indexOf(this.provider) !== -1) fn(true);
+
+  // Check only when it is a new user or when email field is modified
+if (this.isNew || this.isModified('username')) {
+    User.find({ username: username }).exec(function (err, users) {
+        fn(!err && users.length === 0);
+    })
+} else fn(true)
+}, 'Username already exists')
+
 UserSchema.path('email').validate(function (email, fn) {
 	var User = mongoose.model('User');
 

@@ -36,7 +36,7 @@ function(
             'click [data-evt="youtube"]'  	: '__thirdPartyUploadClicked',
             'click [data-evt="save"]' 		: '__uploadFormSubmitted',
             'click [data-evt="addTabs"]'  	: '__addTabsClicked',
-            'click [data-evt="type"] a' 	  : '__typeClicked'
+            'click [data-evt="type"] a' 	: '__typeClicked'
         }),
 
         // onRender: function() {
@@ -115,15 +115,15 @@ function(
             var title = this.$('#shred-title').val(),
             desc = this.$('#shred-description').val(),
             type = this.$('.active').text();
-
+            var tags = _.union(this.shredTagsAC.getKeys(), this.gearTagsAC.getKeys());
 
             this.model.set({
                 title : title,
                 description : desc,
-                shredTags : this.shredTagsAC.getKeys(),
-                gearTags : this.gearTagsAC.getKeys(),
+                tags : tags.map(function(s) {return s.toLowerCase();}),
+                //gearTags : this.gearTagsAC.getKeys(),
                 jamtrackTag : this.jamtrackTagsAC ? this.jamtrackTagsAC.getKeys() : null,
-                type : type
+                type : this.getCurrentType()
             }, {validate : true});
 
 
@@ -146,6 +146,8 @@ function(
                 }
             }
         },
+
+        getCurrentType : function() {},
 
         __addTabsClicked : function () {
             this.$('[data-reg="main"]').fadeOut('fast');

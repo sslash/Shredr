@@ -6,6 +6,7 @@ var mongoose       = require('mongoose'),
     shredService   = require('../services/shredService'),
     battleService  = require('../services/battleService'),
     extend         = require('util')._extend,
+    feedService    = require('./feedService'),
     fileHandler    = require('../libs/fileHandler');
 
 module.exports = {
@@ -24,8 +25,16 @@ module.exports = {
     },
 
     create : function (body) {
+        var def = Q.defer();
         var user = new User(body);
-        return user.create();
+        user.create()
+        .then(function() {
+            return feedService.broadcastNewUserFeed({
+                user : user
+            });
+        })
+        .then(def.resolve, def.reject).done();
+        return def.promise;
     },
 
     addFan : function (faneeId, user) {
@@ -104,5 +113,13 @@ module.exports = {
     addBattleReference : function(user, battleId) {
         user.battles.push(battleId);
         user.save();
+    },
+
+    query : function (q) {
+        var opts = {criteria : {}};
+        if (q.q && q.q.length) {
+            opts.criteria.username = {'$regex'  : new RegExp(q.q, 'gi')};
+        }
+        return query.query(User, opts);
     }
 };

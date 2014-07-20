@@ -21,6 +21,10 @@
     clip: rect(1px, 1px, 1px, 1px);
 }
 
+.no-gap {
+    position:relative;
+    top:-28px;
+}
 
 /* positioning */
 .right { float: right; }
@@ -125,8 +129,11 @@
 .mhl { margin: 0 1.2em;}
 
 .in { display: inline-block; }
+.block { display: block; }
+.cap {text-transform: capitalize;}
 
 .blue-box { background-color: $brown-light; }
+.green-box { background-color: $green; }
 
 /* colors; */
 
@@ -144,7 +151,7 @@
     }
 }
 .blue-b { background-color:$brown-light; }
-.white-b { background-color:#fff !important; }
+.white-b { background-color:$white !important; }
 .white { color: $white !important; }
 .face { background-color: #4c66a4 !important; }
 .green { color: $information; }
@@ -253,31 +260,48 @@
         &.center {
             width: 100%;
             text-align: center;
+            z-index: 1;
         }
+
+        &.bottom { bottom:0;}
+        &.right { right:0;}
+
         &.faded {
-            background: rgba(0, 0, 0, 0.71);
+
+            @include transition(background-color 0.2s ease);
+
+            &:hover {
+                background-color: rgba(255,255,255,0.5) !important;
+            }
+            //background-color: rgba(0, 0, 0, 0.25) !important;
+            z-index: 0 !important;
+
+            background-color: #000 !important;
+            background: -webkit-gradient(radial, 20% 25%, 0, 100% 100%, 400, from(rgba(0, 0, 0, 0.38)), to(rgba(0, 0, 0, 1))) transparent !important;
+            background: -moz-radial-gradient(center 45deg,circle cover,rgba(0,0,0,0.38) 0%,rgba(0,0,0,1)  100%) transparent !important;
         }
         &.large-in {
             bottom:9%;
             font-size: 6em;
         }
         &.wrap-icon {
-            top:1px;
-            right:10px;
+            top: 4px;
+            right: 10px;
         }
         &.full-in {
             top:0;
             width: 100%;
+            bottom:0;
             background-color:inherit;
-            cursor: pointer;
-            height: 98%;
+            // cursor: pointer;
+            // height: 98%;
             z-index: $z-fullin;
-            @include transition(background 0.5s ease);
-            &:hover {
-                background: #000;
-                background: -webkit-gradient(radial,50% 25%,0,50% 25%,400,from(rgba(255,255,255,.01)),to(rgba(255,255,255,.3))) transparent;
-                background: -moz-radial-gradient(center 45deg,circle cover,rgba(255,255,255,.01) 0%,rgba(255,255,255,.3)  100%) transparent;
-            }
+            // @include transition(background 0.5s ease);
+            // &:hover {
+            //     background: #000;
+            //     background: -webkit-gradient(radial,50% 25%,0,50% 25%,400,from(rgba(255,255,255,.01)),to(rgba(255,255,255,.3))) transparent;
+            //     background: -moz-radial-gradient(center 45deg,circle cover,rgba(255,255,255,.01) 0%,rgba(255,255,255,.3)  100%) transparent;
+            // }
         }
     }
 }

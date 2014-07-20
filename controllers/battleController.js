@@ -34,7 +34,7 @@ module.exports = BaseController.extend({
         .then(function(result){
             module.exports.render(req, res, _.extend(result, {
                 type : 'battles',
-                tpl : 'battle/battleListLayout'
+                tpl : 'stage/stageBattlesLayout'
             }));
         });
     },

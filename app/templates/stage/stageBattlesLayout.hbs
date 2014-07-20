@@ -1,0 +1,24 @@
+<div class="container no-gap" data-region="landing">
+    <div class="blue-box txt-center">
+{{#each things}}
+    <div class="brd-dark clearfix in rel" data-evt="battle-clk" data-mod="{{_id}}">
+        <div class="le-wrap battle-thumbs">
+            <div class="le-in full-in faded point">
+                <div class="le-in vert-center center subheading">
+                    <h3 class="cap">{{battler.username}} <span class="block lead">vs</span></h3>
+                    <h3 class="cap">{{battlee.username}}</h3>
+                </div>
+            </div>
+            <!-- <div class="le-in half-in right-half"></div> -->
+
+            <div class="crop" style="background-image: url('{{battler.profileImgFile}}');">
+                <!-- <img src="{{battler.profileImgFile}}" class="shred-thumb"> -->
+            </div>
+            <div class="crop" style="background-image: url('{{battlee.profileImgFile}}');">
+                <!-- <img src="{{battlee.profileImgFile}}" class="shred-thumb"> -->
+            </div>
+        </div>
+    </div>
+{{/each}}
+</div>
+</div>

@@ -13,6 +13,16 @@ function (
 var StageUsersLayout = Backbone.Marionette.Layout.extend({
     template : Tpl,
 
+    initialize : function () {
+        this.listenTo(this.collection, 'sync', this.render);
+    },
+
+    serializeData : function () {
+        return {
+            things : this.collection.toJSON()
+        };
+    },
+
     onRender : function () {
         this.playerComponent = new MapComponent({
             region : new Backbone.Marionette.Region({

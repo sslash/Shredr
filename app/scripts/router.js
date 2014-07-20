@@ -24,6 +24,7 @@ define([
         routes : {
             'stage/shreds' : 'listShreds',
             'stage/users'  : 'listUsers',
+            'stage/battles': 'listBattles',
             'battle/:id'   : 'showBattle',
             'shred/:id'    : 'showShred',
             'users/edit'   : 'editUser',
@@ -38,6 +39,10 @@ define([
 
         listUsers : function () {
             this.usersController.showStageUsers();
+        },
+
+        listBattles : function () {
+            this.battlesController.showStageBattles();
         },
 
         showUser : function (id) {

@@ -39,7 +39,7 @@ module.exports = function(app, passport){
 
   // battles
   app.get('/battle/:id', battleController.show);
-  app.get('/battle', battleController.list);
+  app.get('/stage/battles', battleController.list);
 
   // shreds
   app.get('/shred/:id', shredsController.show);
@@ -61,6 +61,7 @@ module.exports = function(app, passport){
   app.get('/api/shreds/:id', shredsController.get);
   app.post('/api/shreds/:id/rate', auth.requiresLogin, auth.requiresLogin, shredsController.rate);
   app.post('/api/shreds/:id/comment', auth.requiresLogin, shredsController.comment);
+  app.post('/api/shreds/:id/promote', auth.requiresLogin, shredsController.promote);
   app.post('/api/shreds/:id/upload', auth.requiresLogin, shredsController.upload);
   app.post('/api/shreds/:id/hej_jeg_kigger', shredsController.tryIncreaseView);
 

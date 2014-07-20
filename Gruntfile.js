@@ -73,6 +73,11 @@ module.exports = function (grunt) {
             mocha: {
                 command: 'mocha-phantomjs http://localhost:<%= connect.testserver.options.port %>/test',
                 stdout: true
+            },
+
+            backend : {
+                command: 'mocha test/spec/backend/**/*.js',
+                stdout: true
             }
         },
 
@@ -326,6 +331,10 @@ module.exports = function (grunt) {
         'uglify',
         'copy',
         'usemin'
+    ]);
+
+    grunt.registerTask('testBackend', [
+        'exec:backend'
     ]);
 
 };

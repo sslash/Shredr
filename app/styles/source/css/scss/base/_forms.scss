@@ -51,7 +51,8 @@ input[type="radio"] {
 input[type="search"] {
     -webkit-appearance: none;
     border-radius:15px;
-	padding-left: 15px;
+	padding: 0.7em 0.6rem;
+	width: 160px;
 }
 .search-wrap {
 	position: relative;

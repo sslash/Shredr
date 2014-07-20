@@ -16,7 +16,7 @@ var UsersQuery = {
 	}
 }
 
-// TODO: make user query and shreds query use this function
+// TODO: make user query and use this function
 // OPS: There used to be a second argument 'query'. This shouldn't be used
 var query = function (Model, opts, res) {
 	var deferred = Q.defer();
@@ -28,6 +28,8 @@ var query = function (Model, opts, res) {
 		page : opts.page || 0,
 		perPage : opts.perPage || 32
 	};
+
+	console.log('query: ' + JSON.stringify(options));
 
 	Model.list(options, function (err, doc) {
 		if ( res ) {

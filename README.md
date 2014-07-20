@@ -1,25 +1,25 @@
 ##TODOS:
 
+* userlist page
+    - mapview (postpone)
+    - listview
 * Feed
-    - New Shreds from fanees
-    - New Battles with fanees
-    - New relevant users (location)
-    - New battles with fans
-    - New Followings with fanees
-    - Promotions
-        - By promoting a video, you show it on all your fanees' feed (like a retweet)
-        - Must look cool
-        - Promotions can have a text
-
+    - battle comment
+    - battle complete
+    - fan
+    - battle video
     * Later
         - Leveling
         - Scales
         - Theory things
 
 * Searching and filtering
+    - search battles
+
 * Social functions
 * Landing page
 * hide playback buttons
+* tags should be converted to lowercase upon save
 
 // non importants
 * restrict fans added multiple times

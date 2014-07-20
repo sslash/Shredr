@@ -124,19 +124,6 @@ figcaption {
 	}
 }
 
-.crop {
-	float:left;
-	overflow:hidden; /* this is important */
-	position:relative; /* this is important too */
-	width:100%;
-	height:65px;
-	}
-/* position the image using negative top and left values */
-.crop img{
-	position:absolute;
-	// top:-20px;
-}
-
 .social {
 	display:inline-block;
 	padding:8px 10px;
@@ -165,9 +152,9 @@ figcaption {
 	min-width:100%;
 	height:150px;
 
-	.left { margin-left: 50px; }
-	.right { margin-right: 50px; }
-	.le-in { height:150px;}
+	// .left { margin-left: 50px; }
+	// .right { margin-right: 50px; }
+	.content { height:150px;}
 }
 
 .fullscreenimg {

@@ -19,7 +19,7 @@ module.exports = {
     getMany : function () {
         var deferred = Q.defer();
 
-        query.query(Battle)
+        query.query(Battle, {populate : 'battler battlee'})
         .then( function(doc) {
             deferred.resolve({
                 collBS : doc

@@ -127,9 +127,6 @@ So feel free to use any of these approaches. Or don't. It's totally up to you.
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%); }
 
-.blue-box {
-  background-color: #313338; }
-
 .white-b {
   background-color: #f2f2ef; }
 
@@ -202,9 +199,6 @@ So feel free to use any of these approaches. Or don't. It's totally up to you.
   position: relative;
   right: -74px; }
 
-.brd-dark {
-  border: 1px solid rgba(255, 255, 255, 0.3); }
-
 .brd-light {
   border: 1px solid rgba(255, 255, 255, 0.45); }
 
@@ -212,7 +206,7 @@ So feel free to use any of these approaches. Or don't. It's totally up to you.
   border-bottom: 1px solid rgba(255, 255, 255, 0.63); }
 
 .box {
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(242, 242, 239, 0.56);
   background: #313338;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.38);
   border-radius: 2px; }
@@ -721,6 +715,10 @@ table {
   border: 0;
   clip: rect(1px, 1px, 1px, 1px); }
 
+.no-gap {
+  position: relative;
+  top: -28px; }
+
 /* positioning */
 .right {
   float: right; }
@@ -903,8 +901,17 @@ table {
 .in {
   display: inline-block; }
 
+.block {
+  display: block; }
+
+.cap {
+  text-transform: capitalize; }
+
 .blue-box {
   background-color: #313338; }
+
+.green-box {
+  background-color: #394245; }
 
 /* colors; */
 /* Let there be light */
@@ -923,7 +930,7 @@ table {
   background-color: #313338; }
 
 .white-b {
-  background-color: #fff !important; }
+  background-color: #f2f2ef !important; }
 
 .white {
   color: #f2f2ef !important; }
@@ -996,7 +1003,7 @@ table {
   right: -74px; }
 
 .brd-dark {
-  border: 1px solid rgba(255, 255, 255, 0.3); }
+  border: 1px solid rgba(242, 242, 239, 0.56); }
 
 .brd {
   border: 1px solid !important; }
@@ -1011,7 +1018,7 @@ table {
   border-bottom: 1px solid #dddddd; }
 
 .box {
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(242, 242, 239, 0.56);
   background: #313338;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.38);
   border-radius: 2px; }
@@ -1029,31 +1036,36 @@ table {
     position: absolute; }
     .le-wrap .le-in.center {
       width: 100%;
-      text-align: center; }
+      text-align: center;
+      z-index: 1; }
+    .le-wrap .le-in.bottom {
+      bottom: 0; }
+    .le-wrap .le-in.right {
+      right: 0; }
     .le-wrap .le-in.faded {
-      background: rgba(0, 0, 0, 0.71); }
+      -webkit-transition: background-color 0.2s ease;
+      -moz-transition: background-color 0.2s ease;
+      -ms-transition: background-color 0.2s ease;
+      -o-transition: background-color 0.2s ease;
+      transition: background-color 0.2s ease;
+      z-index: 0 !important;
+      background-color: #000 !important;
+      background: -webkit-gradient(radial, 20% 25%, 0, 100% 100%, 400, from(rgba(0, 0, 0, 0.38)), to(black)) transparent !important;
+      background: -moz-radial-gradient(center 45deg, circle cover, rgba(0, 0, 0, 0.38) 0%, black 100%) transparent !important; }
+      .le-wrap .le-in.faded:hover {
+        background-color: rgba(255, 255, 255, 0.5) !important; }
     .le-wrap .le-in.large-in {
       bottom: 9%;
       font-size: 6em; }
     .le-wrap .le-in.wrap-icon {
-      top: 1px;
+      top: 4px;
       right: 10px; }
     .le-wrap .le-in.full-in {
       top: 0;
       width: 100%;
+      bottom: 0;
       background-color: inherit;
-      cursor: pointer;
-      height: 98%;
-      z-index: 40;
-      -webkit-transition: background 0.5s ease;
-      -moz-transition: background 0.5s ease;
-      -ms-transition: background 0.5s ease;
-      -o-transition: background 0.5s ease;
-      transition: background 0.5s ease; }
-      .le-wrap .le-in.full-in:hover {
-        background: #000;
-        background: -webkit-gradient(radial, 50% 25%, 0, 50% 25%, 400, from(rgba(255, 255, 255, 0.01)), to(rgba(255, 255, 255, 0.3))) transparent;
-        background: -moz-radial-gradient(center 45deg, circle cover, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.3) 100%) transparent; }
+      z-index: 40; }
 
 .green-hov {
   -webkit-transition: color 0.3s ease;
@@ -1122,10 +1134,6 @@ html {
 
 #main {
   margin-top: 2em; }
-
-.feed {
-  height: 35em;
-  /* ca 2 thumb columns */ }
 
 .full-screen {
   position: fixed;
@@ -1226,6 +1234,9 @@ strong {
 small, .small {
   font-size: 0.75em;
   color: #777777; }
+
+.icon {
+  font-size: 1.3em; }
 
 .icon-2x {
   font-size: 2em; }
@@ -1380,19 +1391,6 @@ figcaption {
     .box-wrap .le-in.thmb.battle-in {
       bottom: 30%; }
 
-.crop {
-  float: left;
-  overflow: hidden;
-  /* this is important */
-  position: relative;
-  /* this is important too */
-  width: 100%;
-  height: 65px; }
-
-/* position the image using negative top and left values */
-.crop img {
-  position: absolute; }
-
 .social {
   display: inline-block;
   padding: 8px 10px;
@@ -1417,16 +1415,12 @@ figcaption {
   width: 100%;
   min-width: 100%;
   height: 150px; }
-  .banner .left {
-    margin-left: 50px; }
-  .banner .right {
-    margin-right: 50px; }
-  .banner .le-in {
+  .banner .content {
     height: 150px; }
 
 .fullscreenimg {
   position: fixed;
-  top: 108px;
+  top: 117px;
   left: -50%;
   width: 200%;
   height: 200%;
@@ -1478,7 +1472,8 @@ input[type="radio"] {
 input[type="search"] {
   -webkit-appearance: none;
   border-radius: 15px;
-  padding-left: 15px; }
+  padding: 0.7em 0.6rem;
+  width: 160px; }
 
 .search-wrap {
   position: relative; }
@@ -1733,7 +1728,7 @@ td {
       vertical-align: middle;
       display: table-cell; }
   .nav .active {
-    background-color: #349b89;
+    background-color: #313338;
     font-weight: 900;
     padding-top: 0.7em;
     color: #f2f2ef; }
@@ -1765,9 +1760,11 @@ td {
   top: 2.2em;
   text-align: center; }
   .nav-center a {
-    padding: 0.55em 3.4em;
-    background-color: #313338;
-    font-family: "gotham_htflight", "Helvetica", "Arial", sans-serif; }
+    padding: 0.7em 3.4em;
+    background-color: #394245;
+    font-family: "gotham_htflight", "Helvetica", "Arial", sans-serif;
+    position: relative;
+    bottom: 4px; }
 
 .nav-right {
   float: right; }
@@ -1999,7 +1996,8 @@ td {
     min-width: 140px; }
 
 .btn-small {
-  padding: 0.8em; }
+  padding: 0.8em;
+  font-size: 0.75em; }
 
 .btn-info {
   background-color: #307ca8; }
@@ -2028,9 +2026,6 @@ td {
     color: #40bda7; }
   .tab-btn.active {
     border-width: 9px; }
-
-.active {
-  border-bottom: 2px solid #349b89; }
 
 .btn-niz {
   background-color: #349b89; }
@@ -2171,6 +2166,37 @@ td {
 .block-thumb-summary .b-text {
   margin-left: 50%;
   padding: 0.8em; }
+
+#feed {
+  background-image: url(/img/banners/stones.jpg);
+  background-size: cover;
+  background-position: inherit; }
+
+.feed .banner {
+  box-shadow: -2px 11px 8px -10px rgba(32, 32, 32, 0.71); }
+.feed .feed-list {
+  max-height: 42em;
+  overflow-y: scroll; }
+.feed .le-feed {
+  margin: 20px 0; }
+.feed .le-marg {
+  width: 10%;
+  display: inline-block;
+  text-align: left; }
+.feed .le-content {
+  padding: 0 5px;
+  display: inline-block;
+  width: 89%;
+  vertical-align: top; }
+
+.timeline {
+  position: absolute;
+  top: 151px;
+  margin-left: 10px;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(242, 242, 239, 0.44);
+  left: 10%; }
 
 .inline-list li {
   float: left; }
@@ -2403,7 +2429,7 @@ td {
   background: #2b2828;
   margin: 12px;
   text-align: left;
-  border: 1px solid rgba(255, 255, 255, 0.3); }
+  border: 1px solid rgba(242, 242, 239, 0.56); }
 
 .battle-play {
   padding: 40px 80px;
@@ -2473,6 +2499,22 @@ td {
     right: 15%; }
   .arrow.left {
     left: 15%; }
+
+.crop {
+  float: left;
+  width: 100px;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* lt ie8 */
+  -ms-background-position-x: center;
+  -ms-background-position-y: bottom;
+  background-position: center bottom;
+  /* scale bg image proportionately */
+  background-size: cover; }
+
+.battle-thumbs {
+  height: 200px; }
 
 .modal {
   position: fixed;
@@ -2545,16 +2587,13 @@ td {
   overflow-y: hidden; }
 .profile .full-right {
   background-color: #313338;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  -webkit-box-shadow: -4px -2px 11px 0px rgba(51, 51, 51, 0.52);
-  -moz-box-shadow: -4px -2px 11px 0px rgba(51, 51, 51, 0.52);
-  box-shadow: -4px -2px 11px 0px rgba(51, 51, 51, 0.52);
+  border-left: 1px solid rgba(242, 242, 239, 0.56);
   right: 0;
-  top: 108px;
+  top: 117px;
   width: 50%; }
 .profile .full-left {
   position: fixed;
-  top: 108px;
+  top: 117px;
   width: 50%;
   bottom: 0;
   left: 0; }
@@ -2573,30 +2612,32 @@ td {
   background-image: url(/img/banners/theory.png);
   background-size: cover; }
 
-.workspace .ws-banner {
+.ws-banner {
   margin-top: 10%;
   width: 300px;
   height: 500px;
   z-index: 2;
   position: relative; }
-  .workspace .ws-banner > div {
+  .ws-banner > div {
     padding: 15% 10%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.41);
     -webkit-box-shadow: 0px -1px 7px rgba(0, 0, 0, 0.89);
     -moz-box-shadow: 0px -1px 7px rgba(0, 0, 0, 0.89);
     box-shadow: 0px -1px 7px rgba(0, 0, 0, 0.89); }
-    .workspace .ws-banner > div:hover {
+    .ws-banner > div:hover {
       background-color: rgba(0, 0, 0, 0.1);
       -webkit-transition: background-color 0.3s ease-in-out;
       -moz-transition: background-color 0.3s ease-in-out;
       -ms-transition: background-color 0.3s ease-in-out;
       -o-transition: background-color 0.3s ease-in-out;
       transition: background-color 0.3s ease-in-out; }
-.workspace .ws-banner-right {
+
+.ws-banner-right {
   float: right;
   margin-right: 10%; }
-.workspace .ws-banner-left {
+
+.ws-banner-left {
   margin-left: 10%; }
 
 .dropdown {

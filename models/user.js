@@ -43,7 +43,10 @@ var userPlugin  = require('mongoose-user');
      battles: [{ type: Schema.Types.ObjectId, ref : 'Battle' }],
 
      authToken: { type: String, default: '' },
-     facebook: {}
+     facebook: {},
+
+     //TODO: this should be persisted in redis!
+     feed : [Schema.Types.Mixed]
  });
 
 /**
@@ -267,8 +270,8 @@ UserSchema.statics = {
         var def = Q.defer();
 
         this.findOne({ _id : id })
-        .populate('fanees.user')
-        .populate('fans.user')
+        .populate('fanees')
+        .populate('fans')
         .populate('battles')
         .populate('shreds')
         .exec(function(err,res) {

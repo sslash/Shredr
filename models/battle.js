@@ -46,6 +46,8 @@ var BattleSchema = new Schema({
         createdAt: { type : Date, default : Date.now }
     }],
 
+    statement : String,
+    
     // Advanced mode things
     rounds : [Schema.Types.Mixed]
     // rounds : [

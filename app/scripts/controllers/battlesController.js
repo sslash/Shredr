@@ -3,16 +3,23 @@ define([
     'backbone',
     'models/battle',
     'views/battle/battleDetailLayout',
-    'views/battle/preBattleAnimation'
+    'views/battle/preBattleAnimation',
+    'views/stage/stageBattlesLayout',
 ],
 function (
     Backbone,
     Battle,
     BattleDetailsLayout,
-    PreBattleAnimationView
+    PreBattleAnimationView,
+    StageBattlesLayout
 ){
 'use strict';
 var BattlesController = Backbone.Marionette.Controller.extend({
+
+    showStageBattles : function () {
+        Shredr.baseController.renderMainRegion(StageBattlesLayout, {collection : Shredr.collection}, 'battles');
+        Shredr.vent.trigger('battles:stage:render', Shredr.collection);
+    },
 
     showBattleDetail : function (id) {
         Shredr.baseController.exec( new Battle({id : id}), 'fetch',

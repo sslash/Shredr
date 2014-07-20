@@ -1,12 +1,17 @@
 /* global define */
 define([
     'backbone',
-    'models/user'
+    'models/user',
+    'collections/searchCollection'
 ],
-function( Backbone, User ) {
+function( Backbone, User, searchCollection ) {
     'use strict';
 
-    return Backbone.Collection.extend({
+    var usersCollection = Backbone.Collection.extend({
         model: User
     });
+
+    _.extend(usersCollection.prototype, searchCollection);
+
+    return usersCollection;
 });

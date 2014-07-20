@@ -5,6 +5,7 @@ utils          = require('../libs/utils'),
 TagsList       = mongoose.model('TagsList'),
 query          = require('../libs/query.js'),
 Q              = require('q'),
+feedService    = require('./feedService'),
 fileHandler    = require('../libs/fileHandler');
 
 
@@ -12,7 +13,7 @@ module.exports = {
 
     getById : function(id) {
         // returns a promise
-        return Shred.findById(id);
+        return Shred.load(id);
     },
 
     list : function () {
@@ -52,16 +53,50 @@ module.exports = {
 
     comment : function (user, shredId, body) {
         var def = Q.defer();
+        var shred;
 
-        Shred.findSimple(shredId)
-        .then(function(shred) {
+        Shred.load(shredId)
+        .then(function(res) {
+            shred = res;
             shred.comments.push({
                 body: body,
                 user: user._id
             });
             return shred.saveOrUpdate(true);
         })
-        .then(def.resolve.bind(null));
+        .then(function(res) {
+            return feedService.broadcastNewShredCommentFeed({
+                shred : shred,
+                user : user,
+                body : body
+            });
+        })
+        .then(def.resolve, def.reject).done();
+        return def.promise;
+    },
+
+    promote : function (user, shredId, body) {
+        var def = Q.defer(), shred;
+        var promotion = {
+            body : body,
+            createdAt : new Date(),
+            user : user._id
+        };
+
+        Shred.load(shredId)
+        .then(function (res) {
+            shred = res;
+            shred.promotions.push(promotion);
+            return shred.save();
+        })
+        .then(function () {
+            return feedService.broadcastPromotionFeed({
+                user : user,
+                body : body,
+                shred : shred
+            });
+        })
+        .then(def.resolve, def.reject).done();
         return def.promise;
     },
 
@@ -115,18 +150,27 @@ module.exports = {
 
     upload : function (req) {
         var def = Q.defer();
+        var fileResult, shred;
 
         fileHandler.storeVideoFile(req, {thumb : true})
-        .then(function(result) {
-            Shred.findById(req.params.id)
-            .then(function (shred) {
-                shred.fileId = result.file.name;
-                shred.thumb = './public/video/thumbs/' + result.thumb;
-                shred.save(function(err, res){
-                    if (err) { def.reject(err); }
-                    else { def.resolve(shred); }
-                });
+        .then(function(res) {
+            fileResult = res;
+            return Shred.load(req.params.id);
+        })
+        .then(function (res) {
+            shred = res;
+            shred.fileId = fileResult.file.name;
+            shred.thumb = fileResult.thumb;
+            return shred.save();
+        })
+        .then (function() {
+            return feedService.broadcastNewShredFeed({
+                shred : shred,
+                user : req.user
             });
+        })
+        .then(function () {
+            def.resolve(shred);
         })
         .fail(def.reject);
         return def.promise;
@@ -135,9 +179,23 @@ module.exports = {
     query : function (q) {
         var opts = {criteria : {}};
         opts.populate = 'user';
+
+        if (q.q && q.q.length) {
+            opts.criteria.title = {'$regex'  : new RegExp(q.q, 'gi')};
+        }
+
+        if ( q.tags && q.tags.length ) {
+            if ( !_.isArray(q.tags) ) { q.tags = q.tags.split(','); }
+            opts.criteria.tags = {'$in' : q.tags};
+        }
+
+        if ( q.location && q.location.length ) {
+            opts.criteria.location = {'$regex'  : new RegExp(q.q, 'gi')};
+        }
+
         if ( q.perPage ) { opts.perPage = q.perPage; }
-        if ( q.page ) { opts.page = q.query.page };
-        if ( q.type ) { opts.criteria.type = q.type };
+        if ( q.page ) { opts.page = q.query.page; }
+        if ( q.type ) { opts.criteria.type = q.type; }
         return query.query(Shred, opts);
     }
 };

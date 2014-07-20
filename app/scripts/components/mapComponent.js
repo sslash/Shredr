@@ -11,7 +11,7 @@ define([
             template : Tpl,
 
             onShow : function () {
-                this.renderGoogleMaps();
+            //    this.renderGoogleMaps();
             },
 
             renderGoogleMaps : function () {

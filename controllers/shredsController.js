@@ -16,29 +16,6 @@ BaseController = require("./baseController");
 
 module.exports = BaseController.extend({
 
-    // var render : function (req, res, user) {
-    //     user = user || {notLoggedIn : true};
-    //
-    //     list(req, function(shreds, err) {
-    //         if ( err ) { console.log('err: ' + err); }
-    //
-    //         // TODO: base controller.render
-    //         var fullBootstrap = {
-    //             // user : user,
-    //             userBS : JSON.stringify(user),
-    //             modelBS : JSON.stringify({}),
-    //             collBS : JSON.stringify(shreds),
-    //             type : 'shreds',
-    //             leftShreds : shreds.slice(0,14),
-    //             rightShredsTop : shreds.slice(14,22),
-    //             rightShredsBottom : shreds.slice(22,28),
-    //             layout: '../layout'
-    //         };
-    //
-    //         res.render(path.join( __dirname, '../app/templates/stage/stageShredsLayout' ), fullBootstrap);
-    //     });
-    // };
-
     /** RENDERS **/
 
     show : function (req, res) {
@@ -105,7 +82,13 @@ module.exports = BaseController.extend({
         var comment = req.body.body;
         if (!comment) {return client.error(res, {'error' : 'Comment text not included' })}
         shredService.comment(req.user, req.params.id, comment)
-        .then(client.send.bind(null, res, null), client.error.bind(null, res));
+        .then(client.send.bind(null, res, null), client.error.bind(null, res)).done();
+    },
+
+    promote : function (req, res) {
+        var body = req.body.body || '';
+        shredService.promote(req.user, req.params.id, body)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res)).done();
     },
 
     /**
@@ -186,7 +169,7 @@ module.exports = BaseController.extend({
     findById : function(req, res, next, id){
         var User = mongoose.model('User');
 
-        Shred.findById(id, function (err, shred) {
+        Shred.load(id, function (err, shred) {
             if (err) { return next(err); }
             if (!shred) { return next(new Error('not found')); }
             req.shred = shred;

@@ -1,6 +1,6 @@
 <div class="row clearfix">
 <div class="column half" data-mod="kicker">
-    <h4>The Shredr Stage.</h4>
+    <h4>The Shred Stage.</h4>
     <div data-mod="filters">
         <small>
             <span class="green-hov point active" data-model="*">All</span> /
@@ -13,45 +13,18 @@
 </div>
 
 <div class="column fourth">
-    <i class="icon ion-ios7-arrow-down icon-2x pts point" data-evt="more"></i>
+    <i class="icon ion-ios7-arrow-down icon-2x pts point" data-evt="more" data-mod="up"></i>
 </div>
 <div class="column fourth txt-right" data-mod="right">
-    <div class="row clearfix pts">
-            <div class="le-wrap">
-                <input type="search" class="search-submit input-on-dark">
-                <i class="icon ion-ios7-search icon-2x le-in wrap-icon point"></i>
-            </div>
-        <!-- <div class="column two-thirds" style="margin-top: 4px;">
-            <a href="/workspace" data-reg="workspace" class="btn btn-info wide">Workspace <span class="ion-mic-a"></span></a>
-        </div> -->
+    <div class="row clearfix pts" data-reg="search">
     </div>
 </div>
 </div>
 <div data-reg="more" style="display:none; " class="pvl">
     <div class="row clearfix mvs">
         <div class="column third">
-            <input type="search" class="search-submit input-on-dark" placeholder="Filter by Tags">
+            <input type="search" class="search-submit input-on-dark" placeholder="Filter by Tags" data-evt="tags">
         </div>
-        <div class="column third txt-center"><small>Add Tags</small></div>
-        <div class="column third">
-            <input type="range" class="small-form"><label style="display: inline-block;position: relative;bottom: 11px;left: 11px;">Filter skill-level</label>
-        </div>
-
-    </div>
-
-    <div class="row clearfix mvs">
-        <div class="column third">
-            <input type="search" class="search-submit input-on-dark" placeholder="Set Location">
-        </div>
-            <div class="column third txt-center"><small>All Locations</small></div>
-            <div class="column third">
-                <label class="in">
-                    <input type="checkbox"> Fanees Only
-                </label>
-
-                <label class="in mhm">
-                    <input type="checkbox"> Newbies Only
-                </label>
-            </div>
+        <div class="column third txt-center" data-reg="tags"><small>Add Tags</small></div>
     </div>
 </div>

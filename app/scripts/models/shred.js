@@ -249,6 +249,15 @@ define([
 			}
 		},
 
+		promote : function (body) {
+			var url = this.url() + '/promote';
+			var that = this;
+			$.post(url, {body : body})
+			.done(function(res) {
+				that.trigger('shred:promoted');
+			});
+		},
+
 		getRating : function () {
 			var rating = this.get('rating');
 			var raters = rating.raters || {}

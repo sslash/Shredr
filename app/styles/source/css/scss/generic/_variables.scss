@@ -22,6 +22,9 @@ $warning : #fff664; // duno
 $information : #349B89; // green
 $brown: #2b2828;
 $brown-light: #313338; // actually dark blue.
+$purple: #3C3945;
+$green: #394245;
+
 // variations
 $green-light: #40BDA7;
 $green-lighter: #61B1A3;
@@ -33,11 +36,11 @@ $brown-light-light: #474b52;
 // component-colors
 $grey-border:#dce4ec;
 $white-on-brown: rgba(255, 255, 255, 0.67);
-$white-on-brown-brdr: rgba(255, 255, 255, 0.3);
+$white-on-brown-brdr: rgba(242, 242, 239, 0.56);
 $black-trans: rgba(0, 0, 0, 0.75);
 
 $nav-height: 3.9em;
-$top-height: 108px;
+$top-height: 117px;
 
 // z-indexes
 $z-dropdown: 200;
@@ -164,10 +167,6 @@ $thumb-list-height: 359px;
     -webkit-transform: translateY(-50%);
 }
 
-.blue-box {
-    background-color: $brown-light;
-}
-
 // colors;
 .white-b { background-color:$white; }
 .blue-b { background-color:$brown-light; }
@@ -237,10 +236,6 @@ $thumb-list-height: 359px;
 // Borders
 @mixin brd-dark {
     border: 1px solid $white-on-brown-brdr;
-}
-
-.brd-dark {
-    @include brd-dark;
 }
 
 .brd-light {

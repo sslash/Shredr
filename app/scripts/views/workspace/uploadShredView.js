@@ -1,9 +1,10 @@
 define([
 	'views/modals/uploadModal',
+	'components/categoryPickerComponent',
 	'hbs!tmpl/workspace/uploadShredHeader',
 	'hbs!tmpl/workspace/uploadShredFormFields'
 ],
-function( UploadModal, headerTpl, fieldsTpl ) {
+function( UploadModal, CategoryPickerComponent, headerTpl, fieldsTpl ) {
 	'use strict';
 
 	/* Return a ItemView class definition */
@@ -11,6 +12,18 @@ function( UploadModal, headerTpl, fieldsTpl ) {
 		renderMoreStuff : function () {
 			this.$('[data-reg="head"]').html(headerTpl);
 			this.$('[data-reg="left-content"]').append(fieldsTpl);
+			this.renderTypes();
+		},
+
+		renderTypes : function () {
+			this.catPicker = new CategoryPickerComponent({
+				categories : ['Lick', 'Tutorial', 'Cover','Gear-review','Other'],
+				region : new Backbone.Marionette.Region({el : this.$('[data-reg="cats"]')})
+			}).show();
+		},
+
+		getCurrentType : function() {
+			return this.catPicker.getCurrentType();
 		},
 
 		serializeData : function () {

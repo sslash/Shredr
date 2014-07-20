@@ -18,6 +18,13 @@ var ShredSchema = new Schema({
 		raters : {}
 	},
 	tabs: {},
+	promotions : [
+		{
+			body: { type : String, default : '' },
+			user: { type : Schema.ObjectId, ref : 'User' },
+			createdAt: { type : Date, default : Date.now }
+		}
+	],
 	thumb : {type : String},
 	youtubeUrl : {type : String, default : '', trim : true},
 	youtubeId : {type : String, default : '', trim : true},
@@ -28,8 +35,8 @@ var ShredSchema = new Schema({
 		createdAt: { type : Date, default : Date.now }
 	}],
 
-	shredTags: {type: []},
-	gearTags: {type: []},
+	tags: {type: []},
+	// gearTags: {type: []},
 	jamtrackTag : {type : String},
 	fileId : {type : String},
 	createdAt  : {type : Date, default : Date.now}
@@ -118,7 +125,7 @@ ShredSchema.methods = {
 
 		return def.promise;
 	},
-	// 
+	//
 	// tryIncreaseview : function(userOrIp) {
 	// 	var def = Q.defer();
 	//
@@ -160,7 +167,7 @@ ShredSchema.statics = {
 	* @param {Function} cb
 	* @api private
 	*/
-	findById: function (id) {
+	load: function (id) {
 		var deferred = Q.defer();
 		this.findOne({ _id : id })
 		.populate('user')

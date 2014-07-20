@@ -3,35 +3,18 @@ mongoStore  = require('connect-mongo')(express),
 mongoConfig = require('./mongoConfig'),
 pkg         = require('../package'),
 hbs = require('express-hbs'),
-winston     = require('winston'),
-path = require('path'),
-expressWinston = require('express-winston');
+path = require('path');
 
 module.exports = function (app, config, passport) {
     app.set('showStackError', true);
 
     // use express favicon
-    //app.use(express.favicon())
+    app.use(express.favicon())
 
     app.use(express.static( path.join( __dirname, '../public') ));
     app.use(express.static( path.join( __dirname, '../.tmp') ));
     app.use(express.static( path.join( __dirname, '../app') ));
     app.use(express.logger('dev'));
-
-    // express-winston logger makes sense BEFORE the router.
-    // app.use(expressWinston.logger({
-    //     transports: [
-    //     new winston.transports.Console({
-    //         json: true,
-    //         colorize: true
-    //     })
-    //     ]
-    // }));
-    // simple logger
-    app.use(function(req, res, next){
-        console.log('%s %s', req.method, req.url);
-        next();
-    });
 
     // views config
     app.engine('hbs', hbs.express3({
@@ -44,6 +27,7 @@ module.exports = function (app, config, passport) {
         // bodyParser should be above methodOverride
         app.use(express.bodyParser({uploadDir:'./uploads'}));
         app.use(express.methodOverride());
+        app.use(express.logger('dev'));
 
         // cookieParser should be above session
         app.use(express.cookieParser());
@@ -62,16 +46,6 @@ module.exports = function (app, config, passport) {
         // routes should be at the last
         app.use(app.router);
 
-        // express-winston errorLogger makes sense AFTER the router.
-        // app.use(expressWinston.errorLogger({
-        //     transports: [
-        //     new winston.transports.Console({
-        //         json: true,
-        //         colorize: true
-        //     })
-        //     ]
-        // }));
-
         app.use(function (req, res, next) {
             res.status(404).render('404', { url: req.originalUrl });
         });
@@ -80,6 +54,7 @@ module.exports = function (app, config, passport) {
     // development specific stuff
     app.configure('development', function () {
         app.locals.pretty = true;
+        app.use(express.errorHandler());
     });
 
     // staging specific stuff

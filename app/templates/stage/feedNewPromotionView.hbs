@@ -1,0 +1,10 @@
+<h4>{{user.username}} Promotes: <small>{{referenceObj.body}}</small></h4>
+<h3 class="lead mvm"><a href="{{referenceObj.id}}">"{{referenceObj.title}}"</a></h3>
+<div>
+    <div class="right">
+    <p>By
+        <a href="/users/{{referenceObj.user.id}}">{{referenceObj.user.username}}</a></p>
+        <img src="{{referenceObj.user.profileImgFile}}" class="img-xs ">
+    </div>
+    <a href="shred/{{referenceObj.id}}"><img src="{{referenceObj.thumb}}" class="img-sm profile-img left"></a>
+</div>

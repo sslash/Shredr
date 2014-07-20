@@ -49,8 +49,8 @@ define([
                 Shredr.baseController.exec(comment, 'save', { event : 'comment:save' });
             },
 
-            saveSuccess : function (comment, battle) {
-                this.collection.add(battle.comments[battle.comments.length-1]);
+            saveSuccess : function (comment, res) {
+                this.collection.add(res[res.length-1]);
             }
         });
     });

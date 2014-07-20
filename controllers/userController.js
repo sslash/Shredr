@@ -62,13 +62,9 @@ module.exports = BaseController.extend({
 	},
 
 	query : function (req, res) {
-		return Query.UsersQuery.query(req.query, function (err, result) {
-			if ( err ) {
-				res.send(err, 400);
-			} else {
-				res.send(result);
-			}
-		});
+		userService.query(req.query)
+		.then(client.send.bind(null, res, null), client.error.bind(null, res))
+		.done();
 	},
 
 	list : function(req, res) {

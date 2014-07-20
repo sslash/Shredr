@@ -25,8 +25,10 @@
 	&.wide { min-width: 140px; }
 }
 
+// Should fit with .small-form
 .btn-small {
 	padding: $pad-half;
+	font-size: $font-size-small;
 }
 
 .btn-info {
@@ -69,9 +71,9 @@
 	}
 }
 
-.active {
-	border-bottom: 2px solid $information;
-}
+// a.active {
+// 	border-bottom: 2px solid $information;
+// }
 
 
 .btn-niz {

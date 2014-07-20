@@ -239,3 +239,176 @@ var battle = {
 };
 
 db.battles.save(battle);
+
+
+
+
+// FOR TESTS
+
+
+// create two fans
+db.users.save({
+	provider : 'local',
+	username : 'testuserFan1',
+	fans : [],
+	fanees : [],
+	startedPlaying : '1965',
+	email : 'testuserFan1@sapmail.com',
+	profileImgFile : '/img/profiles/1.jpg',
+	location : 'Planet Marsh',
+	birth : new Date(),
+	battles : [],
+	salt : '855018864738',
+	hashed_password : 'da60354b118ade78b7a060036a652d2286c89462'
+	shreds : [],
+	feed : [],
+	testFan : true,
+	guitars : ['Gibson Les Paul'],
+	bio : 'Mandalore skywalker greedo cade grievous jade. Luuke greedo cade moff alderaan darth wicket yavin mace. Gonk yoda darth amidala maul. Jade skywalker c-3po ewok moff. Hutt kit mustafar gamorrean palpatine jango hutt yoda mara. Mace yavin utapau antilles kenobi lobot hutt calrissian padmé'
+});
+
+db.users.save({
+	provider : 'local',
+	username : 'testuserFan2',
+	fans : [],
+	fanees : [],
+	startedPlaying : '1965',
+	email : 'testuserFan2@sapmail.com',
+	profileImgFile : '/img/profiles/1.jpg',
+	location : 'Planet Marsh',
+	birth : new Date(),
+	battles : [],
+	shreds : [],
+	salt : '855018864738',
+	hashed_password : 'da60354b118ade78b7a060036a652d2286c89462'
+	feed : [],
+	testFan : true,
+	guitars : ['Gibson Les Paul'],
+	bio : 'Mandalore skywalker greedo cade grievous jade. Luuke greedo cade moff alderaan darth wicket yavin mace. Gonk yoda darth amidala maul. Jade skywalker c-3po ewok moff. Hutt kit mustafar gamorrean palpatine jango hutt yoda mara. Mace yavin utapau antilles kenobi lobot hutt calrissian padmé'
+});
+
+// main test user1
+db.users.save({
+	provider : 'local',
+	username : 'testuser',
+	fans : [],
+	fanees : [],
+	startedPlaying : '1965',
+	email : 'testuser@sapmail.com',
+	profileImgFile : '/img/profiles/1.jpg',
+	location : 'Planet Marsh',
+	birth : new Date(),
+	battles : [],
+	shreds : [],
+	feed : [],
+	salt : '855018864738',
+	hashed_password : 'da60354b118ade78b7a060036a652d2286c89462'
+	guitars : ['Gibson Les Paul'],
+	bio : 'Mandalore skywalker greedo cade grievous jade. Luuke greedo cade moff alderaan darth wicket yavin mace. Gonk yoda darth amidala maul. Jade skywalker c-3po ewok moff. Hutt kit mustafar gamorrean palpatine jango hutt yoda mara. Mace yavin utapau antilles kenobi lobot hutt calrissian padmé'
+});
+
+// main test user2
+db.users.save({
+	provider : 'local',
+	username : 'testuser2',
+	fans : [],
+	fanees : [],
+	startedPlaying : '1965',
+	email : 'testuser@sapmail.com',
+	profileImgFile : '/img/profiles/1.jpg',
+	location : 'Planet Marsh',
+	birth : new Date(),
+	battles : [],
+	shreds : [],
+	feed : [],
+	salt : '855018864738',
+	hashed_password : 'da60354b118ade78b7a060036a652d2286c89462',
+	guitars : ['Gibson Les Paul'],
+	bio : 'Mandalore skywalker greedo cade grievous jade. Luuke greedo cade moff alderaan darth wicket yavin mace. Gonk yoda darth amidala maul. Jade skywalker c-3po ewok moff. Hutt kit mustafar gamorrean palpatine jango hutt yoda mara. Mace yavin utapau antilles kenobi lobot hutt calrissian padmé'
+});
+
+// set fans relations
+var fans = db.users.find({testFan : true});
+db.users.update({"username" : "testuser2"}, {$set : {fans : [
+	{
+		_id : ObjectId(),
+		user : fans[0]._id
+	},{
+		_id : ObjectId(),
+		user : fans[1]._id
+	}
+]}});
+
+db.users.update({"username" : "testuser"}, {$set : {fans : [
+	{
+		_id : ObjectId(),
+		user : fans[0]._id
+	},{
+		_id : ObjectId(),
+		user : fans[1]._id
+	}
+]}});
+
+var user = db.users.find({username : 'testuser2'});
+var user2 = db.users.find({username : 'testuser'});
+db.users.update({username : 'testuserFan1'}, {$set : {fanees : [{
+		_id : ObjectId(),
+		user : user[0]._id
+	},{
+		_id : ObjectId(),
+		user : user2[0]._id
+	}
+
+]}});
+var user = db.users.find({username : 'testuser2'});
+var user2 = db.users.find({username : 'testuser'});
+db.users.update({username : 'testuserFan2'}, {$set : {fanees : [{
+		_id : ObjectId(),
+		user : user[0]._id
+	},{
+		_id : ObjectId(),
+		user : user2[0]._id
+	}
+]}});
+
+
+// clean
+db.users.remove({testFan : true});
+db.users.remove({username : 'testuser'});
+
+var user = db.users.find({username : 'testuser'});
+
+db.shreds.save({
+	user : user[0]._id,
+	createdAt : new Date(),
+	tags : ['test'],
+	type : ['tutorial'],
+	comments : [],
+	views : {},
+	description : "This is a test shred",
+	title : 'Test Shred'
+});
+
+
+var battler = db.users.find({username : 'testuser'})
+var battlee = db.users.find({username : 'testuser2'})
+
+db.battlerequests.save({
+	"advVidFile" : "sap3.mp4",
+	"battlee" : battler[0]._id,
+	"battler" : battlee[0]._id,
+	"createdAt" : new Date(),
+	"dayLimit" : 5,
+	"duration" : 12.865,
+	"jamtrackId" : null,
+	"mode" : "simple",
+	"rounds" : 3,
+	"startFrame" : 0,
+	"startSec" : 0,
+	"statement" : "test yolo battle"
+});
+
+
+
+// Test battles
+// create a battle request

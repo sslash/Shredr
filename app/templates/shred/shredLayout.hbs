@@ -26,10 +26,10 @@
 
     <div class="row clearfix">
 
-        <div class="column two-thirds">
+        <div class="column two-thirds prl">
             <div class="row mvl clearfix">
                 <h5 class="column three-fourth">{{m.type}} <small>Added {{m.createdAt}}</small></h5>
-                <div class="column fourth green txt-right phl">
+                <div class="column fourth green txt-right">
                     <i class="icon ion-social-facebook mvxs"></i>
                     <i class="icon ion-social-twitter mvxs"></i>
                     <i class="icon ion-social-googleplus mvxs"></i>
@@ -38,7 +38,7 @@
 
             <div class="row mvl clearfix">
                 <h1 class="column three-fourth lead">{{m.title}}</h1>
-                <div class="column fourth phl">
+                <div class="column fourth">
                     <button class="btn btn-ser">Challenge {{m.user.username}}</button>
                 </div>
             </div>
@@ -47,18 +47,23 @@
 
                 <!-- TODO: verify this is correct -->
                 <section class="mtm green-swabs">
-                    <p><a class="white active">About</a>
-                    <a>Promote</a>
-                    <a>Hide</a></p>
-                    <p><label>
-                        {{m.description}}
-                    </label></p>
+                    <div data-reg="cats"></div>
+                    <div class="blue-box pam" data-reg="cat-content">
+                        <div data-mod="About" class="active"><label>{{m.description}}</label></div>
+                        <div data-mod="Promote" style="display:none;">
+                            <p>Promote this Shred on your fans' timeline</p>
+                            <div class="mvl">
+                                <input type="text" id="promote-body" placeholder="Promotion title" class="small-form">
+                                <button class="btn btn-small btn-niz mhl" data-evt="promote">Promote</button>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
 
             <div class="row clearfix">
-                <h3 class="mvs">Shredr Tabs</h3>
-                <div data-reg="tabs" class="prl"></div>
+                <h3>Shredr Tabs</h3>
+                <div data-reg="tabs"></div>
             </div>
         </div>
 

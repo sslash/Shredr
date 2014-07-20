@@ -7,6 +7,7 @@ define([
     'components/commentComponent',
     'components/tabsComponent',
     'components/rateComponent',
+    'components/categoryPickerComponent',
     'collections/commentsCollection',
     'collections/shredsCollection',
     'hbs!tmpl/shred/shredLayout'
@@ -17,6 +18,7 @@ function (
     CommentComponent,
     TabsComponent,
     RateComponent,
+    CategoryPickerComponent,
     CommentCollection,
     ShredsCollection,
     Tpl
@@ -41,8 +43,13 @@ var ShredLayout = Backbone.Marionette.Layout.extend({
         );
     },
 
+    ui : {
+        catContent : '*[data-reg="cat-content"]'
+    },
+
     events : {
-        'click [data-evt="thmb-click"]' : '__playClicked'
+        'click [data-evt="thmb-click"]' : '__playClicked',
+        'click [data-evt="promote"]'    : '__promoteClicked'
     },
 
     onRender : function () {
@@ -50,6 +57,8 @@ var ShredLayout = Backbone.Marionette.Layout.extend({
         this.renderTabs();
         this.renderPlayer();
         this.renderRating();
+        this.renderCategoryPicker();
+        this.bindUIElements();
     },
 
     serializeData : function () {
@@ -97,10 +106,31 @@ var ShredLayout = Backbone.Marionette.Layout.extend({
         }).show();
     },
 
+    renderCategoryPicker : function () {
+        this.categoryPickerComponent = new CategoryPickerComponent({
+            categories : ['About', 'Promote', 'Hide'],
+            region : new Backbone.Marionette.Region({el : this.$('[data-reg="cats"]')})
+        }).show();
+        this.listenTo(this.categoryPickerComponent, 'category:clicked', this.categoryChanged);
+    },
+
+    categoryChanged : function (category) {
+        this.ui.catContent.find('.active').hide().removeClass('active');
+        this.ui.catContent.find('[data-mod="' + category + '"]').show().addClass('active');
+    },
+
     __playClicked : function (e) {
         var id = $(e.currentTarget).attr('data-model');
         Shredr.navigate('/#shred/' + id, {trigger : true});
     },
+
+    __promoteClicked : function () {
+        var body = this.$('#promote-body').val();
+        this.model.promote(body);
+        this.listenTo(this.model, 'shred:promoted', function() {
+            alert('Shred was promoted!');
+        });
+    }
 
 });
 

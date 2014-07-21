@@ -31,13 +31,15 @@ module.exports = BaseController.extend({
 		.then(function (users) {
 			module.exports.render(req, res, {
 				collBS : users,
+				leftUsers : users.slice(0,14),
+				rightUsers : users.slice(14,22),
 				type : 'users',
 				tpl : 'stage/stageUsersLayout'
 			});
 		})
 		.fail(function(err) {
-			console.log('err: ' + err);
-		})
+			throw err;
+		}).done();
 	},
 
 	show : function(req,res){

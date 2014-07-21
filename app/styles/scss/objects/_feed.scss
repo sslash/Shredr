@@ -1,0 +1,42 @@
+#feed {
+    background-image:url(/img/banners/stones.jpg);
+    background-size:cover;
+    background-position:inherit;
+}
+
+$marg : 10%;
+.feed {
+    .banner {
+        box-shadow: -2px 11px 8px -10px rgba(32, 32, 32, 0.71);
+    }
+
+    .feed-list {
+        max-height: 42em;
+        overflow-y: scroll;
+    }
+
+    .le-feed {
+        margin:20px 0;
+    }
+    .le-marg {
+        width:$marg;
+        display:inline-block;
+        text-align:left;
+    }
+    .le-content {
+        padding: 0 5px;
+        display:inline-block;
+        width: 99% - $marg;
+        vertical-align: top;
+    }
+}
+
+.timeline {
+    position: absolute;
+    top: 151px;
+    margin-left:10px;
+    bottom: 0;
+    width: 1px;
+    background-color: rgba(242, 242, 239, 0.44);
+    left: $marg;
+}

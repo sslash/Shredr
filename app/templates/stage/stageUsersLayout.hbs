@@ -1,15 +1,12 @@
 <div data-region="landing">
-    <div class="row clearfix profile">
+    <div class="row clearfix">
 
-        <div class="column half">
-            <div data-reg="map"></div>
-        </div>
-        <div class="column half">
-            <div class="full-right scrollable">
-                {{#each things}}
-                <div class="thumb-box row clearfix mbl">
+        <div class="column half phm">
+            <!-- <div data-reg="map"></div> -->
+                {{#each leftUsers}}
+                <div class="row clearfix pam mal blue-box">
                     <div class="column third">
-                        <img src="{{profileImgFile}}" class="shred-thumb">
+                        <a href="/users/{{_id}}"><img src="{{profileImgFile}}" class="shred-thumb"></a>
                     </div>
 
                     <div class="column two-thirds pam">
@@ -20,11 +17,35 @@
                             <li><small>20 Battles</small></li>
                             <li><small>10 Shreds</small></li>
                         </ul>
-                        <button class="btn btn-niz">Fan</button>
+                        <div class="right">
+                            <button class="btn btn-niz">Fan</button>
+                        </div>
                     </div>
                 </div>
                 {{/each}}
-            </div>
+        </div>
+
+        <div class="column half phm">
+                {{#each rightUsers}}
+                <div class="row clearfix pam mal blue-box">
+                    <div class="column third">
+                        <a href="/users/{{_id}}"><img src="{{profileImgFile}}" class="shred-thumb"></a>
+                    </div>
+
+                    <div class="column two-thirds pam">
+                        <h3><a href="/users/{{_id}}">{{username}}</a></h3>
+                        <p class="mvm ingress">{{bio}}</p>
+                        <ul class="inline-list li-dotted in clearfix">
+                            <li><small>Level 10</small></li>
+                            <li><small>20 Battles</small></li>
+                            <li><small>10 Shreds</small></li>
+                        </ul>
+                        <div class="right">
+                            <button class="btn btn-niz">Fan</button>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
         </div>
     </div>
 </div>

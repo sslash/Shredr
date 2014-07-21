@@ -47,7 +47,7 @@ var BattleSchema = new Schema({
     }],
 
     statement : String,
-    
+
     // Advanced mode things
     rounds : [Schema.Types.Mixed]
     // rounds : [
@@ -237,7 +237,15 @@ BattleSchema.statics = {
         var criteria = options.criteria || {};
         var populate = options.populate || '';
 
-        this.find(criteria)
+        var query = this.find(criteria);
+
+        debugger
+        if (options.query && options.query.or) {
+            query = query.or(options.query.or);
+        }
+
+
+        query
         .populate(populate)
         .sort({'createdAt': -1}) // sort by date
         .limit(options.perPage)

@@ -1,0 +1,4503 @@
+/*
+                                                ,,            ,,                          ,,
+ .M"""bgd mm                                    db          `7MM        mm         mm   `7MM                                    OO OO OO
+,MI    "Y MM                                                  MM        MM         MM     MM                                    88 88 88
+`MMb.   mmMMmm ,pW"Wq.`7MMpdMAo.     `7Mb,od8 `7MM  .P"Ybmmm  MMpMMMb.mmMMmm     mmMMmm   MMpMMMb.  .gP"Ya `7Mb,od8 .gP"Ya      || || ||
+  `YMMNq. MM  6W'   `Wb MM   `Wb       MM' "'   MM :MI  I8    MM    MM  MM         MM     MM    MM ,M'   Yb  MM' "',M'   Yb     || || ||
+.     `MM MM  8M     M8 MM    M8       MM       MM  WmmmP"    MM    MM  MM         MM     MM    MM 8M""""""  MM    8M""""""     `' `' `'
+Mb     dM MM  YA.   ,A9 MM   ,AP       MM       MM 8M         MM    MM  MM         MM     MM    MM YM.    ,  MM    YM.    ,     ,, ,, ,,
+P"Ybmmd"  `Mbmo`Ybmd9'  MMbmmd'      .JMML.   .JMML.YMMMMMb .JMML  JMML.`Mbmo      `Mbmo.JMML  JMML.`Mbmmd'.JMML.   `Mbmmd'     db db db
+                        MM                         6'     dP
+                      .JMML.                       Ybmmmd'
+
+Pattern Lab doesn't have any CSS requirements, which means you can write your styles however you want. Hooray!
+You can use Sass, Less, vanilla CSS, or some other crazy thing I haven't heard of yet.
+So please don't use these styles. They're just here to put together the demo, and nothing more.
+They're intentionally gray, boring, and crappy because you're supposed to do this stuff yourself.
+
+Atomic design is philosophically complimentary with these CSS approaches:
+
+* SMACSS by Jonathan Snook http://smacss.com/
+* OOCSS by Nicole Sullivan http://oocss.org/
+* BEM CSS Methology : http://bem.info/method/
+* CSS Guidelines by Harry Roberts : https://github.com/csswizardry/CSS-Guidelines
+
+So feel free to use any of these approaches. Or don't. It's totally up to you.
+
+*/
+/*------------------------------------*\
+    $TABLE OF CONTENTS
+    based generally on Harry Roberts excellent CSS Guidelines https://github.com/csswizardry/CSS-Guidelines
+\*------------------------------------*/
+/**
+ * VARIABLES..............................Declarations of Sass variables
+ * .....Colors
+ * .....Typography
+ * .....Layout
+ * .....Defaults
+ * .....Breakpoints
+ * MIXINS.................................Sass mixins
+ * RESET..................................Set reset defaults
+ * GLOBAL CLASSES.........................Set reset defaults
+ * GLOBAL ELEMENTS........................Establish global styles
+ * .....Main
+ * .....Headings
+ * .....Text-related elements (p, blockquote, lists)
+ * .....Defaults
+ * .....Breakpoints
+ * TYPOGRAPHY------------------------------
+ * MEDIA------------------------------
+ * LAYOUT------------------------------
+ * NAVIGATION------------------------------
+ * TOC To Be Continued
+ */
+/*!
+  Ionicons, v1.4.1
+  Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
+  https://twitter.com/helloimben  https://twitter.com/ionicframework
+  MIT License: https://github.com/driftyco/ionicons
+*/
+@font-face {
+  font-family: "Ionicons";
+  src: url("../fonts/ionicons.eot?v=1.4.1");
+  src: url("../fonts/ionicons.eot?v=1.4.1#iefix") format("embedded-opentype"), url("../fonts/ionicons.ttf?v=1.4.1") format("truetype"), url("../fonts/ionicons.woff?v=1.4.1") format("woff"), url("../fonts/ionicons.svg?v=1.4.1#Ionicons") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+.ion, .ion-loading-a, .ion-loading-b, .ion-loading-c, .ion-loading-d, .ion-looping, .ion-refreshing, .ion-ios7-reloading, .ionicons, .ion-alert, .ion-alert-circled, .ion-android-add, .ion-android-add-contact, .ion-android-alarm, .ion-android-archive, .ion-android-arrow-back, .ion-android-arrow-down-left, .ion-android-arrow-down-right, .ion-android-arrow-up-left, .ion-android-arrow-up-right, .ion-android-battery, .ion-android-book, .ion-android-calendar, .ion-android-call, .ion-android-camera, .ion-android-chat, .ion-android-checkmark, .ion-android-clock, .ion-android-close, .ion-android-contact, .ion-android-contacts, .ion-android-data, .ion-android-developer, .ion-android-display, .ion-android-download, .ion-android-dropdown, .ion-android-earth, .ion-android-folder, .ion-android-forums, .ion-android-friends, .ion-android-hand, .ion-android-image, .ion-android-inbox, .ion-android-information, .ion-android-keypad, .ion-android-lightbulb, .ion-android-locate, .ion-android-location, .ion-android-mail, .ion-android-microphone, .ion-android-mixer, .ion-android-more, .ion-android-note, .ion-android-playstore, .ion-android-printer, .ion-android-promotion, .ion-android-reminder, .ion-android-remove, .ion-android-search, .ion-android-send, .ion-android-settings, .ion-android-share, .ion-android-social, .ion-android-social-user, .ion-android-sort, .ion-android-star, .ion-android-stopwatch, .ion-android-storage, .ion-android-system-back, .ion-android-system-home, .ion-android-system-windows, .ion-android-timer, .ion-android-trash, .ion-android-volume, .ion-android-wifi, .ion-archive, .ion-arrow-down-a, .ion-arrow-down-b, .ion-arrow-down-c, .ion-arrow-expand, .ion-arrow-graph-down-left, .ion-arrow-graph-down-right, .ion-arrow-graph-up-left, .ion-arrow-graph-up-right, .ion-arrow-left-a, .ion-arrow-left-b, .ion-arrow-left-c, .ion-arrow-move, .ion-arrow-resize, .ion-arrow-return-left, .ion-arrow-return-right, .ion-arrow-right-a, .ion-arrow-right-b, .ion-arrow-right-c, .ion-arrow-shrink, .ion-arrow-swap, .ion-arrow-up-a, .ion-arrow-up-b, .ion-arrow-up-c, .ion-at, .ion-bag, .ion-battery-charging, .ion-battery-empty, .ion-battery-full, .ion-battery-half, .ion-battery-low, .ion-beaker, .ion-beer, .ion-bluetooth, .ion-bookmark, .ion-briefcase, .ion-bug, .ion-calculator, .ion-calendar, .ion-camera, .ion-card, .ion-chatbox, .ion-chatbox-working, .ion-chatboxes, .ion-chatbubble, .ion-chatbubble-working, .ion-chatbubbles, .ion-checkmark, .ion-checkmark-circled, .ion-checkmark-round, .ion-chevron-down, .ion-chevron-left, .ion-chevron-right, .ion-chevron-up, .ion-clipboard, .ion-clock, .ion-close, .ion-close-circled, .ion-close-round, .ion-cloud, .ion-code, .ion-code-download, .ion-code-working, .ion-coffee, .ion-compass, .ion-compose, .ion-connection-bars, .ion-contrast, .ion-disc, .ion-document, .ion-document-text, .ion-drag, .ion-earth, .ion-edit, .ion-egg, .ion-eject, .ion-email, .ion-eye, .ion-eye-disabled, .ion-female, .ion-filing, .ion-film-marker, .ion-flag, .ion-flash, .ion-flash-off, .ion-flask, .ion-folder, .ion-fork, .ion-fork-repo, .ion-forward, .ion-game-controller-a, .ion-game-controller-b, .ion-gear-a, .ion-gear-b, .ion-grid, .ion-hammer, .ion-headphone, .ion-heart, .ion-help, .ion-help-buoy, .ion-help-circled, .ion-home, .ion-icecream, .ion-icon-social-google-plus, .ion-icon-social-google-plus-outline, .ion-image, .ion-images, .ion-information, .ion-information-circled, .ion-ionic, .ion-ios7-alarm, .ion-ios7-alarm-outline, .ion-ios7-albums, .ion-ios7-albums-outline, .ion-ios7-arrow-back, .ion-ios7-arrow-down, .ion-ios7-arrow-forward, .ion-ios7-arrow-left, .ion-ios7-arrow-right, .ion-ios7-arrow-thin-down, .ion-ios7-arrow-thin-left, .ion-ios7-arrow-thin-right, .ion-ios7-arrow-thin-up, .ion-ios7-arrow-up, .ion-ios7-at, .ion-ios7-at-outline, .ion-ios7-bell, .ion-ios7-bell-outline, .ion-ios7-bolt, .ion-ios7-bolt-outline, .ion-ios7-bookmarks, .ion-ios7-bookmarks-outline, .ion-ios7-box, .ion-ios7-box-outline, .ion-ios7-briefcase, .ion-ios7-briefcase-outline, .ion-ios7-browsers, .ion-ios7-browsers-outline, .ion-ios7-calculator, .ion-ios7-calculator-outline, .ion-ios7-calendar, .ion-ios7-calendar-outline, .ion-ios7-camera, .ion-ios7-camera-outline, .ion-ios7-cart, .ion-ios7-cart-outline, .ion-ios7-chatboxes, .ion-ios7-chatboxes-outline, .ion-ios7-chatbubble, .ion-ios7-chatbubble-outline, .ion-ios7-checkmark, .ion-ios7-checkmark-empty, .ion-ios7-checkmark-outline, .ion-ios7-circle-filled, .ion-ios7-circle-outline, .ion-ios7-clock, .ion-ios7-clock-outline, .ion-ios7-close, .ion-ios7-close-empty, .ion-ios7-close-outline, .ion-ios7-cloud, .ion-ios7-cloud-download, .ion-ios7-cloud-download-outline, .ion-ios7-cloud-outline, .ion-ios7-cloud-upload, .ion-ios7-cloud-upload-outline, .ion-ios7-cloudy, .ion-ios7-cloudy-night, .ion-ios7-cloudy-night-outline, .ion-ios7-cloudy-outline, .ion-ios7-cog, .ion-ios7-cog-outline, .ion-ios7-compose, .ion-ios7-compose-outline, .ion-ios7-contact, .ion-ios7-contact-outline, .ion-ios7-copy, .ion-ios7-copy-outline, .ion-ios7-download, .ion-ios7-download-outline, .ion-ios7-drag, .ion-ios7-email, .ion-ios7-email-outline, .ion-ios7-eye, .ion-ios7-eye-outline, .ion-ios7-fastforward, .ion-ios7-fastforward-outline, .ion-ios7-filing, .ion-ios7-filing-outline, .ion-ios7-film, .ion-ios7-film-outline, .ion-ios7-flag, .ion-ios7-flag-outline, .ion-ios7-folder, .ion-ios7-folder-outline, .ion-ios7-gear, .ion-ios7-gear-outline, .ion-ios7-glasses, .ion-ios7-glasses-outline, .ion-ios7-heart, .ion-ios7-heart-outline, .ion-ios7-help, .ion-ios7-help-empty, .ion-ios7-help-outline, .ion-ios7-infinite, .ion-ios7-infinite-outline, .ion-ios7-information, .ion-ios7-information-empty, .ion-ios7-information-outline, .ion-ios7-ionic-outline, .ion-ios7-keypad, .ion-ios7-keypad-outline, .ion-ios7-lightbulb, .ion-ios7-lightbulb-outline, .ion-ios7-location, .ion-ios7-location-outline, .ion-ios7-locked, .ion-ios7-locked-outline, .ion-ios7-medkit, .ion-ios7-medkit-outline, .ion-ios7-mic, .ion-ios7-mic-off, .ion-ios7-mic-outline, .ion-ios7-minus, .ion-ios7-minus-empty, .ion-ios7-minus-outline, .ion-ios7-monitor, .ion-ios7-monitor-outline, .ion-ios7-moon, .ion-ios7-moon-outline, .ion-ios7-more, .ion-ios7-more-outline, .ion-ios7-musical-note, .ion-ios7-musical-notes, .ion-ios7-navigate, .ion-ios7-navigate-outline, .ion-ios7-paperplane, .ion-ios7-paperplane-outline, .ion-ios7-partlysunny, .ion-ios7-partlysunny-outline, .ion-ios7-pause, .ion-ios7-pause-outline, .ion-ios7-people, .ion-ios7-people-outline, .ion-ios7-person, .ion-ios7-person-outline, .ion-ios7-personadd, .ion-ios7-personadd-outline, .ion-ios7-photos, .ion-ios7-photos-outline, .ion-ios7-pie, .ion-ios7-pie-outline, .ion-ios7-play, .ion-ios7-play-outline, .ion-ios7-plus, .ion-ios7-plus-empty, .ion-ios7-plus-outline, .ion-ios7-pricetag, .ion-ios7-pricetag-outline, .ion-ios7-printer, .ion-ios7-printer-outline, .ion-ios7-rainy, .ion-ios7-rainy-outline, .ion-ios7-recording, .ion-ios7-recording-outline, .ion-ios7-redo, .ion-ios7-redo-outline, .ion-ios7-refresh, .ion-ios7-refresh-empty, .ion-ios7-refresh-outline, .ion-ios7-reload, .ion-ios7-rewind, .ion-ios7-rewind-outline, .ion-ios7-search, .ion-ios7-search-strong, .ion-ios7-skipbackward, .ion-ios7-skipbackward-outline, .ion-ios7-skipforward, .ion-ios7-skipforward-outline, .ion-ios7-snowy, .ion-ios7-speedometer, .ion-ios7-speedometer-outline, .ion-ios7-star, .ion-ios7-star-outline, .ion-ios7-stopwatch, .ion-ios7-stopwatch-outline, .ion-ios7-sunny, .ion-ios7-sunny-outline, .ion-ios7-telephone, .ion-ios7-telephone-outline, .ion-ios7-thunderstorm, .ion-ios7-thunderstorm-outline, .ion-ios7-time, .ion-ios7-time-outline, .ion-ios7-timer, .ion-ios7-timer-outline, .ion-ios7-trash, .ion-ios7-trash-outline, .ion-ios7-undo, .ion-ios7-undo-outline, .ion-ios7-unlocked, .ion-ios7-unlocked-outline, .ion-ios7-upload, .ion-ios7-upload-outline, .ion-ios7-videocam, .ion-ios7-videocam-outline, .ion-ios7-volume-high, .ion-ios7-volume-low, .ion-ios7-wineglass, .ion-ios7-wineglass-outline, .ion-ios7-world, .ion-ios7-world-outline, .ion-ipad, .ion-iphone, .ion-ipod, .ion-jet, .ion-key, .ion-knife, .ion-laptop, .ion-leaf, .ion-levels, .ion-lightbulb, .ion-link, .ion-load-a, .ion-load-b, .ion-load-c, .ion-load-d, .ion-location, .ion-locked, .ion-log-in, .ion-log-out, .ion-loop, .ion-magnet, .ion-male, .ion-man, .ion-map, .ion-medkit, .ion-mic-a, .ion-mic-b, .ion-mic-c, .ion-minus, .ion-minus-circled, .ion-minus-round, .ion-model-s, .ion-monitor, .ion-more, .ion-music-note, .ion-navicon, .ion-navicon-round, .ion-navigate, .ion-no-smoking, .ion-nuclear, .ion-paper-airplane, .ion-paperclip, .ion-pause, .ion-person, .ion-person-add, .ion-person-stalker, .ion-pie-graph, .ion-pin, .ion-pinpoint, .ion-pizza, .ion-plane, .ion-play, .ion-playstation, .ion-plus, .ion-plus-circled, .ion-plus-round, .ion-pound, .ion-power, .ion-pricetag, .ion-pricetags, .ion-printer, .ion-radio-waves, .ion-record, .ion-refresh, .ion-reply, .ion-reply-all, .ion-search, .ion-settings, .ion-share, .ion-shuffle, .ion-skip-backward, .ion-skip-forward, .ion-social-android, .ion-social-android-outline, .ion-social-apple, .ion-social-apple-outline, .ion-social-bitcoin, .ion-social-bitcoin-outline, .ion-social-buffer, .ion-social-buffer-outline, .ion-social-designernews, .ion-social-designernews-outline, .ion-social-dribbble, .ion-social-dribbble-outline, .ion-social-dropbox, .ion-social-dropbox-outline, .ion-social-facebook, .ion-social-facebook-outline, .ion-social-freebsd-devil, .ion-social-github, .ion-social-github-outline, .ion-social-googleplus, .ion-social-googleplus-outline, .ion-social-hackernews, .ion-social-hackernews-outline, .ion-social-linkedin, .ion-social-linkedin-outline, .ion-social-pinterest, .ion-social-pinterest-outline, .ion-social-reddit, .ion-social-reddit-outline, .ion-social-rss, .ion-social-rss-outline, .ion-social-skype, .ion-social-skype-outline, .ion-social-tumblr, .ion-social-tumblr-outline, .ion-social-tux, .ion-social-twitter, .ion-social-twitter-outline, .ion-social-vimeo, .ion-social-vimeo-outline, .ion-social-windows, .ion-social-windows-outline, .ion-social-wordpress, .ion-social-wordpress-outline, .ion-social-yahoo, .ion-social-yahoo-outline, .ion-social-youtube, .ion-social-youtube-outline, .ion-speakerphone, .ion-speedometer, .ion-spoon, .ion-star, .ion-stats-bars, .ion-steam, .ion-stop, .ion-thermometer, .ion-thumbsdown, .ion-thumbsup, .ion-trash-a, .ion-trash-b, .ion-umbrella, .ion-unlocked, .ion-upload, .ion-usb, .ion-videocamera, .ion-volume-high, .ion-volume-low, .ion-volume-medium, .ion-volume-mute, .ion-waterdrop, .ion-wifi, .ion-wineglass, .ion-woman, .ion-wrench, .ion-xbox {
+  display: inline-block;
+  font-family: "Ionicons";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.ion-spin, .ion-loading-a, .ion-loading-b, .ion-loading-c, .ion-loading-d, .ion-looping, .ion-refreshing, .ion-ios7-reloading {
+  -webkit-animation: spin 1s infinite linear;
+  -moz-animation: spin 1s infinite linear;
+  -o-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear; }
+
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg); }
+
+  100% {
+    -moz-transform: rotate(359deg); } }
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg); }
+
+  100% {
+    -webkit-transform: rotate(359deg); } }
+
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg); }
+
+  100% {
+    -o-transform: rotate(359deg); } }
+
+@-ms-keyframes spin {
+  0% {
+    -ms-transform: rotate(0deg); }
+
+  100% {
+    -ms-transform: rotate(359deg); } }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+
+  100% {
+    transform: rotate(359deg); } }
+
+.ion-loading-a {
+  -webkit-animation-timing-function: steps(8, start);
+  -moz-animation-timing-function: steps(8, start);
+  animation-timing-function: steps(8, start); }
+
+.ion-alert:before {
+  content: "\f101"; }
+
+.ion-alert-circled:before {
+  content: "\f100"; }
+
+.ion-android-add:before {
+  content: "\f2c7"; }
+
+.ion-android-add-contact:before {
+  content: "\f2c6"; }
+
+.ion-android-alarm:before {
+  content: "\f2c8"; }
+
+.ion-android-archive:before {
+  content: "\f2c9"; }
+
+.ion-android-arrow-back:before {
+  content: "\f2ca"; }
+
+.ion-android-arrow-down-left:before {
+  content: "\f2cb"; }
+
+.ion-android-arrow-down-right:before {
+  content: "\f2cc"; }
+
+.ion-android-arrow-up-left:before {
+  content: "\f2cd"; }
+
+.ion-android-arrow-up-right:before {
+  content: "\f2ce"; }
+
+.ion-android-battery:before {
+  content: "\f2cf"; }
+
+.ion-android-book:before {
+  content: "\f2d0"; }
+
+.ion-android-calendar:before {
+  content: "\f2d1"; }
+
+.ion-android-call:before {
+  content: "\f2d2"; }
+
+.ion-android-camera:before {
+  content: "\f2d3"; }
+
+.ion-android-chat:before {
+  content: "\f2d4"; }
+
+.ion-android-checkmark:before {
+  content: "\f2d5"; }
+
+.ion-android-clock:before {
+  content: "\f2d6"; }
+
+.ion-android-close:before {
+  content: "\f2d7"; }
+
+.ion-android-contact:before {
+  content: "\f2d8"; }
+
+.ion-android-contacts:before {
+  content: "\f2d9"; }
+
+.ion-android-data:before {
+  content: "\f2da"; }
+
+.ion-android-developer:before {
+  content: "\f2db"; }
+
+.ion-android-display:before {
+  content: "\f2dc"; }
+
+.ion-android-download:before {
+  content: "\f2dd"; }
+
+.ion-android-dropdown:before {
+  content: "\f2de"; }
+
+.ion-android-earth:before {
+  content: "\f2df"; }
+
+.ion-android-folder:before {
+  content: "\f2e0"; }
+
+.ion-android-forums:before {
+  content: "\f2e1"; }
+
+.ion-android-friends:before {
+  content: "\f2e2"; }
+
+.ion-android-hand:before {
+  content: "\f2e3"; }
+
+.ion-android-image:before {
+  content: "\f2e4"; }
+
+.ion-android-inbox:before {
+  content: "\f2e5"; }
+
+.ion-android-information:before {
+  content: "\f2e6"; }
+
+.ion-android-keypad:before {
+  content: "\f2e7"; }
+
+.ion-android-lightbulb:before {
+  content: "\f2e8"; }
+
+.ion-android-locate:before {
+  content: "\f2e9"; }
+
+.ion-android-location:before {
+  content: "\f2ea"; }
+
+.ion-android-mail:before {
+  content: "\f2eb"; }
+
+.ion-android-microphone:before {
+  content: "\f2ec"; }
+
+.ion-android-mixer:before {
+  content: "\f2ed"; }
+
+.ion-android-more:before {
+  content: "\f2ee"; }
+
+.ion-android-note:before {
+  content: "\f2ef"; }
+
+.ion-android-playstore:before {
+  content: "\f2f0"; }
+
+.ion-android-printer:before {
+  content: "\f2f1"; }
+
+.ion-android-promotion:before {
+  content: "\f2f2"; }
+
+.ion-android-reminder:before {
+  content: "\f2f3"; }
+
+.ion-android-remove:before {
+  content: "\f2f4"; }
+
+.ion-android-search:before {
+  content: "\f2f5"; }
+
+.ion-android-send:before {
+  content: "\f2f6"; }
+
+.ion-android-settings:before {
+  content: "\f2f7"; }
+
+.ion-android-share:before {
+  content: "\f2f8"; }
+
+.ion-android-social:before {
+  content: "\f2fa"; }
+
+.ion-android-social-user:before {
+  content: "\f2f9"; }
+
+.ion-android-sort:before {
+  content: "\f2fb"; }
+
+.ion-android-star:before {
+  content: "\f2fc"; }
+
+.ion-android-stopwatch:before {
+  content: "\f2fd"; }
+
+.ion-android-storage:before {
+  content: "\f2fe"; }
+
+.ion-android-system-back:before {
+  content: "\f2ff"; }
+
+.ion-android-system-home:before {
+  content: "\f300"; }
+
+.ion-android-system-windows:before {
+  content: "\f301"; }
+
+.ion-android-timer:before {
+  content: "\f302"; }
+
+.ion-android-trash:before {
+  content: "\f303"; }
+
+.ion-android-volume:before {
+  content: "\f304"; }
+
+.ion-android-wifi:before {
+  content: "\f305"; }
+
+.ion-archive:before {
+  content: "\f102"; }
+
+.ion-arrow-down-a:before {
+  content: "\f103"; }
+
+.ion-arrow-down-b:before {
+  content: "\f104"; }
+
+.ion-arrow-down-c:before {
+  content: "\f105"; }
+
+.ion-arrow-expand:before {
+  content: "\f25e"; }
+
+.ion-arrow-graph-down-left:before {
+  content: "\f25f"; }
+
+.ion-arrow-graph-down-right:before {
+  content: "\f260"; }
+
+.ion-arrow-graph-up-left:before {
+  content: "\f261"; }
+
+.ion-arrow-graph-up-right:before {
+  content: "\f262"; }
+
+.ion-arrow-left-a:before {
+  content: "\f106"; }
+
+.ion-arrow-left-b:before {
+  content: "\f107"; }
+
+.ion-arrow-left-c:before {
+  content: "\f108"; }
+
+.ion-arrow-move:before {
+  content: "\f263"; }
+
+.ion-arrow-resize:before {
+  content: "\f264"; }
+
+.ion-arrow-return-left:before {
+  content: "\f265"; }
+
+.ion-arrow-return-right:before {
+  content: "\f266"; }
+
+.ion-arrow-right-a:before {
+  content: "\f109"; }
+
+.ion-arrow-right-b:before {
+  content: "\f10a"; }
+
+.ion-arrow-right-c:before {
+  content: "\f10b"; }
+
+.ion-arrow-shrink:before {
+  content: "\f267"; }
+
+.ion-arrow-swap:before {
+  content: "\f268"; }
+
+.ion-arrow-up-a:before {
+  content: "\f10c"; }
+
+.ion-arrow-up-b:before {
+  content: "\f10d"; }
+
+.ion-arrow-up-c:before {
+  content: "\f10e"; }
+
+.ion-at:before {
+  content: "\f10f"; }
+
+.ion-bag:before {
+  content: "\f110"; }
+
+.ion-battery-charging:before {
+  content: "\f111"; }
+
+.ion-battery-empty:before {
+  content: "\f112"; }
+
+.ion-battery-full:before {
+  content: "\f113"; }
+
+.ion-battery-half:before {
+  content: "\f114"; }
+
+.ion-battery-low:before {
+  content: "\f115"; }
+
+.ion-beaker:before {
+  content: "\f269"; }
+
+.ion-beer:before {
+  content: "\f26a"; }
+
+.ion-bluetooth:before {
+  content: "\f116"; }
+
+.ion-bookmark:before {
+  content: "\f26b"; }
+
+.ion-briefcase:before {
+  content: "\f26c"; }
+
+.ion-bug:before {
+  content: "\f2be"; }
+
+.ion-calculator:before {
+  content: "\f26d"; }
+
+.ion-calendar:before {
+  content: "\f117"; }
+
+.ion-camera:before {
+  content: "\f118"; }
+
+.ion-card:before {
+  content: "\f119"; }
+
+.ion-chatbox:before {
+  content: "\f11b"; }
+
+.ion-chatbox-working:before {
+  content: "\f11a"; }
+
+.ion-chatboxes:before {
+  content: "\f11c"; }
+
+.ion-chatbubble:before {
+  content: "\f11e"; }
+
+.ion-chatbubble-working:before {
+  content: "\f11d"; }
+
+.ion-chatbubbles:before {
+  content: "\f11f"; }
+
+.ion-checkmark:before {
+  content: "\f122"; }
+
+.ion-checkmark-circled:before {
+  content: "\f120"; }
+
+.ion-checkmark-round:before {
+  content: "\f121"; }
+
+.ion-chevron-down:before {
+  content: "\f123"; }
+
+.ion-chevron-left:before {
+  content: "\f124"; }
+
+.ion-chevron-right:before {
+  content: "\f125"; }
+
+.ion-chevron-up:before {
+  content: "\f126"; }
+
+.ion-clipboard:before {
+  content: "\f127"; }
+
+.ion-clock:before {
+  content: "\f26e"; }
+
+.ion-close:before {
+  content: "\f12a"; }
+
+.ion-close-circled:before {
+  content: "\f128"; }
+
+.ion-close-round:before {
+  content: "\f129"; }
+
+.ion-cloud:before {
+  content: "\f12b"; }
+
+.ion-code:before {
+  content: "\f271"; }
+
+.ion-code-download:before {
+  content: "\f26f"; }
+
+.ion-code-working:before {
+  content: "\f270"; }
+
+.ion-coffee:before {
+  content: "\f272"; }
+
+.ion-compass:before {
+  content: "\f273"; }
+
+.ion-compose:before {
+  content: "\f12c"; }
+
+.ion-connection-bars:before {
+  content: "\f274"; }
+
+.ion-contrast:before {
+  content: "\f275"; }
+
+.ion-disc:before {
+  content: "\f12d"; }
+
+.ion-document:before {
+  content: "\f12f"; }
+
+.ion-document-text:before {
+  content: "\f12e"; }
+
+.ion-drag:before {
+  content: "\f130"; }
+
+.ion-earth:before {
+  content: "\f276"; }
+
+.ion-edit:before {
+  content: "\f2bf"; }
+
+.ion-egg:before {
+  content: "\f277"; }
+
+.ion-eject:before {
+  content: "\f131"; }
+
+.ion-email:before {
+  content: "\f132"; }
+
+.ion-eye:before {
+  content: "\f133"; }
+
+.ion-eye-disabled:before {
+  content: "\f306"; }
+
+.ion-female:before {
+  content: "\f278"; }
+
+.ion-filing:before {
+  content: "\f134"; }
+
+.ion-film-marker:before {
+  content: "\f135"; }
+
+.ion-flag:before {
+  content: "\f279"; }
+
+.ion-flash:before {
+  content: "\f137"; }
+
+.ion-flash-off:before {
+  content: "\f136"; }
+
+.ion-flask:before {
+  content: "\f138"; }
+
+.ion-folder:before {
+  content: "\f139"; }
+
+.ion-fork:before {
+  content: "\f27a"; }
+
+.ion-fork-repo:before {
+  content: "\f2c0"; }
+
+.ion-forward:before {
+  content: "\f13a"; }
+
+.ion-game-controller-a:before {
+  content: "\f13b"; }
+
+.ion-game-controller-b:before {
+  content: "\f13c"; }
+
+.ion-gear-a:before {
+  content: "\f13d"; }
+
+.ion-gear-b:before {
+  content: "\f13e"; }
+
+.ion-grid:before {
+  content: "\f13f"; }
+
+.ion-hammer:before {
+  content: "\f27b"; }
+
+.ion-headphone:before {
+  content: "\f140"; }
+
+.ion-heart:before {
+  content: "\f141"; }
+
+.ion-help:before {
+  content: "\f143"; }
+
+.ion-help-buoy:before {
+  content: "\f27c"; }
+
+.ion-help-circled:before {
+  content: "\f142"; }
+
+.ion-home:before {
+  content: "\f144"; }
+
+.ion-icecream:before {
+  content: "\f27d"; }
+
+.ion-icon-social-google-plus:before {
+  content: "\f146"; }
+
+.ion-icon-social-google-plus-outline:before {
+  content: "\f145"; }
+
+.ion-image:before {
+  content: "\f147"; }
+
+.ion-images:before {
+  content: "\f148"; }
+
+.ion-information:before {
+  content: "\f14a"; }
+
+.ion-information-circled:before {
+  content: "\f149"; }
+
+.ion-ionic:before {
+  content: "\f14b"; }
+
+.ion-ios7-alarm:before {
+  content: "\f14d"; }
+
+.ion-ios7-alarm-outline:before {
+  content: "\f14c"; }
+
+.ion-ios7-albums:before {
+  content: "\f14f"; }
+
+.ion-ios7-albums-outline:before {
+  content: "\f14e"; }
+
+.ion-ios7-arrow-back:before {
+  content: "\f150"; }
+
+.ion-ios7-arrow-down:before {
+  content: "\f151"; }
+
+.ion-ios7-arrow-forward:before {
+  content: "\f152"; }
+
+.ion-ios7-arrow-left:before {
+  content: "\f153"; }
+
+.ion-ios7-arrow-right:before {
+  content: "\f154"; }
+
+.ion-ios7-arrow-thin-down:before {
+  content: "\f27e"; }
+
+.ion-ios7-arrow-thin-left:before {
+  content: "\f27f"; }
+
+.ion-ios7-arrow-thin-right:before {
+  content: "\f280"; }
+
+.ion-ios7-arrow-thin-up:before {
+  content: "\f281"; }
+
+.ion-ios7-arrow-up:before {
+  content: "\f155"; }
+
+.ion-ios7-at:before {
+  content: "\f157"; }
+
+.ion-ios7-at-outline:before {
+  content: "\f156"; }
+
+.ion-ios7-bell:before {
+  content: "\f159"; }
+
+.ion-ios7-bell-outline:before {
+  content: "\f158"; }
+
+.ion-ios7-bolt:before {
+  content: "\f15b"; }
+
+.ion-ios7-bolt-outline:before {
+  content: "\f15a"; }
+
+.ion-ios7-bookmarks:before {
+  content: "\f15d"; }
+
+.ion-ios7-bookmarks-outline:before {
+  content: "\f15c"; }
+
+.ion-ios7-box:before {
+  content: "\f15f"; }
+
+.ion-ios7-box-outline:before {
+  content: "\f15e"; }
+
+.ion-ios7-briefcase:before {
+  content: "\f283"; }
+
+.ion-ios7-briefcase-outline:before {
+  content: "\f282"; }
+
+.ion-ios7-browsers:before {
+  content: "\f161"; }
+
+.ion-ios7-browsers-outline:before {
+  content: "\f160"; }
+
+.ion-ios7-calculator:before {
+  content: "\f285"; }
+
+.ion-ios7-calculator-outline:before {
+  content: "\f284"; }
+
+.ion-ios7-calendar:before {
+  content: "\f163"; }
+
+.ion-ios7-calendar-outline:before {
+  content: "\f162"; }
+
+.ion-ios7-camera:before {
+  content: "\f165"; }
+
+.ion-ios7-camera-outline:before {
+  content: "\f164"; }
+
+.ion-ios7-cart:before {
+  content: "\f167"; }
+
+.ion-ios7-cart-outline:before {
+  content: "\f166"; }
+
+.ion-ios7-chatboxes:before {
+  content: "\f169"; }
+
+.ion-ios7-chatboxes-outline:before {
+  content: "\f168"; }
+
+.ion-ios7-chatbubble:before {
+  content: "\f16b"; }
+
+.ion-ios7-chatbubble-outline:before {
+  content: "\f16a"; }
+
+.ion-ios7-checkmark:before {
+  content: "\f16e"; }
+
+.ion-ios7-checkmark-empty:before {
+  content: "\f16c"; }
+
+.ion-ios7-checkmark-outline:before {
+  content: "\f16d"; }
+
+.ion-ios7-circle-filled:before {
+  content: "\f16f"; }
+
+.ion-ios7-circle-outline:before {
+  content: "\f170"; }
+
+.ion-ios7-clock:before {
+  content: "\f172"; }
+
+.ion-ios7-clock-outline:before {
+  content: "\f171"; }
+
+.ion-ios7-close:before {
+  content: "\f2bc"; }
+
+.ion-ios7-close-empty:before {
+  content: "\f2bd"; }
+
+.ion-ios7-close-outline:before {
+  content: "\f2bb"; }
+
+.ion-ios7-cloud:before {
+  content: "\f178"; }
+
+.ion-ios7-cloud-download:before {
+  content: "\f174"; }
+
+.ion-ios7-cloud-download-outline:before {
+  content: "\f173"; }
+
+.ion-ios7-cloud-outline:before {
+  content: "\f175"; }
+
+.ion-ios7-cloud-upload:before {
+  content: "\f177"; }
+
+.ion-ios7-cloud-upload-outline:before {
+  content: "\f176"; }
+
+.ion-ios7-cloudy:before {
+  content: "\f17a"; }
+
+.ion-ios7-cloudy-night:before {
+  content: "\f308"; }
+
+.ion-ios7-cloudy-night-outline:before {
+  content: "\f307"; }
+
+.ion-ios7-cloudy-outline:before {
+  content: "\f179"; }
+
+.ion-ios7-cog:before {
+  content: "\f17c"; }
+
+.ion-ios7-cog-outline:before {
+  content: "\f17b"; }
+
+.ion-ios7-compose:before {
+  content: "\f17e"; }
+
+.ion-ios7-compose-outline:before {
+  content: "\f17d"; }
+
+.ion-ios7-contact:before {
+  content: "\f180"; }
+
+.ion-ios7-contact-outline:before {
+  content: "\f17f"; }
+
+.ion-ios7-copy:before {
+  content: "\f182"; }
+
+.ion-ios7-copy-outline:before {
+  content: "\f181"; }
+
+.ion-ios7-download:before {
+  content: "\f184"; }
+
+.ion-ios7-download-outline:before {
+  content: "\f183"; }
+
+.ion-ios7-drag:before {
+  content: "\f185"; }
+
+.ion-ios7-email:before {
+  content: "\f187"; }
+
+.ion-ios7-email-outline:before {
+  content: "\f186"; }
+
+.ion-ios7-eye:before {
+  content: "\f189"; }
+
+.ion-ios7-eye-outline:before {
+  content: "\f188"; }
+
+.ion-ios7-fastforward:before {
+  content: "\f18b"; }
+
+.ion-ios7-fastforward-outline:before {
+  content: "\f18a"; }
+
+.ion-ios7-filing:before {
+  content: "\f18d"; }
+
+.ion-ios7-filing-outline:before {
+  content: "\f18c"; }
+
+.ion-ios7-film:before {
+  content: "\f18f"; }
+
+.ion-ios7-film-outline:before {
+  content: "\f18e"; }
+
+.ion-ios7-flag:before {
+  content: "\f191"; }
+
+.ion-ios7-flag-outline:before {
+  content: "\f190"; }
+
+.ion-ios7-folder:before {
+  content: "\f193"; }
+
+.ion-ios7-folder-outline:before {
+  content: "\f192"; }
+
+.ion-ios7-gear:before {
+  content: "\f195"; }
+
+.ion-ios7-gear-outline:before {
+  content: "\f194"; }
+
+.ion-ios7-glasses:before {
+  content: "\f197"; }
+
+.ion-ios7-glasses-outline:before {
+  content: "\f196"; }
+
+.ion-ios7-heart:before {
+  content: "\f199"; }
+
+.ion-ios7-heart-outline:before {
+  content: "\f198"; }
+
+.ion-ios7-help:before {
+  content: "\f19c"; }
+
+.ion-ios7-help-empty:before {
+  content: "\f19a"; }
+
+.ion-ios7-help-outline:before {
+  content: "\f19b"; }
+
+.ion-ios7-infinite:before {
+  content: "\f19e"; }
+
+.ion-ios7-infinite-outline:before {
+  content: "\f19d"; }
+
+.ion-ios7-information:before {
+  content: "\f1a1"; }
+
+.ion-ios7-information-empty:before {
+  content: "\f19f"; }
+
+.ion-ios7-information-outline:before {
+  content: "\f1a0"; }
+
+.ion-ios7-ionic-outline:before {
+  content: "\f1a2"; }
+
+.ion-ios7-keypad:before {
+  content: "\f1a4"; }
+
+.ion-ios7-keypad-outline:before {
+  content: "\f1a3"; }
+
+.ion-ios7-lightbulb:before {
+  content: "\f287"; }
+
+.ion-ios7-lightbulb-outline:before {
+  content: "\f286"; }
+
+.ion-ios7-location:before {
+  content: "\f1a6"; }
+
+.ion-ios7-location-outline:before {
+  content: "\f1a5"; }
+
+.ion-ios7-locked:before {
+  content: "\f1a8"; }
+
+.ion-ios7-locked-outline:before {
+  content: "\f1a7"; }
+
+.ion-ios7-medkit:before {
+  content: "\f289"; }
+
+.ion-ios7-medkit-outline:before {
+  content: "\f288"; }
+
+.ion-ios7-mic:before {
+  content: "\f1ab"; }
+
+.ion-ios7-mic-off:before {
+  content: "\f1a9"; }
+
+.ion-ios7-mic-outline:before {
+  content: "\f1aa"; }
+
+.ion-ios7-minus:before {
+  content: "\f1ae"; }
+
+.ion-ios7-minus-empty:before {
+  content: "\f1ac"; }
+
+.ion-ios7-minus-outline:before {
+  content: "\f1ad"; }
+
+.ion-ios7-monitor:before {
+  content: "\f1b0"; }
+
+.ion-ios7-monitor-outline:before {
+  content: "\f1af"; }
+
+.ion-ios7-moon:before {
+  content: "\f1b2"; }
+
+.ion-ios7-moon-outline:before {
+  content: "\f1b1"; }
+
+.ion-ios7-more:before {
+  content: "\f1b4"; }
+
+.ion-ios7-more-outline:before {
+  content: "\f1b3"; }
+
+.ion-ios7-musical-note:before {
+  content: "\f1b5"; }
+
+.ion-ios7-musical-notes:before {
+  content: "\f1b6"; }
+
+.ion-ios7-navigate:before {
+  content: "\f1b8"; }
+
+.ion-ios7-navigate-outline:before {
+  content: "\f1b7"; }
+
+.ion-ios7-paperplane:before {
+  content: "\f1ba"; }
+
+.ion-ios7-paperplane-outline:before {
+  content: "\f1b9"; }
+
+.ion-ios7-partlysunny:before {
+  content: "\f1bc"; }
+
+.ion-ios7-partlysunny-outline:before {
+  content: "\f1bb"; }
+
+.ion-ios7-pause:before {
+  content: "\f1be"; }
+
+.ion-ios7-pause-outline:before {
+  content: "\f1bd"; }
+
+.ion-ios7-people:before {
+  content: "\f1c0"; }
+
+.ion-ios7-people-outline:before {
+  content: "\f1bf"; }
+
+.ion-ios7-person:before {
+  content: "\f1c2"; }
+
+.ion-ios7-person-outline:before {
+  content: "\f1c1"; }
+
+.ion-ios7-personadd:before {
+  content: "\f1c4"; }
+
+.ion-ios7-personadd-outline:before {
+  content: "\f1c3"; }
+
+.ion-ios7-photos:before {
+  content: "\f1c6"; }
+
+.ion-ios7-photos-outline:before {
+  content: "\f1c5"; }
+
+.ion-ios7-pie:before {
+  content: "\f28b"; }
+
+.ion-ios7-pie-outline:before {
+  content: "\f28a"; }
+
+.ion-ios7-play:before {
+  content: "\f1c8"; }
+
+.ion-ios7-play-outline:before {
+  content: "\f1c7"; }
+
+.ion-ios7-plus:before {
+  content: "\f1cb"; }
+
+.ion-ios7-plus-empty:before {
+  content: "\f1c9"; }
+
+.ion-ios7-plus-outline:before {
+  content: "\f1ca"; }
+
+.ion-ios7-pricetag:before {
+  content: "\f28d"; }
+
+.ion-ios7-pricetag-outline:before {
+  content: "\f28c"; }
+
+.ion-ios7-printer:before {
+  content: "\f1cd"; }
+
+.ion-ios7-printer-outline:before {
+  content: "\f1cc"; }
+
+.ion-ios7-rainy:before {
+  content: "\f1cf"; }
+
+.ion-ios7-rainy-outline:before {
+  content: "\f1ce"; }
+
+.ion-ios7-recording:before {
+  content: "\f1d1"; }
+
+.ion-ios7-recording-outline:before {
+  content: "\f1d0"; }
+
+.ion-ios7-redo:before {
+  content: "\f1d3"; }
+
+.ion-ios7-redo-outline:before {
+  content: "\f1d2"; }
+
+.ion-ios7-refresh:before {
+  content: "\f1d6"; }
+
+.ion-ios7-refresh-empty:before {
+  content: "\f1d4"; }
+
+.ion-ios7-refresh-outline:before {
+  content: "\f1d5"; }
+
+.ion-ios7-reload:before, .ion-ios7-reloading:before {
+  content: "\f28e"; }
+
+.ion-ios7-rewind:before {
+  content: "\f1d8"; }
+
+.ion-ios7-rewind-outline:before {
+  content: "\f1d7"; }
+
+.ion-ios7-search:before {
+  content: "\f1da"; }
+
+.ion-ios7-search-strong:before {
+  content: "\f1d9"; }
+
+.ion-ios7-skipbackward:before {
+  content: "\f1dc"; }
+
+.ion-ios7-skipbackward-outline:before {
+  content: "\f1db"; }
+
+.ion-ios7-skipforward:before {
+  content: "\f1de"; }
+
+.ion-ios7-skipforward-outline:before {
+  content: "\f1dd"; }
+
+.ion-ios7-snowy:before {
+  content: "\f309"; }
+
+.ion-ios7-speedometer:before {
+  content: "\f290"; }
+
+.ion-ios7-speedometer-outline:before {
+  content: "\f28f"; }
+
+.ion-ios7-star:before {
+  content: "\f1e0"; }
+
+.ion-ios7-star-outline:before {
+  content: "\f1df"; }
+
+.ion-ios7-stopwatch:before {
+  content: "\f1e2"; }
+
+.ion-ios7-stopwatch-outline:before {
+  content: "\f1e1"; }
+
+.ion-ios7-sunny:before {
+  content: "\f1e4"; }
+
+.ion-ios7-sunny-outline:before {
+  content: "\f1e3"; }
+
+.ion-ios7-telephone:before {
+  content: "\f1e6"; }
+
+.ion-ios7-telephone-outline:before {
+  content: "\f1e5"; }
+
+.ion-ios7-thunderstorm:before {
+  content: "\f1e8"; }
+
+.ion-ios7-thunderstorm-outline:before {
+  content: "\f1e7"; }
+
+.ion-ios7-time:before {
+  content: "\f292"; }
+
+.ion-ios7-time-outline:before {
+  content: "\f291"; }
+
+.ion-ios7-timer:before {
+  content: "\f1ea"; }
+
+.ion-ios7-timer-outline:before {
+  content: "\f1e9"; }
+
+.ion-ios7-trash:before {
+  content: "\f1ec"; }
+
+.ion-ios7-trash-outline:before {
+  content: "\f1eb"; }
+
+.ion-ios7-undo:before {
+  content: "\f1ee"; }
+
+.ion-ios7-undo-outline:before {
+  content: "\f1ed"; }
+
+.ion-ios7-unlocked:before {
+  content: "\f1f0"; }
+
+.ion-ios7-unlocked-outline:before {
+  content: "\f1ef"; }
+
+.ion-ios7-upload:before {
+  content: "\f1f2"; }
+
+.ion-ios7-upload-outline:before {
+  content: "\f1f1"; }
+
+.ion-ios7-videocam:before {
+  content: "\f1f4"; }
+
+.ion-ios7-videocam-outline:before {
+  content: "\f1f3"; }
+
+.ion-ios7-volume-high:before {
+  content: "\f1f5"; }
+
+.ion-ios7-volume-low:before {
+  content: "\f1f6"; }
+
+.ion-ios7-wineglass:before {
+  content: "\f294"; }
+
+.ion-ios7-wineglass-outline:before {
+  content: "\f293"; }
+
+.ion-ios7-world:before {
+  content: "\f1f8"; }
+
+.ion-ios7-world-outline:before {
+  content: "\f1f7"; }
+
+.ion-ipad:before {
+  content: "\f1f9"; }
+
+.ion-iphone:before {
+  content: "\f1fa"; }
+
+.ion-ipod:before {
+  content: "\f1fb"; }
+
+.ion-jet:before {
+  content: "\f295"; }
+
+.ion-key:before {
+  content: "\f296"; }
+
+.ion-knife:before {
+  content: "\f297"; }
+
+.ion-laptop:before {
+  content: "\f1fc"; }
+
+.ion-leaf:before {
+  content: "\f1fd"; }
+
+.ion-levels:before {
+  content: "\f298"; }
+
+.ion-lightbulb:before {
+  content: "\f299"; }
+
+.ion-link:before {
+  content: "\f1fe"; }
+
+.ion-load-a:before, .ion-loading-a:before {
+  content: "\f29a"; }
+
+.ion-load-b:before, .ion-loading-b:before {
+  content: "\f29b"; }
+
+.ion-load-c:before, .ion-loading-c:before {
+  content: "\f29c"; }
+
+.ion-load-d:before, .ion-loading-d:before {
+  content: "\f29d"; }
+
+.ion-location:before {
+  content: "\f1ff"; }
+
+.ion-locked:before {
+  content: "\f200"; }
+
+.ion-log-in:before {
+  content: "\f29e"; }
+
+.ion-log-out:before {
+  content: "\f29f"; }
+
+.ion-loop:before, .ion-looping:before {
+  content: "\f201"; }
+
+.ion-magnet:before {
+  content: "\f2a0"; }
+
+.ion-male:before {
+  content: "\f2a1"; }
+
+.ion-man:before {
+  content: "\f202"; }
+
+.ion-map:before {
+  content: "\f203"; }
+
+.ion-medkit:before {
+  content: "\f2a2"; }
+
+.ion-mic-a:before {
+  content: "\f204"; }
+
+.ion-mic-b:before {
+  content: "\f205"; }
+
+.ion-mic-c:before {
+  content: "\f206"; }
+
+.ion-minus:before {
+  content: "\f209"; }
+
+.ion-minus-circled:before {
+  content: "\f207"; }
+
+.ion-minus-round:before {
+  content: "\f208"; }
+
+.ion-model-s:before {
+  content: "\f2c1"; }
+
+.ion-monitor:before {
+  content: "\f20a"; }
+
+.ion-more:before {
+  content: "\f20b"; }
+
+.ion-music-note:before {
+  content: "\f20c"; }
+
+.ion-navicon:before {
+  content: "\f20e"; }
+
+.ion-navicon-round:before {
+  content: "\f20d"; }
+
+.ion-navigate:before {
+  content: "\f2a3"; }
+
+.ion-no-smoking:before {
+  content: "\f2c2"; }
+
+.ion-nuclear:before {
+  content: "\f2a4"; }
+
+.ion-paper-airplane:before {
+  content: "\f2c3"; }
+
+.ion-paperclip:before {
+  content: "\f20f"; }
+
+.ion-pause:before {
+  content: "\f210"; }
+
+.ion-person:before {
+  content: "\f213"; }
+
+.ion-person-add:before {
+  content: "\f211"; }
+
+.ion-person-stalker:before {
+  content: "\f212"; }
+
+.ion-pie-graph:before {
+  content: "\f2a5"; }
+
+.ion-pin:before {
+  content: "\f2a6"; }
+
+.ion-pinpoint:before {
+  content: "\f2a7"; }
+
+.ion-pizza:before {
+  content: "\f2a8"; }
+
+.ion-plane:before {
+  content: "\f214"; }
+
+.ion-play:before {
+  content: "\f215"; }
+
+.ion-playstation:before {
+  content: "\f30a"; }
+
+.ion-plus:before {
+  content: "\f218"; }
+
+.ion-plus-circled:before {
+  content: "\f216"; }
+
+.ion-plus-round:before {
+  content: "\f217"; }
+
+.ion-pound:before {
+  content: "\f219"; }
+
+.ion-power:before {
+  content: "\f2a9"; }
+
+.ion-pricetag:before {
+  content: "\f2aa"; }
+
+.ion-pricetags:before {
+  content: "\f2ab"; }
+
+.ion-printer:before {
+  content: "\f21a"; }
+
+.ion-radio-waves:before {
+  content: "\f2ac"; }
+
+.ion-record:before {
+  content: "\f21b"; }
+
+.ion-refresh:before, .ion-refreshing:before {
+  content: "\f21c"; }
+
+.ion-reply:before {
+  content: "\f21e"; }
+
+.ion-reply-all:before {
+  content: "\f21d"; }
+
+.ion-search:before {
+  content: "\f21f"; }
+
+.ion-settings:before {
+  content: "\f2ad"; }
+
+.ion-share:before {
+  content: "\f220"; }
+
+.ion-shuffle:before {
+  content: "\f221"; }
+
+.ion-skip-backward:before {
+  content: "\f222"; }
+
+.ion-skip-forward:before {
+  content: "\f223"; }
+
+.ion-social-android:before {
+  content: "\f225"; }
+
+.ion-social-android-outline:before {
+  content: "\f224"; }
+
+.ion-social-apple:before {
+  content: "\f227"; }
+
+.ion-social-apple-outline:before {
+  content: "\f226"; }
+
+.ion-social-bitcoin:before {
+  content: "\f2af"; }
+
+.ion-social-bitcoin-outline:before {
+  content: "\f2ae"; }
+
+.ion-social-buffer:before {
+  content: "\f229"; }
+
+.ion-social-buffer-outline:before {
+  content: "\f228"; }
+
+.ion-social-designernews:before {
+  content: "\f22b"; }
+
+.ion-social-designernews-outline:before {
+  content: "\f22a"; }
+
+.ion-social-dribbble:before {
+  content: "\f22d"; }
+
+.ion-social-dribbble-outline:before {
+  content: "\f22c"; }
+
+.ion-social-dropbox:before {
+  content: "\f22f"; }
+
+.ion-social-dropbox-outline:before {
+  content: "\f22e"; }
+
+.ion-social-facebook:before {
+  content: "\f231"; }
+
+.ion-social-facebook-outline:before {
+  content: "\f230"; }
+
+.ion-social-freebsd-devil:before {
+  content: "\f2c4"; }
+
+.ion-social-github:before {
+  content: "\f233"; }
+
+.ion-social-github-outline:before {
+  content: "\f232"; }
+
+.ion-social-googleplus:before {
+  content: "\f235"; }
+
+.ion-social-googleplus-outline:before {
+  content: "\f234"; }
+
+.ion-social-hackernews:before {
+  content: "\f237"; }
+
+.ion-social-hackernews-outline:before {
+  content: "\f236"; }
+
+.ion-social-linkedin:before {
+  content: "\f239"; }
+
+.ion-social-linkedin-outline:before {
+  content: "\f238"; }
+
+.ion-social-pinterest:before {
+  content: "\f2b1"; }
+
+.ion-social-pinterest-outline:before {
+  content: "\f2b0"; }
+
+.ion-social-reddit:before {
+  content: "\f23b"; }
+
+.ion-social-reddit-outline:before {
+  content: "\f23a"; }
+
+.ion-social-rss:before {
+  content: "\f23d"; }
+
+.ion-social-rss-outline:before {
+  content: "\f23c"; }
+
+.ion-social-skype:before {
+  content: "\f23f"; }
+
+.ion-social-skype-outline:before {
+  content: "\f23e"; }
+
+.ion-social-tumblr:before {
+  content: "\f241"; }
+
+.ion-social-tumblr-outline:before {
+  content: "\f240"; }
+
+.ion-social-tux:before {
+  content: "\f2c5"; }
+
+.ion-social-twitter:before {
+  content: "\f243"; }
+
+.ion-social-twitter-outline:before {
+  content: "\f242"; }
+
+.ion-social-vimeo:before {
+  content: "\f245"; }
+
+.ion-social-vimeo-outline:before {
+  content: "\f244"; }
+
+.ion-social-windows:before {
+  content: "\f247"; }
+
+.ion-social-windows-outline:before {
+  content: "\f246"; }
+
+.ion-social-wordpress:before {
+  content: "\f249"; }
+
+.ion-social-wordpress-outline:before {
+  content: "\f248"; }
+
+.ion-social-yahoo:before {
+  content: "\f24b"; }
+
+.ion-social-yahoo-outline:before {
+  content: "\f24a"; }
+
+.ion-social-youtube:before {
+  content: "\f24d"; }
+
+.ion-social-youtube-outline:before {
+  content: "\f24c"; }
+
+.ion-speakerphone:before {
+  content: "\f2b2"; }
+
+.ion-speedometer:before {
+  content: "\f2b3"; }
+
+.ion-spoon:before {
+  content: "\f2b4"; }
+
+.ion-star:before {
+  content: "\f24e"; }
+
+.ion-stats-bars:before {
+  content: "\f2b5"; }
+
+.ion-steam:before {
+  content: "\f30b"; }
+
+.ion-stop:before {
+  content: "\f24f"; }
+
+.ion-thermometer:before {
+  content: "\f2b6"; }
+
+.ion-thumbsdown:before {
+  content: "\f250"; }
+
+.ion-thumbsup:before {
+  content: "\f251"; }
+
+.ion-trash-a:before {
+  content: "\f252"; }
+
+.ion-trash-b:before {
+  content: "\f253"; }
+
+.ion-umbrella:before {
+  content: "\f2b7"; }
+
+.ion-unlocked:before {
+  content: "\f254"; }
+
+.ion-upload:before {
+  content: "\f255"; }
+
+.ion-usb:before {
+  content: "\f2b8"; }
+
+.ion-videocamera:before {
+  content: "\f256"; }
+
+.ion-volume-high:before {
+  content: "\f257"; }
+
+.ion-volume-low:before {
+  content: "\f258"; }
+
+.ion-volume-medium:before {
+  content: "\f259"; }
+
+.ion-volume-mute:before {
+  content: "\f25a"; }
+
+.ion-waterdrop:before {
+  content: "\f25b"; }
+
+.ion-wifi:before {
+  content: "\f25c"; }
+
+.ion-wineglass:before {
+  content: "\f2b9"; }
+
+.ion-woman:before {
+  content: "\f25d"; }
+
+.ion-wrench:before {
+  content: "\f2ba"; }
+
+.ion-xbox:before {
+  content: "\f30c"; }
+
+/*! jQuery UI - v1.10.4 - 2014-02-08
+* http://jqueryui.com
+* Includes: jquery.ui.core.css, jquery.ui.autocomplete.css, jquery.ui.menu.css
+* Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */
+/* Layout helpers
+----------------------------------*/
+.ui-helper-hidden {
+  display: none; }
+
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+.ui-helper-reset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  line-height: 1.3;
+  text-decoration: none;
+  font-size: 100%;
+  list-style: none; }
+
+.ui-helper-clearfix:before,
+.ui-helper-clearfix:after {
+  content: "";
+  display: table;
+  border-collapse: collapse; }
+
+.ui-helper-clearfix:after {
+  clear: both; }
+
+.ui-helper-clearfix {
+  min-height: 0;
+  /* support: IE7 */ }
+
+.ui-helper-zfix {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  opacity: 0;
+  filter: Alpha(Opacity=0); }
+
+.ui-front {
+  z-index: 100; }
+
+/* Interaction Cues
+----------------------------------*/
+.ui-state-disabled {
+  cursor: default !important; }
+
+/* Icons
+----------------------------------*/
+/* states and images */
+.ui-icon {
+  display: block;
+  text-indent: -99999px;
+  overflow: hidden;
+  background-repeat: no-repeat; }
+
+/* Misc visuals
+----------------------------------*/
+/* Overlays */
+.ui-widget-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+.ui-autocomplete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default; }
+
+.ui-menu {
+  list-style: none;
+  padding: 2px;
+  margin: 0;
+  display: block;
+  outline: none; }
+
+.ui-menu .ui-menu {
+  margin-top: -3px;
+  position: absolute; }
+
+.ui-menu .ui-menu-item {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  /* support: IE10, see #8844 */
+  list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7); }
+
+.ui-menu .ui-menu-divider {
+  margin: 5px -2px 5px -2px;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+  border-width: 1px 0 0 0; }
+
+.ui-menu .ui-menu-item a {
+  text-decoration: none;
+  display: block;
+  padding: 2px .4em;
+  line-height: 1.5;
+  min-height: 0;
+  /* support: IE7 */
+  font-weight: normal; }
+
+.ui-menu .ui-menu-item a.ui-state-focus,
+.ui-menu .ui-menu-item a.ui-state-active {
+  font-weight: normal;
+  margin: -1px;
+  background-color: #4f4f4f; }
+
+.ui-menu .ui-state-disabled {
+  font-weight: normal;
+  margin: .4em 0 .2em;
+  line-height: 1.5; }
+
+.ui-menu .ui-state-disabled a {
+  cursor: default; }
+
+/* icon support */
+.ui-menu-icons {
+  position: relative; }
+
+.ui-menu-icons .ui-menu-item a {
+  position: relative;
+  padding-left: 2em; }
+
+/* left-aligned */
+.ui-menu .ui-icon {
+  position: absolute;
+  top: .2em;
+  left: .2em; }
+
+/* right-aligned */
+.ui-menu .ui-menu-icon {
+  position: static;
+  float: right; }
+
+/*------------------------------------*\
+    $MIXINS
+\*------------------------------------*/
+/* Rem Unit font sizes with relative fallback http:/seesparkbox.com/foundry/scss_rem_mixin_now_with_a_better_fallback
+	Usage: @include font-size(1, large);
+*/
+.element p {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+/*------------------------------------*\
+    $VARIABLES
+\*------------------------------------*/
+/*
+
+*/
+.over-base {
+  z-index: 2; }
+
+@font-face {
+  font-family: 'gotham_htfbold';
+  src: url("../../fonts/gotham/gothamhtf-bold.eot");
+  src: url("../../fonts/gotham/gothamhtf-bold.eot?#iefix") format("embedded-opentype"), url("../../fonts/gotham/gothamhtf-bold.woff") format("woff"), url("../../fonts/gotham/gothamhtf-bold.ttf") format("truetype"), url("../../fonts/gotham/gothamhtf-bold.svg#gotham_htfbold") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'gotham_htfbook';
+  src: url("../../fonts/gotham/gothamhtf-book.eot");
+  src: url("../../fonts/gotham/gothamhtf-book.eot?#iefix") format("embedded-opentype"), url("../../fonts/gotham/gothamhtf-book.woff") format("woff"), url("../../fonts/gotham/gothamhtf-book.ttf") format("truetype"), url("../../fonts/gotham/gothamhtf-book.svg#gotham_htfbook") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'gotham_htflight';
+  src: url("../../fonts/gotham/gothamhtf-light.eot");
+  src: url("../../fonts/gotham/gothamhtf-light.eot?#iefix") format("embedded-opentype"), url("../../fonts/gotham/gothamhtf-light.woff") format("woff"), url("../../fonts/gotham/gothamhtf-light.ttf") format("truetype"), url("../../fonts/gotham/gothamhtf-light.svg#gotham_htflight") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'gotham-htfmedium';
+  src: url("../../fonts/gotham/gothamhtf-medium.eot");
+  src: url("../../fonts/gotham/gothamhtf-medium.eot?#iefix") format("embedded-opentype"), url("../../fonts/gotham/gothamhtf-medium.woff") format("woff"), url("../../fonts/gotham/gothamhtf-medium.ttf") format("truetype"), url("../../fonts/gotham/gothamhtf-medium.svg#gotham_htfmedium") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+.in {
+  display: inline-block; }
+
+.right {
+  float: right; }
+
+.left {
+  float: left; }
+
+.txt-center {
+  text-align: center; }
+
+.txt-left {
+  text-align: left; }
+
+.txt-right {
+  text-align: right; }
+
+.vert-center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%); }
+
+.white-b {
+  background-color: #f2f2ef; }
+
+.blue-b {
+  background-color: #313338; }
+
+.white {
+  color: #f2f2ef !important; }
+
+.grey-faded {
+  color: #474b52; }
+
+.green {
+  color: #349b89; }
+
+.faded {
+  background-color: rgba(119, 119, 119, 0.14); }
+
+.red {
+  color: #d74b4b; }
+
+.black {
+  color: #333333; }
+
+.red-grad {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+
+.brown-box {
+  background-color: #313338;
+  padding: 20px; }
+  .brown-box.box-small {
+    width: 70%; }
+
+.point {
+  cursor: pointer; }
+
+.rel {
+  position: relative; }
+
+.vote-bar {
+  margin: auto; }
+
+.vote-bar-in {
+  -webkit-box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
+  -moz-box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
+  box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  display: inline-block;
+  height: 4px;
+  padding: 0px; }
+
+.battler-vote {
+  margin-right: -7px;
+  background-color: #d74b4b;
+  width: 100px; }
+
+.battlees-vote {
+  background-color: #307ca8;
+  width: 100px; }
+
+.vote-left {
+  position: relative;
+  left: -74px; }
+
+.vote-right {
+  position: relative;
+  right: -74px; }
+
+.brd-light {
+  border: 1px solid rgba(255, 255, 255, 0.45); }
+
+.brd-bottom {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.63); }
+
+.box {
+  border: 1px solid rgba(242, 242, 239, 0.56);
+  background: #313338;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.38);
+  border-radius: 2px; }
+
+.top-shadow {
+  border-top: 1px solid #777777;
+  -webkit-box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55);
+  -moz-box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55);
+  box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55); }
+
+/* things over image, or other thing */
+.green-hov {
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease; }
+  .green-hov:hover {
+    color: #349b89; }
+  .green-hov.active {
+    color: #349b89; }
+
+.scale {
+  display: inline-block; }
+  .scale:hover {
+    -webkit-transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
+    -o-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2); }
+
+.dark-wrapper {
+  background-image: url("/img/outlets.png");
+  background-position: initial initial;
+  background-repeat: initial initial; }
+
+/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
+/* ==========================================================================
+HTML5 display definitions
+========================================================================== */
+/**
+* Correct `block` display not defined in IE 6/7/8/9 and Firefox 3.
+*/
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block; }
+
+/**
+* Correct `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
+*/
+audio,
+canvas,
+video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1; }
+
+/**
+* Prevent modern browsers from displaying `audio` without controls.
+* Remove excess height in iOS 5 devices.
+*/
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/**
+* Address styling not present in IE 7/8/9, Firefox 3, and Safari 4.
+* Known issue: no IE 6 support.
+*/
+[hidden] {
+  display: none; }
+
+/* ==========================================================================
+Base
+========================================================================== */
+/**
+* 1. Correct text resizing oddly in IE 6/7 when body `font-size` is set using
+*    `em` units.
+* 2. Prevent iOS text size adjust after orientation change, without disabling
+*    user zoom.
+*/
+html {
+  font-size: 100%;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */ }
+
+/**
+* Address `font-family` inconsistency between `textarea` and other form
+* elements.
+*/
+html,
+button,
+input,
+select,
+textarea {
+  font-family: sans-serif; }
+
+/**
+* Address margins handled incorrectly in IE 6/7.
+*/
+body {
+  margin: 0; }
+
+/* ==========================================================================
+Links
+========================================================================== */
+/**
+* Address `outline` inconsistency between Chrome and other browsers.
+*/
+a:focus {
+  outline: thin dotted; }
+
+/**
+* Improve readability when focused and also mouse hovered in all browsers.
+*/
+a:active,
+a:hover {
+  outline: 0; }
+
+/* ==========================================================================
+Typography
+========================================================================== */
+/**
+* Address font sizes and margins set differently in IE 6/7.
+* Address font sizes within `section` and `article` in Firefox 4+, Safari 5,
+* and Chrome.
+*/
+h1 {
+  font-size: 2em;
+  margin: 0; }
+
+h2 {
+  font-size: 1.5em;
+  margin: 0; }
+
+h3 {
+  font-size: 1.17em;
+  margin: 0; }
+
+h4 {
+  font-size: 1em;
+  margin: 0; }
+
+h5 {
+  font-size: 0.83em;
+  margin: 0; }
+
+h6 {
+  font-size: 0.67em;
+  margin: 0; }
+
+/**
+* Address styling not present in IE 7/8/9, Safari 5, and Chrome.
+*/
+abbr[title] {
+  border-bottom: 1px dotted; }
+
+/**
+* Address style set to `bolder` in Firefox 3+, Safari 4/5, and Chrome.
+*/
+b,
+strong {
+  font-weight: bold; }
+
+blockquote {
+  margin: 1em 40px; }
+
+/**
+* Address styling not present in Safari 5 and Chrome.
+*/
+dfn {
+  font-style: italic; }
+
+/**
+* Address differences between Firefox and other browsers.
+* Known issue: no IE 6/7 normalization.
+*/
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0; }
+
+/**
+* Address styling not present in IE 6/7/8/9.
+*/
+mark {
+  background: #ff0;
+  color: #000; }
+
+/**
+* Address margins set differently in IE 6/7.
+*/
+p,
+pre {
+  margin: 0; }
+
+/**
+* Correct font family set oddly in IE 6, Safari 4/5, and Chrome.
+*/
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  _font-family: 'courier new', monospace;
+  font-size: 1em; }
+
+/**
+* Improve readability of pre-formatted text in all browsers.
+*/
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word; }
+
+/**
+* Address CSS quotes not supported in IE 6/7.
+*/
+q {
+  quotes: none; }
+
+/**
+* Address `quotes` property not supported in Safari 4.
+*/
+q:before,
+q:after {
+  content: '';
+  content: none; }
+
+/**
+* Address inconsistent and variable font size in all browsers.
+*/
+small {
+  font-size: 80%; }
+
+/**
+* Prevent `sub` and `sup` affecting `line-height` in all browsers.
+*/
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sup {
+  top: -0.5em; }
+
+sub {
+  bottom: -0.25em; }
+
+/* ==========================================================================
+Lists
+========================================================================== */
+/**
+* Address margins set differently in IE 6/7.
+*/
+dl,
+menu,
+ol,
+ul {
+  margin: 0; }
+
+dd {
+  margin: 0 0 0 40px; }
+
+/**
+* Address paddings set differently in IE 6/7.
+*/
+menu,
+ol,
+ul {
+  padding: 0; }
+
+/**
+* Correct list images handled incorrectly in IE 7.
+*/
+nav ul,
+nav ol {
+  list-style: none;
+  list-style-image: none; }
+
+/* ==========================================================================
+Embedded content
+========================================================================== */
+/**
+* 1. Remove border when inside `a` element in IE 6/7/8/9 and Firefox 3.
+* 2. Improve image quality when scaled in IE 7.
+*/
+img {
+  border: 0;
+  /* 1 */
+  -ms-interpolation-mode: bicubic;
+  /* 2 */ }
+
+/**
+* Correct overflow displayed oddly in IE 9.
+*/
+svg:not(:root) {
+  overflow: hidden; }
+
+/* ==========================================================================
+Figures
+========================================================================== */
+/**
+* Address margin not present in IE 6/7/8/9, Safari 5, and Opera 11.
+*/
+figure {
+  margin: 0; }
+
+/* ==========================================================================
+Forms
+========================================================================== */
+/**
+* Correct margin displayed oddly in IE 6/7.
+*/
+form {
+  margin: 0; }
+
+/**
+* Define consistent border, margin, and padding.
+*/
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/**
+* 1. Correct color not being inherited in IE 6/7/8/9.
+* 2. Correct text not wrapping in Firefox 3.
+* 3. Correct alignment displayed oddly in IE 6/7.
+*/
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  white-space: normal;
+  /* 2 */
+  *margin-left: -7px;
+  /* 3 */ }
+
+/**
+* 1. Correct font size not being inherited in all browsers.
+* 2. Address margins set differently in IE 6/7, Firefox 3+, Safari 5,
+*    and Chrome.
+* 3. Improve appearance and consistency in all browsers.
+*/
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  vertical-align: baseline;
+  /* 3 */
+  *vertical-align: middle;
+  /* 3 */ }
+
+/**
+* Address Firefox 3+ setting `line-height` on `input` using `!important` in
+* the UA stylesheet.
+*/
+button,
+input {
+  line-height: normal; }
+
+/**
+* Address inconsistent `text-transform` inheritance for `button` and `select`.
+* All other form control elements do not inherit `text-transform` values.
+* Correct `button` style inheritance in Chrome, Safari 5+, and IE 6+.
+* Correct `select` style inheritance in Firefox 4+ and Opera.
+*/
+button,
+select {
+  text-transform: none; }
+
+/**
+* 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+*    and `video` controls.
+* 2. Correct inability to style clickable `input` types in iOS.
+* 3. Improve usability and consistency of cursor style between image-type
+*    `input` and others.
+* 4. Remove inner spacing in IE 7 without affecting normal text inputs.
+*    Known issue: inner spacing remains in IE 6.
+*/
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+  *overflow: visible;
+  /* 4 */ }
+
+/**
+* Re-set default cursor for disabled elements.
+*/
+button[disabled],
+html input[disabled] {
+  cursor: default; }
+
+/**
+* 1. Address box sizing set to content-box in IE 8/9.
+* 2. Remove excess padding in IE 8/9.
+* 3. Remove excess padding in IE 7.
+*    Known issue: excess padding remains in IE 6.
+*/
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+  *height: 13px;
+  /* 3 */
+  *width: 13px;
+  /* 3 */ }
+
+/**
+* 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+* 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+*    (include `-moz` to future-proof).
+*/
+input[type="search"], input[type="text"], input[type="email"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  /* 2 */
+  box-sizing: border-box; }
+
+/**
+* Remove inner padding and search cancel button in Safari 5 and Chrome
+* on OS X.
+*/
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/**
+* Remove inner padding and border in Firefox 3+.
+*/
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+* 1. Remove default vertical scrollbar in IE 6/7/8/9.
+* 2. Improve readability and alignment in all browsers.
+*/
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */ }
+
+/* ==========================================================================
+Tables
+========================================================================== */
+/**
+* Remove most spacing between table cells.
+*/
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/*------------------------------------*\
+    $GLOBAL ELEMENTS
+\*------------------------------------*/
+/*------------------------------------*\
+    $GLOBAL CLASSES
+\*------------------------------------*/
+/* Completely remove from the flow and screen readers. */
+.is-hidden {
+  display: none !important;
+  visibility: hidden !important; }
+
+.opac {
+  opacity: 0.5; }
+
+/* Completely remove from the flow but leave available to screen readers. */
+.is-vishidden {
+  position: absolute !important;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px); }
+
+.no-gap {
+  position: relative;
+  top: -28px; }
+
+/* positioning */
+.right {
+  float: right; }
+
+.left {
+  float: left; }
+
+.txt-center {
+  text-align: center; }
+
+.txt-left {
+  text-align: left; }
+
+.txt-right {
+  text-align: right; }
+
+.vert-center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%); }
+
+/* Display Classes */
+@media all and (max-width: 46.8em) {
+  .hide-small {
+    display: none; } }
+
+@media all and (min-width: 46.8em) and (max-width: 50em) {
+  .hide-med {
+    display: none; } }
+
+@media all and (min-width: 50em) {
+  .hide-large {
+    display: none; } }
+
+.valid {
+  color: #307ca8; }
+
+.error {
+  color: #d74b4b; }
+
+.warning {
+  color: #fff664; }
+
+.information {
+  color: #349b89; }
+
+.font-secondary {
+  font-family: "gotham-htfmedium", Times, "Times New Roman", serif; }
+
+.pvs {
+  padding: 0.6em 0; }
+
+.pvm {
+  padding: 1em 0; }
+
+.pvl {
+  padding: 1.5em 0; }
+
+.pvxxl {
+  padding: 3em 0; }
+
+.pvxl {
+  padding: 2em 0; }
+
+.pvhuge {
+  padding: 7em 0; }
+
+.phs {
+  padding: 0 0.6em; }
+
+.phm {
+  padding: 0 1em; }
+
+.phl {
+  padding: 0 1.5em; }
+
+.phs {
+  padding: 0 0.6em; }
+
+.pts {
+  padding-top: 0.6em; }
+
+.ptm {
+  padding-top: 1em; }
+
+.ptl {
+  padding-top: 1.5em; }
+
+.ptxl {
+  padding-top: 2em; }
+
+.pbm {
+  padding-bottom: 1em; }
+
+.prl {
+  padding-right: 1.5em; }
+
+.prs {
+  padding-right: 0.6em; }
+
+.pls {
+  padding-left: 0.6em; }
+
+.pam {
+  padding: 0.8em; }
+
+.pal {
+  padding: 1.5em; }
+
+.paxl {
+  padding: 2.5em; }
+
+.pas {
+  padding: 0.6em; }
+
+.mvxs {
+  margin: 0 0.3em; }
+
+.mvm {
+  margin: 0.8em 0; }
+
+.mvs {
+  margin: 0.6em 0; }
+
+.mvl {
+  margin: 1.2em 0; }
+
+.mvxl {
+  margin: 2em 0; }
+
+.mvhuge {
+  margin: 6em 0; }
+
+.mtm {
+  margin-top: 0.8em; }
+
+.mtl {
+  margin-top: 1.2em; }
+
+.mtxl {
+  margin-top: 2em; }
+
+.mbm {
+  margin-bottom: 0.8em; }
+
+.mbs {
+  margin-bottom: 0.6em; }
+
+.mls {
+  margin-left: 0.6em; }
+
+.mll {
+  margin-left: 1.2em; }
+
+.mam {
+  margin: 0.8em; }
+
+.mas {
+  margin: 0.6em; }
+
+.mal {
+  margin: 1.2em; }
+
+.maxl {
+  margin: 2em; }
+
+.mhm {
+  margin: 0 0.8em; }
+
+.mhxl {
+  margin: 0 2em; }
+
+.mhs {
+  margin: 0 0.6em; }
+
+.mhl {
+  margin: 0 1.2em; }
+
+.in {
+  display: inline-block; }
+
+.block {
+  display: block; }
+
+.cap {
+  text-transform: capitalize; }
+
+.blue-box {
+  background-color: #313338; }
+
+.green-box {
+  background-color: #394245; }
+
+/* colors; */
+/* Let there be light */
+.ltbelt {
+  background-color: #f2f2ef;
+  -webkit-box-shadow: background-color 0.3s ease-in;
+  -moz-box-shadow: background-color 0.3s ease-in;
+  box-shadow: background-color 0.3s ease-in; }
+  .ltbelt h1, .ltbelt h2, .ltbelt h3, .ltbelt a, .ltbelt p {
+    color: #474b52 !important; }
+  .ltbelt .li-hover:hover {
+    background-color: #f9f9f9;
+    cursor: pointer; }
+
+.blue-b {
+  background-color: #313338; }
+
+.white-b {
+  background-color: #f2f2ef !important; }
+
+.white {
+  color: #f2f2ef !important; }
+
+.face {
+  background-color: #4c66a4 !important; }
+
+.green {
+  color: #349b89; }
+
+.faded {
+  background-color: rgba(119, 119, 119, 0.14); }
+
+.red {
+  color: #d74b4b; }
+
+.black {
+  color: #333333 !important; }
+
+.red-grad {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+
+.brown-box {
+  background-color: #313338;
+  padding: 20px; }
+  .brown-box.box-small {
+    width: 70%; }
+
+.point {
+  cursor: pointer; }
+
+.rel {
+  position: relative; }
+
+.vert-up {
+  position: relative;
+  bottom: 2em; }
+
+.vote-bar {
+  margin: auto; }
+
+.vote-bar-in {
+  -webkit-box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
+  -moz-box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
+  box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  display: inline-block;
+  height: 4px;
+  padding: 0px; }
+
+.battler-vote {
+  margin-right: -7px;
+  background-color: #d74b4b;
+  width: 100px; }
+
+.battlees-vote {
+  background-color: #307ca8;
+  width: 100px; }
+
+.vote-left {
+  position: relative;
+  left: -74px; }
+
+.vote-right {
+  position: relative;
+  right: -74px; }
+
+.brd-dark {
+  border: 1px solid rgba(242, 242, 239, 0.56); }
+
+.brd {
+  border: 1px solid !important; }
+
+.brd-light {
+  border: 1px solid #dddddd; }
+
+.brd-light-left {
+  border-left: 1px solid #dddddd; }
+
+.brd-light-bottom {
+  border-bottom: 1px solid #dddddd; }
+
+.box {
+  border: 1px solid rgba(242, 242, 239, 0.56);
+  background: #313338;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.38);
+  border-radius: 2px; }
+
+.top-shadow {
+  border-top: 1px solid #777777;
+  -webkit-box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55);
+  -moz-box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55);
+  box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55); }
+
+/* things over image, or other thing */
+.le-wrap {
+  position: relative; }
+  .le-wrap .le-in {
+    position: absolute; }
+    .le-wrap .le-in.center {
+      width: 100%;
+      text-align: center;
+      z-index: 1; }
+    .le-wrap .le-in.bottom {
+      bottom: 0; }
+    .le-wrap .le-in.right {
+      right: 0; }
+    .le-wrap .le-in.hov:hover {
+      background-color: rgba(255, 255, 255, 0.5) !important; }
+    .le-wrap .le-in.faded {
+      -webkit-transition: background-color 0.2s ease;
+      -moz-transition: background-color 0.2s ease;
+      -ms-transition: background-color 0.2s ease;
+      -o-transition: background-color 0.2s ease;
+      transition: background-color 0.2s ease;
+      z-index: 0 !important;
+      background-color: #000 !important;
+      background: -webkit-gradient(radial, 20% 25%, 0, 100% 100%, 400, from(rgba(0, 0, 0, 0.38)), to(black)) transparent !important;
+      background: -moz-radial-gradient(center 45deg, circle cover, rgba(0, 0, 0, 0.38) 0%, black 100%) transparent !important; }
+    .le-wrap .le-in.large-in {
+      bottom: 9%;
+      font-size: 6em; }
+    .le-wrap .le-in.wrap-icon {
+      top: 4px;
+      right: 10px; }
+    .le-wrap .le-in.full-in {
+      top: 0;
+      width: 100%;
+      bottom: 0;
+      background-color: inherit;
+      z-index: 40; }
+
+.green-hov {
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease; }
+  .green-hov:hover {
+    color: #349b89; }
+  .green-hov.active {
+    color: #349b89; }
+
+.white-hov {
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease; }
+  .white-hov:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important; }
+  .white-hov.active {
+    background-color: rgba(255, 255, 255, 0.2) !important; }
+
+.scale {
+  display: inline-block; }
+  .scale:hover {
+    -webkit-transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
+    -o-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2); }
+
+.dark-wrapper {
+  background-image: url("/img/outlets.png");
+  background-position: initial initial;
+  background-repeat: initial initial; }
+
+body {
+  background: #2b2828;
+  font-family: "gotham_htfbook", "Helvetica", "Arial", sans-serif;
+  color: #f2f2ef;
+  font-size: 0.875em; }
+
+/* Small screens (default) */
+html {
+  font-size: 100%; }
+
+/* Medium screens (640px) */
+@media (min-width: 40rem) {
+  html {
+    font-size: 112%; } }
+/* Large screens (1024px) */
+@media (min-width: 64rem) {
+  html {
+    font-size: 120%; } }
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+html {
+  font: 100%/1.5 "Open Sans", sans-serif;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased; }
+
+#main {
+  margin-top: 2em; }
+
+.full-screen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  opacity: 0;
+  z-index: -1;
+  background: #000;
+  background: -webkit-gradient(radial, 50% 25%, 0, 50% 25%, 800, from(rgba(0, 0, 0, 0.85)), to(black)) transparent;
+  background: -moz-radial-gradient(center 45deg, circle cover, rgba(0, 0, 0, 0.85) 0%, black 100%) transparent;
+  -webkit-transition: opacity 0.5s ease;
+  -moz-transition: opacity 0.5s ease;
+  -ms-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease; }
+  .full-screen.show {
+    opacity: 0.5;
+    z-index: 50; }
+  .full-screen.hi-opac {
+    opacity: 0.8; }
+
+footer {
+  position: absolute;
+  bottom: 0; }
+
+.scrollable {
+  position: fixed;
+  height: 100%;
+  overflow-y: scroll; }
+
+.no-top-marg {
+  margin-top: -2.7em; }
+
+.vid-thmb-list {
+  max-height: 359px;
+  overflow-y: scroll; }
+
+/* Links */
+a {
+  color: #333333;
+  text-decoration: none;
+  outline: 0; }
+  a:hover, a:focus {
+    color: #777777; }
+
+/* Headings */
+/*Further Reading: http:/csswizardry.com/2012/02/pragmatic-practical-font-sizing-in-css/ */
+h1, .alpha {
+  line-height: 1.2; }
+
+h2, .beta {
+  line-height: 1.2; }
+
+h3, .gamma {
+  line-height: 1.2; }
+
+/* Subheadings */
+.subheading {
+  font-family: "gotham-htfmedium", Times, "Times New Roman", serif;
+  font-weight: normal; }
+
+h1, h2, h3 {
+  font-family: "gotham_htflight", "Helvetica", "Arial", sans-serif;
+  color: #f2f2ef; }
+
+a {
+  color: rgba(255, 255, 255, 0.67);
+  text-decoration: none; }
+
+.glow {
+  text-shadow: 1px 1px 2px #EBF0B5; }
+
+.win {
+  text-decoration: underline;
+  font-style: italic; }
+
+strong {
+  font-family: "gotham-htfmedium", Times, "Times New Roman", serif; }
+
+.head {
+  font-size: 1.4375em; }
+
+.killer {
+  font-size: 2.875em; }
+
+.lead {
+  font-family: "gotham_htflight", "Helvetica", "Arial", sans-serif;
+  font-weight: normal; }
+
+.fat {
+  font-family: "gotham_htfbold", "Helvetica", "Arial", sans-serif; }
+
+.xsmall {
+  font-size: 0.5em; }
+
+small, .small {
+  font-size: 0.75em;
+  color: #777777; }
+
+.icon {
+  font-size: 1.3em; }
+
+.icon-2x {
+  font-size: 2em; }
+
+.icon-3x {
+  font-size: 3em; }
+
+.txt-light {
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.6); }
+
+/* Text-Related Elements */
+/* Blockquote */
+blockquote {
+  font-style: italic;
+  border-left: 1px solid #777777;
+  color: #777777;
+  padding-left: 1.2em;
+  margin-bottom: 1em; }
+
+/* Horizontal Rule */
+hr {
+  border: 0;
+  height: 2px;
+  background: #eeeeee;
+  margin: 2em 0; }
+
+abbr {
+  border-bottom: 1px dotted #777777;
+  cursor: help; }
+
+ol, ul {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+/* Definition Lists */
+dl {
+  overflow: hidden;
+  margin: 0 0 1em; }
+
+dt {
+  font-weight: bold; }
+
+dd {
+  margin-left: 0; }
+
+/*------------------------------------*\
+    $MEDIA ELEMENTS
+\*------------------------------------*/
+/* Flexible Media */
+img, video, object {
+  max-width: 100%;
+  height: auto; }
+
+iframe {
+  margin-bottom: 1em; }
+
+figure {
+  margin-bottom: 1em; }
+  figure img {
+    margin-bottom: 0.5em; }
+
+figcaption {
+  font-style: italic; }
+
+.shred-vid-wrap {
+  height: 359px; }
+
+.shred-vid {
+  width: 100.1%;
+  padding: 1px;
+  border: 1px solid #000;
+  max-height: 100%;
+  background: #313338; }
+  .shred-vid.half {
+    max-height: 321px; }
+
+.logo-xs {
+  width: 1.2em; }
+
+.logo-sm {
+  width: 1.6em; }
+
+.logo-md {
+  width: 3em; }
+
+.logo-lg {
+  width: 5em; }
+
+.img-sm {
+  width: 80px;
+  height: 80px; }
+
+.img-md {
+  width: 120px;
+  height: 120px; }
+
+.video-thumb {
+  width: 50%; }
+
+.img-large {
+  width: 250px;
+  height: 250px; }
+
+.img-xs {
+  width: 40px;
+  height: 40px; }
+
+.thumb-round {
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4); }
+
+.thumb-txt {
+  max-width: 70%;
+  display: inline-block;
+  position: relative;
+  bottom: 12px;
+  margin: 0 12px; }
+
+.vid-drag {
+  width: 200px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: move; }
+
+.profile-img {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px; }
+
+/* Thumbs- Stage ++ */
+.profile-img-thumb {
+  right: 4px;
+  top: 8px; }
+
+.shred-thumb {
+  width: 100%;
+  max-height: 100%;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+
+.stage-thumb-wrap {
+  cursor: pointer; }
+  .stage-thumb-wrap.small {
+    height: 118.5px; }
+
+.box-wrap {
+  margin: 1px; }
+  .box-wrap .le-in.thmb {
+    bottom: 0em;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7); }
+    .box-wrap .le-in.thmb.battle-in {
+      bottom: 30%; }
+
+.social {
+  display: inline-block;
+  padding: 8px 10px;
+  background: #313338; }
+
+/* video */
+.video-meta {
+  background: rgba(0, 0, 0, 0.45);
+  padding: 14px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-right: 9px;
+  z-index: 10;
+  position: absolute;
+  color: #f2f2ef; }
+
+.banner {
+  background: url("/img/crowdbanner2.jpg");
+  background-size: contain;
+  background-position: center;
+  width: 100%;
+  min-width: 100%;
+  height: 150px; }
+  .banner .content {
+    height: 150px; }
+
+.fullscreenimg {
+  position: fixed;
+  top: 117px;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.4;
+  z-index: 1; }
+
+/*------------------------------------*\
+    $FORMS
+\*------------------------------------*/
+form ol, form ul {
+  list-style: none;
+  margin-left: 0; }
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0; }
+
+label {
+  display: block;
+  padding-bottom: 0.5em; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 0.8em; }
+
+textarea {
+  resize: none; }
+  textarea.tall {
+    height: 8em; }
+
+input, textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  padding: 0.8em 0.65rem; }
+
+input:-webkit-autofill {
+  background-color: #f2f2ef !important; }
+
+input[type=text], input[type=search], input[type=url], input[type=number], textarea {
+  -webkit-appearance: none; }
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  margin-right: 0.3em; }
+
+input[type="search"] {
+  -webkit-appearance: none;
+  border-radius: 15px;
+  padding: 0.7em 0.6rem;
+  width: 160px; }
+
+.search-wrap {
+  position: relative; }
+  .search-wrap .search-icon {
+    position: absolute;
+    top: 7px;
+    left: 14px; }
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+/* Validation */
+.has-error {
+  border-color: #d74b4b; }
+
+.is-valid {
+  border-color: #307ca8; }
+
+/*------------------------------------*\
+    $SPECIFIC FORMS
+\*------------------------------------*/
+.form-dark {
+  background-color: #313338 !important; }
+  .form-dark input, .form-dark textarea {
+    background-color: #2b2828; }
+  .form-dark h2, .form-dark h4, .form-dark p, .form-dark label, .form-dark input, .form-dark textarea {
+    color: #f2f2ef !important; }
+  .form-dark a {
+    color: #307ca8 !important; }
+  .form-dark .deep {
+    background-color: rgba(31, 30, 30, 0.81);
+    height: 3em;
+    box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.85); }
+
+input[type="file"] {
+  width: 75px;
+  background-color: transparent !important; }
+  input[type="file"].upload {
+    margin-top: 15px; }
+
+.upload-box {
+  width: 48%;
+  margin: auto;
+  border: 2px dotted;
+  border-radius: 13px;
+  background: rgba(51, 51, 51, 0.43);
+  margin-top: 225px;
+  margin-bottom: 16px;
+  background-color: #2b2828; }
+  .upload-box.upl-small {
+    width: 25%; }
+    .upload-box.upl-small h5 {
+      padding: 30px; }
+  .upload-box.upl-full {
+    width: 100%; }
+    .upload-box.upl-full h5 {
+      padding: 35px; }
+  .upload-box h5 {
+    padding: 80px;
+    margin: 0; }
+  .upload-box .highlight {
+    border-radius: 13px;
+    background: #313338; }
+
+.input-row input, .input-row textarea {
+  margin: 2em 0;
+  width: 80%; }
+.input-row label {
+  margin-top: 2em; }
+.input-row .clear-marg {
+  margin: 0; }
+
+/* Search Form */
+.search-field {
+  padding-right: 3em; }
+
+.input-on-dark {
+  background: #474b52;
+  color: #f2f2ef; }
+
+.small-form {
+  font-size: 0.875em;
+  padding: 0.5rem;
+  width: 50%; }
+
+.inline-form .search-submit {
+  background: none;
+  padding: 0.78em 1em;
+  border: 0;
+  border-left: 1px solid #777777;
+  color: #777777; }
+
+.ui-autocomplete {
+  background-color: rgba(31, 30, 30, 0.81);
+  z-index: 1001; }
+
+/*------------------------------------*\
+    $Table
+\*------------------------------------*/
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid #777777;
+  width: 100%; }
+
+th {
+  text-align: left;
+  border: 1px solid #777777;
+  padding: 0.2em; }
+
+td {
+  border: 1px solid #777777;
+  padding: 0.2em; }
+
+.animate-fade {
+  -webkit-transition: opacity, 0.3s, ease-out;
+  -moz-transition: opacity, 0.3s, ease-out;
+  -ms-transition: opacity, 0.3s, ease-out;
+  -o-transition: opacity, 0.3s, ease-out;
+  transition: opacity, 0.3s, ease-out; }
+  .animate-fade:hover {
+    opacity: 0; }
+
+.animate-move > .demo-shape {
+  -webkit-transition: all, 0.8s, ease-in-out;
+  -moz-transition: all, 0.8s, ease-in-out;
+  -ms-transition: all, 0.8s, ease-in-out;
+  -o-transition: all, 0.8s, ease-in-out;
+  transition: all, 0.8s, ease-in-out; }
+
+/*------------------------------------*\
+    $LAYOUT
+\*------------------------------------*/
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table; }
+
+.clearfix:after {
+  clear: both; }
+
+.clearfix {
+  *zoom: 1; }
+
+.container, .header {
+  margin: 0 auto;
+  max-width: 60rem;
+  width: 90%; }
+
+.row {
+  width: 100%; }
+
+@media (min-width: 40rem) {
+  .column {
+    float: left; }
+
+  .column.full {
+    width: 100%; }
+
+  .column.two-thirds {
+    width: 66.7%; }
+
+  .column.half {
+    width: 50%; }
+
+  .column.third {
+    width: 33.3%; }
+
+  .column.fourth {
+    width: 24.95%; }
+
+  .column.three-fourth {
+    width: 74.85%; }
+
+  .column.ten {
+    width: 10%; }
+
+  .column.nine-ten {
+    width: 90%; }
+
+  .column.six {
+    width: 16.6%; }
+
+  .column.five-six {
+    width: 83%; }
+
+  .column.five {
+    width: 20%; }
+
+  .column.four-five {
+    width: 80%; }
+
+  .column.flow-opposite {
+    float: right; }
+
+  .column.flow-opposite {
+    float: right; } }
+/*------------------------------------*\
+    $PAGE STRUCTURE
+\*------------------------------------*/
+.header {
+  background: #f2f2ef;
+  padding: 0;
+  border-bottom: 1px solid #dbdbdb; }
+
+.logo {
+  float: left;
+  background: #349b89;
+  max-width: 8rem;
+  margin: 0.4rem; }
+  @media all and (min-width: 46.8em) {
+    .logo {
+      max-width: 9rem; } }
+
+.nav-toggle {
+  float: right;
+  display: block;
+  padding: 0.9rem 1rem 0.7rem;
+  font-size: 1.3rem;
+  line-height: 1;
+  border-left: 1px solid #dbdbdb; }
+  @media all and (min-width: 46.8em) {
+    .nav-toggle {
+      display: none; } }
+  @media all and (max-width: 17em) {
+    .nav-toggle {
+      padding-left: 0.2rem;
+      padding-right: 0.2rem; } }
+
+.search-form {
+  overflow: hidden;
+  max-height: 0; }
+  @media all and (min-width: 46.8em) {
+    .search-form {
+      float: right;
+      max-height: none;
+      margin: 0.65em 0.5em 0 0; } }
+
+/*------------------------------------*\
+    $NAVIGATION
+\*------------------------------------*/
+.nav {
+  background-color: #2b2828;
+  height: 3.9em;
+  padding: 0.3em; }
+  .nav > ul {
+    height: 100%; }
+    .nav > ul > li {
+      padding-right: 3em;
+      height: 100%;
+      vertical-align: middle;
+      display: table-cell; }
+  .nav .active {
+    background-color: #313338;
+    font-weight: 900;
+    padding-top: 0.7em;
+    color: #f2f2ef; }
+
+.kicker {
+  background-color: #313338; }
+
+.kicker-btns {
+  text-align: center; }
+  .kicker-btns h5 {
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.81);
+    cursor: pointer;
+    -webkit-transition: color 0.1s ease-in-out;
+    -moz-transition: color 0.1s ease-in-out;
+    -ms-transition: color 0.1s ease-in-out;
+    -o-transition: color 0.1s ease-in-out;
+    transition: color 0.1s ease-in-out; }
+    .kicker-btns h5:hover {
+      color: #fff; }
+  .kicker-btns span {
+    display: block;
+    padding: 0.4em; }
+
+.nav-center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 2.2em;
+  text-align: center; }
+  .nav-center a {
+    padding: 0.7em 3.4em;
+    background-color: #394245;
+    font-family: "gotham_htflight", "Helvetica", "Arial", sans-serif;
+    position: relative;
+    bottom: 4px; }
+
+.nav-right {
+  float: right; }
+
+.nav-left {
+  float: left; }
+
+.side-nav {
+  background: rgba(0, 0, 0, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.57); }
+  .side-nav li {
+    padding: 8px;
+    cursor: pointer;
+    -webkit-transition: background 0.2s ease;
+    -moz-transition: background 0.2s ease;
+    -ms-transition: background 0.2s ease;
+    -o-transition: background 0.2s ease;
+    transition: background 0.2s ease; }
+    .side-nav li.selected {
+      background: rgba(255, 255, 255, 0.29); }
+    .side-nav li:hover {
+      background: rgba(255, 255, 255, 0.29); }
+
+.green-swabs a {
+  display: inline-block;
+  margin-right: 2em;
+  color: #f2f2ef;
+  font-family: "gotham_htfbold", "Helvetica", "Arial", sans-serif;
+  cursor: pointer; }
+  .green-swabs a.active {
+    border-bottom: 2px solid #349b89; }
+
+/*------------------------------------*\
+    $FOOTER
+\*------------------------------------*/
+.footer {
+  clear: both;
+  overflow: hidden;
+  background: #131313;
+  color: #f2f2ef;
+  line-height: 1.2; }
+  .footer a {
+    color: #f9f9f9; }
+
+.nav-footer {
+  margin: -1.2em -1.2em 1em; }
+  .nav-footer li {
+    border-bottom: 1px solid #333333; }
+    @media all and (min-width: 46.8em) {
+      .nav-footer li {
+        border: 0;
+        float: left; } }
+  .nav-footer a {
+    display: block;
+    padding: 1.2em; }
+
+@media all and (min-width: 46.8em) {
+  .copyright {
+    float: right; } }
+
+/*------------------------------------*\
+    $TEXT Styles
+\*------------------------------------*/
+.intro {
+  font-size: 1.0625em;
+  font-weight: bold; }
+
+.pullquote {
+  font-family: "gotham-htfmedium", Times, "Times New Roman", serif;
+  font-size: 1.4375em; }
+
+.caption {
+  font-style: italic; }
+
+.text a {
+  text-decoration: underline; }
+.text ul {
+  list-style: disc;
+  margin: 0 0 1em 1.2em; }
+  .text ul ul {
+    margin-bottom: 0; }
+.text ol {
+  list-style: decimal;
+  margin: 0 0 1em 1.5em; }
+  .text ol ol {
+    margin-bottom: 0; }
+
+/*------------------------------------*\
+    $COMPONENTS
+\*------------------------------------*/
+/* Icon Font */
+@font-face {
+  font-family: 'icons';
+  src: url("../fonts/icons.eot");
+  src: url("../fonts/icons.eot?#iefix") format("embedded-opentype"), url("../fonts/icons.woff") format("woff"), url("../fonts/icons.ttf") format("truetype"), url("../fonts/icons.svg#icons") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+  font-family: 'icons';
+  content: attr(data-icon);
+  speak: none;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased; }
+
+.icon-twitter:before, .icon-stumbleupon:before, .icon-pinterest:before, .icon-linkedin:before, .icon-google-plus:before, .icon-search:before, .icon-play:before, .icon-menu:before, .icon-arrow-left:before, .icon-arrow-right:before, .icon-bubble:before, .icon-facebook:before, .icon-feed:before, .icon-youtube:before, .icon-tag:before, .icon-tumblr:before, .icon-instagram, .icon-podcast, .icon-apple, .icon-android, .icon-arrow:after, .icon-envelope:before {
+  font-family: 'icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased; }
+
+.icon-twitter:before {
+  content: "\74"; }
+
+.icon-stumbleupon:before {
+  content: "\75"; }
+
+.icon-pinterest:before {
+  content: "\70"; }
+
+.icon-linkedin:before {
+  content: "\69"; }
+
+.icon-google-plus:before {
+  content: "\67"; }
+
+.icon-search:before {
+  content: "\73"; }
+
+.icon-play:before {
+  content: "\61"; }
+
+.icon-menu:before {
+  content: "\21"; }
+
+.icon-arrow-left:before {
+  content: "\23"; }
+
+.icon-arrow-right:before {
+  content: "\24"; }
+
+.icon-bubble:before {
+  content: "\25"; }
+
+.icon-facebook:before {
+  content: "\66"; }
+
+.icon-feed:before {
+  content: "\27"; }
+
+.icon-youtube:before {
+  content: "\79"; }
+
+.icon-tag:before {
+  content: "\28"; }
+
+.icon-tumblr:before {
+  content: "\6d"; }
+
+.icon-instagram:before {
+  content: "\22"; }
+
+.icon-podcast:before {
+  content: "\26"; }
+
+.icon-android:before {
+  content: "\29"; }
+
+.icon-apple:before {
+  content: "\2a"; }
+
+.icon-envelope:before {
+  content: "\2b"; }
+
+.icon-arrow:after {
+  content: "\61";
+  display: inline-block;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.icon-play:before {
+  font-size: 0.7rem;
+  padding-left: 0.2em; }
+
+.icon-play-box {
+  display: block;
+  margin-left: 2.4em; }
+
+.icon-play-box:before {
+  padding: 0.3em;
+  background: #777777;
+  color: #f2f2ef;
+  margin-left: -1.7rem;
+  margin-right: 0.8em; }
+
+/*------------------------------------*\
+    $BUTTONS
+\*------------------------------------*/
+.btn {
+  display: inline-block;
+  background: #349b89;
+  color: #f2f2ef;
+  line-height: 1;
+  font-family: "gotham_htfbold", "Helvetica", "Arial", sans-serif;
+  padding: 1.2em;
+  border: 0;
+  font-size: 0.75em;
+  text-align: center;
+  -webkit-transition: background 0.3s ease-in-out;
+  -moz-transition: background 0.3s ease-in-out;
+  -ms-transition: background 0.3s ease-in-out;
+  -o-transition: background 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out; }
+  .btn:hover, .btn:focus {
+    background: #61b1a3; }
+  .btn.disabled {
+    background: #eeeeee;
+    color: #777777; }
+  .btn.wide {
+    min-width: 140px; }
+
+.btn-small {
+  padding: 0.8em;
+  font-size: 0.75em; }
+
+.btn-info {
+  background-color: #307ca8; }
+  .btn-info:hover, .btn-info:focus, .btn-info:active {
+    background-color: #4b8cb3; }
+
+.btn-huge {
+  padding: 2em; }
+
+.btn-trans {
+  background-color: transparent;
+  border: 1px solid rgba(242, 242, 239, 0.56); }
+
+.btn-buf {
+  background-color: #2b2828;
+  border: 1px solid #313338; }
+  .btn-buf:hover {
+    background-color: #313338; }
+
+.text-btn {
+  font-style: italic; }
+
+.tab-btn {
+  margin: 1em 2em;
+  display: inline-block;
+  color: #2b2828;
+  cursor: pointer;
+  border: none; }
+  .tab-btn:hover {
+    color: #40bda7; }
+  .tab-btn.active {
+    border-bottom: 9px solid #349b89; }
+
+.btn-niz {
+  background-color: #349b89; }
+  .btn-niz:hover {
+    background-color: #40bda7; }
+
+.btn-def {
+  background-color: #313338; }
+  .btn-def:hover {
+    background-color: #474b52; }
+
+.btn-ser {
+  background-color: #d74b4b;
+  color: #333333; }
+  .btn-ser:hover {
+    background-color: #e56b6b; }
+
+.btn-round {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 2px solid; }
+
+.label {
+  border-radius: 50%;
+  padding: 3px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #f2f2ef;
+  cursor: pointer;
+  background-color: #d74b4b; }
+  .label:hover {
+    background-color: #e56b6b; }
+  .label.non {
+    background-color: transparent; }
+    .label.non:hover {
+      background-color: rgba(255, 255, 255, 0.1); }
+
+.tags {
+  margin: 1px;
+  float: left;
+  background: #d74b4b;
+  color: #333333;
+  padding: 2px 2px;
+  border: 1px solid #333333; }
+
+/* Generic Placeholder Brick: REMOVE FOR PRODUCTION */
+.brick {
+  background: #dcdddc;
+  padding: 2.4em;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid #eeeeee; }
+
+/* Block */
+.block {
+  overflow: hidden; }
+  .block p:last-child {
+    margin-bottom: 0; }
+
+.headline {
+  line-height: 1.2; }
+
+/* Hero Block */
+.block-hero {
+  margin-bottom: 0.5em; }
+  .block-hero .b-thumb img {
+    display: block; }
+  @media all and (min-width: 50em) {
+    .block-hero {
+      position: relative; }
+      .block-hero .b-text {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: #f2f2ef;
+        padding: 1.8em; } }
+
+/* Block Thumbnail with Headline */
+.block-thumb {
+  display: table;
+  width: 100%;
+  border-collapse: collapse; }
+  .block-thumb .b-inner {
+    display: table-row;
+    vertical-align: top;
+    overflow: hidden; }
+  @media all and (min-width: 29.75em) {
+    .block-thumb .b-thumb {
+      display: table-cell;
+      vertical-align: top;
+      width: 30%;
+      max-width: 10em; }
+      .block-thumb .b-thumb img {
+        display: block;
+        width: 100%;
+        height: auto; } }
+  @media all and (min-width: 29.75em) {
+    .block-thumb .b-text {
+      display: table-cell;
+      width: 70%;
+      padding: 0 1.2em; } }
+
+/* Block Headline Summary */
+.block-headline-summary a {
+  display: block;
+  padding: 0.8em; }
+
+/* Block Inset */
+.block-inset {
+  position: relative; }
+  .block-inset .b-thumb {
+    position: relative;
+    z-index: 0; }
+    .block-inset .b-thumb img {
+      display: block; }
+
+/* Hero Block */
+.block-inset {
+  margin-bottom: 0.5em;
+  position: relative; }
+  .block-inset .headline {
+    font-size: 1.1em; }
+  .block-inset .b-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f2f2ef;
+    padding: 0.8em; }
+
+/* Block Thumb with Summary */
+.block-thumb-summary .b-thumb {
+  float: left;
+  width: 50%; }
+.block-thumb-summary .b-text {
+  margin-left: 50%;
+  padding: 0.8em; }
+
+#feed {
+  background-image: url(/img/banners/stones.jpg);
+  background-size: cover;
+  background-position: inherit; }
+
+.feed .banner {
+  box-shadow: -2px 11px 8px -10px rgba(32, 32, 32, 0.71); }
+.feed .feed-list {
+  max-height: 42em;
+  overflow-y: scroll; }
+.feed .le-feed {
+  margin: 20px 0; }
+.feed .le-marg {
+  width: 10%;
+  display: inline-block;
+  text-align: left; }
+.feed .le-content {
+  padding: 0 5px;
+  display: inline-block;
+  width: 89%;
+  vertical-align: top; }
+
+.timeline {
+  position: absolute;
+  top: 151px;
+  margin-left: 10px;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(242, 242, 239, 0.44);
+  left: 10%; }
+
+.inline-list li {
+  float: left; }
+
+/* Social List */
+.social-list li {
+  margin: 0 0.4rem 1em 0; }
+.social-list a {
+  font-size: 1.6em; }
+
+/* Headline List */
+.headline-list {
+  margin-bottom: 1em; }
+  .headline-list.flush {
+    margin: 0; }
+  .headline-list h4 {
+    font-weight: normal; }
+  .headline-list li {
+    padding: 0.3em 0;
+    border-top: 1px solid #dddddd; }
+
+/* Post List */
+.post-list li {
+  margin-bottom: 1em; }
+
+/* Bullet List */
+.bullet-list {
+  list-style: disc outside none;
+  line-height: 1.3; }
+  .bullet-list li {
+    margin-bottom: 1em; }
+
+/* Text List */
+.text-list {
+  margin: 0 0 1em;
+  line-height: 1.3; }
+  .text-list li {
+    margin-bottom: 1em; }
+
+.tooltip-container {
+  display: inline-block;
+  position: relative; }
+  .tooltip-container:hover .tooltip {
+    display: block; }
+
+.tooltip-link {
+  background: #f9f9f9; }
+
+.tooltip {
+  display: none;
+  position: absolute;
+  top: 1.5em;
+  left: 0;
+  width: 18em;
+  padding: 1.2em;
+  background: #f2f2ef;
+  border: 1px solid #777777;
+  box-shadow: 0.3em 0.3em 1em 0 rgba(0, 0, 0, 0.2); }
+  .tooltip h2 {
+    margin-top: 0; }
+  @media all and (min-width: 24em) {
+    .tooltip {
+      width: 22em; } }
+  @media all and (min-width: 29.75em) {
+    .tooltip {
+      width: 27em; } }
+  @media all and (min-width: 39.8em) {
+    .tooltip {
+      width: 30em; } }
+
+.accordion {
+  margin-bottom: 1em; }
+
+.acc-handle {
+  background: #131313;
+  color: #f2f2ef;
+  font-family: "gotham-htfmedium", Times, "Times New Roman", serif;
+  font-weight: bold;
+  display: block;
+  position: relative;
+  padding: 0.8em;
+  border-bottom: 1px solid #dddddd; }
+  .acc-handle:after {
+    content: "+";
+    float: right; }
+  .acc-handle:hover {
+    color: #f2f2ef;
+    background: #333333; }
+  .acc-handle.active {
+    background: #333333; }
+    .acc-handle.active:after {
+      content: "-"; }
+
+.tabsArea {
+  position: relative;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block; }
+  .tabsArea .tabs-row {
+    margin: 19px 0;
+    position: relative; }
+    .tabsArea .tabs-row:first-child {
+      margin: 0; }
+  .tabsArea label {
+    position: absolute;
+    text-shadow: 5px 5px 12px black;
+    font-size: 10px;
+    position: absolute;
+    color: white; }
+    .tabsArea label:hover {
+      -webkit-transform: scale(1.3);
+      -moz-transform: scale(1.3);
+      -o-transform: scale(1.3);
+      transform: scale(1.3); }
+  .tabsArea .tabs-cursor {
+    position: absolute;
+    top: 9px;
+    width: 25px;
+    padding: 0 0 0 4px;
+    margin: 0;
+    display: inline;
+    background: transparent;
+    border-color: transparent;
+    border-left: 1px solid #fff;
+    font-size: 12px;
+    line-height: 12px;
+    left: 11px;
+    height: 18px;
+    color: white; }
+    .tabsArea .tabs-cursor.note {
+      border: none; }
+
+#tabs-cursor {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  border-radius: 0;
+  height: 20px;
+  top: 10px; }
+
+.jamtrack-player {
+  position: fixed;
+  width: 250px;
+  right: 0;
+  top: 20%; }
+  .jamtrack-player.pull-right {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    -webkit-transform: translate3d(300%, 0, 0);
+    transform: translate3d(300%, 0, 0); }
+  .jamtrack-player.pull-right-after {
+    -webkit-transform: translate3d(60%, 0, 0);
+    transform: translate3d(60%, 0, 0); }
+  .jamtrack-player .jt-content {
+    padding: 14px 35px;
+    background-color: #307ca8;
+    color: #f2f2ef; }
+
+.section {
+  margin: 0 0 1em; }
+
+.section-title {
+  margin-bottom: 0.5em; }
+
+.article-header h1 {
+  font-size: 2.5em; }
+
+.byline {
+  font-size: 0.875em;
+  font-style: italic;
+  margin-bottom: 0.5em; }
+
+.social-share {
+  overflow: hidden;
+  margin-bottom: 1em; }
+  .social-share li {
+    float: left;
+    margin-right: 0.5em; }
+  .social-share a {
+    background: #333333;
+    color: #f2f2ef;
+    display: block;
+    padding: 0.8em; }
+    .social-share a:hover {
+      background: #777777; }
+
+.comments li {
+  margin-bottom: 1em; }
+
+.comment-container {
+  overflow: hidden;
+  margin-bottom: 1em;
+  list-style: none; }
+
+.comment-meta {
+  float: left;
+  width: 6.5em; }
+  .comment-meta img {
+    display: block;
+    border: 1px solid #eeeeee;
+    margin-bottom: 0.5em; }
+
+.comment-name {
+  font-size: 0.75em; }
+
+.comment-text {
+  margin-left: 9em; }
+
+/*------------------------------------*\
+    $MESSAGING
+\*------------------------------------*/
+.alert {
+  text-align: center;
+  padding: 1.2em;
+  margin-bottom: 0.5em;
+  border: 1px solid #777777;
+  background: #f9f9f9; }
+
+.alert-error {
+  color: #d74b4b;
+  border-color: #d74b4b;
+  background: #ffbebe; }
+
+.messages {
+  max-height: 268px;
+  overflow-y: scroll;
+  background: #2b2828;
+  margin: 12px;
+  text-align: left;
+  border: 1px solid rgba(242, 242, 239, 0.56); }
+
+.battle-play {
+  padding: 40px 80px;
+  background: #313338;
+  border-radius: 50%;
+  border: 1px solid #999;
+  box-shadow: 0 0 4px #333;
+  opacity: 0.9; }
+
+.battle-social {
+  bottom: -33px;
+  right: 20%; }
+
+.battle-drag-label {
+  border-left: 3px solid #333;
+  line-height: 1.3em;
+  position: absolute;
+  padding: 0; }
+
+.battle-anim {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 2%;
+  top: 0;
+  text-align: center;
+  z-index: 100; }
+  .battle-anim .pull-left {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    -webkit-transform: translate3d(-200%, 0, 0);
+    transform: translate3d(-200%, 0, 0); }
+  .battle-anim .battle-vs {
+    margin-top: 30px; }
+  .battle-anim .pull-left-after {
+    top: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); }
+  .battle-anim .pull-right {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    -webkit-transform: translate3d(1000%, 0, 0);
+    transform: translate3d(1000%, 0, 0); }
+  .battle-anim .pull-right-after {
+    top: 0;
+    -webkit-transform: translate3d(270%, 0, 0);
+    transform: translate3d(270%, 0, 0); }
+
+.audio-bfr {
+  background-color: #d74b4b;
+  height: 1.2em;
+  position: relative; }
+
+.arrow {
+  position: absolute;
+  font-size: 4em;
+  color: rgba(0, 0, 0, 0.24);
+  top: 15px; }
+  .arrow.right {
+    right: 15%; }
+  .arrow.left {
+    left: 15%; }
+
+.crop {
+  float: left;
+  width: 100px;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* lt ie8 */
+  -ms-background-position-x: center;
+  -ms-background-position-y: bottom;
+  background-position: center bottom;
+  /* scale bg image proportionately */
+  background-size: cover; }
+
+.battle-thumbs {
+  height: 200px; }
+
+.modal {
+  position: fixed;
+  left: 50%;
+  right: 0;
+  text-align: center;
+  top: 0;
+  z-index: 100;
+  background-color: #777777;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s; }
+  .modal.pull-down {
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0); }
+  .modal .modal-body {
+    height: 100%; }
+  .modal.pull-down-after {
+    -webkit-transform: translate3d(0, 130px, 0);
+    transform: translate3d(0, 130px, 0); }
+  .modal.modal-tall {
+    height: 540px; }
+    .modal.modal-tall .dark-wrapper {
+      height: 100%; }
+  .modal.pull-down-left-before {
+    -webkit-transform: translate3d(200%, 130px, 0);
+    transform: translate3d(200%, 130px, 0); }
+  .modal.pull-down-left-after {
+    -webkit-transform: translate3d(-200%, 130px, 0);
+    transform: translate3d(-200%, 130px, 0); }
+  .modal.modal-huge {
+    margin-left: -40%;
+    width: 80%; }
+  .modal .modal-exit-btn {
+    cursor: pointer;
+    position: absolute;
+    color: #f2f2ef;
+    right: 0;
+    top: -36px;
+    padding: 1px 5px;
+    font-size: 1em; }
+  .modal.modal-short {
+    width: 286px;
+    margin-left: -143px; }
+  .modal.modal-med {
+    width: 400px;
+    margin-left: -200px; }
+  .modal.modal-wide {
+    width: 100%; }
+    @media (min-width: 768px) {
+      .modal.modal-wide {
+        margin-left: -350px;
+        width: 700px; } }
+  @media (max-width: 767px) {
+    .modal {
+      left: 0; } }
+  .modal label, .modal h4, .modal h2, .modal a, .modal p {
+    color: #333333; }
+
+.profile .thumb-box .ingress {
+  max-height: 54px;
+  overflow-y: hidden; }
+.profile .full-right {
+  background-color: #313338;
+  border-left: 1px solid rgba(242, 242, 239, 0.56);
+  right: 0;
+  top: 117px;
+  width: 50%; }
+.profile .full-left {
+  position: fixed;
+  top: 117px;
+  width: 50%;
+  bottom: 0;
+  left: 0; }
+.profile #map-canvas {
+  height: 100%; }
+
+.battle-ch-banner {
+  background-image: url(/img/banners/crowd2mode.jpg);
+  background-position: 85% 60%; }
+
+#upload {
+  background-image: url(/img/banners/mic.png);
+  background-size: cover; }
+
+#resources {
+  background-image: url(/img/banners/theory.png);
+  background-size: cover; }
+
+.ws-banner {
+  margin-top: 10%;
+  width: 300px;
+  height: 500px;
+  z-index: 2;
+  position: relative; }
+  .ws-banner > div {
+    padding: 15% 10%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.41);
+    -webkit-box-shadow: 0px -1px 7px rgba(0, 0, 0, 0.89);
+    -moz-box-shadow: 0px -1px 7px rgba(0, 0, 0, 0.89);
+    box-shadow: 0px -1px 7px rgba(0, 0, 0, 0.89); }
+    .ws-banner > div:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+      -webkit-transition: background-color 0.3s ease-in-out;
+      -moz-transition: background-color 0.3s ease-in-out;
+      -ms-transition: background-color 0.3s ease-in-out;
+      -o-transition: background-color 0.3s ease-in-out;
+      transition: background-color 0.3s ease-in-out; }
+
+.ws-banner-right {
+  float: right;
+  margin-right: 10%; }
+
+.ws-banner-left {
+  margin-left: 10%; }
+
+.dropdown {
+  position: absolute;
+  z-index: 200;
+  left: 0;
+  min-width: 300px;
+  top: 50px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  background-color: #f2f2ef; }
+  .dropdown .row {
+    padding: 15px 10px; }
+  .dropdown .footer {
+    background-color: #307ca8;
+    padding: 5px 10px;
+    line-height: 2em; }
+  .dropdown > div {
+    max-height: 400px;
+    overflow-y: scroll; }
+  .dropdown.right-menu {
+    left: inherit !important;
+    right: 0; }
+
+.arrow-up-right:after, .arrow-up-right:before {
+  bottom: 100%;
+  left: 83% !important;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none; }
+
+.arrow-up {
+  background: #f2f2ef;
+  border: 2px solid #313338; }
+
+.arrow-up:after, .arrow-up:before {
+  bottom: 100%;
+  left: 8%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none; }
+
+.arrow-up:after {
+  border-color: rgba(136, 183, 213, 0);
+  border-bottom-color: #f2f2ef;
+  border-width: 10px;
+  margin-left: -10px; }
+
+.arrow-up:before {
+  border-color: rgba(194, 225, 245, 0);
+  border-bottom-color: #313338;
+  border-width: 16px;
+  margin-left: -16px; }

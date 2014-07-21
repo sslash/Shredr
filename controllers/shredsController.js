@@ -29,8 +29,7 @@ module.exports = BaseController.extend({
             }));
         })
         .fail(function(err) {
-            console.log('failed: '  +err);
-            return null;
+            throw err;
         });
     },
 

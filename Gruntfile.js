@@ -75,10 +75,10 @@ module.exports = function (grunt) {
                 stdout: true
             },
 
-            backend : {
-                command: 'mocha test/spec/backend/**/*.js',
-                stdout: true
-            }
+            // backend : {
+            //     command: 'mocha test/spec/backend/**/*.js',
+            //     stdout: true
+            // }
         },
 
 
@@ -137,7 +137,7 @@ module.exports = function (grunt) {
         // compass
         compass: {
             options: {
-                sassDir: '<%= yeoman.app %>/styles/source/css',
+                sassDir: '<%= yeoman.app %>/styles',
                 cssDir: '.tmp/styles',
                 imagesDir: '<%= yeoman.app %>/images',
                 javascriptsDir: '<%= yeoman.app %>/scripts',
@@ -163,8 +163,9 @@ module.exports = function (grunt) {
                     baseUrl: 'app/scripts',
                     optimize: 'none',
                     paths: {
-                        'templates': '../../.tmp/scripts/templates'
+                        'templates': '.tmp/scripts/templates'
                     },
+                    // dir : 'dist/scripts',
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30
                     //generateSourceMaps: true,
@@ -188,7 +189,7 @@ module.exports = function (grunt) {
         },
 
         useminPrepare: {
-            html: '<%= yeoman.app %>/index.html',
+            html: '<%= yeoman.app %>/templates/layout.hbs',
             options: {
                 dest: '<%= yeoman.dist %>'
             }
@@ -240,7 +241,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.app %>',
-                    src: '*.html',
+                    src: '*.hbs',
                     dest: '<%= yeoman.dist %>'
                 }]
             }
@@ -277,7 +278,7 @@ module.exports = function (grunt) {
                     amd: true
                 },
                 files: {
-                    '.tmp/scripts/templates.js': ['templates/**/*.hbs']
+                    '.tmp/scripts/templates.js': ['<%= yeoman.app %>/templates/**/*.hbs']
                 }
             }
         }

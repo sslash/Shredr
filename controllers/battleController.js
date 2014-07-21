@@ -39,6 +39,12 @@ module.exports = BaseController.extend({
         });
     },
 
+    query : function (req, res) {
+        battleService.query(req.query)
+        .then(client.send.bind(null, res, null), client.error.bind(null, res))
+        .done();
+    },
+
     postBattleRoundVideo : function (req, res) {
         try {
             battleService.storeBattleRoundVideo(req.params.id, req)

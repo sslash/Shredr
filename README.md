@@ -1,8 +1,16 @@
 ##TODOS:
 
-* userlist page
-    - mapview (postpone)
-    - listview
+* userslist
+    - fan
+    - challenge
+
+* battle detail
+    - list of battles
+    - improve ui
+
+* Leveling
+* Badges
+
 * Feed
     - battle comment
     - battle complete

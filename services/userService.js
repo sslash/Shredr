@@ -27,6 +27,7 @@ module.exports = {
     create : function (body) {
         var def = Q.defer();
         var user = new User(body);
+        user.provider = 'local';
         user.create()
         .then(function() {
             return feedService.broadcastNewUserFeed({
@@ -121,5 +122,9 @@ module.exports = {
             opts.criteria.username = {'$regex'  : new RegExp(q.q, 'gi')};
         }
         return query.query(User, opts);
+    },
+
+    getByUsername : function (username) {
+        return this.query({q : username});
     }
 };

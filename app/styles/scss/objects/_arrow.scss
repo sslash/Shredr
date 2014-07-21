@@ -1,0 +1,28 @@
+// expect some other class sets display:relative/absolute
+@mixin arrow_box ($bck:$white, $brdr:$brown-light, $size:2px) {
+	background: $bck;
+	border: $size solid $brdr;
+}
+@mixin arrow_box_b_a ($left:8%) {
+	bottom: 100%;
+	left: $left;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+@mixin arrow_a ($bck:$white) {
+	border-color: rgba(136, 183, 213, 0);
+	border-bottom-color: $bck;
+	border-width: 10px;
+	margin-left: -10px;
+}
+@mixin arrow_b ($brdr:$brown-light) {
+	border-color: rgba(194, 225, 245, 0);
+	border-bottom-color: $brdr;
+	border-width: 16px;
+	margin-left: -16px;
+}

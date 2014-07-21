@@ -109,6 +109,7 @@ module.exports = function(app, passport){
   app.post('/api/battle/:id/postBattleRound', auth.requiresLogin, battleController.postBattleRound);
   app.post('/api/battle/:id/vote/:battlerOrBattlee', auth.requiresLogin, battleController.postVote);
   app.post('/api/battle/:id/comment', auth.requiresLogin, battleController.postComment);
+  app.get('/api/battle/query', battleController.query);
   app.get('/api/battle/:id', battleController.getJSON);
 
 

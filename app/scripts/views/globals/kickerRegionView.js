@@ -7,6 +7,7 @@ define([
     'views/stage/stageUsersKickerView',
     'views/user/userKickerView',
     'views/workspace/resourcesKickerView',
+    'views/stage/stageBattlesKickerView',
     'hbs!tmpl/globals/kickerRegion'
 ],
 function (
@@ -17,6 +18,7 @@ function (
     StageUsersKickerView,
     UserKickerView,
     ResourcesKickerView,
+    StageBattlesKickerView,
     Tpl
 ){
 'use strict';
@@ -35,6 +37,7 @@ var KickerRegionView = Backbone.Marionette.Layout.extend({
     initialize : function () {
         this.listenTo(Shredr.vent, 'shred:stage:render', this.showShredStageKicker);
         this.listenTo(Shredr.vent, 'users:stage:render', this.showUsersStageKicker);
+        this.listenTo(Shredr.vent, 'battles:stage:render', this.showBattlesStageKicker);
         this.listenTo(Shredr.vent, 'users:layout:render', this.showUserKicker);
         this.listenTo(Shredr.vent, 'shred:fetch:success', this.showShredKicker);
         this.listenTo(Shredr.vent, 'battle:fetch:success', this.showBattleKicker);
@@ -49,6 +52,11 @@ var KickerRegionView = Backbone.Marionette.Layout.extend({
     showUsersStageKicker : function (collection) {
         var stageKickerView = new StageUsersKickerView({collection : collection});
         this.wrap.show(stageKickerView);
+    },
+
+    showBattlesStageKicker : function (collection) {
+        var view = new StageBattlesKickerView({collection : collection});
+        this.wrap.show(view);
     },
 
     showResourcesKicker : function () {

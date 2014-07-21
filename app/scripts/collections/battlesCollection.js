@@ -1,12 +1,18 @@
 define([
 	'backbone',
-	'models/battle'
+	'models/battle',
+	'collections/searchCollection'
 ],
-function( Backbone, Battle ) {
+function( Backbone, Battle, searchCollection ) {
     'use strict';
-    
-	return Backbone.Collection.extend({
+
+	var coll = Backbone.Collection.extend({
 		url : 'api/battles',
 		model: Battle
 	});
+
+	_.extend(coll.prototype, searchCollection);
+
+	return coll;
+
 });

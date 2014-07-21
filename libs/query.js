@@ -25,6 +25,7 @@ var query = function (Model, opts, res) {
 	var options = {
 		criteria : opts.criteria || {},
 		populate : opts.populate || '',
+		query : opts.query,
 		page : opts.page || 0,
 		perPage : opts.perPage || 32
 	};

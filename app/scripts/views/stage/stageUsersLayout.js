@@ -18,8 +18,10 @@ var StageUsersLayout = Backbone.Marionette.Layout.extend({
     },
 
     serializeData : function () {
+        var users = this.collection.toJSON();
         return {
-            things : this.collection.toJSON()
+            leftUsers : users.slice(0, 15),
+            rightUsers : users.slice(15, 30)
         };
     },
 

@@ -35,7 +35,7 @@ var userPlugin  = require('mongoose-user');
      bio : {type: String, default: ''},
      profileImgFile: { type: String, default: '/img/profiles/shredder.jpg' },
      profileImgUrl: {type : String},
-     provider: { type: String, default: 'local' },
+     provider: { type: String, default: '' },
      hashed_password: { type: String, default: '' },
      salt: { type: String, default: '' },
 
@@ -52,15 +52,14 @@ var userPlugin  = require('mongoose-user');
 /**
  * Virtuals
  */
- UserSchema
- .virtual('password')
- .set(function(password) {
- 	this._password = password;
- 	this.salt = this.makeSalt();
- 	this.hashed_password = this.encryptPassword(password);
- })
- .get(function() { return this._password; })
-
+UserSchema
+  .virtual('password')
+  .set(function(password) {
+    this._password = password;
+    this.salt = this.makeSalt();
+    this.hashed_password = this.encryptPassword(password);
+  })
+  .get(function() { return this._password })
 /**
  * Validations
  */
@@ -119,14 +118,14 @@ if (this.isNew || this.isModified('email')) {
 
 UserSchema.path('username').validate(function (username) {
   // if you are authenticating by any of the oauth strategies, don't validate
-  if (oAuthTypes.indexOf(this.provider) !== -1) return true
+  if (oAuthTypes.indexOf(this.provider) !== -1) return true;
   	return username.length;
 }, 'Username cannot be blank')
 
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
-  if (this.doesNotRequireValidation()) return true
-  return hashed_password.length
+  if (this.doesNotRequireValidation()) return true;
+  return hashed_password.length;
 }, 'Password cannot be blank')
 
 
@@ -140,8 +139,9 @@ UserSchema.pre('save', function(next) {
     && !this.doesNotRequireValidation())
     next(new Error('Invalid password'))
   else
-    next();
-})
+    next()
+});
+
 
 /**
  * Methods

@@ -2,6 +2,7 @@ var mongoose       = require('mongoose'),
     _              = require('underscore'),
     Battle         = mongoose.model('Battle'),
     query          = require('../libs/query.js'),
+    userService    = require('./userService'),
     Q              = require('q'),
     fileHandler    = require('../libs/fileHandler');
 
@@ -14,6 +15,35 @@ module.exports = {
     getById : function(id) {
         // returns a promise
         return Battle.load(id);
+    },
+
+    query : function (q) {
+        var opts = {criteria : {}};
+        opts.populate = 'battler battlee';
+
+        // search for battler or battlee with given username
+        if (q.q && q.q.length) {
+            var def = Q.defer();
+
+            userService.getByUsername(q.q)
+            .then(function (res) {
+                if (!res.length) return [];
+
+                opts.query = {
+                    or : [
+                        {battler : res[0]._id},
+                        {battlee : res[0]._id}
+                    ]
+                };
+                return query.query(Battle, opts);
+            })
+            .then (def.resolve)
+            .fail(def.resolve.bind(null, [])).done();
+
+            return def.promise;
+        } else {
+            return query.query(Battle, opts);
+        }
     },
 
     getMany : function () {

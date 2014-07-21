@@ -1,0 +1,117 @@
+.battle-play {
+    padding: 40px 80px;
+    background: $brown-light;
+    border-radius: 50%;
+    border: 1px solid #999;
+    box-shadow: 0 0 4px #333;
+    opacity: 0.9;
+}
+
+.battle-social {
+    bottom: -33px;
+    right: 20%;
+}
+
+.battle-drag-label {
+    border-left: 3px solid #333;
+    line-height: 1.3em;
+    position: absolute;
+    padding:0;
+}
+
+.battle-anim {
+    position:fixed;
+    left:0;
+    right: 0;
+    bottom: 0;
+    margin: 2%;
+    top : 0;
+    text-align:center;
+    z-index: $z-modal;
+
+    .pull-left {
+        @include transition(all 0.5s);
+        @include translate(-200%, 0, 0)
+    }
+
+    .battle-vs { margin-top: 30px;}
+
+    .pull-left-after {
+        top: 0;
+        @include translate(100%, 0, 0);
+    }
+
+    .pull-right {
+        @include transition(all 0.5s);
+        @include translate(1000%, 0, 0)
+    }
+
+    .pull-right-after {
+        top: 0;
+        @include translate(270%, 0, 0);
+    }
+}
+
+.audio-bfr {
+    background-color:$error;
+    height:1.2em;
+    position:relative;
+}
+
+.arrow {
+    position:absolute;
+    font-size: 4em;
+    color: rgba(0, 0, 0, 0.24);
+    top: 15px;
+    &.right {
+        right: 15%;
+    }
+    &.left {
+        left: 15%;
+    }
+}
+
+$battler-width: 100px;
+.crop {
+    float: left;
+    width: $battler-width;
+    height: 100%;
+    // background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  /* lt ie8 */
+  -ms-background-position-x: center;
+  -ms-background-position-y: bottom;
+  background-position: center bottom;
+
+  /* scale bg image proportionately */
+  background-size: cover;
+}
+
+.battle-thumbs {
+    height: 200px;
+}
+
+// .battle-footer {
+//     height:30px;
+//     background-color:$green;
+// }
+
+//
+// .half-in {
+//     top:0;
+//     bottom:0;
+// }
+//
+// .left-half {
+//     left: 0;
+//     right: 50%;
+//     background: rgba(57, 66, 69, 0.45);
+// }
+//
+// .right-half {
+//     right: 0;
+//     left: 50%;
+//     background: $green;
+// }

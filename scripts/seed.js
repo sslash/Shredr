@@ -36,7 +36,7 @@ for ( var i = 0; i < 100; i++ ) {
 	}
 
 	db.users.save({
-		provider : 'local',
+		provider : 'facebook',
 		username : names[namei],
 		fans : [],
 		fanees : [],
@@ -87,6 +87,7 @@ for (var i = 0; i < 100; i++) {
 
 
 // battles
+db.battlerequests.remove();
 db.battles.remove({});
 var users = db.users.find();
 var count = db.users.count();

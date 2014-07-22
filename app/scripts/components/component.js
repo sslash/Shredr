@@ -7,7 +7,9 @@ define([
             initialize : function (opts) {
                 if ( opts.region ) {
                     if ( typeof opts.region === 'string' ) {
-                        this.region = new Backbone.Marionette.Region({el : $(opts.region)})
+                        this.region = new Backbone.Marionette.Region({el : $(opts.region)});
+                    } else if ( opts.region instanceof jQuery ){
+                        this.region = new Backbone.Marionette.Region({el : opts.region});
                     } else {
                         this.region = opts.region;
                     }
@@ -26,6 +28,7 @@ define([
             close : function () {
                 this.region.close();
             }
-        })
+        });
+        
         return Component;
     });

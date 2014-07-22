@@ -17,3 +17,10 @@ dt {
 dd {
 	margin-left: 0;
 }
+
+.ingress {
+	max-height: 50px;
+	font-size: 0.8em;
+	text-overflow: ellipsis;
+	overflow-y: hidden;
+}

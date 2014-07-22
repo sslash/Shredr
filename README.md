@@ -1,12 +1,10 @@
 ##TODOS:
 
-* userslist
-    - fan
-    - challenge
-
 * battle detail
     - list of battles
     - improve ui
+
+* side-Widgets
 
 * Leveling
 * Badges

@@ -1,9 +1,7 @@
 ##TODOS:
 
 * battle detail
-    - fix rating
     - commenting
-    - display social
     - paging battles
 
 * side-Widgets

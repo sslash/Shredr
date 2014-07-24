@@ -80,4 +80,16 @@ small, .small {
 .icon-3x {
 	font-size: 3em;
 }
+.round-icon {
+	border-radius: 50%;
+	background: $information;
+	width: 28px;
+	height: 28px;
+	line-height: 1.6em;
+	padding-left: 7%;
+	color: $white;
+	&.ion-social-facebook {
+		padding-left: 11%;
+	}
+}
 .txt-light {text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.6);}

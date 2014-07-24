@@ -66,15 +66,14 @@ var BattleDetailLayout = Backbone.Marionette.Layout.extend({
     },
 
     renderVotes : function () {
-        // var v = this.model.getVotes();
-        // this.$('[data-model="battlers-vts"]').text(v.battlers + ' votes');
-        // this.$('[data-model="battlees-vts"]').text(v.battlees + ' votes');
-        //
-        // // draw bar
-        // var width = 200;
-        // this.$('.battler-vote')[0].style.width = (v.battlersP * width) + 'px';
-        // this.$('.battlees-vote')[0].style.width = (v.battleesP * width) + 'px';
+        var v = this.model.getVotes();
+        this.$('[data-model="battlers-vts"]').text(v.battlers + ' votes');
+        this.$('[data-model="battlees-vts"]').text(v.battlees + ' votes');
 
+        // draw bar
+        var width = 200;
+        this.$('.battler-vote')[0].style.width = (v.battlersP * width) + 'px';
+        this.$('.battlees-vote')[0].style.width = (v.battleesP * width) + 'px';
     },
 
     renderComments : function () {

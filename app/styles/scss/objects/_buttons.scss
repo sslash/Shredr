@@ -85,6 +85,12 @@
 	&:hover { background-color: $red-light; }
 }
 
+.btn-valid {
+	background-color:$valid;
+	color: $white;
+	&:hover { background-color: $white-on-brown; }
+}
+
 .btn-round {
 	@include border-radius(50%);
 	border: 2px solid;

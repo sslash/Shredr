@@ -3,12 +3,14 @@ define([
     'backbone',
     'views/modals/uploadBattleAdvVideoView',
     'views/modals/uploadBattleSmplVideoView',
+    'components/searchComponent',
     'hbs!tmpl/battle/battleDetailKickerView'
 ],
 function (
     Backbone,
     UploadBattleVideoView,
     UploadBattleSmplVideoView,
+    SearchComponent,
     tpl
 ){
 'use strict';
@@ -29,6 +31,14 @@ var BattleDetailKickerView = Backbone.Marionette.ItemView.extend({
 
     onRender : function () {
         this.setStatusMsg();
+        this.searchCmp = new SearchComponent({
+            region : this.$('[data-reg="search"]'),
+            collection : Shredr.collection
+        }).show();
+    },
+
+    onClose : function () {
+        this.searchCmp.destroy();
     },
 
     setStatusMsg : function () {

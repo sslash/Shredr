@@ -17,7 +17,7 @@ define([
             itemViewContainer: '[data-reg="comments"]',
 
             events : {
-                'submit form' : '__formSubmitted'
+                'click [data-evt="add"]' : '__formSubmitted'
             },
 
             __formSubmitted : function (e) {

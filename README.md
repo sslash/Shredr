@@ -1,8 +1,10 @@
 ##TODOS:
 
 * battle detail
-    - list of battles
-    - improve ui
+    - fix rating
+    - commenting
+    - display social
+    - paging battles
 
 * side-Widgets
 

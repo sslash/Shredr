@@ -20,13 +20,18 @@ module.exports = BaseController.extend({
                 onlyOneVid :  (b.rounds[0].length === 1),
                 tpl : 'battle/battleDetailLayout'
             }));
-        });
+        }).fail(function (err) {
+            throw err;
+        }).done();
     },
 
     getJSON : function (req, res) {
         battleService.getById(req.params.id)
         // get related ?
-        .then(client.send.bind(null, res, null));
+        .then(client.send.bind(null, res, null))
+        .fail(function (err) {
+            throw err;
+        }).done();
     },
 
     list : function(req, res) {
@@ -36,7 +41,10 @@ module.exports = BaseController.extend({
                 type : 'battles',
                 tpl : 'stage/stageBattlesLayout'
             }));
-        });
+        })
+        .fail(function (err) {
+            throw err;
+        }).done();
     },
 
     query : function (req, res) {

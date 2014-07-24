@@ -1,6 +1,23 @@
+.play-wrap {
+    height: $battle-vid;
+    position:relative;
+    .play-in {
+        overflow: auto;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        height: 61px;
+    }
+
+    .vote-region {
+        margin-top: 50px;
+    }
+}
 .battle-play {
-    padding: 40px 80px;
-    background: $brown-light;
+    padding: 7px 13px 7px 18px;
     border-radius: 50%;
     border: 1px solid #999;
     box-shadow: 0 0 4px #333;
@@ -91,6 +108,12 @@ $battler-width: 100px;
 
 .battle-thumbs {
     height: 200px;
+    &.battle-small {
+        height:60px;
+        .crop {
+            width:70px;
+        }
+    }
 }
 
 // .battle-footer {

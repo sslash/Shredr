@@ -1967,78 +1967,6 @@ So feel free to use any of these approaches. Or don't. It's totally up to you.
 .vote-bar {
   margin: auto; }
 
-.vote-bar-in {
-  -webkit-box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
-  -moz-box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
-  box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  display: inline-block;
-  height: 4px;
-  padding: 0px; }
-
-.battler-vote {
-  margin-right: -7px;
-  background-color: #d74b4b;
-  width: 100px; }
-
-.battlees-vote {
-  background-color: #307ca8;
-  width: 100px; }
-
-.vote-left {
-  position: relative;
-  left: -74px; }
-
-.vote-right {
-  position: relative;
-  right: -74px; }
-
-.brd-light {
-  border: 1px solid rgba(255, 255, 255, 0.45); }
-
-.brd-bottom {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.63); }
-
-.box {
-  border: 1px solid rgba(242, 242, 239, 0.56);
-  background: #313338;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.38);
-  border-radius: 2px; }
-
-.top-shadow {
-  border-top: 1px solid #777777;
-  -webkit-box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55);
-  -moz-box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55);
-  box-shadow: 5px -11px 8px rgba(0, 0, 0, 0.55); }
-
-/* things over image, or other thing */
-.green-hov {
-  -webkit-transition: color 0.3s ease;
-  -moz-transition: color 0.3s ease;
-  -ms-transition: color 0.3s ease;
-  -o-transition: color 0.3s ease;
-  transition: color 0.3s ease; }
-  .green-hov:hover {
-    color: #349b89; }
-  .green-hov.active {
-    color: #349b89; }
-
-.scale {
-  display: inline-block; }
-  .scale:hover {
-    -webkit-transform: scale(1.2, 1.2);
-    -moz-transform: scale(1.2, 1.2);
-    -ms-transform: scale(1.2, 1.2);
-    -o-transform: scale(1.2, 1.2);
-    transform: scale(1.2, 1.2); }
-
-.dark-wrapper {
-  background-image: url("/img/outlets.png");
-  background-position: initial initial;
-  background-repeat: initial initial; }
-
 /*! normalize.css v1.1.3 | MIT License | git.io/normalize */
 /* ==========================================================================
 HTML5 display definitions
@@ -2537,6 +2465,9 @@ table {
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%); }
 
+.scroll {
+  overflow-y: scroll; }
+
 /* Display Classes */
 @media all and (max-width: 46.8em) {
   .hide-small {
@@ -2768,27 +2699,28 @@ table {
   bottom: 2em; }
 
 .vote-bar {
-  margin: auto; }
+  margin-bottom: -8px; }
 
 .vote-bar-in {
   -webkit-box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
   -moz-box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
   box-shadow: 0 0 5px rgba(229, 107, 107, 0.21);
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
   display: inline-block;
-  height: 4px;
-  padding: 0px; }
+  height: 20px;
+  padding: 0px;
+  border-top: 2px solid #313338;
+  border-bottom: 2px solid #313338; }
 
 .battler-vote {
   margin-right: -7px;
   background-color: #d74b4b;
-  width: 100px; }
+  width: 100px;
+  border-left: 2px solid #313338; }
 
 .battlees-vote {
   background-color: #307ca8;
-  width: 100px; }
+  width: 100px;
+  border-right: 2px solid #313338; }
 
 .vote-left {
   position: relative;
@@ -2898,6 +2830,20 @@ table {
   background-image: url("/img/outlets.png");
   background-position: initial initial;
   background-repeat: initial initial; }
+
+.foot {
+  position: fixed;
+  bottom: 0;
+  max-height: 300px;
+  left: 0;
+  right: 0; }
+
+.glass {
+  border-top: 1px solid #333333;
+  -webkit-box-shadow: -2px -2px 4px #131313;
+  -moz-box-shadow: -2px -2px 4px #131313;
+  box-shadow: -2px -2px 4px #131313;
+  background-color: rgba(0, 0, 0, 0.45); }
 
 body {
   background: #2b2828;
@@ -3049,7 +2995,7 @@ blockquote {
   font-style: italic;
   border-left: 1px solid #777777;
   color: #777777;
-  padding-left: 1.2em;
+  padding-left: 1em;
   margin-bottom: 1em; }
 
 /* Horizontal Rule */
@@ -3114,7 +3060,7 @@ figcaption {
   max-height: 100%;
   background: #313338; }
   .shred-vid.half {
-    max-height: 321px; }
+    height: 321px; }
 
 .logo-xs {
   width: 1.2em; }
@@ -3222,12 +3168,13 @@ figcaption {
 
 .fullscreenimg {
   position: fixed;
-  top: 117px;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: 115px;
   opacity: 0.4;
   z-index: 1; }
+  .fullscreenimg.streched {
+    left: -50%;
+    width: 200%;
+    height: 200%; }
 
 /*------------------------------------*\
     $FORMS
@@ -3258,7 +3205,7 @@ input, textarea {
   width: 100%;
   box-sizing: border-box;
   border: none;
-  padding: 0.8em 0.65rem; }
+  padding: 0.66667em 0.65rem; }
 
 input:-webkit-autofill {
   background-color: #f2f2ef !important; }
@@ -3423,7 +3370,7 @@ td {
 
 .container, .header {
   margin: 0 auto;
-  max-width: 60rem;
+  max-width: 84rem;
   width: 90%; }
 
 .row {
@@ -3465,6 +3412,9 @@ td {
 
   .column.five {
     width: 20%; }
+
+  .column.two-five {
+    width: 40%; }
 
   .column.four-five {
     width: 80%; }
@@ -3612,7 +3562,7 @@ td {
     color: #f9f9f9; }
 
 .nav-footer {
-  margin: -1.2em -1.2em 1em; }
+  margin: -1em -1em 1em; }
   .nav-footer li {
     border-bottom: 1px solid #333333; }
     @media all and (min-width: 46.8em) {
@@ -3621,7 +3571,7 @@ td {
         float: left; } }
   .nav-footer a {
     display: block;
-    padding: 1.2em; }
+    padding: 1em; }
 
 @media all and (min-width: 46.8em) {
   .copyright {
@@ -3762,14 +3712,14 @@ td {
 
 .icon-play-box {
   display: block;
-  margin-left: 2.4em; }
+  margin-left: 2em; }
 
 .icon-play-box:before {
-  padding: 0.3em;
+  padding: 0.25em;
   background: #777777;
   color: #f2f2ef;
   margin-left: -1.7rem;
-  margin-right: 0.8em; }
+  margin-right: 0.66667em; }
 
 /*------------------------------------*\
     $BUTTONS
@@ -3780,7 +3730,7 @@ td {
   color: #f2f2ef;
   line-height: 1;
   font-family: "gotham_htfbold", "Helvetica", "Arial", sans-serif;
-  padding: 1.2em;
+  padding: 1em;
   border: 0;
   font-size: 0.75em;
   text-align: center;
@@ -3798,7 +3748,7 @@ td {
     min-width: 140px; }
 
 .btn-small {
-  padding: 0.8em;
+  padding: 0.66667em;
   font-size: 0.75em; }
 
 .btn-info {
@@ -3849,6 +3799,12 @@ td {
   .btn-ser:hover {
     background-color: #e56b6b; }
 
+.btn-valid {
+  background-color: #307ca8;
+  color: #f2f2ef; }
+  .btn-valid:hover {
+    background-color: rgba(255, 255, 255, 0.67); }
+
 .btn-round {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -3880,7 +3836,7 @@ td {
 /* Generic Placeholder Brick: REMOVE FOR PRODUCTION */
 .brick {
   background: #dcdddc;
-  padding: 2.4em;
+  padding: 2em;
   text-align: center;
   font-weight: bold;
   border-bottom: 1px solid #eeeeee; }
@@ -3909,7 +3865,7 @@ td {
         width: 100%;
         background: rgba(0, 0, 0, 0.5);
         color: #f2f2ef;
-        padding: 1.8em; } }
+        padding: 1.5em; } }
 
 /* Block Thumbnail with Headline */
 .block-thumb {
@@ -3934,12 +3890,12 @@ td {
     .block-thumb .b-text {
       display: table-cell;
       width: 70%;
-      padding: 0 1.2em; } }
+      padding: 0 1em; } }
 
 /* Block Headline Summary */
 .block-headline-summary a {
   display: block;
-  padding: 0.8em; }
+  padding: 0.66667em; }
 
 /* Block Inset */
 .block-inset {
@@ -3963,7 +3919,7 @@ td {
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
     color: #f2f2ef;
-    padding: 0.8em; }
+    padding: 0.66667em; }
 
 /* Block Thumb with Summary */
 .block-thumb-summary .b-thumb {
@@ -3971,7 +3927,7 @@ td {
   width: 50%; }
 .block-thumb-summary .b-text {
   margin-left: 50%;
-  padding: 0.8em; }
+  padding: 0.66667em; }
 
 #feed {
   background-image: url(/img/banners/stones.jpg);
@@ -4021,7 +3977,7 @@ td {
   .headline-list h4 {
     font-weight: normal; }
   .headline-list li {
-    padding: 0.3em 0;
+    padding: 0.25em 0;
     border-top: 1px solid #dddddd; }
 
 /* Post List */
@@ -4057,7 +4013,7 @@ td {
   top: 1.5em;
   left: 0;
   width: 18em;
-  padding: 1.2em;
+  padding: 1em;
   background: #f2f2ef;
   border: 1px solid #777777;
   box-shadow: 0.3em 0.3em 1em 0 rgba(0, 0, 0, 0.2); }
@@ -4083,7 +4039,7 @@ td {
   font-weight: bold;
   display: block;
   position: relative;
-  padding: 0.8em;
+  padding: 0.66667em;
   border-bottom: 1px solid #dddddd; }
   .acc-handle:after {
     content: "+";
@@ -4188,7 +4144,7 @@ td {
     background: #333333;
     color: #f2f2ef;
     display: block;
-    padding: 0.8em; }
+    padding: 0.66667em; }
     .social-share a:hover {
       background: #777777; }
 
@@ -4219,7 +4175,7 @@ td {
 \*------------------------------------*/
 .alert {
   text-align: center;
-  padding: 1.2em;
+  padding: 1em;
   margin-bottom: 0.5em;
   border: 1px solid #777777;
   background: #f9f9f9; }
@@ -4237,9 +4193,23 @@ td {
   text-align: left;
   border: 1px solid rgba(242, 242, 239, 0.56); }
 
+.play-wrap {
+  height: 321px;
+  position: relative; }
+  .play-wrap .play-in {
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 61px; }
+  .play-wrap .vote-region {
+    margin-top: 50px; }
+
 .battle-play {
-  padding: 40px 80px;
-  background: #313338;
+  padding: 7px 13px 7px 18px;
   border-radius: 50%;
   border: 1px solid #999;
   box-shadow: 0 0 4px #333;
@@ -4321,6 +4291,10 @@ td {
 
 .battle-thumbs {
   height: 200px; }
+  .battle-thumbs.battle-small {
+    height: 60px; }
+    .battle-thumbs.battle-small .crop {
+      width: 70px; }
 
 .modal {
   position: fixed;
@@ -4395,11 +4369,11 @@ td {
   background-color: #313338;
   border-left: 1px solid rgba(242, 242, 239, 0.56);
   right: 0;
-  top: 117px;
+  top: 115px;
   width: 50%; }
 .profile .full-left {
   position: fixed;
-  top: 117px;
+  top: 115px;
   width: 50%;
   bottom: 0;
   left: 0; }

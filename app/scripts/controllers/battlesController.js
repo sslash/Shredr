@@ -28,7 +28,7 @@ var BattlesController = Backbone.Marionette.Controller.extend({
             success : function (battle, response, options) {
 
                 Shredr.baseController.renderMainRegion(BattleDetailsLayout, {
-                        model : battle, collection : Shredr.collection });
+                        model : battle, collection : Shredr.collection }, 'battles');
 
                 // show animation
                 this.showPreBattleAnimation(battle);

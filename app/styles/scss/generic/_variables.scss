@@ -40,7 +40,7 @@ $white-on-brown-brdr: rgba(242, 242, 239, 0.56);
 $black-trans: rgba(0, 0, 0, 0.75);
 
 $nav-height: 3.9em;
-$top-height: 117px;
+$top-height: 115px;
 
 // z-indexes
 $z-dropdown: 200;
@@ -51,6 +51,8 @@ $z-fullin: 40;
 $z-vid: 10;
 $z-base: 1;
 .over-base { z-index: $z-base + 1; }
+
+$battle-vid: 321px;
 
 //Typography
 
@@ -120,7 +122,7 @@ $space-and-half : $space*1.5;
 $space-double : $space*2;
 $space-quad : $space*4;
 $space-half : $space/2;
-$pad : 1.2em;
+$pad : 1em;
 $pad-and-half : $pad*1.5;
 $pad-double : $pad*2;
 $pad-half : $pad/1.5;
@@ -198,82 +200,8 @@ $thumb-list-height: 359px;
 
 .vote-bar { margin:auto; }
 
-.vote-bar-in {
-    @include box-shadow (0 0 5px rgba(229, 107, 107, 0.21));
-    @include border-radius(15px);
-    display:inline-block;
-    height:4px;
-    padding:0px;
-}
-
-.battler-vote {
-    margin-right: -7px;
-    background-color: $error;
-    width : 100px;
-}
-
-.battlees-vote {
-    background-color: $valid;
-    width : 100px;
-}
-
-
-// .round {
-//     @include border-radius(6px);
-// }
-
-// TODO: super hack. fix this
-.vote-left {
-    position: relative;
-    left: -74px;
-}
-.vote-right {
-    position:relative;
-    right: -74px;
-}
-
 
 // Borders
 @mixin brd-dark {
     border: 1px solid $white-on-brown-brdr;
-}
-
-.brd-light {
-    border: 1px solid rgba(255, 255, 255, 0.45);
-}
-.brd-bottom { border-bottom: 1px solid rgba(255, 255, 255, 0.63);}
-
-.box {
-    @include brd-dark;
-    background: $brown-light;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.38);
-    border-radius: 2px;
-}
-
-.top-shadow {
-    border-top: 1px solid $gray;
-    @include box-shadow( 5px -11px 8px rgba(0, 0, 0, 0.55) );
-}
-
-/* things over image, or other thing */
-.green-hov {
-    @include transition(color .3s ease);
-    &:hover {
-        color: $information;
-    }
-
-    &.active {
-        color:$information;
-    }
-}
-
-.scale {
-    display:inline-block;
-    &:hover { @include scale(1.2, 1.2); }
-}
-
-.dark-wrapper {
-    background-image: url('/img/outlets.png');
-    background-position: initial initial;
-    background-repeat: initial initial;
 }

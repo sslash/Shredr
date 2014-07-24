@@ -25,7 +25,7 @@ module.exports = BaseController.extend({
             module.exports.render(req, res, _.extend(result, {
                 type : 'shreds',
                 things : _.first(result.collBS, 10),
-                tpl : 'shred/shredLayout'
+                tpl : 'shred/shredDetailLayout'
             }));
         })
         .fail(function(err) {

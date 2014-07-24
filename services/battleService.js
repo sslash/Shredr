@@ -136,7 +136,7 @@ module.exports = {
 
     getManyRelated : function (battle) {
         var deferred = Q.defer();
-        query.query(Battle)
+        query.query(Battle, {populate : 'battler battlee'})
         .then( function(doc) {
             deferred.resolve({
                 modelBS : battle,

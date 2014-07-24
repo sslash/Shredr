@@ -66,22 +66,20 @@ var BattleDetailLayout = Backbone.Marionette.Layout.extend({
     },
 
     renderVotes : function () {
-        var v = this.model.getVotes();
-        this.$('[data-model="battlers-vts"]').text(v.battlers + ' votes');
-        this.$('[data-model="battlees-vts"]').text(v.battlees + ' votes');
-
-        // draw bar
-        var width = 200;
-        this.$('.battler-vote')[0].style.width = (v.battlersP * width) + 'px';
-        this.$('.battlees-vote')[0].style.width = (v.battleesP * width) + 'px';
+        // var v = this.model.getVotes();
+        // this.$('[data-model="battlers-vts"]').text(v.battlers + ' votes');
+        // this.$('[data-model="battlees-vts"]').text(v.battlees + ' votes');
+        //
+        // // draw bar
+        // var width = 200;
+        // this.$('.battler-vote')[0].style.width = (v.battlersP * width) + 'px';
+        // this.$('.battlees-vote')[0].style.width = (v.battleesP * width) + 'px';
 
     },
 
     renderComments : function () {
         this.commentComponent = new CommentComponent({
-            region : new Backbone.Marionette.Region({
-                el : this.$('[data-reg="comments"]'),
-            }),
+            region : this.$('[data-reg="comments"]'),
             type : 'battle',
             _id : this.model.get('_id'),
             collection : new CommentCollection(this.model.get('comments'))

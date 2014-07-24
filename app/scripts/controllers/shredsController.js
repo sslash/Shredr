@@ -2,7 +2,7 @@
 define([
 'backbone',
 'views/stage/stageShredsLayout',
-'views/shred/shredLayout',
+'views/shred/shredDetailLayout',
 'models/shred'
 ],
 function (

@@ -30,7 +30,7 @@ figcaption {
 	width: 100.1%;
 	padding: 1px;
 	border: 1px solid #000;
-	&.half { max-height: 321px; }
+	&.half { height: $battle-vid; }
 	max-height: 100%;
 	background: $brown-light;
 }
@@ -160,9 +160,11 @@ figcaption {
 .fullscreenimg {
 	position: fixed;
 	top: $top-height;
-	left: -50%;
-	width: 200%;
-	height: 200%;
+	&.streched {
+		left: -50%;
+		width: 200%;
+		height: 200%;
+	}
 	opacity: 0.4;
 	z-index: $z-base;
 }

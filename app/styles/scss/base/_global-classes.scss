@@ -39,6 +39,10 @@
     -webkit-transform: translateY(-50%);
 }
 
+.scroll {
+    overflow-y:scroll;
+}
+
 /* Display Classes */
 .hide-small {
     @media all and (max-width: $bp-med) {
@@ -182,25 +186,31 @@
     bottom: 2em;
 }
 
-.vote-bar { margin:auto; }
+.vote-bar {
+    margin-bottom: -8px;
+}
 
+$vote-brd: 2px solid $brown-light;
 .vote-bar-in {
     @include box-shadow (0 0 5px rgba(229, 107, 107, 0.21));
-    @include border-radius(15px);
     display:inline-block;
-    height:4px;
+    height:20px;
     padding:0px;
+    border-top: $vote-brd;
+    border-bottom: $vote-brd;
 }
 
 .battler-vote {
     margin-right: -7px;
     background-color: $error;
     width : 100px;
+    border-left: $vote-brd;
 }
 
 .battlees-vote {
     background-color: $valid;
     width : 100px;
+    border-right: $vote-brd;
 }
 
 
@@ -337,4 +347,17 @@
     background-image: url('/img/outlets.png');
     background-position: initial initial;
     background-repeat: initial initial;
+}
+
+.foot {
+    position:fixed;
+    bottom: 0;
+    max-height: 300px;
+    left:0;
+    right: 0;
+}
+.glass {
+    border-top:1px solid $gray-dark;
+    @include box-shadow(-2px -2px 4px $gray-dark-2);
+    background-color: rgba(0, 0, 0, 0.45);
 }

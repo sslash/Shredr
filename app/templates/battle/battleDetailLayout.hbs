@@ -1,94 +1,225 @@
-<div class="container" data-region="landing">
-    <div class="row clearfix le-wrap">
-        <div class="column half">
-            {{#each m.rounds}}
-                <video id="video_0_{{@index}}" style="display:none" data-model="battlerVid"
-                    src="/video/battle/{{this.0.videoFileId}}" class="shred-vid half"></video>
-            {{/each}}
-        </div>
-        <div class="column half">
-            {{#each m.rounds}}
-                {{#if this.1.videoFileId}}
-                <video class="shred-vid half" style="display:none" id="video_1_{{@index}}"
-                    data-model="battleeVid" src="/video/battle/{{this.1.videoFileId}}"></video>
-                {{/if}}
-            {{/each}}
+<div data-region="landing">
+    <div class="fullscreenimg">
+        <img src="/img/crowd.jpg">
+    </div>
 
-            {{#if onlyOneVid}}
-                <img src="{{m.battlee.profileImgFile}}" class="shred-vid half">
-            {{/if}}
-        </div>
-
-        <audio data-model="audio">
-            <p>Your browser does not support this feauture :(</p>
-            {{#if m.jamtrackId}}
-                <source src="/audio/{{m.jamtrackId.fileId}}" type="audio/mpeg">
+    <audio data-model="audio">
+        <p>Your browser does not support this feauture :(</p>
+        {{#if m.jamtrackId}}
+        <source src="/audio/{{m.jamtrackId.fileId}}" type="audio/mpeg">
             {{else}}
-                <source src="/audio/br/{{m.fileId}}"type="audio/mpeg">
-            {{/if}}
-        </audio>
+            <source src="/audio/br/{{m.fileId}}"type="audio/mpeg">
+                {{/if}}
+            </audio>
 
-        <div class="le-in center large-in"><h1><i class="ion-play battle-play"></i></h1></div>
-        <div class="le-in full-in" data-evt="play"></div>
-    </div>
+            <div class="rel over-base pvl">
+                <div class="container">
 
-    <small data-model="dur">0:00</small>
-
-    <div class="row clearfix mvl le-wrap">
-        <div class="column third">
-            <h3><img src="{{m.battler.profileImgFile}}" class="thumb-round img-xs"><a href="/users/{{m.battler._id}}" class="thumb-txt">{{m.battler.username}}</a></h3>
-            <i class="ion-location fa-2x phs"></i><small>{{m.battler.location}}</small>
-            <button class="btn btn-niz mhl btn-logo" data-evt="vote" data-model="battler">Vote</button>
-        </div>
-
-        <div class="column third txt-center">
-            <p><small class="vote-left white" data-model="battlers-vts">0 votes</small></p>
-            <div class="vote-bar">
-                <div class="vote-bar-in battler-vote"></div>
-                <div class="vote-bar-in battlees-vote"></div>
-            </div>
-            <p><small class="vote-right white" data-model="battlees-vts">0 votes</small></p>
-
-            <div class="green social mvm">
-                <i class="icon ion-social-facebook phs"></i>
-                <i class="icon ion-social-twitter phs"></i>
-                <i class="icon ion-social-googleplus phs"></i>
-            </div>
-        </div>
-
-        <div class="column third txt-right">
-            <h3><a href="/users/{{m.battlee._id}}" class="thumb-txt">{{m.battlee.username}}</a><img src="{{m.battlee.profileImgFile}}" class="thumb-round img-xs"></h3>
-            <button class="btn btn-niz btn-logo mhl" data-evt="vote" data-model="battlee">Vote</button>
-            <i class="ion-location fa-2x phs"></i><small>{{m.battlee.location}}</small>
-        </div>
-
-    </div>
-
-    <div class="row clearfix pvxl">
-        <div class="column two-thirds" data-reg="comments">
-
-        </div>
-
-        <div class="column third">
-            <div class="mvl brown-box box-small right clearfix">
-                <h4>Related Battles</h4>
-
-                {{#each things}}
-                    <div class="brd-dark box-wrap le-wrap mvm clearfix" data-mod="{{_id}}" data-evt="rel-bat">
-                        <div class="crop">
-                            <img src="http://img.youtube.com/vi/GcGl_UGEarc/0.jpg" class="shred-thumb">
+                    <div class="row clearfix" data-reg="landing">
+                        <div class="column two-five">
+                            {{#each m.rounds}}
+                            <video id="video_0_{{@index}}"  data-model="battlerVid"
+                            src="/video/battle/{{this.0.videoFileId}}" class="shred-vid half"></video>
+                            {{/each}}
                         </div>
-                        <div class="crop">
-                            <img src="/images/shredder.jpg" class="shred-thumb">
+
+                        <div class="column five txt-center play-wrap">
+                            <div class="play-in">
+                                <i class="ion-play battle-play icon-3x"></i>
+                            </div>
+                            <div data-evt="play"><br></div>
                         </div>
-                        <div class="le-in thmb battle-in txt-center">
-                            <p>Ken vs</p>
-                            <p>Tim</p>
+
+
+                        <div class="column two-five">
+                            {{#each m.rounds}}
+                            {{#if this.1.videoFileId}}
+                            <video class="shred-vid half" style="display:none" id="video_1_{{@index}}"
+                            data-model="battleeVid" src="/video/battle/{{this.1.videoFileId}}"></video>
+                            {{/if}}
+                            {{/each}}
+
+                            {{#if onlyOneVid}}
+                            <img src="{{m.battlee.profileImgFile}}" class="shred-vid half">
+                            {{/if}}
                         </div>
-                        <div class="le-in full-in"></div>
                     </div>
-                {{/each}}
+
+
+                    <div class="row clearfix pvxl le-wrap">
+                        <div class="column two-five">
+                            <div class="clearfix">
+                                <button class="btn btn-niz mal btn-logo right btn-ser" data-evt="vote" data-model="battler">Vote</button>
+                                <img src="{{m.battler.profileImgFile}}" class="thumb-round img-sm left mhl">
+                                <div class="mvl">
+                                    <h3><a href="/users/{{m.battler._id}}">{{m.battler.username}}</a></h3>
+                                    <i class="ion-location fa-2x phs"></i><small>{{m.battler.location}}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column five txt-center">
+                            <div class="vote-region">
+                                <p><small class="vote-left white" data-model="battlers-vts">0 votes</small></p>
+                                <div class="vote-bar">
+                                    <div class="vote-bar-in battler-vote"></div>
+                                    <div class="vote-bar-in battlees-vote"></div>
+                                </div>
+                                <p><small class="vote-right white" data-model="battlees-vts">0 votes</small></p>
+                            </div>
+                        </div>
+
+                        <div class="column two-five txt-right">
+                            <div class="clearfix">
+                                <button class="btn btn-niz mal btn-logo left btn-valid" data-evt="vote" data-model="battlee">Vote</button>
+                                <img src="{{m.battlee.profileImgFile}}" class="thumb-round img-sm right mhl">
+                                <div class="mvl">
+                                    <h3><a href="/users/{{m.battlee._id}}">{{m.battlee.username}}</a></h3>
+                                    <i class="ion-location fa-2x phs"></i><small>{{m.battlee.location}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
+            <div class="bottom foot over-base glass">
+                <div class="container">
+                    <div class="row clearfix">
+                        <div class="column half" data-reg="comments"></div>
+
+                        <div class="column half mvm">
+                                <h4>Related Battles</h4>
+
+                                <div class="scroll">
+                                {{#each things}}
+                                <div class="mvl column third">
+                                    <div class="brd-dark clearfix in rel" data-evt="battle-clk" data-mod="{{_id}}">
+                                        <div class="le-wrap battle-thumbs battle-small">
+                                            <div class="le-in full-in faded hov point">
+                                                <div class="le-in vert-center center subheading">
+                                                    <p class="cap">{{battler.username}} <span class="block lead small white">vs</span></p>
+                                                    <p class="cap">{{battlee.username}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="crop" style="background-image: url('{{battler.profileImgFile}}');">
+                                            </div>
+                                            <div class="crop" style="background-image: url('{{battlee.profileImgFile}}');">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+            <!-- <div class="container" data-region="landing">
+            <div class="row clearfix le-wrap">
+            <div class="column half">
+            {{#each m.rounds}}
+            <video id="video_0_{{@index}}" style="display:none" data-model="battlerVid"
+            src="/video/battle/{{this.0.videoFileId}}" class="shred-vid half"></video>
+            {{/each}}
         </div>
+        <div class="column half">
+        {{#each m.rounds}}
+        {{#if this.1.videoFileId}}
+        <video class="shred-vid half" style="display:none" id="video_1_{{@index}}"
+        data-model="battleeVid" src="/video/battle/{{this.1.videoFileId}}"></video>
+        {{/if}}
+        {{/each}}
+
+        {{#if onlyOneVid}}
+        <img src="{{m.battlee.profileImgFile}}" class="shred-vid half">
+        {{/if}}
     </div>
+
+    <audio data-model="audio">
+    <p>Your browser does not support this feauture :(</p>
+    {{#if m.jamtrackId}}
+    <source src="/audio/{{m.jamtrackId.fileId}}" type="audio/mpeg">
+    {{else}}
+    <source src="/audio/br/{{m.fileId}}"type="audio/mpeg">
+    {{/if}}
+</audio>
+
+<div class="le-in center large-in"><h1><i class="ion-play battle-play"></i></h1></div>
+<div class="le-in full-in" data-evt="play"></div>
+</div>
+
+<small data-model="dur">0:00</small>
+
+<div class="row clearfix mvl le-wrap">
+<div class="column third">
+<h3><img src="{{m.battler.profileImgFile}}" class="thumb-round img-xs"><a href="/users/{{m.battler._id}}" class="thumb-txt">{{m.battler.username}}</a></h3>
+<i class="ion-location fa-2x phs"></i><small>{{m.battler.location}}</small>
+<button class="btn btn-niz mhl btn-logo" data-evt="vote" data-model="battler">Vote</button>
+</div>
+
+<div class="column third txt-center">
+<p><small class="vote-left white" data-model="battlers-vts">0 votes</small></p>
+<div class="vote-bar">
+<div class="vote-bar-in battler-vote"></div>
+<div class="vote-bar-in battlees-vote"></div>
+</div>
+<p><small class="vote-right white" data-model="battlees-vts">0 votes</small></p>
+
+<div class="green social mvm">
+<i class="icon ion-social-facebook phs"></i>
+<i class="icon ion-social-twitter phs"></i>
+<i class="icon ion-social-googleplus phs"></i>
+</div>
+</div>
+
+<div class="column third txt-right">
+<h3><a href="/users/{{m.battlee._id}}" class="thumb-txt">{{m.battlee.username}}</a><img src="{{m.battlee.profileImgFile}}" class="thumb-round img-xs"></h3>
+<button class="btn btn-niz btn-logo mhl" data-evt="vote" data-model="battlee">Vote</button>
+<i class="ion-location fa-2x phs"></i><small>{{m.battlee.location}}</small>
+</div>
+
+</div>
+
+<div class="row clearfix pvxl">
+<div class="column two-thirds" data-reg="comments">
+
+</div>
+
+<div class="column third">
+<div class="mvl brown-box box-small right clearfix">
+<h4>Related Battles</h4>
+
+{{#each things}}
+<div class="brd-dark box-wrap le-wrap mvm clearfix" data-mod="{{_id}}" data-evt="rel-bat">
+<div class="crop">
+<img src="http://img.youtube.com/vi/GcGl_UGEarc/0.jpg" class="shred-thumb">
+</div>
+<div class="crop">
+<img src="/images/shredder.jpg" class="shred-thumb">
+</div>
+<div class="le-in thmb battle-in txt-center">
+<p>Ken vs</p>
+<p>Tim</p>
+</div>
+<div class="le-in full-in"></div>
+</div>
+{{/each}}
+</div>
+</div>
+</div>
+</div> -->
 </div>

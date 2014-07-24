@@ -1,0 +1,79 @@
+<div class="container" data-region="landing">
+    <div class="row clearfix">
+
+        <div class="column three-fourth prs rel shred-vid-wrap" data-reg="player"></div>
+
+        <div class="column fourth blue-box pas small vid-thmb-list">
+
+            {{#each things}}
+
+            <!-- brd-dark -->
+            <div class="box-wrap row clearfix point" data-evt="thmb-click" data-model="{{_id}}">
+                <div class="column third">
+                    <img src="{{thumb}}" class="shred-thumb">
+                </div>
+
+                <div class="column two-thirds pam">
+                    <p class="white">{{title}}</p>
+                    <p><small>By {{user.username}}</small></p>
+                </div>
+            </div>
+
+            {{/each}}
+        </div>
+    </div>
+
+
+    <div class="row clearfix">
+
+        <div class="column two-thirds prl">
+            <div class="row mvl clearfix">
+                <h5 class="column three-fourth">{{m.type}} <small>Added {{m.createdAt}}</small></h5>
+                <div class="column fourth green txt-right">
+                    <i class="icon ion-social-facebook mvxs"></i>
+                    <i class="icon ion-social-twitter mvxs"></i>
+                    <i class="icon ion-social-googleplus mvxs"></i>
+                </div>
+            </div>
+
+            <div class="row mvl clearfix">
+                <h1 class="column three-fourth lead">{{m.title}}</h1>
+                <div class="column fourth">
+                    <button class="btn btn-ser">Challenge {{m.user.username}}</button>
+                </div>
+            </div>
+
+            <div class="row mvl clearfix">
+
+                <!-- TODO: verify this is correct -->
+                <section class="mtm green-swabs">
+                    <div data-reg="cats"></div>
+                    <div class="blue-box pam" data-reg="cat-content">
+                        <div data-mod="About" class="active"><label>{{m.description}}</label></div>
+                        <div data-mod="Promote" style="display:none;">
+                            <p>Promote this Shred on your fans' timeline</p>
+                            <div class="mvl">
+                                <input type="text" id="promote-body" placeholder="Promotion title" class="small-form">
+                                <button class="btn btn-small btn-niz mhl" data-evt="promote">Promote</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="row clearfix">
+                <h3>Shredr Tabs</h3>
+                <div data-reg="tabs"></div>
+            </div>
+        </div>
+
+        <div class="column third">
+            <div data-reg="rate"></div>
+
+            <div class="row mvl pam blue-box">
+                <div data-reg="comments"></div>
+            </div>
+        </div>
+
+    </div>
+</div>

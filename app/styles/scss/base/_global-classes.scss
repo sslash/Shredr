@@ -27,8 +27,8 @@
 }
 
 /* positioning */
-.right { float: right; }
-.left { float: left; }
+.right { float: right !important; }
+.left { float: left !important; }
 .txt-center { text-align: center; }
 .txt-left { text-align: left; }
 .txt-right { text-align: right; }
@@ -274,6 +274,7 @@ $vote-brd: 2px solid $brown-light;
         }
 
         &.bottom { bottom:0;}
+        &.full-w { left: 0; right: 0;}
         &.right { right:0;}
 
         &.hov {

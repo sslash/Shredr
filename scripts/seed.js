@@ -85,6 +85,31 @@ for (var i = 0; i < 100; i++) {
 	});
 }
 
+// Jamtracks
+var users = db.users.find();
+var count = db.users.count();
+var jamtracks = ["Sweet JT in d-minor", "Bluesy thing with twis", "Rock in d-minor", "Ballad in a-minor", "Slash-inspired rock in G", "Super sweet JT", "JT for the big D", "Aw yeah, this one's the bomb", "D-minor. Thats it", "Its all I've got", "Srsly, this rox", "Yeah boi. Thats wazup"];
+var jtlen = jamtracks.length;
+
+
+db.jamtracks.remove();
+for (var i = 0; i < 30; i++) {
+	var useri = Math.floor((Math.random()*count));
+	var jt = Math.floor((Math.random()*jtlen));
+
+	db.jamtracks.save({
+		createdAt : new Date(),
+		description : "Sweet jamtracks, bluesy with a twist of rock.",
+		fileId : "scrb1_claptonsmoky_jt.mp3",
+		relatedShreds : [ ],
+		tags : [
+			"blues", "d-minor"
+		],
+		title : jamtracks[jt],
+		user : users[useri]._id,
+	});
+}
+
 
 // battles
 db.battlerequests.remove();
@@ -114,6 +139,7 @@ for (var i = 0; i < 100; i++) {
 						videoFileId : 'sap1.mp4',
 						startSec : 0,
 						startFrame : 0,
+						duration : 14
 					}
 				]
 			]
@@ -170,36 +196,6 @@ for (var i = 0; i < 1000; i++) {
 		user : users[useri]._id,
 	});
 }
-
-
-// Jamtracks
-var users = db.users.find();
-var count = db.users.count();
-var jamtracks = ["Sweet JT in d-minor", "Bluesy thing with twis", "Rock in d-minor", "Ballad in a-minor", "Slash-inspired rock in G", "Super sweet JT", "JT for the big D", "Aw yeah, this one's the bomb", "D-minor. Thats it", "Its all I've got", "Srsly, this rox", "Yeah boi. Thats wazup"];
-var jtlen = jamtracks.length;
-
-db.jamtracks.remove();
-for (var i = 0; i < 30; i++) {
-	var useri = Math.floor((Math.random()*count));
-	var jt = Math.floor((Math.random()*jtlen));
-
-	db.jamtracks.save({
-		createdAt : new Date(),
-		description : "Sweet jamtracks, bluesy with a twist of rock.",
-		fileId : "scrb1_claptonsmoky_jt.mp3",
-		relatedShreds : [ ],
-		tags : [
-			"blues", "d-minor"
-		],
-		title : jamtracks[jt],
-		user : users[useri]._id,
-	});
-}
-
-
-
-
-
 
 // CUSTOM STUFF
 

@@ -32,7 +32,7 @@ function (
                     this.renderCanvas();
                     this.setVideoWidths();
                 } catch(e) {
-                    this.renderAsyncs.call(this);
+                    setTimeout(this.renderAsyncs.bind(this), 20);
                 }
             }.bind(this), 20);
         },

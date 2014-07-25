@@ -104,8 +104,8 @@ var BattleDetailLayout = Backbone.Marionette.Layout.extend({
            if ( this.$battleeVids[i] ) {
                battleVids[z++] = {
                    sel : this.$battleeVids[i],
-                   vidStartSec : parseInt(rounds[i][1].startSec, 10) || 0,
-                   vidStartFramesOffset: parseInt(rounds[i][1].startFrame, 10) || 0
+                   vidStartSec : parseInt(rounds[i][1].startSec, 10),
+                   vidStartFramesOffset: parseInt(rounds[i][1].startFrame, 10)
                }
            }
        }

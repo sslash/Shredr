@@ -36,7 +36,14 @@ module.exports = BaseController.extend({
 
     list : function(req, res) {
         battleService.getMany()
-        .then(function(result){
+        .then(function(result) {
+
+            // TODO: serialization should be done in the model!
+            result.collBS = result.collBS.map(function (b) {
+                b.votesStr = b.votes.battlers.length + ' - ' + b.votes.battlees.length;
+                return b;
+            });
+
             module.exports.render(req, res, _.extend(result, {
                 type : 'battles',
                 tpl : 'stage/stageBattlesLayout'

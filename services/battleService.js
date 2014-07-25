@@ -194,7 +194,7 @@ module.exports = {
 
             return battle.saveOrUpdate(true);
         })
-        .then(deferred.resolve.bind(null));
+        .then(deferred.resolve.bind(null), def.reject).done();
 
         return deferred.promise;
     },

@@ -21,6 +21,7 @@ function( Backbone, User, baseBattle ) {
 			var model = Backbone.Model.prototype.toJSON.call(this);
 			model.battler = model.battler.toJSON ? model.battler.toJSON() : model.battler;
 			model.battlee = model.battlee.toJSON ? model.battlee.toJSON() : model.battlee;
+			model.votesStr = '' + model.votes.battlers.length + ' - ' + model.votes.battlees.length;
 			return model;
 		},
 

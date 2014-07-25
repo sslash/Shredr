@@ -2445,10 +2445,10 @@ table {
 
 /* positioning */
 .right {
-  float: right; }
+  float: right !important; }
 
 .left {
-  float: left; }
+  float: left !important; }
 
 .txt-center {
   text-align: center; }
@@ -2768,6 +2768,9 @@ table {
       z-index: 1; }
     .le-wrap .le-in.bottom {
       bottom: 0; }
+    .le-wrap .le-in.full-w {
+      left: 0;
+      right: 0; }
     .le-wrap .le-in.right {
       right: 0; }
     .le-wrap .le-in.hov:hover {
@@ -3841,8 +3844,12 @@ td {
   float: left;
   background: #d74b4b;
   color: #333333;
-  padding: 2px 2px;
+  padding: 2px 3px;
+  font-side: 0.7em;
   border: 1px solid #333333; }
+  .tags.battles {
+    background: transparent;
+    color: #f2f2ef; }
 
 /* Generic Placeholder Brick: REMOVE FOR PRODUCTION */
 .brick {
@@ -4306,6 +4313,13 @@ td {
     height: 60px; }
     .battle-thumbs.battle-small .crop {
       width: 70px; }
+
+.scroll {
+  overflow-y: scroll; }
+  .scroll.comments {
+    max-height: 208px; }
+  .scroll.battles {
+    max-height: 190px; }
 
 .modal {
   position: fixed;

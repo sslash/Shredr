@@ -145,21 +145,6 @@ define([
                 this.listenTo(this, 'player:stop', this.stop);
             },
 
-            startPlayer : function (waitCondition, playFn) {
-
-                function tryRender () {
-                    if (waitCondition) {
-                        setTimeout(tryRender.bind(this), 40);
-
-                    } else {
-                        playFn.call(this);
-                    }
-                }
-                tryRender.call(this);
-            },
-
-
-
             play : function () {
                 var startFn = function() {
                     this.playIterator = new PlayIterator(this.videos, this.audio, this.uploadMode, this);
@@ -178,6 +163,19 @@ define([
                 }
 
                 this.startPlayer(waitCondition, startFn);
+            },
+
+            startPlayer : function (waitCondition, playFn) {
+
+                function tryRender () {
+                    if (waitCondition) {
+                        setTimeout(tryRender.bind(this), 40);
+
+                    } else {
+                        playFn.call(this);
+                    }
+                }
+                tryRender.call(this);
             },
 
             stop : function () {

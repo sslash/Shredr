@@ -31,7 +31,7 @@ define([
             initialize: function(options) {
                 Component.prototype.initialize.call(this, options);
                 this.collection = options.collection;
-                this.view = new ListView({collection : this.collection})
+                this.view = new ListView({collection : this.collection});
                 this.type = options.type;
                 this._id = options._id;
                 this.listenTo(this.view, 'form:submitted', this.formSubmitted);
@@ -50,7 +50,7 @@ define([
             },
 
             saveSuccess : function (comment, res) {
-                this.collection.add(res[res.length-1]);
+                this.collection.add(comment);
             }
         });
     });

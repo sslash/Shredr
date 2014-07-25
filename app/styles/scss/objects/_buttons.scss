@@ -120,6 +120,13 @@
 	float: left;
 	background: $error;
 	color:$black;
-	padding: 2px 2px;
+	padding: 2px 3px;
+	font-side: 0.7em;
 	border: 1px solid $black;
+
+	&.battles {
+		background: transparent;
+		color: $white;
+
+	}
 }

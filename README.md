@@ -1,9 +1,6 @@
 ##TODOS:
 
-* battle detail
-    - commenting
-    - paging battles
-
+* facebooklogin btn
 * side-Widgets
 
 * Leveling

@@ -1,10 +1,11 @@
 ##TODOS:
-
-* facebooklogin btn
-* side-Widgets
-
-* Leveling
 * Badges
+    - Just started Badge
+    - First battle
+    - First video
+
+* Profile page
+    - list of fans/fanees
 
 * Feed
     - battle comment

@@ -483,6 +483,11 @@ input[type="search"], input[type="text"], input[type="email"]{
 	box-sizing: border-box;
 }
 
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px $brown inset;
+	-webkit-text-fill-color: $white !important;
+}
+
 /**
 * Remove inner padding and search cancel button in Safari 5 and Chrome
 * on OS X.

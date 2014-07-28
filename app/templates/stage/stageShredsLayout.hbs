@@ -1,7 +1,45 @@
-<div class="container no-gap" data-region="landing">
+<div class="no-gap" data-region="landing">
     <div class="row clearfix">
 
-        <div class="column half">
+        <div class="column six">
+            <br>
+            <div class="sidebox">
+                <div class="blue-box pas">
+                    <header><h3>Upcoming Contests</h3></header>
+
+                    <div class="clearfix mvl">
+                        <p class="fat">Welcome To Shredr</p>
+                        <p class="lead"><img class="logo-md" src="/img/contest.jpg">
+                            First launch. Let's celebrate with our first ever contest</p>
+                    </div>
+
+                    <div class="clearfix mvl">
+                        <p class="fat">Welcome To Shredr</p>
+                        <p class="lead"><img class="logo-md" src="/img/contest.jpg">
+                            First launch. Let's celebrate with our first ever contest</p>
+                    </div>
+                </div>
+
+
+                <div class="blue-box pas mvxl">
+                    <header><h3>Shredder of the week!</h3></header>
+
+                    <div class="clearfix">
+
+                        <p class="fat mvl">John Stewart</p>
+                        <img class="logo-lg" src="/img/harrison.jpeg">
+                        <p class="mvl">John Stewart is this weeks Shredder</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="column two-six">
             <div data-reg="feed" class="column full"></div>
             {{#each leftShreds}}
             <div class="column half">
@@ -22,7 +60,7 @@
             {{/each}}
         </div>
 
-        <div class="column half">
+        <div class="column two-six">
             {{#each rightShredsTop}}
             <div class="column half">
 
@@ -39,29 +77,68 @@
 
             </div>
             {{/each}}
-            <div data-reg="thmb" class="column full">
-                <section class="box pas box-wrap">
-                    <h1>Stuff</h1>
-                    <p class="lead">Things,
-                        <br>can be here.</p>
-                    </section>
-                </div>
-                {{#each rightShredsBottom}}
-                <div class="column half">
+            {{#each rightShredsBottom}}
+            <div class="column half">
 
-                    <div class="brd-dark box-wrap le-wrap stage-thumb-wrap" data-evt="play" data-model="{{_id}}">
-                        <img src="{{thumb}}" class="shred-thumb">
-                        <div class="le-in thmb pas white">
-                            <p>{{this.user.username}}</p>
-                            <small class="lead white">{{title}}</small>
-                            <div class="le-in profile-img-thumb">
-                                <img src="{{user.profileImgFile}}" class="thumb-round img-xs">
-                            </div>
+                <div class="brd-dark box-wrap le-wrap stage-thumb-wrap" data-evt="play" data-model="{{_id}}">
+                    <img src="{{thumb}}" class="shred-thumb">
+                    <div class="le-in thmb pas white">
+                        <p>{{this.user.username}}</p>
+                        <small class="lead white">{{title}}</small>
+                        <div class="le-in profile-img-thumb">
+                            <img src="{{user.profileImgFile}}" class="thumb-round img-xs">
                         </div>
                     </div>
-
                 </div>
-                {{/each}}
+
             </div>
+            {{/each}}
+        </div>
+
+
+
+        <div class="column six">
+            <br>
+            <div class="sidebox">
+                <div class="blue-box pas">
+                    <header><h3>Suggested Users</h3></header>
+
+                    <div class="clearfix">
+                        <p class="fat mvl"><img class="logo-md thumb-round" src="/img/contest.jpg">
+                            Helena Mark
+                        </p>
+
+                        <p class="fat mvl"><img class="logo-md thumb-round" src="/img/contest.jpg">
+                            Helena Mark
+                        </p>
+                        <p class="fat mvl"><img class="logo-md thumb-round" src="/img/contest.jpg">
+                            Helena Mark
+                        </p>
+                        <p class="fat mvl"><img class="logo-md thumb-round" src="/img/contest.jpg">
+                            Helena Mark
+                        </p>
+                    </div>
+                </div>
+
+                <div class="blue-box pas mvxl">
+                    <header><h3>Next Badge?</h3></header>
+
+                    <div class="clearfix">
+
+                        <p class="fat mvl">Wordspreader</p>
+                        <img class="logo-lg" src="/img/contest.jpg">
+                        <p class="mvl">This one is for the social media user</p>
+                        <div>
+                            <i class="icon mhm ion-social-facebook"></i>
+                            <i class="icon mhm ion-social-twitter"></i>
+                            <i class="icon mhm ion-social-googleplus"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
     </div>
+</div>

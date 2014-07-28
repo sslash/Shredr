@@ -10,7 +10,8 @@ define([
     'hbs!tmpl/stage/feedNewUserView',
     'hbs!tmpl/stage/feedNewBattleView',
     'hbs!tmpl/stage/feedNewPromotionView',
-    'hbs!tmpl/stage/feedNewCommentView'
+    'hbs!tmpl/stage/feedNewCommentView',
+    'hbs!tmpl/stage/feedEmptyView'
 ],
 function (
     Backbone,
@@ -22,7 +23,8 @@ function (
     newUserTpl,
     newBattleTpl,
     newPromotionTpl,
-    newCommentTpl
+    newCommentTpl,
+    emptyTpl
 ){
 'use strict';
 
@@ -52,9 +54,14 @@ var ItemView = Backbone.Marionette.ItemView.extend({
     }
 });
 
+var NoChildsView = Backbone.Marionette.ItemView.extend({
+    template : emptyTpl
+});
+
 
 var CollectionView = Backbone.Marionette.CollectionView.extend({
-    itemView : ItemView
+    itemView : ItemView,
+    emptyView: NoChildsView
 });
 
 var FeedView = Backbone.Marionette.Layout.extend({

@@ -2379,6 +2379,10 @@ input[type="search"], input[type="text"], input[type="email"] {
   /* 2 */
   box-sizing: border-box; }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #2b2828 inset;
+  -webkit-text-fill-color: #f2f2ef !important; }
+
 /**
 * Remove inner padding and search cancel button in Safari 5 and Chrome
 * on OS X.
@@ -3221,9 +3225,6 @@ input, textarea {
   border: none;
   padding: 0.66667em 0.65rem; }
 
-input:-webkit-autofill {
-  background-color: #f2f2ef !important; }
-
 input[type=text], input[type=search], input[type=url], input[type=number], textarea {
   -webkit-appearance: none; }
 
@@ -3384,8 +3385,8 @@ td {
 
 .container, .header {
   margin: 0 auto;
-  max-width: 84rem;
-  width: 90%; }
+  max-width: 70rem;
+  width: 70%; }
 
 .row {
   width: 100%; }
@@ -3421,6 +3422,9 @@ td {
   .column.six {
     width: 16.6%; }
 
+  .column.two-six {
+    width: 33.32%; }
+
   .column.five-six {
     width: 83%; }
 
@@ -3438,6 +3442,13 @@ td {
 
   .column.flow-opposite {
     float: right; } }
+.sidebox {
+  position: fixed;
+  font-size: 0.7em;
+  padding: 1em;
+  width: 16.6%;
+  top: 117px; }
+
 /*------------------------------------*\
     $PAGE STRUCTURE
 \*------------------------------------*/

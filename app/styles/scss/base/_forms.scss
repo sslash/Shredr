@@ -34,10 +34,6 @@ input, textarea {
 	padding: $pad-half 0.65rem;
 }
 
-input:-webkit-autofill {
-    background-color: $white !important;
-}
-
 input[type=text], input[type=search], input[type=url], input[type=number], textarea {
 	-webkit-appearance: none;
 }

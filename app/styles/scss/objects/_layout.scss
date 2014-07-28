@@ -14,8 +14,8 @@
 
 .container {
 	margin: 0 auto;
-	max-width: 84rem;
-	width: 90%;
+	max-width: 70rem;
+	width: 70%;
 }
 
 .row {
@@ -36,6 +36,7 @@
 	.column.ten { width: 10%; }
 	.column.nine-ten { width: 90%; }
 	.column.six { width: 16.6% }
+	.column.two-six { width: 33.32% }
 	.column.five-six { width: 83% }
 	.column.five { width: 20% }
 	.column.two-five { width: 40% }
@@ -43,4 +44,13 @@
 
 	.column.flow-opposite { float: right; }
 	.column.flow-opposite { float: right; }
+}
+
+
+.sidebox {
+	position:fixed;
+	font-size: 0.7em;
+	padding:1em;
+	width: 16.6%;
+	top: $top-height + 2;
 }

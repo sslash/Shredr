@@ -65,8 +65,8 @@ var KickerRegionView = Backbone.Marionette.Layout.extend({
         this.ui.workspace.hide();
     },
 
-    showUserKicker : function (collection) {
-        var userKickerView = new UserKickerView({collection : collection});
+    showUserKicker : function (model) {
+        var userKickerView = new UserKickerView({model : model});
         this.wrap.show(userKickerView);
     },
 

@@ -25,7 +25,8 @@ var UserLayout = Backbone.Marionette.Layout.extend({
 
     events : {
         'click [data-evt="pm"]' : '__pmClicked',
-        'click [data-evt="br"]' : '__brClicked'
+        'click [data-evt="br"]' : '__brClicked',
+        'click [data-evt="battle-clk"]' : '__battleClicked'
     },
 
     onRender : function () {
@@ -48,6 +49,11 @@ var UserLayout = Backbone.Marionette.Layout.extend({
             model : this.model,
             classes : 'modal-huge modal-tall form-dark'
         }));
+    },
+
+    __battleClicked : function (e) {
+        var id = $(e.currentTarget).attr('data-mod');
+        Shredr.navigate('/battle/' + id, {trigger : true});
     },
 
     __brClicked : function (e) {

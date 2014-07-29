@@ -17,7 +17,8 @@ function (
 ){
 'use strict';
 var NotificationModal = Backbone.Marionette.Layout.extend({
-    template : tpl,className:'rel',
+    template : tpl,
+    className:'rel',
 
     initialize : function (opts) {
         this.extraClasses = opts.classes || '';

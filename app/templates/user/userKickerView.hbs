@@ -1,22 +1,47 @@
-<ul>
-    <li class="in lead mhxl">
-        <h3>Level</h3>
-        <p>10</p>
+<ul data-evt="drop">
+    <li class="in lead phxl white-hov point rel" data-mod="followers">
+        <h4>Followers</h4>
+        <h1 class="lead information">{{followers}}</h1>
+
+        <div class="arrow-up dropdown" style="display:none">
+          <div class="pam">
+            {{#each m.fans}}
+            <div class="clearfix txt-left">
+                <a href="/users/{{user._id}}" class="left mrs"><img src="{{user.profileImgFile}}" class="logo-md thumb-round"></a>
+                <a href="/users/{{user._id}}" class="black">{{user.username}}</a>
+            </div>
+            {{/each}}
+          </div>
+        </div>
     </li>
-    <li class="in lead mhxl">
-        <h3>Shreds</h3>
-        <p>10</p>
+
+
+    <li class="in lead phxl white-hov point rel" data-mod="following">
+        <h4>Following</h4>
+        <h1 class="lead information">{{following}}</h1>
+
+        <div class="arrow-up dropdown" data-reg="body" style="display:none;">
+          <div class="pam">
+            {{#each m.fanees}}
+            <div class="row clearfix txt-left">
+                <a href="/users/{{user._id}}" class="left mrs"><img src="{{user.profileImgFile}}" class="logo-md thumb-round"></a>
+                <a href="/users/{{user._id}}" class="black">{{user.username}}</a>
+            </div>
+            {{/each}}
+          </div>
+        </div>
     </li>
-    <li class="in lead mhxl">
-        <h3>Battles</h3>
-        <p>10</p>
+
+    <li class="in lead phxl">
+        <h4>Shreds</h4>
+        <h1 class="lead information">{{shreds}}</h1>
     </li>
-    <li class="in lead mhxl">
-        <h3>Fans</h3>
-        <p>10</p>
-    </li>
-    <li class="in lead mhxl">
-        <h3>Fanees</h3>
-        <p>10</p>
+    <li class="in lead phxl">
+        <h4>Battles</h4>
+        <h1 class="lead information">{{battles}}</h1>
     </li>
 </ul>
+<!--
+
+
+ -->

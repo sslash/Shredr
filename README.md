@@ -1,11 +1,11 @@
 ##TODOS:
+
 * Badges
     - Just started Badge
     - First battle
     - First video
-
-* Profile page
-    - list of fans/fanees
+* Battles
+    - On backend; merge videos into one
 
 * Feed
     - battle comment

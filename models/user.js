@@ -60,6 +60,8 @@ UserSchema
     this.hashed_password = this.encryptPassword(password);
   })
   .get(function() { return this._password })
+
+
 /**
  * Validations
  */
@@ -263,20 +265,28 @@ updatePass: function (cb) {
 UserSchema.statics = {
 
     /**
-    * TODO: load should be a function to get a
-    * populated model, like list
+    * TODO: This does a lot of fetching..
     */
     load : function (id) {
         var def = Q.defer();
 
         this.findOne({ _id : id })
-        .populate('fanees')
-        .populate('fans')
-        .populate('battles')
+        .populate('fanees.user')
+        .populate('fans.user')
         .populate('shreds')
         .exec(function(err,res) {
             if (err) { def.reject(err); }
-            else { def.resolve(res); }
+            else {
+                var Battle = mongoose.model('Battle');
+                var promises = res.battles.map(function (b) {
+                    return Battle.load(b.toString());
+                });
+
+                Q.all(promises)
+                .then (function (b) {
+                    def.resolve(_.extend(res.toJSON(), {battles : b}));
+                }, def.reject).done();
+            }
         });
 
         return def.promise;

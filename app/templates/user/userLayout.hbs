@@ -1,22 +1,18 @@
 <div data-region="landing">
     <div class="banner le-wrap no-top-marg">
-        <div class="content center pal faded">
-            <div class="left txt-left">
-                <h1 class="head">{{m.username}}</h1>
+        <div class="txt-center pal over-base rel">
+            <img src="{{m.profileImgFile}}" class="img-md thumb-round">
+            <h1 class="kill lead">{{m.username}}</h1>
+            <div class="right">
                 <p><i class="ion-location fa-2x phs"></i><small>{{m.location}}</small></p>
             </div>
-            <div class="right">
-                <img src="{{m.profileImgFile}}" class="img-md profile-img">
-            </div>
         </div>
+        <div class="le-in full-in faded"></div>
     </div>
 
     <div class="row clearfix">
         <div class="column half">
             <div class="blue-box mal pal">
-                <header>
-                    <strong>Bio</strong>
-                </header>
                 <p class="lead mvm">{{m.bio}}</p>
                 <small>{{m.username}} was born <strong>{{m.birth}}</strong>,
                     and started playing in <strong>{{m.startedPlaying}}</strong>.
@@ -40,18 +36,50 @@
             </div>
 
         </div>
-        <div class="column half">
-            <div class="right scrollable">
+
+        <div class="column fourth">
+            <div class="blue-box mal pal">
                 {{#each m.shreds}}
-                <div class="blue-box mal pal txt-center">
-                    <a href="/shred/{{_id}}"><img src="{{thumb}}" class="shred-thumb brd-dark"></a>
-                    <div class="footer txt-center">
-                        <h4 class="lead mam"><a href="/shred/{{id}}">{{title}}</a></h4>
-                        <p><small>{{description}}</small></p>
+                    <div class="brd-dark box-wrap le-wrap stage-thumb-wrap mvm">
+                        <a class="white" href="/shred/{{_id}}"><img src="{{thumb}}" class="shred-thumb"></a>
+                        <div class="le-in thmb pas white">
+                            <p><a class="white" href="/shred/{{_id}}">{{title}}</a></p>
+                            <small class="lead white">{{description}}</small>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="column fourth">
+            <div class="blue-box mal pal txt-center">
+                {{#each m.battles}}
+                <div class="brd-dark clearfix in rel mvm" data-evt="battle-clk" data-mod="{{_id}}">
+                    <div class="le-wrap battle-thumbs">
+                        <div class="le-in full-in faded hov point">
+                            <div class="le-in vert-center center subheading">
+                                <h3 class="cap">{{battler.username}} <span class="block lead">vs</span></h3>
+                                <h3 class="cap">{{battlee.username}}</h3>
+                            </div>
+
+                            <div class="le-in bottom full-w mas">
+                                <span class="small tags right battles">{{votesStr}}</span>
+                                <span class="small tags left battles">{{mode}}</span>
+                            </div>
+                        </div>
+                        <!-- <div class="le-in half-in right-half"></div> -->
+
+                        <div class="crop" style="background-image: url('{{battler.profileImgFile}}');">
+                            <!-- <img src="{{battler.profileImgFile}}" class="shred-thumb"> -->
+                        </div>
+                        <div class="crop" style="background-image: url('{{battlee.profileImgFile}}');">
+                            <!-- <img src="{{battlee.profileImgFile}}" class="shred-thumb"> -->
+                        </div>
                     </div>
                 </div>
                 {{/each}}
             </div>
         </div>
+
     </div>
 </div>

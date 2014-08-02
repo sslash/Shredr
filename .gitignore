@@ -6,3 +6,7 @@ app/bower_components
 .tmp/
 .sass-cache
 uploads
+public/video
+public/audio
+public/img/iconssummer
+public/img/freebieIcons

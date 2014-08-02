@@ -119,10 +119,10 @@ $battler-width: 100px;
 .scroll {
     overflow-y: scroll;
     &.comments {
-        max-height: 208px;
+        max-height: 500px;
     }
 
     &.battles {
-        max-height:190px;
+        max-height:500px;
     }
 }

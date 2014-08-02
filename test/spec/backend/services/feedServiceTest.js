@@ -14,7 +14,7 @@ var userService = require(process.cwd() + '/services/userService');
 var feedService = require(process.cwd() + '/services/feedService');
 var dat = this;
 
-describe('feedService', function () {
+xdescribe('feedService', function () {
 
 
     if('should be defined', function () {
@@ -158,7 +158,7 @@ describe('feedService', function () {
     //     });
     // });
 
-    
+
 });
 
 

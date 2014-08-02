@@ -7,7 +7,7 @@ var brService = rewire(process.cwd() + '/services/battleRequestService');
 var testHelper    = require('../testHelper');
 var brId;
 
-describe('battleRequestService', function () {
+xdescribe('battleRequestService', function () {
 
     before(function(done) {
         testHelper.createBattleRequest(function(id) {

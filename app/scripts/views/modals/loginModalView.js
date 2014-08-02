@@ -2,7 +2,9 @@
 define([
     'backbone',
     'views/modals/baseModalLayout',
+    'views/badges/baseBadge',
     'models/user',
+    'models/badge',
     'libs/utils',
     'hbs!tmpl/modals/loginModalView',
     'hbs!tmpl/modals/loginModalLogin',
@@ -12,7 +14,9 @@ define([
 function (
     Backbone,
     BaseModalLayout,
+    BaseBadgeView,
     User,
+    Badge,
     utils,
     Tpl,
     loginTpl,
@@ -61,7 +65,11 @@ var LoginModalView = BaseModalLayout.extend({
 
     modelSavedSuccess : function () {
         Shredr.authController.loginUser(this.model);
-        utils.execFadeOutIn(this.$('form'), regSuccessTpl(this.model.toJSON()));
+        Shredr.baseController.hideShowNewModal(new BaseBadgeView({
+            model : new Badge(this.model.get('flash').badges[0]),
+            tpl : 'theNovice',
+            classes : 'modal-short form-dark'
+        }));
     },
 
     modelLoginSuccess : function () {

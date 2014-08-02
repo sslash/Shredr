@@ -46,7 +46,9 @@ var userPlugin  = require('mongoose-user');
      facebook: {},
 
      //TODO: this should be persisted in redis!
-     feed : [Schema.Types.Mixed]
+     feed : [Schema.Types.Mixed],
+
+     badges : [{ type: Schema.Types.ObjectId, ref : 'Badge' }]
  });
 
 /**

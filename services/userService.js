@@ -4,7 +4,7 @@ var mongoose       = require('mongoose'),
     query          = require('../libs/query.js'),
     Q              = require('q'),
     shredService   = require('../services/shredService'),
-    battleService  = require('../services/battleService'),
+    badgeService   = require('../services/badgeService'),
     extend         = require('util')._extend,
     feedService    = require('./feedService'),
     fileHandler    = require('../libs/fileHandler');
@@ -24,17 +24,21 @@ module.exports = {
         return deferred.promise;
     },
 
-    create : function (body) {
+    create : function (body, req) {
         var def = Q.defer();
-        var user = new User(body);
-        user.provider = 'local';
-        user.create()
+        var user = new User(_.extend(body, {provider : 'local'}));
+
+        badgeService.addBadgeForUser('The Novice', user)
+        .then(function (res) {
+            req.session.flash = {badges : [res.toJSON()]};
+            return user.create();
+        })
         .then(function() {
             return feedService.broadcastNewUserFeed({
                 user : user
             });
         })
-        .then(def.resolve, def.reject).done();
+        .then(def.resolve.bind(null,user), def.reject).done();
         return def.promise;
     },
 

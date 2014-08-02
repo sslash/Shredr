@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 	Query = require('../libs/query'),
 	BaseController = require("./baseController"),
 	userService    = require('../services/userService'),
+	_				= require('underscore'),
 	extend = require('util')._extend;
 
 var renderIndex = function(req, res, user, err) {
@@ -20,8 +21,8 @@ var renderIndex = function(req, res, user, err) {
 	});
 };
 
-var login = function (req, res) {
-	res.send(req.user);
+var login = function (req, res, opts) {
+	res.send(_.extend(req.user.toJSON(), opts, {_id : req.user._id.toJSON()}));
 };
 
 module.exports = BaseController.extend({
@@ -116,13 +117,13 @@ module.exports = BaseController.extend({
 	},
 
 	create : function(req, res) {
-		userService.create(req.body)
+		userService.create(req.body, req)
 		.then(function (user) {
-			console.log('Created user success!');
+			console.log('Created user success! ' + user.username);
 			// manually login the user once successfully signed up
 			// logIn is a passport function (passport.request.js)
 			req.logIn(user, function () {
-				login(req, res);
+				login(req, res, {flash : req.session.flash});
 			});
 		})
 		.fail(client.error.bind(null, res)).done();

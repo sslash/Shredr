@@ -22,7 +22,7 @@ function diFileHandler () {
     });
 }
 
-describe('shredService', function () {
+xdescribe('shredService', function () {
 
     before(diFileHandler);
 

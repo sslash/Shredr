@@ -3190,6 +3190,10 @@ figcaption {
   .banner .content {
     height: 150px; }
 
+.back-img {
+  background-size: cover;
+  background-position: center center; }
+
 .fullscreenimg {
   position: fixed;
   top: 115px;
@@ -3967,7 +3971,8 @@ td {
 #feed {
   background-image: url(/img/banners/stones.jpg);
   background-size: cover;
-  background-position: inherit; }
+  background-position: inherit;
+  height: 150px; }
 
 .feed .banner {
   box-shadow: -2px 11px 8px -10px rgba(32, 32, 32, 0.71); }
@@ -4334,9 +4339,9 @@ td {
 .scroll {
   overflow-y: scroll; }
   .scroll.comments {
-    max-height: 208px; }
+    max-height: 500px; }
   .scroll.battles {
-    max-height: 190px; }
+    max-height: 500px; }
 
 .modal {
   position: fixed;

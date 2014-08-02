@@ -1,5 +1,9 @@
 ##TODOS:
 
+* Landing Page
+
+* Logged in page: Need a better site structure. Perhaps Battles should be first-class citisens
+
 * Badges
     - Just started Badge
     - First battle

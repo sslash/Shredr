@@ -75,10 +75,10 @@ module.exports = function (grunt) {
                 stdout: true
             },
 
-            // backend : {
-            //     command: 'mocha test/spec/backend/**/*.js',
-            //     stdout: true
-            // }
+            backend : {
+                command: 'mocha test/spec/backend/**/*.js -t 5000',
+                stdout: true
+            }
         },
 
 

@@ -157,6 +157,11 @@ figcaption {
 	.content { height:150px;}
 }
 
+.back-img {
+	background-size: cover;
+	background-position: center center;
+}
+
 .fullscreenimg {
 	position: fixed;
 	top: $top-height;

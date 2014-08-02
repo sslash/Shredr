@@ -71,7 +71,12 @@ module.exports = {
             ret = battle;
             var args = {};
             args.path = './public/video/battle/';
-            return fileHandler.storeVideoFile(req, args)
+            args.title = id;
+            // Todo change where this info is placed
+            args.orgFile = battle.rounds[0][0];
+
+            return fileHandler.createMergedBattleFile(req, args)
+            //return fileHandler.storeVideoFile(req, args)
 
             // Get current battle round, and save the reference to the video
             .then(function(result) {
@@ -99,6 +104,7 @@ module.exports = {
         })
         // // TODO: send notification to battlee
         .fail (function(err) {
+            console.log('failed: ' + err);
             return deferred.reject(err);
         });
 

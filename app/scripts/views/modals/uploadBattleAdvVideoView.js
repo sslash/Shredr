@@ -59,6 +59,9 @@ function (
 
         // set number of seconds until video must start
         dragStop : function (e) {
+            if(!this.readyState) {
+                return alert('Error, failed to fetch audio. Please try again later');
+            }
 
             // get percentage of pixels from left
             var $ct = $(e.target);
@@ -106,7 +109,7 @@ function (
                 if ( this.$audio.readyState < 3 ) {
                     setTimeout(tryRender.bind(this), 40);
                 } else {
-
+                    this.readyState = true;
                     var lastSec = this.getLastVideoSec();
                     var audioSecs = this.$audio.duration;
 

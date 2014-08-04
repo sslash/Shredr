@@ -7,6 +7,10 @@ var mongoose    = require('mongoose'),
 
 module.exports = {
 
+    findById : function (id) {
+        return Jamtrack.findById(id);
+    },
+
     list : function (opts) {
         var opts = opts || {};
         opts.populate = 'user';

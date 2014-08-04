@@ -17,6 +17,10 @@ require.config({
         autocomplete : {
             deps: ['jquery'],
             exports: 'autocomplete'
+        },
+        fileupload: {
+            deps : ['autocomplete'],
+            exports : 'fileupload'
         }
     },
 
@@ -24,6 +28,7 @@ require.config({
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone-amd/backbone',
         underscore: '../bower_components/underscore-amd/underscore',
+        fileupload : 'libs/jquery.fileupload',
 
         /* alias all marionette libs */
         'backbone.marionette': '../bower_components/backbone.marionette/lib/core/amd/backbone.marionette',

@@ -4,7 +4,7 @@ var expect         = require('expect.js');
 var fileHandler    = require(process.cwd() + '/libs/fileHandler');
 
 describe('fileHandler', function () {
-    describe('createMergedBattleFile', function () {
+    xdescribe('createMergedBattleFile', function () {
 
         it('should save initial battle advanced file', function (done) {
             fileHandler.saveInitialBattleAdv({}, {

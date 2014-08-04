@@ -4,6 +4,7 @@ define([
   'models/battleRequest',
   'collections/jamtrackCollection',
   'components/uploadComponent',
+  'libs/utils',
   'views/modals/baseModalLayout',
   'views/globals/playAudioView',
   'views/modals/uploadBattleAdvVideoView',
@@ -16,6 +17,7 @@ define([
     BattleRequest,
     JamtrackCollection,
     UploadComponent,
+    utils,
     BaseModalLayout,
     PlayAudioView,
     UploadBattleAdvVideoView,
@@ -86,12 +88,11 @@ define([
       renderJamtrackForm : function () {
         // hide mode select images and buttons
         this.$('[data-mod="mode-head"]').text('Advanced Mode Selected');
-        this.$('[data-reg="mode"]').fadeOut('fast');
-        this.$('[data-reg="upl"]').html(jamtrackTpl);
-
-        this.renderJamtracksColl();
-        this.renderJamtrackPlayback();
-        this.renderUploadComponent();
+        utils.execFadeOutIn(this.$('[data-reg="mode"]'), jamtrackTpl, function () {
+            this.renderJamtracksColl();
+            this.renderJamtrackPlayback();
+            this.renderUploadComponent();
+        }.bind(this));
       },
 
       renderJamtracksColl : function () {

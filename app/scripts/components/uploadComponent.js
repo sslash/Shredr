@@ -1,7 +1,8 @@
 define([
     'components/component',
     'hbs!tmpl/components/uploadComponent',
-    'autocomplete'
+    'autocomplete',
+    'fileupload'
     ],
     function( Component, tmpl ) {
         'use strict';
@@ -11,12 +12,54 @@ define([
 
             initialize : function (opts) {
                 this.extraClasses = opts.classes;
-                this.listenTo(this, 'file:changed:success', this.createThumb);
+                this.url = opts.url;
+                // this.listenTo(this, 'file:changed:success', this.createThumb);
             },
 
-            events : {
-                'change #file-upload' : '__fileChanged'
+            initFileupload : function () {
+                var data = {
+                    battlee : this.model.get('_id'),
+                    battler : Shredr.user.get('_id'),
+                    jamtrackId : '53d20eb4bd50f187d339b524',
+                    rounds : 3,
+                    dayLimit : 1,
+                    statemenet : 'Hello statemenet yolo'
+                };
+
+                var dat = this;
+                this.$('#fileupload').fileupload({
+                    dataType: 'json',
+                    url : this.url,
+                    formData: data,
+                    add: function (e, data) {
+                        data.context = $('<button class="btn btn-niz"/>').text('Upload')
+                        .appendTo(dat.$('form'))
+                        .click(function () {
+                            data.context = $('<p/>').text('Uploading...').replaceAll($(this));
+                            data.submit();
+                        });
+                    },
+                    done: function (e, data) {
+                        console.log('holaer')
+                        if( !data.result.files ) return;
+                        $.each(data.result.files, function (index, file) {
+                            $('<p/>').text(file.name).appendTo(document.body);
+                        });
+                    },
+                    progressall: function (e, data) {
+                        console.log('swag')
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#progress .bar').css(
+                            'width',
+                            progress + '%'
+                        );
+                    }
+                });
             },
+
+            // events : {
+            //     'change #file-upload' : '__fileChanged'
+            // },
 
             createThumb : function(file) {
                 var reader = new FileReader();
@@ -71,11 +114,15 @@ define([
             initialize: function(opts) {
                 opts = opts || {};
                 Component.prototype.initialize.call(this, opts);
-                this.view = new View({classes : opts.classes});
-                this.listenTo(this.view, 'file:changed', this.__fileUploadBtnClicked);
-                this.listenTo(this.region, 'show', this.initDropListeners);
-                this.listenTo(this, 'file:upload', this.upload);
-                this.listenTo(this.view, 'file:changed:thumb:created', this.thumbCreated);
+                this.view = new View({
+                    model : opts.model,
+                    url : opts.url,
+                    classes : opts.classes
+                });
+                // this.listenTo(this.view, 'file:changed', this.__fileUploadBtnClicked);
+                // this.listenTo(this.region, 'show', this.initDropListeners);
+                // this.listenTo(this, 'file:upload', this.upload);
+                // this.listenTo(this.view, 'file:changed:thumb:created', this.thumbCreated);
             },
 
             __fileUploadBtnClicked : function (e) {
@@ -131,6 +178,7 @@ define([
 
             show : function () {
                 this.region.show(this.view);
+                this.view.initFileupload();
                 return this;
             },
 

@@ -1,6 +1,7 @@
   var fs    = require('fs'),
     path  = require('path'),
     Q     = require('q'),
+    _       = require('underscore'),
     async = require('async'),
     ffmpeg = require('fluent-ffmpeg'),
     vidDir = './public/video/',
@@ -41,12 +42,22 @@ module.exports.storeFile = function (args, next) {
     });
 };
 
-module.exports.saveInitialBattleAdv = function (req, args) {
+module.exports.saveInitialBattleAdv = function (args) {
     var def = Q.defer();
+    _.extend(args, {
+        file1 : args.file1 || args.file.path,
+        file2 : args.file2 || args.file.path,
+        outputfile : args.filepath + args.filename,
+        audioFile : args.audioFilepath + args.audioFilename,
+        start : args.startSec + args.startFrame / 60,
+    });
 
     async.waterfall([
-        this.setNewDuration.bind(null, req, args),
-        this.addAudio
+        this.validateVideo.bind(null,args),
+        this.setNewDuration,
+        this.addAudio,
+        this.createThumbnail,
+        this.outputFile,
     ], function (err, res) {
         if (err) def.reject(err);
         else def.resolve(res);
@@ -55,32 +66,79 @@ module.exports.saveInitialBattleAdv = function (req, args) {
     return def.promise;
 };
 
+module.exports.validateVideo = function (args, next) {
+    var file = args.file;
+    var size = file.size;
+    size /= (1000*1000);
+
+    // Do some error handling
+    if ( size > 100) {
+        // max size = 10Mb
+        next({err :'File too large'});
+
+    } else if ( !((/^video/).test(file.type)) ) {
+        // must be video file
+        next({err :'File is not a video file'});
+    } else {
+        next(null, args);
+    }
+};
+
+module.exports.outputFile = function (args, next) {
+    var filetype = path.extname(args.file.name);
+    var newFilename = args.filename + filetype;
+
+    var command = new ffmpeg(args.file1)
+    .output(args.outputfile)
+    .withSize('672x384');
+
+    if ( filetype !== '.webm' ) {
+        command = command.output(args.filename + '.webm')
+        .withVideoCodec('libvpx')
+        .withAudioCodec('libvorbis')
+        .withSize('672x384')
+        .withAudioQuality(4)
+        .toFormat('webm');
+    }
+
+    command.on('end', function() {
+        console.log('Finished processing');
+        next(null, args);
+    })
+    .on('error', function (err) {
+        next(err);
+    })
+    .run();
+};
+
 // adds audio to the given video
-module.exports.addAudio = function (req, args, next) {
-    var sourcefilename = args.filepath + args.file2;
-    var outputfile = args.filepath + args.outputfile;
-    var test = process.cwd() + '/public/video/battle/test.mp4';
-    var audio = args.audio;
+module.exports.addAudio = function (args, next) {
+    var sourcefilename = args.file1;
+
+    // TODO: set outputfile should be the new name of the file
+    var outputfile = args.file2;
+    var audio = args.audioFile;
     new ffmpeg({logger : console})
     .addInput(audio)
     .addInput(sourcefilename)
     .audioChannels(4)
     .complexFilter('[0:a][1:a]amerge, pan=stereo:c0<c0+c2:c1<c1+c3[out]')
     .outputOptions(['-map 1:v', '-map [out]', '-c:v copy', '-c:a libfdk_aac'])
-    .save(test)
+    .save(outputfile)
     .on('error', next)
     .on('end', function () {
         console.log('DONE')
-        next(null, req, args);
+        next(null, args);
     })
     // .run();
 
 };
 
 // sets start and end time to given movie.
-module.exports.setNewDuration = function (req, args, next) {
-    var sourcefilename = args.filepath + args.file1;
-    var outputfile = args.filepath + args.file2;
+TODO: DEBUG WHY THIS FAILS
+module.exports.setNewDuration = function (args, next) {
+    var sourcefilename = args.file1;
+    var outputfile = args.file2;
 
     try {
         var command = new ffmpeg({source : sourcefilename});
@@ -100,7 +158,7 @@ module.exports.setNewDuration = function (req, args, next) {
         })
         .on('end', function (res) {
             console.log('yeah this is done');
-            next(null, req, args);
+            next(null, args);
         })
         .run();
     }catch(e) {
@@ -262,21 +320,17 @@ module.exports.storeVideoFile = function (req, opts, next) {
     return def.promise;
 };
 
-function createThumbnail(res) {
-    var deferred = Q.defer();
-    var filepath = vidDir + res.file.name;
-    new ffmpeg({ source: filepath })
+function createThumbnail (args, next) {
+    new ffmpeg({ source: args.file1 })
     .withSize('320x240')
     .on('error', function (err) {
-        console.log('fail: ' + err.message);
-        deferred.reject(err.message);
+        console.log('failed to screenschot: ' + err.message);
+        next(err.message);
     })
     .on('end', function(filenames) {
         console.log('Successfully generated ' + filenames.join(', '));
-        res.thumb = filenames.length ? thumbDir + filenames[0] : null;
-        deferred.resolve(res);
+        args.thumb = filenames.length ? thumbDir + filenames[0] : null;
+        next(null, args);
     })
     .takeScreenshots(1, thumbDirStore);
-
-    return deferred.promise;
 }

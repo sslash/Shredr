@@ -24,7 +24,7 @@ var BattleRequestSchema = new Schema({
   jamtrackFileId : String,
 
   // Just the video. Misleading name..
-  advVidFile : String,
+  videFileId : String,
 
   // Advanced mode things
   startSec : Number,

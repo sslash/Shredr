@@ -16,10 +16,13 @@ exports.create = function (req, res) {
     battlee : req.body.battlee,
     statement: req.body.statement,
     rounds : req.body.rounds,
+    file : req.files ? req.files.files[0] : null,
     mode : req.body.mode,
+    startFrame : req.body.startFrame,
+    startSec : req.body.startSec,
+    duration : req.body.duration,
     dayLimit : req.body.dayLimit,
     jamtrackId : req.body.jamtrackId || null
-
   })
   .then(client.send.bind(null, res, null))
   .fail(client.error.bind(null, res))

@@ -57,7 +57,7 @@ JamtrackSchema.methods = {
 JamtrackSchema.statics = {
 
   findById: function (id, next) {
-    this.findOne({ _id : id })
+    return this.findOne({ _id : id })
       .populate('user relatedShreds')
       .exec(next);
   },

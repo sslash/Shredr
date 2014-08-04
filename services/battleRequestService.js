@@ -1,20 +1,41 @@
 var mongoose      = require('mongoose'),
-Q             = require('q'),
-fileHandler   = require('../libs/fileHandler'),
-userService    = require('./userService'),
-Battle         = mongoose.model('Battle'),
-feedService    = require('./feedService'),
-BattleRequest = mongoose.model('BattleRequest');
+    Q             = require('q'),
+    fileHandler   = require('../libs/fileHandler'),
+    userService    = require('./userService'),
+    Battle         = mongoose.model('Battle'),
+    feedService    = require('./feedService'),
+    _               = require('underscore'),
+    jamtrackService = require('./jamtrackService'),
+    BattleRequest = mongoose.model('BattleRequest');
 
 exports.create = function (opts) {
     var def = Q.defer();
-    new BattleRequest(opts).create()
+
+    // get jamtrack file
+    jamtrackService.findById(opts.jamtrackId)
+    .then(function(jamtrack) {
+        return fileHandler.saveInitialBattleAdv({
+            audioFilename : jamtrack.fileId,
+            startSec : opts.startSec,
+            startFrame : opts.startFrame,
+            file : opts.file,
+            filepath : process.cwd() + '/public/battle/',
+            audioFilepath : process.cwd() + '/public/audio/',
+            filename : opts.battler._id.toString() + '_' + Date.now().toString()
+        });
+    })
+    .then(function (filename) {
+        return new BattleRequest(_.extend(opts, {videFileId : filename})).create();
+    })
     .then(function(res) {
 
         // because this fetch populates the model
-        BattleRequest.findById(res.id)
-        .then(def.resolve, def.reject).done();
-    }).done();
+        BattleRequest.findById(res.id, function(err, res) {
+            if ( err ) def.reject(err);
+            else def.resolve(res);
+        });
+    }, def.reject);
+
     return def.promise;
 };
 

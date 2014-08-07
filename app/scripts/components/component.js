@@ -25,10 +25,11 @@ define([
                 return this;
             },
 
-            close : function () {
+            // remember to call this!
+            onClose : function () {
                 this.region.close();
             }
         });
-        
+
         return Component;
     });

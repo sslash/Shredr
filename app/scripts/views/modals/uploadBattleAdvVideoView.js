@@ -1,4 +1,3 @@
-//TODO: FINISH SAVE
 /* global define */
 define([
 'views/modals/uploadBattleSmplVideoView',
@@ -32,6 +31,7 @@ function (
                     this.renderCanvas();
                     this.setVideoWidths();
                 } catch(e) {
+                    console.log('error: ' + e);
                     setTimeout(this.renderAsyncs.bind(this), 20);
                 }
             }.bind(this), 20);
@@ -191,7 +191,6 @@ function (
                     vidStartFramesOffset : this.vidStartFramesOffset
                 });
             }
-
             // create a new videoplayercomnponent.
             this.vpComponent = new VPComponent({
                 videos : vpVideos,
@@ -213,17 +212,24 @@ function (
           this.vpComponent.trigger('player:stop');
       },
 
-      // upload file, then post battleround
-      __submitClicked : function () {
-
-          this.model.postBattleRound({
-              uploadComponent : this.uploadComponent,
-              startSec : this.vidStartSec,
-              duration : this.$video[0].duration,
-              startFrame : this.vidStartFramesOffset
-          });
+      getSaveData : function () {
+          return {
+            startSec : this.vidStartSec,
+            duration : this.$video[0].duration,
+            startFrame : this.vidStartFramesOffset
+          }
       }
 
+      // upload file, then post battleround
+    //   __submitClicked : function () {
+      //
+    //       this.model.postBattleRound({
+    //           uploadComponent : this.uploadComponent,
+    //           startSec : this.vidStartSec,
+    //           duration : this.$video[0].duration,
+    //           startFrame : this.vidStartFramesOffset
+    //       });
+    //   },
     });
 
     return UploadBattleVideoView;

@@ -5,7 +5,6 @@ define([
     'views/modals/brView',
     'views/user/editUserView',
     'components/fanComponent',
-    'components/uploadComponent',
     'hbs!tmpl/user/userLayout'
 ],
 function (
@@ -14,7 +13,6 @@ function (
     BrView,
     EditUserView,
     FanComponent,
-    uploadComponent,
     tpl
 ){
 'use strict';
@@ -33,11 +31,11 @@ var UserLayout = Backbone.Marionette.Layout.extend({
 
     onRender : function () {
         this.renderFanButton();
-        var uploadForm = new uploadComponent({
-            region : this.$('#uploader'),
-            url : '/api/battleRequest/',
-            model : this.model
-        }).show();
+        // var uploadForm = new uploadComponent({
+        //     region : this.$('#uploader'),
+        //     url : '/api/battleRequest/',
+        //     model : this.model
+        // }).show();
     },
 
     serializeData : function () {

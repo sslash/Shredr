@@ -57,7 +57,7 @@ define([
                 var startTime, duration, frames = 0;
                 this.playAudio();
                 startTime = new Date().getTime();
-                playNext();
+                run();
 
                 function run () {
                     // set when next video starts
@@ -80,7 +80,6 @@ define([
                             // update seconds in UI
                             dat.component.trigger('player:seconds', dat.secs);
                         }
-
 
                         // done with dat movie. try play next
                     } else {

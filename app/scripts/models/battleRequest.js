@@ -52,13 +52,14 @@ function( Backbone, User, Jamtrack, baseBattle ) {
             return json;
         },
 
-        getUploadUrl : function () {
-            if ( !this.id ) {
-                throw new Error('Battle Request object does not have an ID');
-            }
-
-            return this.url() + '/' + this.get('mode') + '/uploadFile';
-        },
+        // dont think this is needed anymore..
+        // getUploadUrl : function () {
+        //     // if ( !this.id ) {
+        //     //     throw new Error('Battle Request object does not have an ID');
+        //     // }
+        //
+        //     return this.url() + '/' + this.get('mode') + '/uploadFile';
+        // },
 
         getLastVideo : function () {
           return {

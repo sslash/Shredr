@@ -2,6 +2,7 @@
 define([
   'backbone',
   'models/battleRequest',
+  'models/jamtrack',
   'collections/jamtrackCollection',
   'components/uploadComponent',
   'libs/utils',
@@ -15,6 +16,7 @@ define([
   function (
     Backbone,
     BattleRequest,
+    Jamtrack,
     JamtrackCollection,
     UploadComponent,
     utils,
@@ -30,9 +32,10 @@ define([
 
       initialize : function (opts) {
         BaseModalLayout.prototype.initialize.apply(this, arguments);
+        this.jamtrackModel = new Jamtrack();
         this.brModel = new BattleRequest({
           battlee : this.model.get('_id'),
-          mode : 'simple'
+          mode : 'Simple'
         });
       },
 
@@ -49,6 +52,10 @@ define([
         brRounds : '[data-mod="brRounds"]',
         brDays : '[data-mod="brDays"]'
       }),
+
+      onClose : function () {
+        //   this.uploadComponent.close();
+      },
 
       onRender : function () {
         BaseModalLayout.prototype.onRender.apply(this, arguments);
@@ -67,7 +74,7 @@ define([
 
       __jamtrackSelected : function (e) {
         this.selectedJamtrack = this.jamtrackColl.get(e.currentTarget.value);
-        this.brModel.set('jamtrackId', this.selectedJamtrack.get('_id'));
+        this.brModel.set('jamtrackId', this.selectedJamtrack.toJSON());
       },
 
       __simpleClicked : function (e) {
@@ -82,7 +89,7 @@ define([
       },
 
       __playJamtrackClicked : function (e) {
-        this.playAudioView.playJamtrack(this.selectedJamtrack);
+          this.playAudioView.playJamtrack(this.selectedJamtrack);
       },
 
       renderJamtrackForm : function () {
@@ -107,11 +114,12 @@ define([
       },
 
       renderUploadComponent : function () {
-        this.uploadComponent = new UploadComponent({
-          fileUpload : true,
-          fileDrop : true,
-          region : new Backbone.Marionette.Region({el : this.$('[data-reg="upload"]')})
-        }).show();
+        // this.uploadComponent = new UploadComponent({
+        //   fileUpload : true,
+        //   fileDrop : true,
+        //   model : this.jamtrackModel,
+        //   region : this.$('[data-reg="upload"]')
+        // }).show();
       },
 
       renderJamtracks : function () {
@@ -123,20 +131,24 @@ define([
       },
 
       doSave : {
+
           Simple : function () {
-              this.saveModel();
+            //   this.saveModel();
+            this.onSaveSuccess();
           },
           Advanced : function () {
               // if user has selected a jamtrack from the list.
               // no need to upload anything
               if ( this.brModel.get('jamtrackId') ) {
-                  this.saveModel();
+                  // this.saveModel();
+                  this.onSaveSuccess();
                   // Or, user should have uploaded either a jamtrack (mode 1), or video
               } else {
-                  if ( !this.uploadComponent.fileAdded() ) {
-                      return alert('You must upload a jamtrack, or select an existing');
-                  }
-                  this.saveModel(this.uploadJamtrack.bind(this));
+                // not supported yet
+                //   if ( !this.uploadComponent.fileAdded() ) {
+                //       return alert('You must upload a jamtrack, or select an existing');
+                //   }
+                  //this.saveModel(this.uploadJamtrack.bind(this));
               }
           }
       },
@@ -155,23 +167,28 @@ define([
       * Mode1: will simply save br
       * Mode2: jamtrack has been uploaded, or jamtrackid is selected
       */
-      saveModel : function (next) {
-        // return this.onSaveSuccess(); //TODO just rm this
-        Shredr.baseController.exec(this.brModel, 'save', {
-          attrs : {
-              rounds : this.$('#brRounds').val(),
-              dayLimit : this.$('#brDays').val(),
-              statement : this.$('#br-statement').val()
-          },
-          success : function (res) {
-            if (next) { next(); }
-            else { this.onSaveSuccess(res); }
-          }.bind(this)
-        });
-      },
+    //   saveModel : function (next) {
+    //     // return this.onSaveSuccess(); //TODO just rm this
+    //     Shredr.baseController.exec(this.brModel, 'save', {
+    //       attrs : {
+    //           rounds : this.$('#brRounds').val(),
+    //           dayLimit : this.$('#brDays').val(),
+    //           statement : this.$('#br-statement').val()
+    //       },
+    //       success : function (res) {
+    //         if (next) { next(); }
+    //         else { this.onSaveSuccess(res); }
+    //       }.bind(this)
+    //     });
+    //   },
 
       onSaveSuccess : function (res) {
-        if (res) { this.brModel.set(res); }
+        // if (res) { this.brModel.set(res); }
+        this.brModel.set({
+            rounds : this.$('#brRounds').val(),
+            dayLimit : this.$('#brDays').val(),
+            statement : this.$('#br-statement').val()
+        });
 
         var opts = {
             model : this.brModel,

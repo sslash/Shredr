@@ -25,6 +25,9 @@ require.config({
     },
 
     paths: {
+        'load-image' : 'libs/load-image',
+        'jquery.fileupload-process' : 'libs/jquery.fileupload-process',
+        'jquery.fileupload-video' : 'libs/jquery.fileupload-video',
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone-amd/backbone',
         underscore: '../bower_components/underscore-amd/underscore',

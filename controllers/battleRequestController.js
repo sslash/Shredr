@@ -18,8 +18,8 @@ exports.create = function (req, res) {
     rounds : req.body.rounds,
     file : req.files ? req.files.files[0] : null,
     mode : req.body.mode,
-    startFrame : req.body.startFrame,
-    startSec : req.body.startSec,
+    startFrame : req.body.startFrame || '0',
+    startSec : req.body.startSec || '0',
     duration : req.body.duration,
     dayLimit : req.body.dayLimit,
     jamtrackId : req.body.jamtrackId || null

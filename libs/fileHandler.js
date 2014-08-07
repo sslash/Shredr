@@ -10,61 +10,147 @@
     thumbDir = '/video/thumbs/';
 
     // Stored on hdd
-var thumbDirStore =  './public' + thumbDir;
+// var thumbDirStore =  './public' + thumbDir;
 
 
 module.exports.storeFile = function (args, next) {
 
     // get the temporary location of the file
-    var tmp_path = "./" + args.file.path;
+    var tmp_path = process.cwd() + '/' + args.file.path;
 
     // set where the file should actually exists - in this case it is in the "images" directory
-    var target_path = args.path + args.filename;
-    console.log("Will save file to: " + target_path);
+    var outputFile = args.path + args.filename + path.extname(args.file.name);
+
     // move the file from the temporary location to the intended location
-    fs.rename(tmp_path, target_path, function(err) {
+    fs.rename(tmp_path, outputFile, function(err) {
         if (err) {
             console.log("Error saving file! " + JSON.stringify(err));
-            next.call(null, {err : err}, {});
+            next(err);
         }
         // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
         fs.unlink(tmp_path, function() {
             if (err) {
                 //throw err;
                 console.log('error saving file! ' + err);
-                next.call(null, {err : err}, {});
+                next(err);
             } else {
-                console.log('File Saved.');
-                //res.send('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes');
-                next.call(null, null, {file : args.file});
+
+                // format the video to a fixed format
+                var command = new ffmpeg(outputFile)
+                .output(args.out_file)
+                .withSize('672x384')
+                .on('end', function() {
+                    console.log('File Saved: ' + outputFile);
+                    args.file1 = outputFile;
+                    next(null, args);
+                })
+                .on('error', function (err) {
+                    console.log('outerr: ' + err);
+                    next(err);
+                })
+                .run();
             }
         });
     });
 };
 
-module.exports.saveInitialBattleAdv = function (args) {
+module.exports.saveInitialBattleSimple = function (args) {
     var def = Q.defer();
     _.extend(args, {
-        file1 : args.file1 || args.file.path,
-        file2 : args.file2 || args.file.path,
-        outputfile : args.filepath + args.filename,
-        audioFile : args.audioFilepath + args.audioFilename,
-        start : args.startSec + args.startFrame / 60,
+        out_file : args.path + args.filename + '_out.mp4',
+        done_file : args.path + args.filename + '_done'
     });
 
     async.waterfall([
-        this.validateVideo.bind(null,args),
-        this.setNewDuration,
-        this.addAudio,
+        this.storeFile.bind(null, args),
+        // writes thumbs/filename
         this.createThumbnail,
+        // verifies > 5mb
+        this.validateVideo,
+        // writes done_file.mp4 and done_file.webm -> takes out_file
         this.outputFile,
+        // deletes all but done_file
+        this.deleteFiles
     ], function (err, res) {
+        console.log('Finished simple!');
         if (err) def.reject(err);
         else def.resolve(res);
     });
 
     return def.promise;
 };
+
+module.exports.saveInitialBattleAdv = function (args) {
+    var def = Q.defer();
+    _.extend(args, {
+        audioFile : args.audioFilepath + args.audioFilename,
+        start : parseFloat(args.startSec + '.' + args.startFrame,10),
+        pad_file : args.path + args.filename + '_pad.m4v',
+        out_file : args.path + args.filename + '_out.mp4',
+        merge_file : args.path + args.filename + '_merge.mp4',
+        after_audio_file : args.path + args.filename + '_waudio.mp4',
+        done_file : args.path + args.filename + '_done'
+    });
+
+    async.waterfall([
+        // writes file1 and out_file -> formats 672x384
+        this.storeFile.bind(null, args),
+
+        // writes thumbs/filename
+        this.createThumbnail,
+
+        // verifies > 5mb
+        this.validateVideo,
+
+        // writes pad_file -> video of image
+        this.createInitialPadVideo,
+
+        // writes merge_file -> merge out_file and pad_file
+        this.doMerge,
+
+        // writes after_audio_file -> adds audioFile to merge_file
+        this.addAudio,
+
+        // writes done_file.mp4 and done_file.webm -> takes after_audio_file
+        this.outputFile,
+
+        // deletes all but done_file
+        this.deleteFiles
+    ], function (err, res) {
+        console.log('Finished Adcanced!');
+        if (err) def.reject(err);
+        else def.resolve(res);
+    });
+
+    return def.promise;
+};
+
+module.exports.deleteFiles = function (args, next) {
+
+    function deleteFile (file) {
+        return function (next) {
+            if (!file) return next();
+            console.log('Deleting: ' + file);
+            fs.unlink(file, function (err) {
+                if (err) next(err);
+                else next();
+            });
+        };
+    }
+
+    var deleteFiles = [
+        args.file1,
+        args.out_file,
+        args.pad_file,
+        args.merge_file,
+        args.after_audio_file
+     ];
+
+    async.waterfall(deleteFiles.map(deleteFile), function (err, res) {
+        if (err) { next(err); }
+        else next(null, args);
+     });
+}
 
 module.exports.validateVideo = function (args, next) {
     var file = args.file;
@@ -84,16 +170,39 @@ module.exports.validateVideo = function (args, next) {
     }
 };
 
-module.exports.outputFile = function (args, next) {
-    var filetype = path.extname(args.file.name);
-    var newFilename = args.filename + filetype;
+// sets start and end time to given movie.
+module.exports.createInitialPadVideo = function (args, next) {
+    var outputfile = args.pad_file;
+    console.log('start: ' + args.start);
 
-    var command = new ffmpeg(args.file1)
-    .output(args.outputfile)
-    .withSize('672x384');
+    try {
+        var command = new ffmpeg(process.cwd() + '/public/img/icons/vidthmb.jpg')
+        .loop(args.start)
+        // using 25 fps
+        .fps(25)
+        .complexFilter('aevalsrc=0')
+
+        .on('error', next)
+        .on('end', function (res) {
+            console.log('New duration done');
+            next(null, args);
+        })
+        .save(outputfile)
+    }catch(e) {
+        console.log('err new duration: ' + e); next(e);
+    }
+};
+
+
+module.exports.outputFile = function (args, next) {
+    var filetype = path.extname(args.done_file);
+    var newFilename = args.done_file;
+
+    var command = new ffmpeg(args.after_audio_file || args.out_file)
+    .output(newFilename + '.mp4')
 
     if ( filetype !== '.webm' ) {
-        command = command.output(args.filename + '.webm')
+        command = command.output(newFilename + '.webm')
         .withVideoCodec('libvpx')
         .withAudioCodec('libvorbis')
         .withSize('672x384')
@@ -106,76 +215,17 @@ module.exports.outputFile = function (args, next) {
         next(null, args);
     })
     .on('error', function (err) {
+        console.log('outerr: ' + err);
         next(err);
     })
     .run();
 };
 
-// adds audio to the given video
-module.exports.addAudio = function (args, next) {
-    var sourcefilename = args.file1;
 
-    // TODO: set outputfile should be the new name of the file
-    var outputfile = args.file2;
-    var audio = args.audioFile;
-    new ffmpeg({logger : console})
-    .addInput(audio)
-    .addInput(sourcefilename)
-    .audioChannels(4)
-    .complexFilter('[0:a][1:a]amerge, pan=stereo:c0<c0+c2:c1<c1+c3[out]')
-    .outputOptions(['-map 1:v', '-map [out]', '-c:v copy', '-c:a libfdk_aac'])
-    .save(outputfile)
-    .on('error', next)
-    .on('end', function () {
-        console.log('DONE')
-        next(null, args);
-    })
-    // .run();
-
-};
-
-// sets start and end time to given movie.
-TODO: DEBUG WHY THIS FAILS
-module.exports.setNewDuration = function (args, next) {
-    var sourcefilename = args.file1;
-    var outputfile = args.file2;
-
-    try {
-        var command = new ffmpeg({source : sourcefilename});
-
-        if ( args.start) {
-            command = command.seek(args.start);
-        }
-
-        if (args.duration) {
-            command = command.duration(args.duration);
-        }
-
-        command
-        .output(outputfile)
-        .on('error', function(err) {
-            console.log('error: ' + err);
-        })
-        .on('end', function (res) {
-            console.log('yeah this is done');
-            next(null, args);
-        })
-        .run();
-    }catch(e) {
-        console.log('errrrr: ' + e); next(e);
-    }
-};
-
-module.exports.doMerge = function (req, args, next) {
-
-    // var file = req.files.file;
-    // var tmp_path = './' + file.path;
-    // var newfilename = args.path + file.name;
-    // var initialFilename = './public/video/battle/' + args.orgFile.videoFileId;
-
-    var initialFilename = args.filepath + args.file1;
-    var newFilename = args.filepath + args.file3;
-    var mergedFilename = process.cwd() + '/public/video/battle/mergedFile.mp4';
+module.exports.doMerge = function (args, next) {
+    var initialFilename = args.pad_file;
+    var newFilename = args.out_file;
+    var mergedFilename = args.merge_file;
 
     // old file path
     try {
@@ -185,29 +235,38 @@ module.exports.doMerge = function (req, args, next) {
         .input(newFilename)
         .mergeToFile(mergedFilename, process.cwd() + '/uploads')
         .on('error', function (err) {
-            console.log('Error merging: ' + err); next(err);
+            next(err);
         })
         .on('end', function() {
-
-            console.log('merge finito!')
-            next(null, {
-                file : {
-                    name : mergedFilename
-                }
-            });
-            // store the merged file
-            // this.storeFile({
-            //     file :
-            //     filename :
-            //     path : args.path
-            // })
+            console.log('Merge finito!')
+            next(null, args);
         });
+
         }catch(e) {
-            console.log('failed: ' + e);
             next(e);
         }
-
 }
+
+// adds audio to the given video
+module.exports.addAudio = function (args, next) {
+    var sourcefilename = args.merge_file;
+
+    var outputfile = args.after_audio_file;
+    var audio = args.audioFile;
+
+    new ffmpeg()
+    .addInput(audio)
+    .addInput(sourcefilename)
+    .audioChannels(4)
+    .complexFilter('[0:a][1:a]amerge, pan=stereo:c0<c0+c2:c1<c1+c3[out]')
+    .outputOptions(['-map 1:v', '-map [out]', '-c:v copy', '-c:a libfdk_aac'])
+    .save(outputfile)
+    .on('error', next)
+    .on('end', function () {
+        console.log('Done audio')
+        next(null, args);
+    });
+};
 
 module.exports.createMergedBattleFile = function (req, args) {
     var def = Q.defer();
@@ -320,17 +379,18 @@ module.exports.storeVideoFile = function (req, opts, next) {
     return def.promise;
 };
 
-function createThumbnail (args, next) {
-    new ffmpeg({ source: args.file1 })
-    .withSize('320x240')
-    .on('error', function (err) {
-        console.log('failed to screenschot: ' + err.message);
-        next(err.message);
+module.exports.createThumbnail = function (args, next) {
+  var thumbDir = process.cwd() + '/public/video/thumbs/';
+
+    ffmpeg(args.out_file)
+    .on('error', function(err) {
+      console.log('An error occurred: ' + err.message);
+      next(err.message);
     })
     .on('end', function(filenames) {
-        console.log('Successfully generated ' + filenames.join(', '));
-        args.thumb = filenames.length ? thumbDir + filenames[0] : null;
-        next(null, args);
+      args.thumb = thumbDir + args.filename + '.png';
+      console.log('Thumb File: ' + args.thumb);
+      next(null, args);
     })
-    .takeScreenshots(1, thumbDirStore);
-}
+    .takeScreenshots({count : 1, timemarks: ['1.5' ], filename : args.filename}, thumbDir);
+};

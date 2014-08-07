@@ -2,7 +2,8 @@ define([
     'components/component',
     'hbs!tmpl/components/uploadComponent',
     'autocomplete',
-    'fileupload'
+    'fileupload',
+    'jquery.fileupload-video'
     ],
     function( Component, tmpl ) {
         'use strict';
@@ -12,54 +13,110 @@ define([
 
             initialize : function (opts) {
                 this.extraClasses = opts.classes;
-                this.url = opts.url;
+                this.addFn = opts.addFn;
                 // this.listenTo(this, 'file:changed:success', this.createThumb);
             },
 
             initFileupload : function () {
-                var data = {
-                    battlee : this.model.get('_id'),
-                    battler : Shredr.user.get('_id'),
-                    jamtrackId : '53d20eb4bd50f187d339b524',
-                    rounds : 3,
-                    dayLimit : 1,
-                    statemenet : 'Hello statemenet yolo'
-                };
+                // var data = {
+                //     battlee : this.model.get('_id'),
+                //     battler : Shredr.user.get('_id'),
+                //     jamtrackId : '53d20eb4bd50f187d339b524',
+                //     rounds : 3,
+                //     dayLimit : 1,
+                //     statemenet : 'Hello statemenet yolo'
+                // };
 
                 var dat = this;
-                this.$('#fileupload').fileupload({
-                    dataType: 'json',
-                    url : this.url,
-                    formData: data,
-                    add: function (e, data) {
-                        data.context = $('<button class="btn btn-niz"/>').text('Upload')
-                        .appendTo(dat.$('form'))
-                        .click(function () {
-                            data.context = $('<p/>').text('Uploading...').replaceAll($(this));
-                            data.submit();
-                        });
-                    },
-                    done: function (e, data) {
-                        console.log('holaer')
-                        if( !data.result.files ) return;
-                        $.each(data.result.files, function (index, file) {
-                            $('<p/>').text(file.name).appendTo(document.body);
-                        });
-                    },
-                    progressall: function (e, data) {
-                        console.log('swag')
-                        var progress = parseInt(data.loaded / data.total * 100, 10);
-                        $('#progress .bar').css(
-                            'width',
-                            progress + '%'
-                        );
-                    }
-                });
-            },
 
-            // events : {
-            //     'change #file-upload' : '__fileChanged'
-            // },
+        // var url = window.location.hostname + '/uploads',
+
+        // var uploadButton = $('<button/>')
+        //     .addClass('btn btn-primary')
+        //     .prop('disabled', true)
+        //     .text('Processing...')
+        //     .on('click', function () {
+        //         var $this = $(this),
+        //             data = $this.data();
+        //         $this
+        //             .off('click')
+        //             .text('Abort')
+        //             .on('click', function () {
+        //                 $this.remove();
+        //                 data.abort();
+        //             });
+        //         data.submit().always(function () {
+        //             $this.remove();
+        //         });
+        //     });
+
+            this.$('#fileupload').fileupload({
+                url: this.model.url(),
+                dataType: 'json',
+                autoUpload: false,
+                //acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                maxFileSize: 5000000, // 5 MB
+                // Enable image resizing, except for Android and Opera,
+                // which actually support image resizing, but fail to
+                // send Blob objects via XHR requests:
+                disableImageResize: /Android(?!.*Chrome)|Opera/
+                .test(window.navigator.userAgent),
+                previewMaxWidth: 100,
+                previewMaxHeight: 100,
+                previewCrop: true
+            })
+            .on('fileuploadadd', this.addFn)
+            .on('fileuploadprocessalways', function (e, data) {
+                var index = data.index,
+                file = data.files[index];
+                if (file.preview) {
+                    dat.trigger('file:changed:thumb:created', file.preview.src);
+                }
+                if (file.error) {
+                    node
+                    .append('<br>')
+                    .append($('<span class="text-danger"/>').text(file.error));
+                }
+                // if (index + 1 === data.files.length) {
+                //     data.context.find('button')
+                //     .text('Upload')
+                //     .prop('disabled', !!data.files.error);
+                // }
+            }).on('fileuploadprogressall', function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                console.log('espa3 ' + progress + '%');
+                $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }).on('fileuploaddone', function (e, data) {
+                console.log('espa43')
+                dat.model.trigger('sync');
+                // $.each(data.result.files, function (index, file) {
+                //     if (file.url) {
+                //         var link = $('<a>')
+                //         .attr('target', '_blank')
+                //         .prop('href', file.url);
+                //         $(data.context.children()[index])
+                //         .wrap(link);
+                //     } else if (file.error) {
+                //         var error = $('<span class="text-danger"/>').text(file.error);
+                //         $(data.context.children()[index])
+                //         .append('<br>')
+                //         .append(error);
+                //     }
+                // });
+            }).on('fileuploadfail', function (e, data) {
+                $.each(data.files, function (index, file) {
+                    var error = $('<span class="text-danger"/>').text('File upload failed.');
+                    $(data.context.children()[index])
+                    .append('<br>')
+                    .append(error);
+                });
+            }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+            },
 
             createThumb : function(file) {
                 var reader = new FileReader();
@@ -106,6 +163,10 @@ define([
 
             __fileChanged : function (e) {
                 this.trigger('file:changed', e);
+            },
+
+            onClose : function () {
+                this.$('#fileupload').fileupload('destroy');
             }
         });
 
@@ -116,13 +177,13 @@ define([
                 Component.prototype.initialize.call(this, opts);
                 this.view = new View({
                     model : opts.model,
-                    url : opts.url,
-                    classes : opts.classes
+                    classes : opts.classes,
+                    addFn : opts.addFn
                 });
                 // this.listenTo(this.view, 'file:changed', this.__fileUploadBtnClicked);
                 // this.listenTo(this.region, 'show', this.initDropListeners);
                 // this.listenTo(this, 'file:upload', this.upload);
-                // this.listenTo(this.view, 'file:changed:thumb:created', this.thumbCreated);
+                this.listenTo(this.view, 'file:changed:thumb:created', this.thumbCreated);
             },
 
             __fileUploadBtnClicked : function (e) {

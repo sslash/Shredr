@@ -9,36 +9,57 @@ var mongoose      = require('mongoose'),
     BattleRequest = mongoose.model('BattleRequest');
 
 exports.create = function (opts) {
-    var def = Q.defer();
+    var def = Q.defer(), br;
+    var promise = opts.mode === 'Advanced' ?
+        createAdvancedBR(opts) : createSimpleBR(opts);
 
-    // get jamtrack file
-    jamtrackService.findById(opts.jamtrackId)
+    promise
+    .then(function(args) {
+        return new BattleRequest(_.extend(opts, {
+          videoFileId : args.file1,
+          thumb : args.thumb
+        }))
+        .create();
+    })
+    .then(function(res) {
+        // because this fetch populates the model
+        return BattleRequest.findById(res.id)
+    })
+    .then(function(res) {
+        br = res;
+        return sendBrNotification(br)
+    })
+    .then(function () {
+        def.resolve(br);
+    }, def.reject);
+
+    return def.promise;
+};
+
+function createAdvancedBR (opts) {
+
+    // get jamtrack file first
+    return jamtrackService.findById(opts.jamtrackId)
     .then(function(jamtrack) {
         return fileHandler.saveInitialBattleAdv({
             audioFilename : jamtrack.fileId,
             startSec : opts.startSec,
             startFrame : opts.startFrame,
             file : opts.file,
-            filepath : process.cwd() + '/public/battle/',
+            path : process.cwd() + '/public/video/battle/',
             audioFilepath : process.cwd() + '/public/audio/',
             filename : opts.battler._id.toString() + '_' + Date.now().toString()
         });
-    })
-    .then(function (filename) {
-        return new BattleRequest(_.extend(opts, {videFileId : filename})).create();
-    })
-    .then(function(res) {
+    });
+}
 
-        // because this fetch populates the model
-        BattleRequest.findById(res.id, function(err, res) {
-            if ( err ) def.reject(err);
-            else def.resolve(res);
-        });
-    }, def.reject);
-
-    return def.promise;
-};
-
+function createSimpleBR (opts) {
+    return fileHandler.saveInitialBattleSimple({
+        path : process.cwd() + '/public/video/battle/',
+        filename : opts.battler._id.toString() + '_' + Date.now().toString(),
+        file : opts.file
+    });
+}
 
 exports.uploadJamtrack = function (brId, req) {
     var def = Q.defer();
@@ -64,33 +85,33 @@ exports.uploadJamtrack = function (brId, req) {
 
     return def.promise;
 };
-
-exports.uploadInitialVideo = function (brId, req) {
-    var def = Q.defer();
-
-    var battleRequest = {};
-    BattleRequest.findById(brId)
-
-    // store video file
-    .then(function(doc) {
-        battleRequest = doc;
-        var args = {};
-        args.path = './public/video/br/';
-        return fileHandler.storeVideoFile(req, args);
-    })
-    // Save the reference to the local file
-    .then(function(result) {
-        battleRequest.advVidFile = result.file.name;
-        battleRequest.save(function(err,res) {
-        if ( err ) { return def.reject(err); }
-            def.resolve(battleRequest);
-        });
-    })
-    .fail(function(err) {
-        def.reject(err);
-    }).done();
-    return def.promise;
-};
+//
+// exports.uploadInitialVideo = function (brId, req) {
+//     var def = Q.defer();
+//
+//     var battleRequest = {};
+//     BattleRequest.findById(brId)
+//
+//     // store video file
+//     .then(function(doc) {
+//         battleRequest = doc;
+//         var args = {};
+//         args.path = './public/video/br/';
+//         return fileHandler.storeVideoFile(req, args);
+//     })
+//     // Save the reference to the local file
+//     .then(function(result) {
+//         battleRequest.advVidFile = result.file.name;
+//         battleRequest.save(function(err,res) {
+//         if ( err ) { return def.reject(err); }
+//             def.resolve(battleRequest);
+//         });
+//     })
+//     .fail(function(err) {
+//         def.reject(err);
+//     }).done();
+//     return def.promise;
+// };
 
 
 var sendBrNotification = function (br) {
@@ -102,21 +123,21 @@ var sendBrNotification = function (br) {
     });
 };
 
-exports.updateBattleRequest = function (brId, body) {
-    var battleRequst = {};
-    return BattleRequest.findById(brId)
-    .then(function(br){
-        battleRequest = br;
-        br.startFrame = body.startFrame;
-        br.startSec = body.startSec;
-        br.duration = body.duration;
-        br.save();
-    })
-    // send notification to battlee
-    .then(function(br) {
-        return sendBrNotification(battleRequest);
-    });
-};
+// exports.updateBattleRequest = function (brId, body) {
+//     var battleRequst = {};
+//     return BattleRequest.findById(brId)
+//     .then(function(br){
+//         battleRequest = br;
+//         br.startFrame = body.startFrame;
+//         br.startSec = body.startSec;
+//         br.duration = body.duration;
+//         br.save();
+//     })
+//     // send notification to battlee
+//     .then(function(br) {
+//         return sendBrNotification(battleRequest);
+//     });
+// };
 
 var sendBrRespondNotification = function (type, response, battler, battlee, referenceId) {
     return battler.addNotification({

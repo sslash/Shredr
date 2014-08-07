@@ -9,10 +9,12 @@
           <div data-reg="vids" class="left">
               {{#each m.rounds}}
                   {{#each this}}
-                      <video id="vid_{{startSec}}" class="video-js vjs-default-skin left"
-                       style="margin-right:1px;" data-setup='{"preload":"auto", "controls":"false"}' data-model="battle-vid" src="/video/battle/{{videoFileId}}">
-                          <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-                      </video>
+                    {{#if videoFileId}}
+                          <video id="vid_{{startSec}}" class="video-js vjs-default-skin left"
+                           style="margin-right:1px;" data-setup='{"preload":"auto", "controls":"false"}' data-model="battle-vid" src="/video/battle/{{videoFileId}}">
+                              <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                          </video>
+                    {{/if}}
                   {{/each}}
               {{/each}}
           </div>
@@ -54,7 +56,7 @@
         </p>
       </div>
       <div class="column third">
-        <p><button class="btn btn-niz" data-evt="submit">Done!</button></p>
+        <div data-reg="submit"></div>
       </div>
     </div>
   </div>

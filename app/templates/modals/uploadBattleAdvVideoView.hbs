@@ -7,16 +7,13 @@
   <section class="faded pam mvxl">
       <div class="row clearfix rel" data-reg="video-drag">
           <div data-reg="vids" class="left">
-              {{#each m.rounds}}
-                  {{#each this}}
-                    {{#if videoFileId}}
-                          <video id="vid_{{startSec}}" class="video-js vjs-default-skin left"
-                           style="margin-right:1px;" data-setup='{"preload":"auto", "controls":"false"}' data-model="battle-vid" src="/video/battle/{{videoFileId}}">
-                              <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-                          </video>
-                    {{/if}}
-                  {{/each}}
-              {{/each}}
+            {{#if m.mergedFile}}
+                <video id="vid_{{startSec}}" class="left" style="margin-right:1px;" data-model="battle-vid">
+                    <source src="/video/battle/{{m.mergedFile}}.webm" type="video/webm;"/>
+                    <source src="/video/battle/{{m.mergedFile}}.mp4" type="video/mp4;"/>
+                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                </video>
+            {{/if}}
           </div>
 
         <div class="left mhl">

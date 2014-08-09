@@ -75,13 +75,15 @@ module.exports = BaseController.extend({
     },
 
     postBattleRound : function (req, res) {
-        try {
-            battleService.storeBattleRound(req.params.id, req.body)
-            .then(client.send.bind(null,res, null))
-            .fail(client.error.bind(null,res));
-        }catch(e) {
-            console.log('ERROR ' + e);
-        }
+        battleService.postBattleRound({
+            id : req.params.id,
+            file : req.files ? req.files.files[0] : null,
+            startFrame : req.body.startFrame || '0',
+            startSec : req.body.startSec || '0',
+            duration : req.body.duration,
+        })
+        .then(client.send.bind(null,res, null))
+        .fail(client.error.bind(null,res));
     },
 
     postVote : function (req, res) {

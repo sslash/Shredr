@@ -106,9 +106,9 @@ module.exports = function(app, passport){
 
   // battles
   app.post('/api/battle/:id/postBattleRound/video', auth.requiresLogin, battleController.postBattleRoundVideo);
-  app.post('/api/battle/:id/postBattleRound', auth.requiresLogin, battleController.postBattleRound);
   app.post('/api/battle/:id/vote/:battlerOrBattlee', auth.requiresLogin, battleController.postVote);
   app.post('/api/battle/:id/comment', auth.requiresLogin, battleController.postComment);
+  app.post('/api/battle/:id', auth.requiresLogin, battleController.postBattleRound);
   app.get('/api/battle/query', battleController.query);
   app.get('/api/battle/:id', battleController.getJSON);
 

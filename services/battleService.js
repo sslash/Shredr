@@ -61,83 +61,144 @@ module.exports = {
 
         return deferred.promise;
     },
+    //
+    // storeBattleRoundVideo : function(id, req) {
+    //     var deferred = Q.defer();
+    //     var ret = {};
+    //
+    //     Battle.findSimple(id)
+    //     .then(function(battle) {
+    //         ret = battle;
+    //         var args = {};
+    //         args.path = './public/video/battle/';
+    //         args.title = id;
+    //         // Todo change where this info is placed
+    //         args.orgFile = battle.rounds[0][0];
+    //
+    //         return fileHandler.createMergedBattleFile(req, args)
+    //         //return fileHandler.storeVideoFile(req, args)
+    //
+    //         // Get current battle round, and save the reference to the video
+    //         .then(function(result) {
+    //
+    //             var i = battle.rounds.length-1;
+    //             var turn = { videoFileId : result.file.name };
+    //
+    //             // if we need to start a new round, create turns array
+    //             // and populate index 0
+    //             if (battle.rounds[i].length === 2) {
+    //                 battle.rounds.push([turn]);
+    //
+    //             // else add a turn
+    //             } else {
+    //                 battle.rounds[i].push(turn);
+    //             }
+    //
+    //             battle.markModified('rounds');
+    //
+    //             battle.save(function(err) {
+    //                 if (err) {deferred.reject(err); }
+    //                 else { deferred.resolve(battle); }
+    //             });
+    //         })
+    //     })
+    //     // // TODO: send notification to battlee
+    //     .fail (function(err) {
+    //         console.log('failed: ' + err);
+    //         return deferred.reject(err);
+    //     });
+    //
+    //     return deferred.promise;
+    // },
+    //
+    // storeBattleRound : function (id, body) {
+    //     var deferred = Q.defer();
+    //
+    //     Battle.findSimple(id)
+    //     .then(function(battle) {
+    //         var args = {};
+    //         args.path = './public/video/battle/';
+    //         args.title = id;
+    //         // Todo change where this info is placed
+    //         args.orgFile = battle.rounds[0][0];
+    //
+    //         return fileHandler.createMergedBattleFile(req, args)
+    //
+    //         // get current round
+    //         var i = battle.rounds.length-1;
+    //         // either add meta to index 0, or 1
+    //         var index = battle.rounds[i].length === 2 ? 1 : 0;
+    //
+    //         _.extend(battle.rounds[i][index], {
+    //             startFrame : body.startFrame,
+    //             startSec   : body.startSec,
+    //             duration   : body.duration,
+    //             createdAt  : new Date()
+    //         });
+    //         battle.markModified('rounds');
+    //         battle.save(function(err) {
+    //             // send notification to battlee
+    //             if (err) {deferred.reject(err); }
+    //             else { deferred.resolve(battle); }
+    //         });
+    //     });
+    //
+    //
+    //     return deferred.promise;
+    // },
 
-    storeBattleRoundVideo : function(id, req) {
-        var deferred = Q.defer();
-        var ret = {};
+    postBattleRound : function (data) {
+        var def = Q.defer(),battle;
+        Battle.findSimple(data.id, {populate : 'jamtrackId'})
+        .then(function(res) {
+            battle = res;
 
-        Battle.findSimple(id)
-        .then(function(battle) {
-            ret = battle;
-            var args = {};
-            args.path = './public/video/battle/';
-            args.title = id;
-            // Todo change where this info is placed
-            args.orgFile = battle.rounds[0][0];
+            var args = {
+                startSec : data.startSec,
+                startFrame : data.startFrame,
+                file : data.file,
+                filename : battle.filename,
+                mode: res.mode,
+                path : process.cwd() + '/public/video/battle/',
+                audioFilepath : process.cwd() + '/public/audio/',
+            }
 
-            return fileHandler.createMergedBattleFile(req, args)
-            //return fileHandler.storeVideoFile(req, args)
+            args.prevMergedFile = args.path + battle.mergedFile + '.mp4';
 
-            // Get current battle round, and save the reference to the video
-            .then(function(result) {
+            if (res.mode === 'Advanced') {
+                args.audioFilename = res.jamtrackId.fileId;
+            }
 
-                var i = battle.rounds.length-1;
-                var turn = { videoFileId : result.file.name };
-
-                // if we need to start a new round, create turns array
-                // and populate index 0
-                if (battle.rounds[i].length === 2) {
-                    battle.rounds.push([turn]);
-
-                // else add a turn
-                } else {
-                    battle.rounds[i].push(turn);
-                }
-
-                battle.markModified('rounds');
-
-                battle.save(function(err) {
-                    if (err) {deferred.reject(err); }
-                    else { deferred.resolve(battle); }
-                });
-            })
+            return fileHandler.saveBattleRound(args)
         })
-        // // TODO: send notification to battlee
-        .fail (function(err) {
-            console.log('failed: ' + err);
-            return deferred.reject(err);
-        });
+        .then(function (res){
 
-        return deferred.promise;
-    },
-
-    storeBattleRound : function (id, body) {
-        var deferred = Q.defer();
-
-        Battle.findSimple(id)
-        .then(function(battle) {
-
-            // get current round
-            var i = battle.rounds.length-1;
-            // either add meta to index 0, or 1
-            var index = battle.rounds[i].length === 2 ? 1 : 0;
-
-            _.extend(battle.rounds[i][index], {
-                startFrame : body.startFrame,
-                startSec   : body.startSec,
-                duration   : body.duration,
+            var turn = {
+                startFrame : data.startFrame,
+                startSec   : data.startSec,
+                duration   : data.duration,
                 createdAt  : new Date()
-            });
+            }, i = battle.rounds.length-1;
+
+            // if we need to start a new round, create turns array
+            // and populate index 0
+            if (battle.rounds[i].length === 2) {
+                battle.rounds.push([turn]);
+
+            // else add a turn
+            } else {
+                battle.rounds[i].push(turn);
+            }
+
             battle.markModified('rounds');
             battle.save(function(err) {
                 // send notification to battlee
-                if (err) {deferred.reject(err); }
-                else { deferred.resolve(battle); }
+                if (err) {def.reject(err); }
+                else { def.resolve(battle); }
             });
-        });
+        },def.reject).done();
 
-
-        return deferred.promise;
+        return def.promise;
     },
 
     getManyRelated : function (battle) {

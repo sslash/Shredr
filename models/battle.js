@@ -21,12 +21,19 @@ var BattleSchema = new Schema({
 
     // Simple or Advanced
     mode : String,
+
     createdAt  : {type : Date, default : Date.now},
 
     // In case for stored jamtrack (mode2)
     jamtrackFileId : String,
 
     videoFileId : String,
+
+    // filename without ending. used to create filenames
+    filename : String,
+
+    // Only the video files (no audio)
+    mergedFile : String,
 
     // In case for mode2, and the user has chosen an existing jamtrack
     jamtrackId : {type : Schema.ObjectId, ref : 'Jamtrack'},
@@ -261,9 +268,15 @@ BattleSchema.statics = {
         return deferred.promise;
     },
 
-    findSimple : function(id, cb) {
+    findSimple : function(id, opts) {
         var deferred = Q.defer();
-        this.findOne({ _id : id })
+        var promise = this.findOne({ _id : id });
+
+        if ( opts && opts.populate ) {
+            promise.populate(opts.populate);
+        }
+
+        promise
         .exec(function(err,res) {
             if (err) { deferred.reject(err); }
             else { deferred.resolve(res); }

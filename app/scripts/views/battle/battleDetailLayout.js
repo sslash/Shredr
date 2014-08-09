@@ -132,21 +132,22 @@ var BattleDetailLayout = Backbone.Marionette.Layout.extend({
    },
 
    renderPlayScreen : function () {
-       this.$('.large-in').fadeOut();
+    //    this.$('.large-in').fadeOut();
        this.$('[data-evt="play"]').fadeOut();
    },
 
    // Play clicked! must set up the videoplayer component and start playing..
    __playClicked : function () {
-       this.vpComponent = new VPComponent({
-           videos : this.getOrderedBattleVids(),
-           mode : this.model.get('mode'),
-           audio : this.$('audio')[0]
-       });
-       this.listenTo(this.vpComponent, 'player:seconds', this.renderPlaySeconds);
-       this.listenTo(this.vpComponent, 'player:next', this.renderNextVideo);
+    this.$('video')[0].play();
+    //    this.vpComponent = new VPComponent({
+    //        videos : this.getOrderedBattleVids(),
+    //        mode : this.model.get('mode'),
+    //        audio : this.$('audio')[0]
+    //    });
+    //    this.listenTo(this.vpComponent, 'player:seconds', this.renderPlaySeconds);
+    //    this.listenTo(this.vpComponent, 'player:next', this.renderNextVideo);
        this.renderPlayScreen();
-       this.vpComponent.play();
+    //    this.vpComponent.play();
    },
 
    __voteClicked : function (e) {

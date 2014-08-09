@@ -49,7 +49,6 @@ define([
         //             $this.remove();
         //         });
         //     });
-
             this.$('#fileupload').fileupload({
                 url: this.model.url(),
                 dataType: 'json',

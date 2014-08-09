@@ -3075,7 +3075,8 @@ figcaption {
   font-style: italic; }
 
 .shred-vid-wrap {
-  height: 359px; }
+  width: 60%;
+  display: inline-block; }
 
 .shred-vid {
   width: 100.1%;

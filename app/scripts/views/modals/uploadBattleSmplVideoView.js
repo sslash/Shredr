@@ -113,7 +113,6 @@ function (
           data.context = $('<button class="btn btn-niz" data-evt="submit"/>').text('Done!')
           .appendTo(this.$('[data-reg="submit"]'))
           .click(function () {
-              console.log('heihei')
                 data.formData = this.model.getSaveData();
                 if ( this.getSaveData ) _.extend(data.formData, this.getSaveData());
                 data.context = $('<p/>').text('Uploading, be patient..').replaceAll(this.$('[data-evt="submit"]'));

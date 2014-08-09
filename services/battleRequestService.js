@@ -10,15 +10,21 @@ var mongoose      = require('mongoose'),
 
 exports.create = function (opts) {
     var def = Q.defer(), br;
+
     var promise = opts.mode === 'Advanced' ?
         createAdvancedBR(opts) : createSimpleBR(opts);
 
+
     promise
     .then(function(args) {
-        return new BattleRequest(_.extend(opts, {
-          videoFileId : args.file1,
-          thumb : args.thumb
-        }))
+        var data = _.extend(opts, {
+          videoFileId : args.playableFile,
+          mergedFile : args.mergedFile,
+          thumb : args.thumb,
+          filename : args.filename
+      });
+
+        return new BattleRequest(data)
         .create();
     })
     .then(function(res) {
@@ -41,7 +47,7 @@ function createAdvancedBR (opts) {
     // get jamtrack file first
     return jamtrackService.findById(opts.jamtrackId)
     .then(function(jamtrack) {
-        return fileHandler.saveInitialBattleAdv({
+        return fileHandler.createInitialBattleAdvanced({
             audioFilename : jamtrack.fileId,
             startSec : opts.startSec,
             startFrame : opts.startFrame,
@@ -54,10 +60,11 @@ function createAdvancedBR (opts) {
 }
 
 function createSimpleBR (opts) {
-    return fileHandler.saveInitialBattleSimple({
+    return fileHandler.createInitialBattleSimple({
         path : process.cwd() + '/public/video/battle/',
         filename : opts.battler._id.toString() + '_' + Date.now().toString(),
-        file : opts.file
+        file : opts.file,
+
     });
 }
 
@@ -173,6 +180,9 @@ exports.acceptBattleRequest = function (battleId) {
         battle.dayLimit = br.dayLimit;
         battle.mode = br.mode;
         battle.statement = br.statement;
+        battle.videoFileId = br.videoFileId;
+        battle.mergedFile = br.mergedFile;
+        battle.filename = br.filename;
 
         if ( br.mode === 'Advanced') {
             // set jamtrack
@@ -187,12 +197,10 @@ exports.acceptBattleRequest = function (battleId) {
         battle.rounds = [];
         battle.rounds[0] = [
         {
-            videoFileId : br.advVidFile,
             createdAt : new Date(),
             startSec : 0,
             startFrame : 0,
             duration : br.duration,
-            rating : { raters : 0, currentValue : 0 }
         }
         ];
 

@@ -23,8 +23,14 @@ var BattleRequestSchema = new Schema({
   // jamtrack
   jamtrackFileId : String,
 
-  // Just the video. Misleading name..
+  // PlayableVideoFile
   videoFileId : String,
+
+  // Only the video files (no audio)
+  mergedFile : String,
+
+  // filename without ending. used to create filenames
+  filename : String,
 
   thumb : String,
 
